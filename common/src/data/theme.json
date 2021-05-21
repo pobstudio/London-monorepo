@@ -1,0 +1,138 @@
+{
+  "0x7a250d5630b4cf539739df2c5dacb4c659f2488d": {
+    "name": "Uniswap Router",
+    "colors": ["#FF007A", "#000000", "#FFB8DA", "#FFFFFF"]
+  },
+  "0xf164fc0ec4e93095b804a4795bbe1e041497b92a": {
+    "name": "Uniswap Router",
+    "colors": ["#FF007A", "#000000", "#FFB8DA", "#FFFFFF"]
+  },
+  "0x090d4613473dee047c3f2706764f49e0821d256e": {
+    "name": "Uniswap Token Distributor",
+    "colors": ["#FF007A", "#000000", "#FFB8DA", "#FFFFFF"]
+  },
+  "0xa26e80e7dea86279c6d778d702cc413e6cffa777": {
+    "name": "0x Staking Proxy",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0xa3ac9844514b96bb502627ca9dceb57c4be289e3": {
+    "name": "0x Forwarder",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0x61935cbdd02287b511119ddb11aeb42f1593b7ef": {
+    "name": "0x v3",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0x080bf510fcbf18b91105470639e9561022937712": {
+    "name": "0x v2.1",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0xdef1c0ded9bec7f1a1670819833240f027b25eff": {
+    "name": "0x Exchange Proxy",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0x38a795580d0f687e399913a00ddef6a17612c722": {
+    "name": "0x Coordinator",
+    "colors": ["#000000", "#A2F5EB", "#00AE99", "#003831"]
+  },
+  "0xf73b31c07e3f8ea8f7c59ac58ed1f878708c8a76": {
+    "name": "Sushiswap Dev Fund",
+    "colors": ["#FEF8EF", "#EFE9E7", "#563B29", "#DC3045"]
+  },
+  "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd": {
+    "name": "Sushiswap Router",
+    "colors": ["#FEF8EF", "#EFE9E7", "#563B29", "#DC3045"]
+  },
+  "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f": {
+    "name": "Sushiswap Router",
+    "colors": ["#FEF8EF", "#EFE9E7", "#563B29", "#DC3045"]
+  },
+  "0x3fda67f7583380e67ef93072294a7fac882fd7e7": {
+    "name": "Compound finance",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b": {
+    "name": "Compound finance",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x1055be4bf7338c7606d9efdcf80593f180ba043e": {
+    "name": "Compound finance",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x6c8c6b02e7b2be14d4fa6022dfd6d75921d90e4e": {
+    "name": "cBAT",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4": {
+    "name": "cCOMP",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643": {
+    "name": "cETH",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x158079ee67fce2f58472a96584a73c7ab9ac95c1": {
+    "name": "cREP",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0xf5dce57282a584d2746faf1593d3121fcac444dc": {
+    "name": "cSAI",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x35a18000230da775cac24873d00ff85bccded550": {
+    "name": "cUNI",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x39aa39c021dfbae8fac545936693ac917d5e7563": {
+    "name": "cUSDC",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9": {
+    "name": "cUSDT",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0xc11b1268c1a384e55c48c2391d8d480264a3a7f4": {
+    "name": "cWBTC",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0xccf4429db6322d5c611ee964527d42e5d685dd6a": {
+    "name": "cWBTC2",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0xb3319f5d18bc0d84dd1b4825dcde5d5f7266d407": {
+    "name": "cZRX",
+    "colors": ["#60CF99", "#080A0E", "#161E26", "#FFFFFF"]
+  },
+  "0x7be8076f4ea4a4ad08075c2508e481d6c946d12b": {
+    "name": "OpenSea",
+    "colors": ["#3291E9", "#6BD9FC", "#E2E6EF", "#828689"]
+  },
+  "0x9c4e9cce4780062942a7fe34fa2fa7316c872956": {
+    "name": "OpenSea: ENS",
+    "colors": ["#3291E9", "#6BD9FC", "#E2E6EF", "#828689"]
+  },
+  "0xa5409ec958c83c3f309868babaca7c86dcb077c1": {
+    "name": "OpenSea: Registry",
+    "colors": ["#3291E9", "#6BD9FC", "#E2E6EF", "#828689"]
+  },
+  "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073": {
+    "name": "OpenSea: Wallet",
+    "colors": ["#3291E9", "#6BD9FC", "#E2E6EF", "#828689"]
+  },
+  "0x881d40237659c251811cec9c364ef91dc08d300c": {
+    "name": "Metamask: Swap Router",
+    "colors": ["#F68518", "#161616", "#CD6116", "#D7C1B3"]
+  },
+  "0x11111112542d85b3ef69ae05771c2dccff4faa26": {
+    "name": "1inch",
+    "colors": ["#FFFFFF", "#C6362E", "#97A5C0", "#20304D"]
+  },
+  "0x11111254369792b2ca5d084ab5eea397ca8fa48b": {
+    "name": "1inch",
+    "colors": ["#FFFFFF", "#C6362E", "#97A5C0", "#20304D"]
+  },
+  "0x111111125434b319222cdbf8c261674adb56f3ae": {
+    "name": "1inch",
+    "colors": ["#FFFFFF", "#C6362E", "#97A5C0", "#20304D"]
+  }
+}
