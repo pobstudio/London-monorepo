@@ -1,5 +1,5 @@
 {
-  "name": "@pob/sketches",
+  "name": "@pob/common",
   "version": "1.0.0",
   "main": "src/index.ts",
   "license": "MIT",

@@ -9,98 +9,98 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface DummyERC1155ReceiverInterface extends ethers.utils.Interface {
   functions: {
-    "ERC1155_BATCH_RECEIVED()": FunctionFragment;
-    "ERC1155_RECEIVED()": FunctionFragment;
-    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
-    "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
-    "setRejectTransferFlag(bool)": FunctionFragment;
+    'ERC1155_BATCH_RECEIVED()': FunctionFragment;
+    'ERC1155_RECEIVED()': FunctionFragment;
+    'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)': FunctionFragment;
+    'onERC1155Received(address,address,uint256,uint256,bytes)': FunctionFragment;
+    'setRejectTransferFlag(bool)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "ERC1155_BATCH_RECEIVED",
-    values?: undefined
+    functionFragment: 'ERC1155_BATCH_RECEIVED',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "ERC1155_RECEIVED",
-    values?: undefined
+    functionFragment: 'ERC1155_RECEIVED',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "onERC1155BatchReceived",
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+    functionFragment: 'onERC1155BatchReceived',
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "onERC1155Received",
-    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+    functionFragment: 'onERC1155Received',
+    values: [string, string, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "setRejectTransferFlag",
-    values: [boolean]
+    functionFragment: 'setRejectTransferFlag',
+    values: [boolean],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "ERC1155_BATCH_RECEIVED",
-    data: BytesLike
+    functionFragment: 'ERC1155_BATCH_RECEIVED',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "ERC1155_RECEIVED",
-    data: BytesLike
+    functionFragment: 'ERC1155_RECEIVED',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "onERC1155BatchReceived",
-    data: BytesLike
+    functionFragment: 'onERC1155BatchReceived',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "onERC1155Received",
-    data: BytesLike
+    functionFragment: 'onERC1155Received',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setRejectTransferFlag",
-    data: BytesLike
+    functionFragment: 'setRejectTransferFlag',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "BatchTokenReceived(address,address,uint256[],uint256[],bytes)": EventFragment;
-    "TokenReceived(address,address,uint256,uint256,bytes)": EventFragment;
+    'BatchTokenReceived(address,address,uint256[],uint256[],bytes)': EventFragment;
+    'TokenReceived(address,address,uint256,uint256,bytes)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "BatchTokenReceived"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TokenReceived"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BatchTokenReceived'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TokenReceived'): EventFragment;
 }
 
 export class DummyERC1155Receiver extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: DummyERC1155ReceiverInterface;
+  'interface': DummyERC1155ReceiverInterface;
 
-  functions: {
+  'functions': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<[string]>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<[string]>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<[string]>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<[string]>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<[string]>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<[string]>;
 
     onERC1155BatchReceived(
       operator: string,
@@ -108,16 +108,16 @@ export class DummyERC1155Receiver extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"(
+    'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)'(
       operator: string,
       from: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     onERC1155Received(
@@ -126,91 +126,91 @@ export class DummyERC1155Receiver extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "onERC1155Received(address,address,uint256,uint256,bytes)"(
+    'onERC1155Received(address,address,uint256,uint256,bytes)'(
       operator: string,
       from: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setRejectTransferFlag(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setRejectTransferFlag(bool)"(
+    'setRejectTransferFlag(bool)'(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
   };
 
-  ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_BATCH_RECEIVED'(overrides?: CallOverrides): Promise<string>;
 
-  "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
-  ERC1155_RECEIVED(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_RECEIVED'(overrides?: CallOverrides): Promise<string>;
 
-  "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
-  onERC1155BatchReceived(
+  'onERC1155BatchReceived'(
     operator: string,
     from: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"(
+  'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)'(
     operator: string,
     from: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  onERC1155Received(
+  'onERC1155Received'(
     operator: string,
     from: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "onERC1155Received(address,address,uint256,uint256,bytes)"(
+  'onERC1155Received(address,address,uint256,uint256,bytes)'(
     operator: string,
     from: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setRejectTransferFlag(
+  'setRejectTransferFlag'(
     _shouldRejectTransfer: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setRejectTransferFlag(bool)"(
+  'setRejectTransferFlag(bool)'(
     _shouldRejectTransfer: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  callStatic: {
+  'callStatic': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<string>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<string>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
     onERC1155BatchReceived(
       operator: string,
@@ -218,16 +218,16 @@ export class DummyERC1155Receiver extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"(
+    'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)'(
       operator: string,
       from: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     onERC1155Received(
@@ -236,36 +236,36 @@ export class DummyERC1155Receiver extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "onERC1155Received(address,address,uint256,uint256,bytes)"(
+    'onERC1155Received(address,address,uint256,uint256,bytes)'(
       operator: string,
       from: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     setRejectTransferFlag(
       _shouldRejectTransfer: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setRejectTransferFlag(bool)"(
+    'setRejectTransferFlag(bool)'(
       _shouldRejectTransfer: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
-  filters: {
+  'filters': {
     BatchTokenReceived(
       operator: null,
       from: null,
       tokenIds: null,
       tokenValues: null,
-      data: null
+      data: null,
     ): EventFilter;
 
     TokenReceived(
@@ -273,18 +273,18 @@ export class DummyERC1155Receiver extends Contract {
       from: null,
       tokenId: null,
       tokenValue: null,
-      data: null
+      data: null,
     ): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC1155BatchReceived(
       operator: string,
@@ -292,16 +292,16 @@ export class DummyERC1155Receiver extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"(
+    'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)'(
       operator: string,
       from: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     onERC1155Received(
@@ -310,42 +310,42 @@ export class DummyERC1155Receiver extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "onERC1155Received(address,address,uint256,uint256,bytes)"(
+    'onERC1155Received(address,address,uint256,uint256,bytes)'(
       operator: string,
       from: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setRejectTransferFlag(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setRejectTransferFlag(bool)"(
+    'setRejectTransferFlag(bool)'(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     ERC1155_BATCH_RECEIVED(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "ERC1155_BATCH_RECEIVED()"(
-      overrides?: CallOverrides
+    'ERC1155_BATCH_RECEIVED()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "ERC1155_RECEIVED()"(
-      overrides?: CallOverrides
+    'ERC1155_RECEIVED()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     onERC1155BatchReceived(
@@ -354,16 +354,16 @@ export class DummyERC1155Receiver extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"(
+    'onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)'(
       operator: string,
       from: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     onERC1155Received(
@@ -372,26 +372,26 @@ export class DummyERC1155Receiver extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "onERC1155Received(address,address,uint256,uint256,bytes)"(
+    'onERC1155Received(address,address,uint256,uint256,bytes)'(
       operator: string,
       from: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setRejectTransferFlag(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setRejectTransferFlag(bool)"(
+    'setRejectTransferFlag(bool)'(
       _shouldRejectTransfer: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
   };
 }

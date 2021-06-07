@@ -9,294 +9,294 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface MixinTokenURIInterface extends ethers.utils.Interface {
   functions: {
-    "baseMetadataURI()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "setBaseMetadataURI(string)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "uri(uint256)": FunctionFragment;
+    'baseMetadataURI()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'setBaseMetadataURI(string)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'uri(uint256)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "baseMetadataURI",
-    values?: undefined
+    functionFragment: 'baseMetadataURI',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setBaseMetadataURI",
-    values: [string]
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'setBaseMetadataURI',
+    values: [string],
   ): string;
-  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [string],
+  ): string;
+  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string;
 
   decodeFunctionResult(
-    functionFragment: "baseMetadataURI",
-    data: BytesLike
+    functionFragment: 'baseMetadataURI',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setBaseMetadataURI",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'setBaseMetadataURI',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export class MixinTokenURI extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: MixinTokenURIInterface;
+  'interface': MixinTokenURIInterface;
 
-  functions: {
+  'functions': {
     baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<[string]>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
   };
 
-  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
+  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
 
-  "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
+  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  'owner'(overrides?: CallOverrides): Promise<string>;
 
-  "owner()"(overrides?: CallOverrides): Promise<string>;
+  'owner()'(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  setBaseMetadataURI(
+  'setBaseMetadataURI'(
     newBaseMetadataURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setBaseMetadataURI(string)"(
+  'setBaseMetadataURI(string)'(
     newBaseMetadataURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
+  'transferOwnership'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "transferOwnership(address)"(
+  'transferOwnership(address)'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  uri(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'uri'(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  "uri(uint256)"(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'uri(uint256)'(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  callStatic: {
+  'callStatic': {
     baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    "owner()"(overrides?: CallOverrides): Promise<string>;
+    'owner()'(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
+    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
   };
 
-  filters: {
+  'filters': {
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null
+      newOwner: string | null,
     ): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "baseMetadataURI()"(
-      overrides?: CallOverrides
+    'baseMetadataURI()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     uri(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

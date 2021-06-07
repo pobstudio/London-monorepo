@@ -26,9 +26,7 @@ export async function getScreenshot(
     width: dimensions[0],
     height: dimensions[1],
   });
-  await page.goto(
-    `FILL THIS`,
-  );
+  await page.goto(`FILL THIS`);
   const file = await page.screenshot({ type, quality });
   return file as Buffer;
 }

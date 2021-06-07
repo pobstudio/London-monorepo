@@ -47,10 +47,6 @@ export default class PobDocument extends Document {
               href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
               rel="stylesheet"
             />
-            <link
-              href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
-              rel="stylesheet"
-            />
             <meta
               name="fortmatic-site-verification"
               content="VnUbNzIEkOFMQk6L"

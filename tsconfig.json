@@ -18,8 +18,5 @@
     "esModuleInterop": true
   },
   "include": [],
-  "references": [
-    { "path": "./common" },
-    { "path": "./protocol" }
-  ]
+  "references": [{ "path": "./common" }, { "path": "./protocol" }]
 }

@@ -9,78 +9,78 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface MixinPausableInterface extends ethers.utils.Interface {
   functions: {
-    "paused()": FunctionFragment;
+    'paused()': FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
 
   events: {
-    "Paused(address)": EventFragment;
-    "Unpaused(address)": EventFragment;
+    'Paused(address)': EventFragment;
+    'Unpaused(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
 }
 
 export class MixinPausable extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: MixinPausableInterface;
+  'interface': MixinPausableInterface;
 
-  functions: {
+  'functions': {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    "paused()"(overrides?: CallOverrides): Promise<[boolean]>;
+    'paused()'(overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  paused(overrides?: CallOverrides): Promise<boolean>;
+  'paused'(overrides?: CallOverrides): Promise<boolean>;
 
-  "paused()"(overrides?: CallOverrides): Promise<boolean>;
+  'paused()'(overrides?: CallOverrides): Promise<boolean>;
 
-  callStatic: {
+  'callStatic': {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    "paused()"(overrides?: CallOverrides): Promise<boolean>;
+    'paused()'(overrides?: CallOverrides): Promise<boolean>;
   };
 
-  filters: {
+  'filters': {
     Paused(account: null): EventFilter;
 
     Unpaused(account: null): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "paused()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'paused()'(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "paused()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'paused()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -9,534 +9,534 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface ERC1155MintableInterface extends ethers.utils.Interface {
   functions: {
-    "ERC1155_BATCH_RECEIVED()": FunctionFragment;
-    "ERC1155_RECEIVED()": FunctionFragment;
-    "balanceOf(address,uint256)": FunctionFragment;
-    "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "baseMetadataURI()": FunctionFragment;
-    "contractURI()": FunctionFragment;
-    "create(bool)": FunctionFragment;
-    "createWithType(uint256)": FunctionFragment;
-    "exchangesRegistry()": FunctionFragment;
-    "getNonFungibleBaseType(uint256)": FunctionFragment;
-    "getNonFungibleIndex(uint256)": FunctionFragment;
-    "isApprovedForAll(address,address)": FunctionFragment;
-    "isFungible(uint256)": FunctionFragment;
-    "isNonFungible(uint256)": FunctionFragment;
-    "isNonFungibleBaseType(uint256)": FunctionFragment;
-    "isNonFungibleItem(uint256)": FunctionFragment;
-    "maxIndex(uint256)": FunctionFragment;
-    "metadataKey()": FunctionFragment;
-    "metadataRegistry()": FunctionFragment;
-    "mintFungible(uint256,address[],uint256[])": FunctionFragment;
-    "mintNonFungible(uint256,address[])": FunctionFragment;
-    "owner()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
-    "setApprovalForAll(address,bool)": FunctionFragment;
-    "setBaseMetadataURI(string)": FunctionFragment;
-    "setContractURI(string)": FunctionFragment;
-    "setCreatorApproval(uint256,address,bool)": FunctionFragment;
-    "setExchangesRegistry(address)": FunctionFragment;
-    "setMetadataKey(string)": FunctionFragment;
-    "setMetadataRegistry(address)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "uri(uint256)": FunctionFragment;
+    'ERC1155_BATCH_RECEIVED()': FunctionFragment;
+    'ERC1155_RECEIVED()': FunctionFragment;
+    'balanceOf(address,uint256)': FunctionFragment;
+    'balanceOfBatch(address[],uint256[])': FunctionFragment;
+    'baseMetadataURI()': FunctionFragment;
+    'contractURI()': FunctionFragment;
+    'create(bool)': FunctionFragment;
+    'createWithType(uint256)': FunctionFragment;
+    'exchangesRegistry()': FunctionFragment;
+    'getNonFungibleBaseType(uint256)': FunctionFragment;
+    'getNonFungibleIndex(uint256)': FunctionFragment;
+    'isApprovedForAll(address,address)': FunctionFragment;
+    'isFungible(uint256)': FunctionFragment;
+    'isNonFungible(uint256)': FunctionFragment;
+    'isNonFungibleBaseType(uint256)': FunctionFragment;
+    'isNonFungibleItem(uint256)': FunctionFragment;
+    'maxIndex(uint256)': FunctionFragment;
+    'metadataKey()': FunctionFragment;
+    'metadataRegistry()': FunctionFragment;
+    'mintFungible(uint256,address[],uint256[])': FunctionFragment;
+    'mintNonFungible(uint256,address[])': FunctionFragment;
+    'owner()': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)': FunctionFragment;
+    'safeTransferFrom(address,address,uint256,uint256,bytes)': FunctionFragment;
+    'setApprovalForAll(address,bool)': FunctionFragment;
+    'setBaseMetadataURI(string)': FunctionFragment;
+    'setContractURI(string)': FunctionFragment;
+    'setCreatorApproval(uint256,address,bool)': FunctionFragment;
+    'setExchangesRegistry(address)': FunctionFragment;
+    'setMetadataKey(string)': FunctionFragment;
+    'setMetadataRegistry(address)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'uri(uint256)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "ERC1155_BATCH_RECEIVED",
-    values?: undefined
+    functionFragment: 'ERC1155_BATCH_RECEIVED',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "ERC1155_RECEIVED",
-    values?: undefined
+    functionFragment: 'ERC1155_RECEIVED',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [string, BigNumberish]
+    functionFragment: 'balanceOf',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOfBatch",
-    values: [string[], BigNumberish[]]
+    functionFragment: 'balanceOfBatch',
+    values: [string[], BigNumberish[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "baseMetadataURI",
-    values?: undefined
+    functionFragment: 'baseMetadataURI',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "contractURI",
-    values?: undefined
+    functionFragment: 'contractURI',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "create", values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'create', values: [boolean]): string;
   encodeFunctionData(
-    functionFragment: "createWithType",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exchangesRegistry",
-    values?: undefined
+    functionFragment: 'createWithType',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getNonFungibleBaseType",
-    values: [BigNumberish]
+    functionFragment: 'exchangesRegistry',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "getNonFungibleIndex",
-    values: [BigNumberish]
+    functionFragment: 'getNonFungibleBaseType',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isApprovedForAll",
-    values: [string, string]
+    functionFragment: 'getNonFungibleIndex',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isFungible",
-    values: [BigNumberish]
+    functionFragment: 'isApprovedForAll',
+    values: [string, string],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungible",
-    values: [BigNumberish]
+    functionFragment: 'isFungible',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungibleBaseType",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungible',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungibleItem",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungibleBaseType',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "maxIndex",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungibleItem',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "metadataKey",
-    values?: undefined
+    functionFragment: 'maxIndex',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "metadataRegistry",
-    values?: undefined
+    functionFragment: 'metadataKey',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "mintFungible",
-    values: [BigNumberish, string[], BigNumberish[]]
+    functionFragment: 'metadataRegistry',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "mintNonFungible",
-    values: [BigNumberish, string[]]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "ownerOf",
-    values: [BigNumberish]
+    functionFragment: 'mintFungible',
+    values: [BigNumberish, string[], BigNumberish[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'mintNonFungible',
+    values: [BigNumberish, string[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'ownerOf',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "safeBatchTransferFrom",
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferFrom",
-    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+    functionFragment: 'safeBatchTransferFrom',
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "setApprovalForAll",
-    values: [string, boolean]
+    functionFragment: 'safeTransferFrom',
+    values: [string, string, BigNumberish, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "setBaseMetadataURI",
-    values: [string]
+    functionFragment: 'setApprovalForAll',
+    values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: "setContractURI",
-    values: [string]
+    functionFragment: 'setBaseMetadataURI',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "setCreatorApproval",
-    values: [BigNumberish, string, boolean]
+    functionFragment: 'setContractURI',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "setExchangesRegistry",
-    values: [string]
+    functionFragment: 'setCreatorApproval',
+    values: [BigNumberish, string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: "setMetadataKey",
-    values: [string]
+    functionFragment: 'setExchangesRegistry',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "setMetadataRegistry",
-    values: [string]
+    functionFragment: 'setMetadataKey',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
+    functionFragment: 'setMetadataRegistry',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'supportsInterface',
+    values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [string],
+  ): string;
+  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string;
 
   decodeFunctionResult(
-    functionFragment: "ERC1155_BATCH_RECEIVED",
-    data: BytesLike
+    functionFragment: 'ERC1155_BATCH_RECEIVED',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "ERC1155_RECEIVED",
-    data: BytesLike
+    functionFragment: 'ERC1155_RECEIVED',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "balanceOfBatch",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "baseMetadataURI",
-    data: BytesLike
+    functionFragment: 'balanceOfBatch',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "contractURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "createWithType",
-    data: BytesLike
+    functionFragment: 'baseMetadataURI',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "exchangesRegistry",
-    data: BytesLike
+    functionFragment: 'contractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'create', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'createWithType',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getNonFungibleBaseType",
-    data: BytesLike
+    functionFragment: 'exchangesRegistry',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getNonFungibleIndex",
-    data: BytesLike
+    functionFragment: 'getNonFungibleBaseType',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isApprovedForAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "isFungible", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isNonFungible",
-    data: BytesLike
+    functionFragment: 'getNonFungibleIndex',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isNonFungibleBaseType",
-    data: BytesLike
+    functionFragment: 'isApprovedForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'isFungible', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'isNonFungible',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isNonFungibleItem",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "maxIndex", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "metadataKey",
-    data: BytesLike
+    functionFragment: 'isNonFungibleBaseType',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "metadataRegistry",
-    data: BytesLike
+    functionFragment: 'isNonFungibleItem',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'maxIndex', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'metadataKey',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "mintFungible",
-    data: BytesLike
+    functionFragment: 'metadataRegistry',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "mintNonFungible",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
+    functionFragment: 'mintFungible',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeBatchTransferFrom",
-    data: BytesLike
+    functionFragment: 'mintNonFungible',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeTransferFrom",
-    data: BytesLike
+    functionFragment: 'safeBatchTransferFrom',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setApprovalForAll",
-    data: BytesLike
+    functionFragment: 'safeTransferFrom',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setBaseMetadataURI",
-    data: BytesLike
+    functionFragment: 'setApprovalForAll',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setContractURI",
-    data: BytesLike
+    functionFragment: 'setBaseMetadataURI',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setCreatorApproval",
-    data: BytesLike
+    functionFragment: 'setContractURI',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setExchangesRegistry",
-    data: BytesLike
+    functionFragment: 'setCreatorApproval',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setMetadataKey",
-    data: BytesLike
+    functionFragment: 'setExchangesRegistry',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setMetadataRegistry",
-    data: BytesLike
+    functionFragment: 'setMetadataKey',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
+    functionFragment: 'setMetadataRegistry',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'supportsInterface',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'uri', data: BytesLike): Result;
 
   events: {
-    "ApprovalForAll(address,address,bool)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
-    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
-    "URI(string,uint256)": EventFragment;
+    'ApprovalForAll(address,address,bool)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'TransferBatch(address,address,address,uint256[],uint256[])': EventFragment;
+    'TransferSingle(address,address,address,uint256,uint256)': EventFragment;
+    'URI(string,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TransferBatch'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TransferSingle'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment;
 }
 
 export class ERC1155Mintable extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: ERC1155MintableInterface;
+  'interface': ERC1155MintableInterface;
 
-  functions: {
+  'functions': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<[string]>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<[string]>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<[string]>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<[string]>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<[string]>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<[string]>;
 
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { balances_: BigNumber[] }>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { balances_: BigNumber[] }>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<[string]>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
-    "contractURI()"(overrides?: CallOverrides): Promise<[string]>;
+    'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     createWithType(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "createWithType(uint256)"(
+    'createWithType(uint256)'(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     exchangesRegistry(overrides?: CallOverrides): Promise<[string]>;
 
-    "exchangesRegistry()"(overrides?: CallOverrides): Promise<[string]>;
+    'exchangesRegistry()'(overrides?: CallOverrides): Promise<[string]>;
 
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     maxIndex(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "maxIndex(uint256)"(
+    'maxIndex(uint256)'(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     metadataKey(overrides?: CallOverrides): Promise<[string]>;
 
-    "metadataKey()"(overrides?: CallOverrides): Promise<[string]>;
+    'metadataKey()'(overrides?: CallOverrides): Promise<[string]>;
 
     metadataRegistry(overrides?: CallOverrides): Promise<[string]>;
 
-    "metadataRegistry()"(overrides?: CallOverrides): Promise<[string]>;
+    'metadataRegistry()'(overrides?: CallOverrides): Promise<[string]>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -544,16 +544,16 @@ export class ERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     safeTransferFrom(
@@ -562,627 +562,630 @@ export class ERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setContractURI(string)"(
+    'setContractURI(string)'(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setCreatorApproval(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setCreatorApproval(uint256,address,bool)"(
+    'setCreatorApproval(uint256,address,bool)'(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setExchangesRegistry(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setExchangesRegistry(address)"(
+    'setExchangesRegistry(address)'(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setMetadataKey(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setMetadataKey(string)"(
+    'setMetadataKey(string)'(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setMetadataRegistry(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setMetadataRegistry(address)"(
+    'setMetadataRegistry(address)'(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     supportsInterface(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "supportsInterface(bytes4)"(
+    'supportsInterface(bytes4)'(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
   };
 
-  ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_BATCH_RECEIVED'(overrides?: CallOverrides): Promise<string>;
 
-  "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
-  ERC1155_RECEIVED(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_RECEIVED'(overrides?: CallOverrides): Promise<string>;
 
-  "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+  'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(
+  'balanceOf'(
     owner: string,
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "balanceOf(address,uint256)"(
+  'balanceOf(address,uint256)'(
     owner: string,
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  balanceOfBatch(
+  'balanceOfBatch'(
     owners: string[],
     ids: BigNumberish[],
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  "balanceOfBatch(address[],uint256[])"(
+  'balanceOfBatch(address[],uint256[])'(
     owners: string[],
     ids: BigNumberish[],
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
+  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
 
-  "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
+  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
-  contractURI(overrides?: CallOverrides): Promise<string>;
+  'contractURI'(overrides?: CallOverrides): Promise<string>;
 
-  "contractURI()"(overrides?: CallOverrides): Promise<string>;
+  'contractURI()'(overrides?: CallOverrides): Promise<string>;
 
-  create(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
+  'create'(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
 
-  "create(bool)"(
+  'create(bool)'(
     isNF: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  createWithType(
+  'createWithType'(
     type_: BigNumberish,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "createWithType(uint256)"(
+  'createWithType(uint256)'(
     type_: BigNumberish,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  exchangesRegistry(overrides?: CallOverrides): Promise<string>;
+  'exchangesRegistry'(overrides?: CallOverrides): Promise<string>;
 
-  "exchangesRegistry()"(overrides?: CallOverrides): Promise<string>;
+  'exchangesRegistry()'(overrides?: CallOverrides): Promise<string>;
 
-  getNonFungibleBaseType(
+  'getNonFungibleBaseType'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "getNonFungibleBaseType(uint256)"(
+  'getNonFungibleBaseType(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getNonFungibleIndex(
+  'getNonFungibleIndex'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "getNonFungibleIndex(uint256)"(
+  'getNonFungibleIndex(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  isApprovedForAll(
+  'isApprovedForAll'(
     owner: string,
     operator: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isApprovedForAll(address,address)"(
+  'isApprovedForAll(address,address)'(
     owner: string,
     operator: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  'isFungible'(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-  "isFungible(uint256)"(
+  'isFungible(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-  "isNonFungible(uint256)"(
+  'isNonFungible'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungibleBaseType(
+  'isNonFungible(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isNonFungibleBaseType(uint256)"(
+  'isNonFungibleBaseType'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungibleItem(
+  'isNonFungibleBaseType(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isNonFungibleItem(uint256)"(
+  'isNonFungibleItem'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  maxIndex(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  'isNonFungibleItem(uint256)'(
+    id: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  "maxIndex(uint256)"(
+  'maxIndex'(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  'maxIndex(uint256)'(
     arg0: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  metadataKey(overrides?: CallOverrides): Promise<string>;
+  'metadataKey'(overrides?: CallOverrides): Promise<string>;
 
-  "metadataKey()"(overrides?: CallOverrides): Promise<string>;
+  'metadataKey()'(overrides?: CallOverrides): Promise<string>;
 
-  metadataRegistry(overrides?: CallOverrides): Promise<string>;
+  'metadataRegistry'(overrides?: CallOverrides): Promise<string>;
 
-  "metadataRegistry()"(overrides?: CallOverrides): Promise<string>;
+  'metadataRegistry()'(overrides?: CallOverrides): Promise<string>;
 
-  mintFungible(
+  'mintFungible'(
     id: BigNumberish,
     to: string[],
     quantities: BigNumberish[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "mintFungible(uint256,address[],uint256[])"(
+  'mintFungible(uint256,address[],uint256[])'(
     id: BigNumberish,
     to: string[],
     quantities: BigNumberish[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  mintNonFungible(
+  'mintNonFungible'(
     type_: BigNumberish,
     to: string[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "mintNonFungible(uint256,address[])"(
+  'mintNonFungible(uint256,address[])'(
     type_: BigNumberish,
     to: string[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  'owner'(overrides?: CallOverrides): Promise<string>;
 
-  "owner()"(overrides?: CallOverrides): Promise<string>;
+  'owner()'(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'ownerOf'(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  "ownerOf(uint256)"(
+  'ownerOf(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  safeBatchTransferFrom(
+  'safeBatchTransferFrom'(
     from: string,
     to: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+  'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
     from: string,
     to: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  safeTransferFrom(
+  'safeTransferFrom'(
     from: string,
     to: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+  'safeTransferFrom(address,address,uint256,uint256,bytes)'(
     from: string,
     to: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setApprovalForAll(
+  'setApprovalForAll'(
     operator: string,
     approved: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setApprovalForAll(address,bool)"(
+  'setApprovalForAll(address,bool)'(
     operator: string,
     approved: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setBaseMetadataURI(
+  'setBaseMetadataURI'(
     newBaseMetadataURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setBaseMetadataURI(string)"(
+  'setBaseMetadataURI(string)'(
     newBaseMetadataURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setContractURI(
+  'setContractURI'(
     newContractURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setContractURI(string)"(
+  'setContractURI(string)'(
     newContractURI: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setCreatorApproval(
+  'setCreatorApproval'(
     id: BigNumberish,
     creator: string,
     status: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setCreatorApproval(uint256,address,bool)"(
+  'setCreatorApproval(uint256,address,bool)'(
     id: BigNumberish,
     creator: string,
     status: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setExchangesRegistry(
+  'setExchangesRegistry'(
     newExchangesRegistry: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setExchangesRegistry(address)"(
+  'setExchangesRegistry(address)'(
     newExchangesRegistry: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setMetadataKey(
+  'setMetadataKey'(
     newMetadataKey: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setMetadataKey(string)"(
+  'setMetadataKey(string)'(
     newMetadataKey: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setMetadataRegistry(
+  'setMetadataRegistry'(
     newMetadataRegistry: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setMetadataRegistry(address)"(
+  'setMetadataRegistry(address)'(
     newMetadataRegistry: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  supportsInterface(
+  'supportsInterface'(
     _interfaceID: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "supportsInterface(bytes4)"(
+  'supportsInterface(bytes4)'(
     _interfaceID: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  transferOwnership(
+  'transferOwnership'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "transferOwnership(address)"(
+  'transferOwnership(address)'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  uri(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'uri'(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  "uri(uint256)"(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'uri(uint256)'(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  callStatic: {
+  'callStatic': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<string>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<string>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<string>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
-    "contractURI()"(overrides?: CallOverrides): Promise<string>;
+    'contractURI()'(overrides?: CallOverrides): Promise<string>;
 
     create(isNF: boolean, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     createWithType(
       type_: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "createWithType(uint256)"(
+    'createWithType(uint256)'(
       type_: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     exchangesRegistry(overrides?: CallOverrides): Promise<string>;
 
-    "exchangesRegistry()"(overrides?: CallOverrides): Promise<string>;
+    'exchangesRegistry()'(overrides?: CallOverrides): Promise<string>;
 
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     maxIndex(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "maxIndex(uint256)"(
+    'maxIndex(uint256)'(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     metadataKey(overrides?: CallOverrides): Promise<string>;
 
-    "metadataKey()"(overrides?: CallOverrides): Promise<string>;
+    'metadataKey()'(overrides?: CallOverrides): Promise<string>;
 
     metadataRegistry(overrides?: CallOverrides): Promise<string>;
 
-    "metadataRegistry()"(overrides?: CallOverrides): Promise<string>;
+    'metadataRegistry()'(overrides?: CallOverrides): Promise<string>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    "owner()"(overrides?: CallOverrides): Promise<string>;
+    'owner()'(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
+    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1190,16 +1193,16 @@ export class ERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     safeTransferFrom(
@@ -1208,132 +1211,132 @@ export class ERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setContractURI(string)"(
+    'setContractURI(string)'(
       newContractURI: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setCreatorApproval(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setCreatorApproval(uint256,address,bool)"(
+    'setCreatorApproval(uint256,address,bool)'(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setExchangesRegistry(
       newExchangesRegistry: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setExchangesRegistry(address)"(
+    'setExchangesRegistry(address)'(
       newExchangesRegistry: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setMetadataKey(
       newMetadataKey: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setMetadataKey(string)"(
+    'setMetadataKey(string)'(
       newMetadataKey: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setMetadataRegistry(
       newMetadataRegistry: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setMetadataRegistry(address)"(
+    'setMetadataRegistry(address)'(
       newMetadataRegistry: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     supportsInterface(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "supportsInterface(bytes4)"(
+    'supportsInterface(bytes4)'(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
   };
 
-  filters: {
+  'filters': {
     ApprovalForAll(
       _owner: string | null,
       _operator: string | null,
-      _approved: null
+      _approved: null,
     ): EventFilter;
 
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null
+      newOwner: string | null,
     ): EventFilter;
 
     TransferBatch(
@@ -1341,7 +1344,7 @@ export class ERC1155Mintable extends Contract {
       _from: string | null,
       _to: string | null,
       _ids: null,
-      _values: null
+      _values: null,
     ): EventFilter;
 
     TransferSingle(
@@ -1349,195 +1352,195 @@ export class ERC1155Mintable extends Contract {
       _from: string | null,
       _to: string | null,
       _id: null,
-      _value: null
+      _value: null,
     ): EventFilter;
 
     URI(_value: null, _id: BigNumberish | null): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     ERC1155_BATCH_RECEIVED(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ERC1155_BATCH_RECEIVED()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'ERC1155_BATCH_RECEIVED()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ERC1155_RECEIVED()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'ERC1155_RECEIVED()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "baseMetadataURI()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
 
-    "create(bool)"(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
+    'create(bool)'(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
 
     createWithType(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "createWithType(uint256)"(
+    'createWithType(uint256)'(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     exchangesRegistry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "exchangesRegistry()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'exchangesRegistry()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     maxIndex(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "maxIndex(uint256)"(
+    'maxIndex(uint256)'(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     metadataKey(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "metadataKey()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'metadataKey()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     metadataRegistry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "metadataRegistry()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'metadataRegistry()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1545,16 +1548,16 @@ export class ERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     safeTransferFrom(
@@ -1563,329 +1566,329 @@ export class ERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setContractURI(string)"(
+    'setContractURI(string)'(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setCreatorApproval(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setCreatorApproval(uint256,address,bool)"(
+    'setCreatorApproval(uint256,address,bool)'(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setExchangesRegistry(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setExchangesRegistry(address)"(
+    'setExchangesRegistry(address)'(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setMetadataKey(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setMetadataKey(string)"(
+    'setMetadataKey(string)'(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setMetadataRegistry(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setMetadataRegistry(address)"(
+    'setMetadataRegistry(address)'(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     supportsInterface(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "supportsInterface(bytes4)"(
+    'supportsInterface(bytes4)'(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     uri(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     ERC1155_BATCH_RECEIVED(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "ERC1155_BATCH_RECEIVED()"(
-      overrides?: CallOverrides
+    'ERC1155_BATCH_RECEIVED()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     ERC1155_RECEIVED(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "ERC1155_RECEIVED()"(
-      overrides?: CallOverrides
+    'ERC1155_RECEIVED()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "baseMetadataURI()"(
-      overrides?: CallOverrides
+    'baseMetadataURI()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     createWithType(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "createWithType(uint256)"(
+    'createWithType(uint256)'(
       type_: BigNumberish,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     exchangesRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "exchangesRegistry()"(
-      overrides?: CallOverrides
+    'exchangesRegistry()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     maxIndex(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "maxIndex(uint256)"(
+    'maxIndex(uint256)'(
       arg0: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     metadataKey(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "metadataKey()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'metadataKey()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     metadataRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "metadataRegistry()"(
-      overrides?: CallOverrides
+    'metadataRegistry()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1893,16 +1896,16 @@ export class ERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
@@ -1911,122 +1914,122 @@ export class ERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setBaseMetadataURI(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setBaseMetadataURI(string)"(
+    'setBaseMetadataURI(string)'(
       newBaseMetadataURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setContractURI(string)"(
+    'setContractURI(string)'(
       newContractURI: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setCreatorApproval(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setCreatorApproval(uint256,address,bool)"(
+    'setCreatorApproval(uint256,address,bool)'(
       id: BigNumberish,
       creator: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setExchangesRegistry(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setExchangesRegistry(address)"(
+    'setExchangesRegistry(address)'(
       newExchangesRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setMetadataKey(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setMetadataKey(string)"(
+    'setMetadataKey(string)'(
       newMetadataKey: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setMetadataRegistry(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setMetadataRegistry(address)"(
+    'setMetadataRegistry(address)'(
       newMetadataRegistry: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "supportsInterface(bytes4)"(
+    'supportsInterface(bytes4)'(
       _interfaceID: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     uri(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "uri(uint256)"(
+    'uri(uint256)'(
       _id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

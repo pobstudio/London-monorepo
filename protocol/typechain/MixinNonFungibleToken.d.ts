@@ -9,425 +9,428 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface MixinNonFungibleTokenInterface extends ethers.utils.Interface {
   functions: {
-    "getNonFungibleBaseType(uint256)": FunctionFragment;
-    "getNonFungibleIndex(uint256)": FunctionFragment;
-    "isFungible(uint256)": FunctionFragment;
-    "isNonFungible(uint256)": FunctionFragment;
-    "isNonFungibleBaseType(uint256)": FunctionFragment;
-    "isNonFungibleItem(uint256)": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
+    'getNonFungibleBaseType(uint256)': FunctionFragment;
+    'getNonFungibleIndex(uint256)': FunctionFragment;
+    'isFungible(uint256)': FunctionFragment;
+    'isNonFungible(uint256)': FunctionFragment;
+    'isNonFungibleBaseType(uint256)': FunctionFragment;
+    'isNonFungibleItem(uint256)': FunctionFragment;
+    'ownerOf(uint256)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "getNonFungibleBaseType",
-    values: [BigNumberish]
+    functionFragment: 'getNonFungibleBaseType',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getNonFungibleIndex",
-    values: [BigNumberish]
+    functionFragment: 'getNonFungibleIndex',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isFungible",
-    values: [BigNumberish]
+    functionFragment: 'isFungible',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungible",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungible',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungibleBaseType",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungibleBaseType',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isNonFungibleItem",
-    values: [BigNumberish]
+    functionFragment: 'isNonFungibleItem',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
-    values: [BigNumberish]
+    functionFragment: 'ownerOf',
+    values: [BigNumberish],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getNonFungibleBaseType",
-    data: BytesLike
+    functionFragment: 'getNonFungibleBaseType',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getNonFungibleIndex",
-    data: BytesLike
+    functionFragment: 'getNonFungibleIndex',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "isFungible", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isFungible', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "isNonFungible",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isNonFungibleBaseType",
-    data: BytesLike
+    functionFragment: 'isNonFungible',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "isNonFungibleItem",
-    data: BytesLike
+    functionFragment: 'isNonFungibleBaseType',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'isNonFungibleItem',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
 
   events: {};
 }
 
 export class MixinNonFungibleToken extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: MixinNonFungibleTokenInterface;
+  'interface': MixinNonFungibleTokenInterface;
 
-  functions: {
+  'functions': {
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
   };
 
-  getNonFungibleBaseType(
+  'getNonFungibleBaseType'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "getNonFungibleBaseType(uint256)"(
+  'getNonFungibleBaseType(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getNonFungibleIndex(
+  'getNonFungibleIndex'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "getNonFungibleIndex(uint256)"(
+  'getNonFungibleIndex(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  'isFungible'(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-  "isFungible(uint256)"(
+  'isFungible(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-  "isNonFungible(uint256)"(
+  'isNonFungible'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungibleBaseType(
+  'isNonFungible(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isNonFungibleBaseType(uint256)"(
+  'isNonFungibleBaseType'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  isNonFungibleItem(
+  'isNonFungibleBaseType(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isNonFungibleItem(uint256)"(
+  'isNonFungibleItem'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  "ownerOf(uint256)"(
+  'isNonFungibleItem(uint256)'(
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'ownerOf'(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  'ownerOf(uint256)'(
+    id: BigNumberish,
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  callStatic: {
+  'callStatic': {
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
   };
 
-  filters: {};
+  'filters': {};
 
-  estimateGas: {
+  'estimateGas': {
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isFungible(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     ownerOf(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     getNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getNonFungibleBaseType(uint256)"(
+    'getNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getNonFungibleIndex(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getNonFungibleIndex(uint256)"(
+    'getNonFungibleIndex(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isFungible(uint256)"(
+    'isFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungible(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungible(uint256)"(
+    'isNonFungible(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungibleBaseType(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungibleBaseType(uint256)"(
+    'isNonFungibleBaseType(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isNonFungibleItem(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isNonFungibleItem(uint256)"(
+    'isNonFungibleItem(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     ownerOf(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "ownerOf(uint256)"(
+    'ownerOf(uint256)'(
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -9,364 +9,364 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface WhitelistExchangesProxyInterface extends ethers.utils.Interface {
   functions: {
-    "isAddressWhitelisted(address)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "setPaused(bool)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "updateProxyAddress(address,bool)": FunctionFragment;
+    'isAddressWhitelisted(address)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'updateProxyAddress(address,bool)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "isAddressWhitelisted",
-    values: [string]
+    functionFragment: 'isAddressWhitelisted',
+    values: [string],
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "setPaused", values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [boolean]): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'transferOwnership',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "updateProxyAddress",
-    values: [string, boolean]
+    functionFragment: 'updateProxyAddress',
+    values: [string, boolean],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "isAddressWhitelisted",
-    data: BytesLike
+    functionFragment: 'isAddressWhitelisted',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "setPaused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateProxyAddress",
-    data: BytesLike
+    functionFragment: 'updateProxyAddress',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export class WhitelistExchangesProxy extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: WhitelistExchangesProxyInterface;
+  'interface': WhitelistExchangesProxyInterface;
 
-  functions: {
+  'functions': {
     isAddressWhitelisted(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isAddressWhitelisted(address)"(
+    'isAddressWhitelisted(address)'(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    "paused()"(overrides?: CallOverrides): Promise<[boolean]>;
+    'paused()'(overrides?: CallOverrides): Promise<[boolean]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     setPaused(
       newPaused: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setPaused(bool)"(
+    'setPaused(bool)'(
       newPaused: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     updateProxyAddress(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "updateProxyAddress(address,bool)"(
+    'updateProxyAddress(address,bool)'(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
   };
 
-  isAddressWhitelisted(
+  'isAddressWhitelisted'(
     proxy: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isAddressWhitelisted(address)"(
+  'isAddressWhitelisted(address)'(
     proxy: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  'owner'(overrides?: CallOverrides): Promise<string>;
 
-  "owner()"(overrides?: CallOverrides): Promise<string>;
+  'owner()'(overrides?: CallOverrides): Promise<string>;
 
-  paused(overrides?: CallOverrides): Promise<boolean>;
+  'paused'(overrides?: CallOverrides): Promise<boolean>;
 
-  "paused()"(overrides?: CallOverrides): Promise<boolean>;
+  'paused()'(overrides?: CallOverrides): Promise<boolean>;
 
-  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  setPaused(
+  'setPaused'(
     newPaused: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setPaused(bool)"(
+  'setPaused(bool)'(
     newPaused: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
+  'transferOwnership'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "transferOwnership(address)"(
+  'transferOwnership(address)'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  updateProxyAddress(
+  'updateProxyAddress'(
     proxy: string,
     status: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "updateProxyAddress(address,bool)"(
+  'updateProxyAddress(address,bool)'(
     proxy: string,
     status: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  callStatic: {
+  'callStatic': {
     isAddressWhitelisted(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isAddressWhitelisted(address)"(
+    'isAddressWhitelisted(address)'(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    "owner()"(overrides?: CallOverrides): Promise<string>;
+    'owner()'(overrides?: CallOverrides): Promise<string>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    "paused()"(overrides?: CallOverrides): Promise<boolean>;
+    'paused()'(overrides?: CallOverrides): Promise<boolean>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
+    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
     setPaused(newPaused: boolean, overrides?: CallOverrides): Promise<void>;
 
-    "setPaused(bool)"(
+    'setPaused(bool)'(
       newPaused: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     updateProxyAddress(
       proxy: string,
       status: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "updateProxyAddress(address,bool)"(
+    'updateProxyAddress(address,bool)'(
       proxy: string,
       status: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
-  filters: {
+  'filters': {
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null
+      newOwner: string | null,
     ): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     isAddressWhitelisted(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isAddressWhitelisted(address)"(
+    'isAddressWhitelisted(address)'(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "paused()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'paused()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
     setPaused(newPaused: boolean, overrides?: Overrides): Promise<BigNumber>;
 
-    "setPaused(bool)"(
+    'setPaused(bool)'(
       newPaused: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     updateProxyAddress(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "updateProxyAddress(address,bool)"(
+    'updateProxyAddress(address,bool)'(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     isAddressWhitelisted(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isAddressWhitelisted(address)"(
+    'isAddressWhitelisted(address)'(
       proxy: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "paused()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'paused()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     setPaused(
       newPaused: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setPaused(bool)"(
+    'setPaused(bool)'(
       newPaused: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     updateProxyAddress(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "updateProxyAddress(address,bool)"(
+    'updateProxyAddress(address,bool)'(
       proxy: string,
       status: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
   };
 }

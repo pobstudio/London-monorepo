@@ -7,6 +7,7 @@ export const ThemedGlobalStyle = createGlobalStyle`
     html {
     }
     body {
+        background: black;
         min-height: 100vh;
         width: 100%;
         margin: 0;

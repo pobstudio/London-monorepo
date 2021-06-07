@@ -1,5 +1,5 @@
 export interface Deployment {
-  multisig: string; 
+  multisig: string;
   erc1155: string;
 }
 

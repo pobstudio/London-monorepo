@@ -1,10 +1,10 @@
 {
-  "name": "hash-app",
+  "name": "MINT-app",
   "version": "1.0.0",
   "description": "",
   "main": "",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start"
   },
@@ -16,7 +16,6 @@
     "@ethersproject/providers": "^5.0.17",
     "@pob/common": "1.0.0",
     "@pob/protocol": "1.0.0",
-    "@pob/sketches": "1.0.0",
     "@reach/listbox": "^0.12.1",
     "@reach/menu-button": "^0.12.1",
     "@reach/tooltip": "^0.15.0",
@@ -24,6 +23,9 @@
     "@react-three/drei": "^4.0.3",
     "@react-three/fiber": "^6.0.1",
     "@react-three/flex": "^0.6.0",
+    "@visx/gradient": "^1.7.0",
+    "@visx/scale": "^1.11.1",
+    "@visx/shape": "^1.12.0",
     "@welldone-software/why-did-you-render": "^6.0.5",
     "analytics": "^0.6.4",
     "chrome-aws-lambda": "^8.0.1",

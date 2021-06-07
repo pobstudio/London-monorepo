@@ -9,43 +9,43 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   PayableOverrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface LazyMinterInterface extends ethers.utils.Interface {
   functions: {
-    "getSignedMintHash(tuple)": FunctionFragment;
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
-    "maxIndex()": FunctionFragment;
-    "mint(tuple[])": FunctionFragment;
-    "mintableErc1155()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "pause()": FunctionFragment;
-    "paused()": FunctionFragment;
-    "registry()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "setTreasury(address)": FunctionFragment;
-    "setVerifier(address)": FunctionFragment;
-    "splitSignature(bytes)": FunctionFragment;
-    "tokenType()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "treasury()": FunctionFragment;
-    "unpause()": FunctionFragment;
-    "verifier()": FunctionFragment;
-    "verifySignedMint(address,tuple)": FunctionFragment;
+    'getSignedMintHash(tuple)': FunctionFragment;
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
+    'maxIndex()': FunctionFragment;
+    'mint(tuple[])': FunctionFragment;
+    'mintableErc1155()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'pause()': FunctionFragment;
+    'paused()': FunctionFragment;
+    'registry()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'setTreasury(address)': FunctionFragment;
+    'setVerifier(address)': FunctionFragment;
+    'splitSignature(bytes)': FunctionFragment;
+    'tokenType()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'treasury()': FunctionFragment;
+    'unpause()': FunctionFragment;
+    'verifier()': FunctionFragment;
+    'verifySignedMint(address,tuple)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "getSignedMintHash",
+    functionFragment: 'getSignedMintHash',
     values: [
       {
         dst: string;
@@ -53,16 +53,16 @@ interface LazyMinterInterface extends ethers.utils.Interface {
         ethPriceInWei: BigNumberish;
         salt: BigNumberish;
         signature: BytesLike;
-      }
-    ]
+      },
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "isSigned",
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
+    functionFragment: 'isSigned',
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: "maxIndex", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxIndex', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "mint",
+    functionFragment: 'mint',
     values: [
       {
         dst: string;
@@ -70,37 +70,37 @@ interface LazyMinterInterface extends ethers.utils.Interface {
         ethPriceInWei: BigNumberish;
         salt: BigNumberish;
         signature: BytesLike;
-      }[]
-    ]
+      }[],
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "mintableErc1155",
-    values?: undefined
+    functionFragment: 'mintableErc1155',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "pause", values?: undefined): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(functionFragment: "registry", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'registry', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
-  encodeFunctionData(functionFragment: "setVerifier", values: [string]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setVerifier', values: [string]): string;
   encodeFunctionData(
-    functionFragment: "splitSignature",
-    values: [BytesLike]
+    functionFragment: 'splitSignature',
+    values: [BytesLike],
   ): string;
-  encodeFunctionData(functionFragment: "tokenType", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'tokenType', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'transferOwnership',
+    values: [string],
   ): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
-  encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
-  encodeFunctionData(functionFragment: "verifier", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'verifier', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "verifySignedMint",
+    functionFragment: 'verifySignedMint',
     values: [
       string,
       {
@@ -109,79 +109,79 @@ interface LazyMinterInterface extends ethers.utils.Interface {
         ethPriceInWei: BigNumberish;
         salt: BigNumberish;
         signature: BytesLike;
-      }
-    ]
+      },
+    ],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "getSignedMintHash",
-    data: BytesLike
+    functionFragment: 'getSignedMintHash',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxIndex", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "mintableErc1155",
-    data: BytesLike
+    functionFragment: 'mintableErc1155',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "registry", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'registry', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setTreasury",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setVerifier",
-    data: BytesLike
+    functionFragment: 'setTreasury',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "splitSignature",
-    data: BytesLike
+    functionFragment: 'setVerifier',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "tokenType", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'splitSignature',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "verifier", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tokenType', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "verifySignedMint",
-    data: BytesLike
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'verifier', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'verifySignedMint',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
-    "Paused(address)": EventFragment;
-    "Unpaused(address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Paused(address)': EventFragment;
+    'Unpaused(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
 }
 
 export class LazyMinter extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: LazyMinterInterface;
+  'interface': LazyMinterInterface;
 
-  functions: {
+  'functions': {
     getSignedMintHash(
       signedMint: {
         dst: string;
@@ -190,10 +190,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    "getSignedMintHash((address,string,uint256,uint256,bytes))"(
+    'getSignedMintHash((address,string,uint256,uint256,bytes))'(
       signedMint: {
         dst: string;
         uri: string;
@@ -201,7 +201,7 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     isSigned(
@@ -210,21 +210,21 @@ export class LazyMinter extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     maxIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    "maxIndex()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'maxIndex()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
       signedMints: {
@@ -234,10 +234,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<ContractTransaction>;
 
-    "mint(tuple[])"(
+    'mint(tuple[])'(
       signedMints: {
         dst: string;
         uri: string;
@@ -245,88 +245,88 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<ContractTransaction>;
 
     mintableErc1155(overrides?: CallOverrides): Promise<[string]>;
 
-    "mintableErc1155()"(overrides?: CallOverrides): Promise<[string]>;
+    'mintableErc1155()'(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     pause(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "pause()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'pause()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    "paused()"(overrides?: CallOverrides): Promise<[boolean]>;
+    'paused()'(overrides?: CallOverrides): Promise<[boolean]>;
 
     registry(overrides?: CallOverrides): Promise<[string]>;
 
-    "registry()"(overrides?: CallOverrides): Promise<[string]>;
+    'registry()'(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setTreasury(address)"(
+    'setTreasury(address)'(
       _treasury: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setVerifier(
       _verifier: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setVerifier(address)"(
+    'setVerifier(address)'(
       _verifier: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-    "splitSignature(bytes)"(
+    'splitSignature(bytes)'(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     tokenType(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    "tokenType()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'tokenType()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    "treasury()"(overrides?: CallOverrides): Promise<[string]>;
+    'treasury()'(overrides?: CallOverrides): Promise<[string]>;
 
     unpause(overrides?: Overrides): Promise<ContractTransaction>;
 
-    "unpause()"(overrides?: Overrides): Promise<ContractTransaction>;
+    'unpause()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     verifier(overrides?: CallOverrides): Promise<[string]>;
 
-    "verifier()"(overrides?: CallOverrides): Promise<[string]>;
+    'verifier()'(overrides?: CallOverrides): Promise<[string]>;
 
     verifySignedMint(
       signer: string,
@@ -337,10 +337,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "verifySignedMint(address,(address,string,uint256,uint256,bytes))"(
+    'verifySignedMint(address,(address,string,uint256,uint256,bytes))'(
       signer: string,
       signedMint: {
         dst: string;
@@ -349,11 +349,11 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
-  getSignedMintHash(
+  'getSignedMintHash'(
     signedMint: {
       dst: string;
       uri: string;
@@ -361,10 +361,10 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     },
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  "getSignedMintHash((address,string,uint256,uint256,bytes))"(
+  'getSignedMintHash((address,string,uint256,uint256,bytes))'(
     signedMint: {
       dst: string;
       uri: string;
@@ -372,32 +372,32 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     },
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  isSigned(
+  'isSigned'(
     _address: string,
     messageHash: BytesLike,
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
+  'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
     _address: string,
     messageHash: BytesLike,
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  maxIndex(overrides?: CallOverrides): Promise<BigNumber>;
+  'maxIndex'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  "maxIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
+  'maxIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  mint(
+  'mint'(
     signedMints: {
       dst: string;
       uri: string;
@@ -405,10 +405,10 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     }[],
-    overrides?: PayableOverrides
+    overrides?: PayableOverrides,
   ): Promise<ContractTransaction>;
 
-  "mint(tuple[])"(
+  'mint(tuple[])'(
     signedMints: {
       dst: string;
       uri: string;
@@ -416,90 +416,90 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     }[],
-    overrides?: PayableOverrides
+    overrides?: PayableOverrides,
   ): Promise<ContractTransaction>;
 
-  mintableErc1155(overrides?: CallOverrides): Promise<string>;
+  'mintableErc1155'(overrides?: CallOverrides): Promise<string>;
 
-  "mintableErc1155()"(overrides?: CallOverrides): Promise<string>;
+  'mintableErc1155()'(overrides?: CallOverrides): Promise<string>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  'owner'(overrides?: CallOverrides): Promise<string>;
 
-  "owner()"(overrides?: CallOverrides): Promise<string>;
+  'owner()'(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides): Promise<ContractTransaction>;
+  'pause'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "pause()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'pause()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  paused(overrides?: CallOverrides): Promise<boolean>;
+  'paused'(overrides?: CallOverrides): Promise<boolean>;
 
-  "paused()"(overrides?: CallOverrides): Promise<boolean>;
+  'paused()'(overrides?: CallOverrides): Promise<boolean>;
 
-  registry(overrides?: CallOverrides): Promise<string>;
+  'registry'(overrides?: CallOverrides): Promise<string>;
 
-  "registry()"(overrides?: CallOverrides): Promise<string>;
+  'registry()'(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  setTreasury(
+  'setTreasury'(
     _treasury: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setTreasury(address)"(
+  'setTreasury(address)'(
     _treasury: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setVerifier(
+  'setVerifier'(
     _verifier: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setVerifier(address)"(
+  'setVerifier(address)'(
     _verifier: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  splitSignature(
+  'splitSignature'(
     sig: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-  "splitSignature(bytes)"(
+  'splitSignature(bytes)'(
     sig: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-  tokenType(overrides?: CallOverrides): Promise<BigNumber>;
+  'tokenType'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  "tokenType()"(overrides?: CallOverrides): Promise<BigNumber>;
+  'tokenType()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  transferOwnership(
+  'transferOwnership'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "transferOwnership(address)"(
+  'transferOwnership(address)'(
     newOwner: string,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  treasury(overrides?: CallOverrides): Promise<string>;
+  'treasury'(overrides?: CallOverrides): Promise<string>;
 
-  "treasury()"(overrides?: CallOverrides): Promise<string>;
+  'treasury()'(overrides?: CallOverrides): Promise<string>;
 
-  unpause(overrides?: Overrides): Promise<ContractTransaction>;
+  'unpause'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  "unpause()"(overrides?: Overrides): Promise<ContractTransaction>;
+  'unpause()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-  verifier(overrides?: CallOverrides): Promise<string>;
+  'verifier'(overrides?: CallOverrides): Promise<string>;
 
-  "verifier()"(overrides?: CallOverrides): Promise<string>;
+  'verifier()'(overrides?: CallOverrides): Promise<string>;
 
-  verifySignedMint(
+  'verifySignedMint'(
     signer: string,
     signedMint: {
       dst: string;
@@ -508,10 +508,10 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     },
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "verifySignedMint(address,(address,string,uint256,uint256,bytes))"(
+  'verifySignedMint(address,(address,string,uint256,uint256,bytes))'(
     signer: string,
     signedMint: {
       dst: string;
@@ -520,10 +520,10 @@ export class LazyMinter extends Contract {
       salt: BigNumberish;
       signature: BytesLike;
     },
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  callStatic: {
+  'callStatic': {
     getSignedMintHash(
       signedMint: {
         dst: string;
@@ -532,10 +532,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "getSignedMintHash((address,string,uint256,uint256,bytes))"(
+    'getSignedMintHash((address,string,uint256,uint256,bytes))'(
       signedMint: {
         dst: string;
         uri: string;
@@ -543,7 +543,7 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     isSigned(
@@ -552,21 +552,21 @@ export class LazyMinter extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     maxIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "maxIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'maxIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       signedMints: {
@@ -576,10 +576,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "mint(tuple[])"(
+    'mint(tuple[])'(
       signedMints: {
         dst: string;
         uri: string;
@@ -587,82 +587,82 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     mintableErc1155(overrides?: CallOverrides): Promise<string>;
 
-    "mintableErc1155()"(overrides?: CallOverrides): Promise<string>;
+    'mintableErc1155()'(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    "owner()"(overrides?: CallOverrides): Promise<string>;
+    'owner()'(overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
-    "pause()"(overrides?: CallOverrides): Promise<void>;
+    'pause()'(overrides?: CallOverrides): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    "paused()"(overrides?: CallOverrides): Promise<boolean>;
+    'paused()'(overrides?: CallOverrides): Promise<boolean>;
 
     registry(overrides?: CallOverrides): Promise<string>;
 
-    "registry()"(overrides?: CallOverrides): Promise<string>;
+    'registry()'(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
+    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
-    "setTreasury(address)"(
+    'setTreasury(address)'(
       _treasury: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setVerifier(_verifier: string, overrides?: CallOverrides): Promise<void>;
 
-    "setVerifier(address)"(
+    'setVerifier(address)'(
       _verifier: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-    "splitSignature(bytes)"(
+    'splitSignature(bytes)'(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     tokenType(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "tokenType()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'tokenType()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
-    "treasury()"(overrides?: CallOverrides): Promise<string>;
+    'treasury()'(overrides?: CallOverrides): Promise<string>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    "unpause()"(overrides?: CallOverrides): Promise<void>;
+    'unpause()'(overrides?: CallOverrides): Promise<void>;
 
     verifier(overrides?: CallOverrides): Promise<string>;
 
-    "verifier()"(overrides?: CallOverrides): Promise<string>;
+    'verifier()'(overrides?: CallOverrides): Promise<string>;
 
     verifySignedMint(
       signer: string,
@@ -673,10 +673,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "verifySignedMint(address,(address,string,uint256,uint256,bytes))"(
+    'verifySignedMint(address,(address,string,uint256,uint256,bytes))'(
       signer: string,
       signedMint: {
         dst: string;
@@ -685,14 +685,14 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
-  filters: {
+  'filters': {
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null
+      newOwner: string | null,
     ): EventFilter;
 
     Paused(account: null): EventFilter;
@@ -700,7 +700,7 @@ export class LazyMinter extends Contract {
     Unpaused(account: null): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     getSignedMintHash(
       signedMint: {
         dst: string;
@@ -709,10 +709,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getSignedMintHash((address,string,uint256,uint256,bytes))"(
+    'getSignedMintHash((address,string,uint256,uint256,bytes))'(
       signedMint: {
         dst: string;
         uri: string;
@@ -720,7 +720,7 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isSigned(
@@ -729,21 +729,21 @@ export class LazyMinter extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     maxIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "maxIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'maxIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
       signedMints: {
@@ -753,10 +753,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<BigNumber>;
 
-    "mint(tuple[])"(
+    'mint(tuple[])'(
       signedMints: {
         dst: string;
         uri: string;
@@ -764,82 +764,82 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<BigNumber>;
 
     mintableErc1155(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "mintableErc1155()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'mintableErc1155()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     pause(overrides?: Overrides): Promise<BigNumber>;
 
-    "pause()"(overrides?: Overrides): Promise<BigNumber>;
+    'pause()'(overrides?: Overrides): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "paused()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'paused()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     registry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "registry()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'registry()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
     setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
 
-    "setTreasury(address)"(
+    'setTreasury(address)'(
       _treasury: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setVerifier(_verifier: string, overrides?: Overrides): Promise<BigNumber>;
 
-    "setVerifier(address)"(
+    'setVerifier(address)'(
       _verifier: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "splitSignature(bytes)"(
+    'splitSignature(bytes)'(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tokenType(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "tokenType()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'tokenType()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "treasury()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'treasury()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(overrides?: Overrides): Promise<BigNumber>;
 
-    "unpause()"(overrides?: Overrides): Promise<BigNumber>;
+    'unpause()'(overrides?: Overrides): Promise<BigNumber>;
 
     verifier(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "verifier()"(overrides?: CallOverrides): Promise<BigNumber>;
+    'verifier()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     verifySignedMint(
       signer: string,
@@ -850,10 +850,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "verifySignedMint(address,(address,string,uint256,uint256,bytes))"(
+    'verifySignedMint(address,(address,string,uint256,uint256,bytes))'(
       signer: string,
       signedMint: {
         dst: string;
@@ -862,11 +862,11 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     getSignedMintHash(
       signedMint: {
         dst: string;
@@ -875,10 +875,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getSignedMintHash((address,string,uint256,uint256,bytes))"(
+    'getSignedMintHash((address,string,uint256,uint256,bytes))'(
       signedMint: {
         dst: string;
         uri: string;
@@ -886,7 +886,7 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isSigned(
@@ -895,21 +895,21 @@ export class LazyMinter extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     maxIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "maxIndex()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'maxIndex()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
       signedMints: {
@@ -919,10 +919,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "mint(tuple[])"(
+    'mint(tuple[])'(
       signedMints: {
         dst: string;
         uri: string;
@@ -930,90 +930,90 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       }[],
-      overrides?: PayableOverrides
+      overrides?: PayableOverrides,
     ): Promise<PopulatedTransaction>;
 
     mintableErc1155(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "mintableErc1155()"(
-      overrides?: CallOverrides
+    'mintableErc1155()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "pause()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'pause()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "paused()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'paused()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     registry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "registry()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'registry()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setTreasury(address)"(
+    'setTreasury(address)'(
       _treasury: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setVerifier(
       _verifier: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setVerifier(address)"(
+    'setVerifier(address)'(
       _verifier: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "splitSignature(bytes)"(
+    'splitSignature(bytes)'(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     tokenType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "tokenType()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'tokenType()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "transferOwnership(address)"(
+    'transferOwnership(address)'(
       newOwner: string,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "treasury()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'treasury()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unpause(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "unpause()"(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'unpause()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     verifier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "verifier()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'verifier()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     verifySignedMint(
       signer: string,
@@ -1024,10 +1024,10 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "verifySignedMint(address,(address,string,uint256,uint256,bytes))"(
+    'verifySignedMint(address,(address,string,uint256,uint256,bytes))'(
       signer: string,
       signedMint: {
         dst: string;
@@ -1036,7 +1036,7 @@ export class LazyMinter extends Contract {
         salt: BigNumberish;
         signature: BytesLike;
       },
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

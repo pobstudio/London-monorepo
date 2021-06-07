@@ -5,10 +5,7 @@ import { useTransactionsStore } from '../stores/transaction';
 import { useWeb3React } from '@web3-react/core';
 import { useToastsStore } from '../stores/toasts';
 import { useProvider } from '../hooks/useProvider';
-import { useAnalytics } from 'use-analytics';
-import { ANALYTIC_EVENTS } from '../constants/analytics';
 export const TransactionsEffect: FC = () => {
-  const { track } = useAnalytics();
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
   const { account, chainId } = useWeb3React();
   const provider = useProvider(true);
@@ -37,11 +34,6 @@ export const TransactionsEffect: FC = () => {
                 blockNumber,
                 receipt.status === 1 ? 'success' : 'failed',
               );
-              if (receipt.status !== 1) {
-                track(ANALYTIC_EVENTS.APP_MINTING_FAILED, {
-                  hash: transaction.hash,
-                });
-              }
             } else {
               updateTransactionMap((draft) => {
                 draft[transaction.hash].lastBlockNumChecked = blockNumber;
@@ -56,7 +48,7 @@ export const TransactionsEffect: FC = () => {
           });
       }
     }
-  }, [provider, blockNumber, track, account, chainId]);
+  }, [provider, blockNumber, account, chainId]);
 
   return <></>;
 };

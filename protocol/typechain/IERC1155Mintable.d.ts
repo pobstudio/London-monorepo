@@ -9,189 +9,189 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface IERC1155MintableInterface extends ethers.utils.Interface {
   functions: {
-    "balanceOf(address,uint256)": FunctionFragment;
-    "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "create(bool)": FunctionFragment;
-    "isApprovedForAll(address,address)": FunctionFragment;
-    "mintFungible(uint256,address[],uint256[])": FunctionFragment;
-    "mintNonFungible(uint256,address[])": FunctionFragment;
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
-    "setApprovalForAll(address,bool)": FunctionFragment;
+    'balanceOf(address,uint256)': FunctionFragment;
+    'balanceOfBatch(address[],uint256[])': FunctionFragment;
+    'create(bool)': FunctionFragment;
+    'isApprovedForAll(address,address)': FunctionFragment;
+    'mintFungible(uint256,address[],uint256[])': FunctionFragment;
+    'mintNonFungible(uint256,address[])': FunctionFragment;
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)': FunctionFragment;
+    'safeTransferFrom(address,address,uint256,uint256,bytes)': FunctionFragment;
+    'setApprovalForAll(address,bool)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "balanceOf",
-    values: [string, BigNumberish]
+    functionFragment: 'balanceOf',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "balanceOfBatch",
-    values: [string[], BigNumberish[]]
+    functionFragment: 'balanceOfBatch',
+    values: [string[], BigNumberish[]],
   ): string;
-  encodeFunctionData(functionFragment: "create", values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'create', values: [boolean]): string;
   encodeFunctionData(
-    functionFragment: "isApprovedForAll",
-    values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintFungible",
-    values: [BigNumberish, string[], BigNumberish[]]
+    functionFragment: 'isApprovedForAll',
+    values: [string, string],
   ): string;
   encodeFunctionData(
-    functionFragment: "mintNonFungible",
-    values: [BigNumberish, string[]]
+    functionFragment: 'mintFungible',
+    values: [BigNumberish, string[], BigNumberish[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "safeBatchTransferFrom",
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+    functionFragment: 'mintNonFungible',
+    values: [BigNumberish, string[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "safeTransferFrom",
-    values: [string, string, BigNumberish, BigNumberish, BytesLike]
+    functionFragment: 'safeBatchTransferFrom',
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "setApprovalForAll",
-    values: [string, boolean]
+    functionFragment: 'safeTransferFrom',
+    values: [string, string, BigNumberish, BigNumberish, BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [string, boolean],
   ): string;
 
-  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "balanceOfBatch",
-    data: BytesLike
+    functionFragment: 'balanceOfBatch',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "create", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'create', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "isApprovedForAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "mintFungible",
-    data: BytesLike
+    functionFragment: 'isApprovedForAll',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "mintNonFungible",
-    data: BytesLike
+    functionFragment: 'mintFungible',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeBatchTransferFrom",
-    data: BytesLike
+    functionFragment: 'mintNonFungible',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "safeTransferFrom",
-    data: BytesLike
+    functionFragment: 'safeBatchTransferFrom',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setApprovalForAll",
-    data: BytesLike
+    functionFragment: 'safeTransferFrom',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setApprovalForAll',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "ApprovalForAll(address,address,bool)": EventFragment;
-    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
-    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
-    "URI(string,uint256)": EventFragment;
+    'ApprovalForAll(address,address,bool)': EventFragment;
+    'TransferBatch(address,address,address,uint256[],uint256[])': EventFragment;
+    'TransferSingle(address,address,address,uint256,uint256)': EventFragment;
+    'URI(string,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TransferBatch'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TransferSingle'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'URI'): EventFragment;
 }
 
 export class IERC1155Mintable extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: IERC1155MintableInterface;
+  'interface': IERC1155MintableInterface;
 
-  functions: {
+  'functions': {
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { balances_: BigNumber[] }>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber[]] & { balances_: BigNumber[] }>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     safeBatchTransferFrom(
@@ -200,16 +200,16 @@ export class IERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     safeTransferFrom(
@@ -218,216 +218,216 @@ export class IERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<ContractTransaction>;
   };
 
-  balanceOf(
+  'balanceOf'(
     owner: string,
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "balanceOf(address,uint256)"(
+  'balanceOf(address,uint256)'(
     owner: string,
     id: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  balanceOfBatch(
+  'balanceOfBatch'(
     owners: string[],
     ids: BigNumberish[],
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  "balanceOfBatch(address[],uint256[])"(
+  'balanceOfBatch(address[],uint256[])'(
     owners: string[],
     ids: BigNumberish[],
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  create(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
+  'create'(isNF: boolean, overrides?: Overrides): Promise<ContractTransaction>;
 
-  "create(bool)"(
+  'create(bool)'(
     isNF: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(
+  'isApprovedForAll'(
     owner: string,
     operator: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  "isApprovedForAll(address,address)"(
+  'isApprovedForAll(address,address)'(
     owner: string,
     operator: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  mintFungible(
+  'mintFungible'(
     id: BigNumberish,
     to: string[],
     quantities: BigNumberish[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "mintFungible(uint256,address[],uint256[])"(
+  'mintFungible(uint256,address[],uint256[])'(
     id: BigNumberish,
     to: string[],
     quantities: BigNumberish[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  mintNonFungible(
+  'mintNonFungible'(
     type_: BigNumberish,
     to: string[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "mintNonFungible(uint256,address[])"(
+  'mintNonFungible(uint256,address[])'(
     type_: BigNumberish,
     to: string[],
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  safeBatchTransferFrom(
+  'safeBatchTransferFrom'(
     from: string,
     to: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+  'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
     from: string,
     to: string,
     ids: BigNumberish[],
     values: BigNumberish[],
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  safeTransferFrom(
+  'safeTransferFrom'(
     from: string,
     to: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+  'safeTransferFrom(address,address,uint256,uint256,bytes)'(
     from: string,
     to: string,
     id: BigNumberish,
     value: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  setApprovalForAll(
+  'setApprovalForAll'(
     operator: string,
     approved: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  "setApprovalForAll(address,bool)"(
+  'setApprovalForAll(address,bool)'(
     operator: string,
     approved: boolean,
-    overrides?: Overrides
+    overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  callStatic: {
+  'callStatic': {
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     create(isNF: boolean, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     safeBatchTransferFrom(
@@ -436,16 +436,16 @@ export class IERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     safeTransferFrom(
@@ -454,36 +454,36 @@ export class IERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
-  filters: {
+  'filters': {
     ApprovalForAll(
       _owner: string | null,
       _operator: string | null,
-      _approved: null
+      _approved: null,
     ): EventFilter;
 
     TransferBatch(
@@ -491,7 +491,7 @@ export class IERC1155Mintable extends Contract {
       _from: string | null,
       _to: string | null,
       _ids: null,
-      _values: null
+      _values: null,
     ): EventFilter;
 
     TransferSingle(
@@ -499,77 +499,77 @@ export class IERC1155Mintable extends Contract {
       _from: string | null,
       _to: string | null,
       _id: null,
-      _value: null
+      _value: null,
     ): EventFilter;
 
     URI(_value: null, _id: BigNumberish | null): EventFilter;
   };
 
-  estimateGas: {
+  'estimateGas': {
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
 
-    "create(bool)"(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
+    'create(bool)'(isNF: boolean, overrides?: Overrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     safeBatchTransferFrom(
@@ -578,16 +578,16 @@ export class IERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     safeTransferFrom(
@@ -596,99 +596,99 @@ export class IERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     balanceOf(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "balanceOf(address,uint256)"(
+    'balanceOf(address,uint256)'(
       owner: string,
       id: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     balanceOfBatch(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "balanceOfBatch(address[],uint256[])"(
+    'balanceOfBatch(address[],uint256[])'(
       owners: string[],
       ids: BigNumberish[],
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     create(isNF: boolean, overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    "create(bool)"(
+    'create(bool)'(
       isNF: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "isApprovedForAll(address,address)"(
+    'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     mintFungible(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "mintFungible(uint256,address[],uint256[])"(
+    'mintFungible(uint256,address[],uint256[])'(
       id: BigNumberish,
       to: string[],
       quantities: BigNumberish[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     mintNonFungible(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "mintNonFungible(uint256,address[])"(
+    'mintNonFungible(uint256,address[])'(
       type_: BigNumberish,
       to: string[],
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
@@ -697,16 +697,16 @@ export class IERC1155Mintable extends Contract {
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"(
+    'safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)'(
       from: string,
       to: string,
       ids: BigNumberish[],
       values: BigNumberish[],
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
@@ -715,28 +715,28 @@ export class IERC1155Mintable extends Contract {
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256,uint256,bytes)"(
+    'safeTransferFrom(address,address,uint256,uint256,bytes)'(
       from: string,
       to: string,
       id: BigNumberish,
       value: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    "setApprovalForAll(address,bool)"(
+    'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides
+      overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
   };
 }

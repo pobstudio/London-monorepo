@@ -6,12 +6,7 @@ const isDev = !process.env.AWS_REGION;
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     let file: Buffer = Buffer.alloc(0);
-    file = await getScreenshot(
-      'jpeg',
-      70,
-      [1000, 1000],
-      isDev,
-    );
+    file = await getScreenshot('jpeg', 70, [1000, 1000], isDev);
     res.statusCode = 200;
     res.setHeader('Content-Type', `image/jpeg`);
     res.setHeader(

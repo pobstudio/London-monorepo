@@ -19,7 +19,7 @@ const {
 } = process.env;
 
 const config: HardhatUserConfig = {
-  solidity: '0.7.3',
+  solidity: '0.8.4',
   networks: {},
   etherscan: {
     // Your API key for Etherscan
