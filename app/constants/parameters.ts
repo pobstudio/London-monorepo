@@ -10,3 +10,6 @@ export const BELL_CURVE_C = BigNumber.from(11590).mul(ONE_MWEI);
 export const BELL_CURVE_D = BigNumber.from(1159);
 
 export const SIG_DIGITS = BigNumber.from(3);
+
+// TENETATIVE VALUE
+export const BLOCK_NUMBER_UP_TO = 12833000;

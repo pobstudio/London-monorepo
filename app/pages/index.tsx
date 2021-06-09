@@ -2,6 +2,10 @@ import React from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { BellCurve } from '../components/bellCurve';
+import { Countdown } from '../components/countdown';
+import { Text, Bold } from '../components/text';
+import { TOKEN_SYMBOL } from '../constants';
+import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -14,15 +18,49 @@ import { BellCurve } from '../components/bellCurve';
 
 const PageWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
+`;
+
+const Content = styled.div`
+  width: 350px;
+  p + p {
+    margin-top: 16px;
+  }
+`;
+
+const Spacer = styled.div`
+  width: 100%;
+  height: 120px;
 `;
 
 const IndexPage: NextPage = () => {
   return (
     <PageWrapper>
-      <BellCurve width={400} height={400} />
+      <Spacer />
+      <Countdown />
+      <BellCurve width={600} height={160} />
+      <Content>
+        <Text>
+          <Bold>15.59 GWEI</Bold>
+        </Text>
+        <Text>
+          {TOKEN_SYMBOL} IS A SOCIAL CURRENCY. BACKED BY THE LASTING IMPACT OF
+          THIS MOMENT IN TIME.
+        </Text>
+        <Text>
+          After $London hardfork, no more $LONDON will EVER be created. You got
+          til block num {BLOCK_NUMBER_UP_TO.toLocaleString()}.
+        </Text>
+        <Text>
+          FAIR LAUNCH, <Bold>NO STARTING SUPPLY.</Bold>
+        </Text>
+        <Text>WORK TOGETHER, COLLUDE, OR MANIPULATE.</Text>
+        <Text>
+          GL. TRY TO GET <Bold>15.59 GWEI</Bold>
+        </Text>
+      </Content>
     </PageWrapper>
   );
 };
