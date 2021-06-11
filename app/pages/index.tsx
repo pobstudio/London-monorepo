@@ -3,7 +3,8 @@ import { NextPage } from 'next';
 import styled from 'styled-components';
 import { BellCurve } from '../components/bellCurve';
 import { Countdown } from '../components/countdown';
-import { Text, Bold } from '../components/text';
+import { Text, Bold, MiniText } from '../components/text';
+import { A } from '../components/anchor';
 import { TOKEN_SYMBOL } from '../constants';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
 
@@ -24,9 +25,10 @@ const PageWrapper = styled.div`
 `;
 
 const Content = styled.div`
-  width: 350px;
+  margin-top: 24px;
+  width: 450px;
   p + p {
-    margin-top: 16px;
+    margin-top: 24px;
   }
 `;
 
@@ -40,30 +42,55 @@ const IndexPage: NextPage = () => {
     <PageWrapper>
       <Spacer />
       <Countdown />
-      <BellCurve width={600} height={160} />
+      <BellCurve width={800} height={160} />
       <Content>
         <Text>
           <Bold>15.59 GWEI</Bold>
         </Text>
         <Text>
-          {TOKEN_SYMBOL} IS A SOCIAL CURRENCY. BACKED BY THE LASTING IMPACT OF
-          THIS MOMENT IN TIME.
+          {TOKEN_SYMBOL} is a social currency backed by the lasting impact of this moment in time.
         </Text>
         <Text>
-          After $London hardfork, no more $LONDON will EVER be created. You got
-          til block num {BLOCK_NUMBER_UP_TO.toLocaleString()}.
+          After {TOKEN_SYMBOL} hardfork, no more {TOKEN_SYMBOL} will EVER be created.
+        </Text>
+        <Text>
+          You got until block num {BLOCK_NUMBER_UP_TO.toLocaleString()}.
         </Text>
         <Text>
           FAIR LAUNCH, <Bold>NO STARTING SUPPLY.</Bold>
         </Text>
-        <Text>WORK TOGETHER, COLLUDE, OR MANIPULATE.</Text>
+        <Text>Work together, collude, or manipulate.</Text>
         <Text>
-          GL. TRY TO GET <Bold>15.59 GWEI</Bold>
+          GL. Try to get <Bold>15.59 GWEI</Bold>. <a style={{color: 'white', textDecoration: 'underline'}}>Learn More</a>
         </Text>
+      </Content>
+      <Content style={{marginTop: 32}}>
+        <MiniText>
+          Omne quod movetur ab alio movetur
+        </MiniText>
+      </Content>
+      <Content style={{marginTop: 32}}>
+        <AnchorList>
+          <A>{TOKEN_SYMBOL} GIFT SHOP</A>
+          <A>{TOKEN_SYMBOL} NIGHT CLUB DAO</A>
+          <A>Trade</A>
+          <A>Discord</A>
+          <A>Twitter</A>
+        </AnchorList>
       </Content>
     </PageWrapper>
   );
 };
+
+const AnchorList = styled.div`
+  > a {
+    display: block;
+  }
+  a + a {
+    margin-top: 12px;
+  }
+`;
+
 export default React.memo(IndexPage);
 
 // const BetweenContentAndFooterSpacer = styled.div`

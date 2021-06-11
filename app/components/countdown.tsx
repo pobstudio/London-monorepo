@@ -10,9 +10,9 @@ const CountdownHeader = styled.h1`
   margin: 0;
   color: white;
   opacity: 0.15;
-  font-size: 104px;
+  font-size: 144px;
   font-weight: 500;
-  line-height: 104px;
+  line-height: 144px;
 `;
 
 const CountdownLabel = styled.p`
