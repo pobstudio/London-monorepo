@@ -40,45 +40,52 @@ const Spacer = styled.div`
 const IndexPage: NextPage = () => {
   return (
     <PageWrapper>
-      <Spacer />
-      <Countdown />
-      <BellCurve width={800} height={160} />
       <Content>
         <Text>
-          <Bold>15.59 GWEI</Bold>
+          <a style={{color: 'white', textDecoration: 'underline'}}>{TOKEN_SYMBOL}</a>
         </Text>
-        <Text>
-          {TOKEN_SYMBOL} is a social currency backed by the lasting impact of this moment in time.
-        </Text>
-        <Text>
-          After {TOKEN_SYMBOL} hardfork, no more {TOKEN_SYMBOL} will EVER be created.
-        </Text>
-        <Text>
-          You got until block num {BLOCK_NUMBER_UP_TO.toLocaleString()}.
-        </Text>
-        <Text>
-          FAIR LAUNCH, <Bold>NO STARTING SUPPLY.</Bold>
-        </Text>
-        <Text>Work together, collude, or manipulate.</Text>
-        <Text>
-          GL. Try to get <Bold>15.59 GWEI</Bold>. <a style={{color: 'white', textDecoration: 'underline'}}>Learn More</a>
-        </Text>
-      </Content>
-      <Content style={{marginTop: 32}}>
-        <MiniText>
-          Omne quod movetur ab alio movetur
-        </MiniText>
-      </Content>
-      <Content style={{marginTop: 32}}>
-        <AnchorList>
-          <A>{TOKEN_SYMBOL} GIFT SHOP</A>
-          <A>{TOKEN_SYMBOL} NIGHT CLUB DAO</A>
-          <A>Trade</A>
-          <A>Discord</A>
-          <A>Twitter</A>
-        </AnchorList>
       </Content>
     </PageWrapper>
+    // <PageWrapper>
+    //   <Spacer />
+    //   <Countdown />
+    //   <BellCurve width={800} height={160} />
+    //   <Content>
+    //     <Text>
+    //       <Bold>15.59 GWEI</Bold>
+    //     </Text>
+    //     <Text>
+    //       {TOKEN_SYMBOL} is a social currency backed by the lasting impact of this moment in time.
+    //     </Text>
+    //     <Text>
+    //       After {TOKEN_SYMBOL} hardfork, no more {TOKEN_SYMBOL} will EVER be created.
+    //     </Text>
+    //     <Text>
+    //       You got until block num {BLOCK_NUMBER_UP_TO.toLocaleString()}.
+    //     </Text>
+    //     <Text>
+    //       FAIR LAUNCH, <Bold>NO STARTING SUPPLY.</Bold>
+    //     </Text>
+    //     <Text>Work together, collude, or manipulate.</Text>
+    //     <Text>
+    //       GL. Try to get <Bold>15.59 GWEI</Bold>. <a style={{color: 'white', textDecoration: 'underline'}}>Learn More</a>
+    //     </Text>
+    //   </Content>
+    //   <Content style={{marginTop: 32}}>
+    //     <MiniText>
+    //       Omne quod movetur ab alio movetur
+    //     </MiniText>
+    //   </Content>
+    //   <Content style={{marginTop: 32}}>
+    //     <AnchorList>
+    //       <A>{TOKEN_SYMBOL} GIFT SHOP</A>
+    //       <A>{TOKEN_SYMBOL} NIGHT CLUB DAO</A>
+    //       <A>Trade</A>
+    //       <A>Discord</A>
+    //       <A>Twitter</A>
+    //     </AnchorList>
+    //   </Content>
+    // </PageWrapper>
   );
 };
 
