@@ -31,8 +31,12 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
-          <A href={TWITTER_LINK} target={'_blank'}>Twitter</A>
-          <A href={DISCORD_LINK} target={'_blank'}>Discord</A>
+          <A href={TWITTER_LINK} target={'_blank'}>
+            Twitter
+          </A>
+          <A href={DISCORD_LINK} target={'_blank'}>
+            Discord
+          </A>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>
