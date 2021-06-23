@@ -40,7 +40,9 @@ const GiftShopPage: NextPage = () => {
         <Text>
           <Bold>Coming soon</Bold>
         </Text>
-        <Text>Unique NFTs celebrating EIP 1559. Each cost 1559 {TOKEN_SYMBOL}</Text>
+        <Text>
+          Unique NFTs celebrating EIP 1559. Each cost 1559 {TOKEN_SYMBOL}
+        </Text>
       </Content>
     </PageWrapper>
   );

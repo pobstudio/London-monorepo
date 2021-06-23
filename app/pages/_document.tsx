@@ -42,14 +42,10 @@ export default class PobDocument extends Document {
       <>
         <Html lang={'en'} dir={'ltr'}>
           <Head>
-            <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link
-              href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
               rel="stylesheet"
-            />
-            <meta
-              name="fortmatic-site-verification"
-              content="VnUbNzIEkOFMQk6L"
+              type="text/css"
+              href="https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts.css"
             />
             <link
               rel="shortcut icon"

@@ -4,8 +4,8 @@ export const Arrow: FC<{ className?: string }> = ({ className }) => {
   return (
     <svg
       className={className}
-      width="27"
-      height="7"
+      width="54"
+      height="14"
       viewBox="0 0 27 7"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

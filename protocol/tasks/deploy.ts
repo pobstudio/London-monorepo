@@ -1,50 +1,65 @@
+import { BigNumber } from '@ethersproject/bignumber';
+import { utils } from 'ethers';
 import { task } from 'hardhat/config';
-import { ERC1155Mintable } from '../typechain/ERC1155Mintable';
+import { deployments } from '../deployments';
+import { ERC20Mintable } from '../typechain/ERC20Mintable';
+import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
+import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
-task('deploy', 'Deploys erc1155', async (args, hre) => {
+const ONE_MWEI = utils.parseUnits('1', 'mwei');
+
+task('deploy', 'Deploys $LONDON ', async (args, hre) => {
   const owner = (await hre.ethers.getSigners())[0];
 
   await hre.run('compile');
 
   console.log(`deploying with ${await owner.getAddress()}`);
 
+  const tokenSymbol = 'LONDON';
+  const tokenName = 'LONDON';
+
+  const blockNumberUpTo = 12833000;
+
+  const a = BigNumber.from(6000).mul(ONE_MWEI);
+  const b = BigNumber.from(1);
+  const c = BigNumber.from(15590).mul(ONE_MWEI);
+  const d = BigNumber.from(1559);
+
+  // deploy gas price minter
+  const GasPriceBasedMinter = await hre.ethers.getContractFactory(
+    'GasPriceBasedMinter',
+  );
+  const minter = (await GasPriceBasedMinter.deploy(
+    blockNumberUpTo,
+    a,
+    b,
+    c,
+    d,
+  )) as GasPriceBasedMinter;
+  await minter.deployed();
+  console.log('GasPriceBasedMinter deployed to:', minter.address);
+
   // deploy erc1155
-  const ERC1155Mintable = await hre.ethers.getContractFactory(
-    'ERC1155Mintable',
+  const ERC20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
+
+  const erc20 = (await ERC20Mintable.deploy(
+    minter.address,
+    tokenName,
+    tokenSymbol,
+  )) as ERC20Mintable;
+  await erc20.deployed();
+  console.log('ERC20Mintable deployed to:', erc20.address);
+
+  // wire minting rights
+  console.log('wiring minting rights');
+  await minter.setErc20(erc20.address);
+
+  // transfer ownership
+  console.log('transfering ownership');
+  await minter.transferOwnership(
+    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
   );
-  const erc1155 = (await ERC1155Mintable.deploy()) as ERC1155Mintable;
-  await erc1155.deployed();
-  console.log('ERC1155Mintable deployed to:', erc1155.address);
-
-  // deploy exchange registry
-  const WhitelistExchangesProxy = await hre.ethers.getContractFactory(
-    'WhitelistExchangesProxy',
+  await erc20.transferOwnership(
+    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
   );
-  const whitelistProxy = await WhitelistExchangesProxy.deploy();
-  await whitelistProxy.deployed();
-  console.log('WhitelistExchangesProxy deployed to:', whitelistProxy.address);
-
-  // TODO: utilize exchange proxy
-
-  // Set metadata URIs
-  // TODO: set these correctly
-  await erc1155.setContractURI(`https://hash.pob.studio/api/contract-metadata`);
-  await erc1155.setBaseMetadataURI(
-    `https://hash.pob.studio/api/token-metadata?id=0x`,
-  );
-
-  // checks
-  const INTERFACE_SIGNATURE_ERC165 = '0x01ffc9a7';
-  const INTERFACE_SIGNATURE_ERC1155 = '0xd9b67a26';
-
-  const isERC165Supported = await erc1155.supportsInterface(
-    INTERFACE_SIGNATURE_ERC165,
-  );
-  const isERC1155Supported = await erc1155.supportsInterface(
-    INTERFACE_SIGNATURE_ERC1155,
-  );
-
-  console.log('Interface check: ');
-  console.log('ERC165:', isERC165Supported);
-  console.log('ERC1155:', isERC1155Supported);
 });

@@ -40,7 +40,10 @@ const DaoPage: NextPage = () => {
         <Text>
           <Bold>Coming soon</Bold>
         </Text>
-        <Text>Ultra exclusive DAO to celebrate a milestone for ETH. Membership is 1559 {TOKEN_SYMBOL}</Text>
+        <Text>
+          Ultra exclusive DAO to celebrate a milestone for ETH. Membership is
+          1559 {TOKEN_SYMBOL}
+        </Text>
       </Content>
     </PageWrapper>
   );

@@ -1,6 +1,7 @@
 export interface Deployment {
   multisig: string;
-  erc1155: string;
+  erc20: string;
+  minter: string;
 }
 
 export type Deployments = { [chainId: number]: Deployment };

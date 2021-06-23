@@ -11,5 +11,6 @@
 /**/artifacts
 /**/out
 /**/generated-sketches
-
+/**/generated/
+/**/build/
 .vercel

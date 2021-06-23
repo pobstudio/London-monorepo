@@ -13,6 +13,8 @@ import { DefaultSeo } from 'next-seo';
 import { Web3ReactProvider } from '@web3-react/core';
 import { ethers } from 'ethers';
 import { AppProvider } from '../contexts/app';
+import { ApolloProvider } from '@apollo/client';
+import { subgraphClient } from '../clients/graph';
 // import { pobSubgraphClient } from '../clients';
 // import { CheckoutFooter } from '../components/checkout/cart-footer';
 
@@ -67,27 +69,29 @@ export default class PobApp extends App {
         /> */}
         <ThemedGlobalStyle />
         <AppProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            {/** Effects are any tasks that strictly only makes state changes to stores */}
-            <LocalStorageEffect />
-            <BlockchainEffect />
-            <EagerConnectEffect />
-            <TokensEffect />
-            <TransactionsEffect />
-            <WalletEffect />
-            <ToastsEffect />
-            {/** Modals */}
-            {/* <SearchModal />
+          <ApolloProvider client={subgraphClient}>
+            <Web3ReactProvider getLibrary={getLibrary}>
+              {/** Effects are any tasks that strictly only makes state changes to stores */}
+              <LocalStorageEffect />
+              <BlockchainEffect />
+              <EagerConnectEffect />
+              <TokensEffect />
+              <TransactionsEffect />
+              <WalletEffect />
+              <ToastsEffect />
+              {/** Modals */}
+              {/* <SearchModal />
             <WalletModal />
             <MenuModal /> */}
-            {/* <BlockNumberCornerWrapper>
+              {/* <BlockNumberCornerWrapper>
               <BlockNumber />
             </BlockNumberCornerWrapper> */}
-            {/** Fixed Components */}
-            {/* <CheckoutFooter /> */}
-            {/** Component */}
-            <Component {...modifiedPageProps} />
-          </Web3ReactProvider>
+              {/** Fixed Components */}
+              {/* <CheckoutFooter /> */}
+              {/** Component */}
+              <Component {...modifiedPageProps} />
+            </Web3ReactProvider>
+          </ApolloProvider>
         </AppProvider>
       </>
     );

@@ -1,5 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ONE_GWEI,
   ONE_MWEI,
@@ -16,18 +16,21 @@ import { curveMonotoneX } from '@visx/curve';
 import { LinearGradient } from '@visx/gradient';
 import { localPoint } from '@visx/event';
 import styled from 'styled-components';
+import { clamp } from 'lodash';
+import { AxisLeft, AxisBottom } from '@visx/axis';
 
 export interface BellCurveProps {
   width: number;
   height: number;
+  onTooltip?: (data: Datum | undefined) => void;
 }
 
 const BellCurveContainer = styled.div`
   position: relative;
-  margin-bottom: 32px;
+  margin: 32px 0 20px 0;
 `;
 
-type Datum = [number, number];
+export type Datum = [number, number];
 
 const getData = () => {
   const data: Datum[] = [];
@@ -36,7 +39,7 @@ const getData = () => {
       data.push([
         parseFloat(utils.formatUnits(BELL_CURVE_C, 'gwei')),
         parseFloat(utils.formatUnits(bellCurve(BELL_CURVE_C), 'ether')),
-      ]); 
+      ]);
     } else {
       data.push([
         parseFloat(utils.formatUnits(i, 'gwei')),
@@ -49,14 +52,14 @@ const getData = () => {
 
 export const MARGIN = {
   top: 5,
-  bottom: 0,
-  right: 5,
-  left: 5,
+  bottom: 25,
+  right: 10,
+  left: 36,
 };
 
-export const PERCENTAGE_BOTTOM_BUFFER = 0.5;
+export const PERCENTAGE_BOTTOM_BUFFER = 0;
 // DOMAIN of bell curve in wei [0, 1000 GWEI]
-export const DOMAIN = [ZERO, BigNumber.from(150).mul(ONE_GWEI)];
+export const DOMAIN = [ZERO, BigNumber.from(200).mul(ONE_GWEI)];
 // RANGE of bell curve in base unit [0, 1559E18 TOKENS]
 export const RANGE = [ZERO, BELL_CURVE_D.mul(ONE_TOKEN_IN_BASE_UNITS)];
 
@@ -71,7 +74,7 @@ const TOOLTIP_WIDTH = 160;
 // x in gwei, y in unit amount of TOKEN
 
 export const BellCurve: FC<BellCurveProps> = (props) => {
-  const { width, height } = props;
+  const { width, height, onTooltip } = props;
 
   const data = useMemo(() => getData(), []);
 
@@ -95,13 +98,13 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
   const yScale = useMemo(
     () =>
       scaleLinear({
-        range: [height - percentageBufferHeight, MARGIN.top],
+        range: [height - MARGIN.bottom, MARGIN.top],
         domain: [
           parseFloat(utils.formatUnits(RANGE[0], 'ether')),
           parseFloat(utils.formatUnits(RANGE[1], 'ether')),
         ],
       }),
-    [width, percentageBufferHeight],
+    [width],
   );
 
   const [isTooltipShown, setIsTooltipShown] = useState(true);
@@ -118,7 +121,8 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
       if (x < 0 || x > width) {
         return;
       }
-      const invertX = xScale.invert(x);
+      const clampX = clamp(x, MARGIN.left, width - MARGIN.right - 1);
+      const invertX = xScale.invert(clampX);
       const index = Math.floor(invertX);
       setTooltipDatum(data[index]);
       if (!isTooltipShown) {
@@ -128,6 +132,10 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
     },
     [xScale, data, isTooltipShown],
   );
+
+  useEffect(() => {
+    onTooltip?.(tooltipDatum);
+  }, [tooltipDatum, onTooltip]);
 
   return (
     <BellCurveContainer>
@@ -141,19 +149,42 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
       >
         <LinearGradient
           id="area-gradient-0"
-          from={'#FFFFFF'}
-          to={'#FFFFFF'}
-          fromOpacity={0.2}
+          from={'#000000'}
+          to={'#000000'}
+          fromOpacity={0.4}
           toOpacity={0.1}
         />
         <LinearGradient
           id="area-gradient-1"
-          from={'#FFFFFF'}
-          to={'#FFFFFF'}
+          from={'#000000'}
+          to={'#000000'}
           fromOpacity={0.1}
           toOpacity={0.0}
         />
-        <AreaClosed<Datum>
+        <AxisLeft
+          tickStroke={'#dddddd'}
+          tickLength={4}
+          left={MARGIN.left}
+          scale={yScale}
+        />
+        <AxisBottom
+          tickStroke={'#dddddd'}
+          tickLength={4}
+          top={height - MARGIN.bottom}
+          scale={xScale}
+        />
+        <text
+          x="-90"
+          y={MARGIN.left + 10}
+          transform="rotate(-90)"
+          fontSize={10}
+        >
+          {TOKEN_SYMBOL} Minted
+        </text>
+        <text x={width - 80} y={height - MARGIN.bottom - 6} fontSize={10}>
+          Gas Price (gwei)
+        </text>
+        {/* <AreaClosed<Datum>
           data={data}
           x={(d) => xScale(d[0]) ?? 0}
           y={(d) => yScale(d[1]) ?? 0}
@@ -162,19 +193,19 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
           stroke="white"
           fill="url(#area-gradient-0)"
           curve={curveMonotoneX}
-        />
-        <Bar
+        /> */}
+        {/* <Bar
           x={MARGIN.left}
           y={height - percentageBufferHeight}
           width={width - MARGIN.left - MARGIN.right}
           height={percentageBufferHeight}
           fill="url(#area-gradient-1)"
-        />
+        /> */}
         <LinePath<Datum>
-          stroke={'white'}
-          strokeWidth={2}
+          stroke={'#0000FF'}
+          strokeWidth={1}
           data={data}
-          strokeOpacity={0.8}
+          strokeOpacity={1}
           x={(d) => xScale(d[0]) ?? 0}
           y={(d) => yScale(d[1]) ?? 0}
           curve={curveMonotoneX}
@@ -182,17 +213,17 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
         {isTooltipShown && tooltipDatum && (
           <g>
             <Line
-              from={{ x: xScale(tooltipDatum[0]), y: height }}
+              from={{ x: xScale(tooltipDatum[0]), y: height - MARGIN.bottom }}
               to={{ x: xScale(tooltipDatum[0]), y: yScale(tooltipDatum[1]) }}
-              stroke={'white'}
+              stroke={'#000000'}
               strokeOpacity={0.2}
               strokeWidth={1}
               pointerEvents="none"
-              strokeDasharray="4,2"
+              // strokeDasharray="4,2"
             />
             <circle
               cx={xScale(tooltipDatum[0])}
-              cy={yScale(tooltipDatum[1]) + 2}
+              cy={yScale(tooltipDatum[1]) + 1}
               r={5}
               fill="black"
               fillOpacity={0.3}
@@ -213,46 +244,35 @@ export const BellCurve: FC<BellCurveProps> = (props) => {
           </g>
         )}
       </svg>
-      {isTooltipShown && tooltipDatum && (<>
-        <TooltipTopWell
-          style={{ transform: `translate(${xScale(tooltipDatum[0]) - TOOLTIP_WIDTH / 2}px, ${yScale(tooltipDatum[1])}px)` }}
-        >
-          <TooltipLabel style={{opacity: 1}}>{tooltipDatum[1]} {TOKEN_SYMBOL}</TooltipLabel>
-        </TooltipTopWell>
-        <TooltipBottomWell
-          style={{ transform: `translateX(${xScale(tooltipDatum[0]) - TOOLTIP_WIDTH / 2}px)` }}
-        >
-          <TooltipLabel>{tooltipDatum[0]} GWEI</TooltipLabel>
-        </TooltipBottomWell></>
+      {isTooltipShown && tooltipDatum && (
+        <>
+          <TooltipTopWell>
+            <TooltipLabel style={{ opacity: 1 }}>
+              X: {tooltipDatum[0]} gwei
+            </TooltipLabel>
+            <TooltipLabel style={{ opacity: 1 }}>
+              Y: {tooltipDatum[1]} {TOKEN_SYMBOL}
+            </TooltipLabel>
+          </TooltipTopWell>
+        </>
       )}
     </BellCurveContainer>
   );
 };
 
 const TooltipLabel = styled.p`
-  font-size: 12px;
-  color: white;
-  opacity: 0.4;
+  font-size: 14px;
+  color: black;
+  opacity: 1;
   font-weight: 500;
-  text-transform: uppercase;
   margin: 0;
-`;
-
-const TooltipBottomWell = styled.div`
-  position: absolute;
-  bottom: -12px;
-  left: 0;
-  padding: 0 8px;
-  width: ${TOOLTIP_WIDTH}px;
-  text-align: center;
 `;
 
 const TooltipTopWell = styled.div`
   position: absolute;
-  top: -22px;
-  left: 0;
-  padding: 0 8px;
-  width: ${TOOLTIP_WIDTH}px;
-  text-align: center;
+  top: 0;
+  right: 0;
+  border: 1px solid black;
+  background: white;
+  padding: 4px;
 `;
-

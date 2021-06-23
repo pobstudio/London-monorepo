@@ -3,7 +3,7 @@ import { chain } from 'lodash';
 import { useEffect } from 'react';
 import { FC } from 'react';
 import { useMountedState } from 'react-use';
-import { ALCHEMY_KEY, CHAIN_ID, DRAW_ALCHEMY_KEY } from '../constants';
+import { ALCHEMY_KEY, CHAIN_ID } from '../constants';
 import { useProvider } from '../hooks/useProvider';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useToastsStore } from '../stores/toasts';
@@ -52,13 +52,6 @@ export const BlockchainEffect: FC = () => {
   }, [provider, isMounted, setBlockNumber]);
 
   useEffect(() => {
-    if (CHAIN_ID !== 1) {
-      return;
-    }
-    setMainnetBlockNumber(blockNumber);
-  }, [setMainnetBlockNumber, blockNumber]);
-
-  useEffect(() => {
     if (!isMounted() || !provider || !account) {
       return;
     }
@@ -67,38 +60,5 @@ export const BlockchainEffect: FC = () => {
     });
   }, [provider, account, setBalance, blockNumber]);
 
-  useEffect(() => {
-    if (!isMounted()) {
-      return;
-    }
-
-    if (CHAIN_ID === 1) {
-      return;
-    }
-
-    const provider = getMainnetProvider();
-
-    let stale = false;
-
-    // set initial value
-    provider.getBlockNumber().then((blockNum: number) => {
-      if (!stale) {
-        setMainnetBlockNumber(blockNum);
-      }
-    });
-
-    provider.on('block', (blockNum: number) => {
-      if (stale) {
-      }
-      setMainnetBlockNumber(blockNum);
-    });
-
-    // remove listener when the component is unmounted
-    return () => {
-      provider.removeAllListeners('block');
-      setMainnetBlockNumber(undefined);
-      stale = true;
-    };
-  }, [isMounted, setMainnetBlockNumber]);
   return <></>;
 };

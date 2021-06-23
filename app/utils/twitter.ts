@@ -1,17 +1,9 @@
 import qs from 'query-string';
 
 export const DEFAULT_AT_USERNAME = 'prrfbeauty';
-export const DEFAULT_HASHTAGS: string[] = [
-  'MySaga',
-  'nftart',
-  'POB',
-  'cryptoart',
-  'ERC1155',
-  'generative',
-  'historian',
-];
+export const DEFAULT_HASHTAGS: string[] = [];
 
-export const getTwitterShareLink = (url: string, text?: string) => {
+export const getTwitterShareLink = (url?: string, text?: string) => {
   const params = {
     url,
     text,
