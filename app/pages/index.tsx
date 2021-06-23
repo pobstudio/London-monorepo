@@ -15,7 +15,7 @@ import {
   MiniText,
 } from '../components/text';
 import { A, AButton } from '../components/anchor';
-import { CHAIN_ID, TOKEN_SYMBOL } from '../constants';
+import { CHAIN_ID, LONDON_EMOJI, TOKEN_SYMBOL } from '../constants';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
 import { FlexCenter, Flex, FlexEnds } from '../components/flex';
 import { Web3Status } from '../components/web3Status';
@@ -246,6 +246,22 @@ const IndexPage: NextPage = () => {
           Table 1: Stats on the <Italic>{TOKEN_SYMBOL}</Italic> project.
         </Text>
         <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
+        <RightAlignedText>
+          To be straight, <Italic>{TOKEN_SYMBOL}</Italic> is a meme token. But even with this notion, we do hope to provide some 'utility' to <Italic>{TOKEN_SYMBOL}</Italic> holders by creating an exclusive DAO called:
+        </RightAlignedText>
+        <RightAlignedText>
+          <Bold>{LONDON_EMOJI} <Italic>{TOKEN_SYMBOL}</Italic> Night Club</Bold>
+        </RightAlignedText>
+        <RightAlignedText>
+          The DAO will control a pool of <Italic>{TOKEN_SYMBOL}</Italic> tokens capitalized via a NFT sale (to be described later). <Bold><Italic>{TOKEN_SYMBOL}</Italic> Night Club</Bold> will govern the use of the pool to serve community projects and fund other highly experimentive crypto-experiences.
+        </RightAlignedText>
+        <RightAlignedText>
+          <Bold><Italic>{TOKEN_SYMBOL}</Italic> Night Club</Bold> will be launched post London hardfork.
+        </RightAlignedText>
+        <RightAlignedText>
+          To fund <Bold><Italic>{TOKEN_SYMBOL}</Italic> Night Club</Bold> we will be launching a NFT store called <Bold><Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe</Bold>.
+          The <Bold><Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe</Bold> will contain generative mementos of <Italic>{TOKEN_SYMBOL}</Italic> project, each redeemable only with <Italic>{TOKEN_SYMBOL}</Italic>.
+        </RightAlignedText> 
         <SubTitle style={{ marginTop: 48 }}>Expectation</SubTitle>
         <SubTitle style={{ marginTop: 48 }}>Appendix: Contract Code</SubTitle>
         <RightAlignedText>
