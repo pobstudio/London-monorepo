@@ -263,6 +263,9 @@ const IndexPage: NextPage = () => {
           The <Bold><Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe</Bold> will contain generative mementos of <Italic>{TOKEN_SYMBOL}</Italic> project, each redeemable only with <Italic>{TOKEN_SYMBOL}</Italic>.
         </RightAlignedText> 
         <SubTitle style={{ marginTop: 48 }}>Expectation</SubTitle>
+        <RightAlignedText>
+          TODO
+        </RightAlignedText>
         <SubTitle style={{ marginTop: 48 }}>Appendix: Contract Code</SubTitle>
         <RightAlignedText>
           <A
