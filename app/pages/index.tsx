@@ -317,8 +317,8 @@ const IndexPage: NextPage = () => {
         </RightAlignedText>
         <SubTitle style={{ marginTop: 48 }}>Background</SubTitle>
         <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL}</Italic> has been a project we been thinking
-          about for a while. It all began with our personal fustration with gas
+          <Italic>{TOKEN_SYMBOL}</Italic> is a project we been thinking about
+          for a while. It all began with our personal fustration with gas
           prices. It is a particularly thorny aspect of interacting with the ETH
           blockchain for both newcomers and veterans alike. Developers building
           Defi work long hours to fight against front running. NFT projects
@@ -346,13 +346,14 @@ const IndexPage: NextPage = () => {
           With the stars aligning, the London hardfork + EIP 1559 provides a
           perfect 'meme' for this project. EIP 1559 fundamentally changes gas
           price mechanics, so what better thing to create a project about gas
-          prices around? We also wanted the projected to 'expire' to not
+          prices around? We also wanted the project to 'expire' to not
           needlessly clog the mempool with transactions, the hardfork became the
           perfect 'epxiry' date.
         </RightAlignedText>
         <RightAlignedText>
           This is why the bonding curve (a bell curve) is centered at precisely
-          15.59 gwei in homage to EIP 1559. As people mint closer and closer to
+          15.59 gwei in homage to EIP 1559 and your maximum returns is 1559{' '}
+          <Italic>{TOKEN_SYMBOL}</Italic>. As people mint closer and closer to
           15.59 gwei and even get it exactly, people in the future will know of
           <Bold>
             the measurable impact of <Italic>{TOKEN_SYMBOL}</Italic> without
