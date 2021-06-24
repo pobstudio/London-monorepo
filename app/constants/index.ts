@@ -30,6 +30,8 @@ export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 // links
 export const STUDIO_PROD_LINK = 'https://pob.studio';
 
+export const LONDON_PROD_LINK = 'https://london.pob.studio';
+
 export const BLOG_LINK = `https://pobstudio.substack.com`;
 
 export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
@@ -38,5 +40,8 @@ export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
-// OG banners
+// strings 
 export const LONDON_EMOJI = `🏙🌙💃🏻`;
+
+// OG banners
+export const GLOBAL_OG_BANNER = `${LONDON_PROD_LINK}/banner/default.png`;
