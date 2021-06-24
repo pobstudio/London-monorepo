@@ -15,8 +15,7 @@ import { ethers } from 'ethers';
 import { AppProvider } from '../contexts/app';
 import { ApolloProvider } from '@apollo/client';
 import { subgraphClient } from '../clients/graph';
-// import { pobSubgraphClient } from '../clients';
-// import { CheckoutFooter } from '../components/checkout/cart-footer';
+import { LONDON_PROD_LINK, GLOBAL_OG_BANNER } from '../constants';
 
 const getLibrary = (provider: any) => {
   const library = new ethers.providers.Web3Provider(provider);
@@ -32,13 +31,13 @@ export default class PobApp extends App {
     const modifiedPageProps = { ...pageProps, err };
     return (
       <>
-        {/* <DefaultSeo
-          title={`$HASH by POB - Ethereum's history tokenized`}
-          description={'Generative art fueled by tx metadata.'}
+        <DefaultSeo
+          title={`$LONDON by POB - Mint at 15.59 GWEI`}
+          description={'Social currency backed by a minting bonding curve'}
           openGraph={{
             type: 'website',
             locale: 'en_US',
-            url: HASH_PROD_LINK,
+            url: LONDON_PROD_LINK,
             title: `$HASH by POB - Ethereum's history tokenized`,
             description: 'Generative art fueled by tx metadata.',
             site_name: 'POB',
@@ -63,10 +62,10 @@ export default class PobApp extends App {
             },
             {
               name: 'twitter:url',
-              content: HASH_PROD_LINK,
+              content: LONDON_PROD_LINK,
             },
           ]}
-        /> */}
+        />
         <ThemedGlobalStyle />
         <AppProvider>
           <ApolloProvider client={subgraphClient}>
