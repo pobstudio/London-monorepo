@@ -274,7 +274,7 @@ const IndexPage: NextPage = () => {
         </Text>
         <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
         <RightAlignedText>
-          To be straight, <Italic>{TOKEN_SYMBOL}</Italic> is a meme token. But
+          To be straight, <Italic>{TOKEN_SYMBOL}</Italic> is a social currency. But
           even with this notion, we do hope to provide some 'utility' to{' '}
           <Italic>{TOKEN_SYMBOL}</Italic> holders by creating an exclusive DAO
           called:
