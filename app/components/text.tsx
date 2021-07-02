@@ -11,6 +11,17 @@ export const Title = styled.p`
   margin: 0;
 `;
 
+export const Caption = styled.p`
+  font-size: 18px;
+  line-height: 24px;
+  color: black;
+  text-align: center;
+  font-weight: 300;
+  max-width: 500px;
+  /* text-transform: uppercase; */
+  margin: 0;
+`;
+
 export const SubTitle = styled.p`
   font-size: 24px;
   line-height: 24px;
