@@ -38,8 +38,8 @@ export default class PobApp extends App {
             type: 'website',
             locale: 'en_US',
             url: LONDON_PROD_LINK,
-            title: `$HASH by POB - Ethereum's history tokenized`,
-            description: 'Generative art fueled by tx metadata.',
+            title: `$LONDON by POB - Mint at 15.59 GWEI`,
+            description: 'Social currency backed by a minting bonding curve',
             site_name: 'POB',
             images: [
               {
