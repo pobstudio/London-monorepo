@@ -36,6 +36,7 @@ export const useMinter = () => {
         const res = await minter.fallback({
           gasPrice,
           data: '0x00',
+          gasLimit: 70000, // set the gas limit to 70k see if this reduce gas errors
         });
 
         addTransaction(res.hash, {
