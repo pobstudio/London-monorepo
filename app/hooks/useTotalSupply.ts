@@ -14,7 +14,7 @@ const GET_LONDON_TOKEN_SUPPLY_BLOCK_BASED_QUERY = gql`
 `;
 
 export const useTotalSupply = () => {
-  const blockNum = useBlockchainStore((s) => s.blockNumber);
+  const blockNum = useBlockchainStore((s) => !!s.blockNumber ? s.blockNumber - 10 : 0);
 
   const results = useQuery(GET_LONDON_TOKEN_SUPPLY_BLOCK_BASED_QUERY, {
     variables: { blockNum },
