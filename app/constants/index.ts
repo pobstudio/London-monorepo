@@ -40,7 +40,7 @@ export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
-// strings 
+// strings
 export const LONDON_EMOJI = `🏙🌙💃🏻`;
 
 // OG banners

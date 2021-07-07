@@ -2,7 +2,6 @@ import { FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { LONDON_EMOJI, ONE_GWEI, TOKEN_SYMBOL } from '../constants';
 import { useMinter } from '../hooks/useMinter';
-import { Arrow } from './icons/arrow';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
 import { useLoadingText } from '../hooks/useLoadingText';
@@ -15,11 +14,15 @@ import { ASpan, Bold, Text, Title } from './text';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useGasInfo } from '../hooks/useGasInfo';
 import { getTwitterShareLink } from '../utils/twitter';
+import { BREAKPTS } from '../styles';
 
 const MintWrapper = styled.div`
   border: 1px solid black;
   width: 450px;
   margin: 48px 0 20px 0;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    max-width: 100%;
+  }
 `;
 
 const Button = styled.button`

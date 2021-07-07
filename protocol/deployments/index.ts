@@ -2,8 +2,8 @@ import { Deployments } from './types';
 
 export const deployments: Deployments = {
   1: {
-    erc20: '0x0',
-    minter: '0x0',
+    erc20: '0x491D6b7D6822d5d4BC88a1264E1b47791Fd8E904',
+    minter: '0xd48c6a5c3046A29a57dAd9B6453769c674B7d22F',
     multisig: '0x28558Ba4343FeB2709ed7A9531B72402a7794D8D',
   },
   4: {

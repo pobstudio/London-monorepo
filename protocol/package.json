@@ -6,7 +6,8 @@
   "scripts": {
     "build": "hardhat compile && hardhat typechain",
     "compile": "hardhat compile",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "verify": "hardhat verify-etherscan"
   },
   "author": "",
   "license": "ISC",

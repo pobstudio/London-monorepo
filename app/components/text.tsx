@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BREAKPTS } from '../styles';
 
 export const Title = styled.p`
   font-size: 24px;
@@ -9,6 +10,11 @@ export const Title = styled.p`
   max-width: 500px;
   /* text-transform: uppercase; */
   margin: 0;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 100%;
+    font-size: 20px;
+    line-height: 20px;
+  }
 `;
 
 export const SubTitle = styled.p`
@@ -19,6 +25,9 @@ export const SubTitle = styled.p`
   width: 800px;
   /* text-transform: uppercase; */
   margin: 0;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 100%;
+  }
 `;
 
 export const Text = styled.p`
@@ -29,10 +38,16 @@ export const Text = styled.p`
   max-width: 800px;
   /* text-transform: uppercase; */
   margin: 0;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    max-width: 100%;
+  }
 `;
 
 export const RightAlignedText = styled(Text)`
   width: 800px;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 100%;
+  }
 `;
 
 export const MiniText = styled.p`

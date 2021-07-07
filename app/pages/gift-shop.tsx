@@ -7,6 +7,7 @@ import { Text, Bold, MiniText } from '../components/text';
 import { A } from '../components/anchor';
 import { TOKEN_SYMBOL } from '../constants';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
+import { Header } from '../components/header';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -35,16 +36,19 @@ const Content = styled.div`
 
 const GiftShopPage: NextPage = () => {
   return (
-    <PageWrapper>
-      <Content>
-        <Text>
-          <Bold>Coming soon</Bold>
-        </Text>
-        <Text>
-          Unique NFTs celebrating EIP 1559. Each cost 1559 {TOKEN_SYMBOL}
-        </Text>
-      </Content>
-    </PageWrapper>
+    <>
+      <Header />
+      <PageWrapper>
+        <Content>
+          <Text>
+            <Bold>Coming soon</Bold>
+          </Text>
+          <Text>
+            Unique NFTs celebrating EIP 1559. Each cost 1559 {TOKEN_SYMBOL}
+          </Text>
+        </Content>
+      </PageWrapper>
+    </>
   );
 };
 

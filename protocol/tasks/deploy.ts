@@ -18,7 +18,7 @@ task('deploy', 'Deploys $LONDON ', async (args, hre) => {
   const tokenSymbol = 'LONDON';
   const tokenName = 'LONDON';
 
-  const blockNumberUpTo = 12833000;
+  const blockNumberUpTo = 12965000;
 
   const a = BigNumber.from(6000).mul(ONE_MWEI);
   const b = BigNumber.from(1);
@@ -56,9 +56,8 @@ task('deploy', 'Deploys $LONDON ', async (args, hre) => {
 
   // transfer ownership
   console.log('transfering ownership');
-  await minter.transferOwnership(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
-  );
+  await minter.renounceOwnership();
+
   await erc20.transferOwnership(
     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
   );

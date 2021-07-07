@@ -23,9 +23,9 @@ contract BellCurveParametersStorage {
 
     function bellCurve(uint256 x) internal view returns (uint256 y) {
       uint256 decimals = 10 ** SIG_DIGITS;
-      // since it is all uints, we will use a ternary to keep the uint256
+      // since it is all uints, we will use a ternary to keep it positive 
       uint256 xDiffC = x > c ? (x - c) : (c - x);
-      // this complex set of math gets us SIG_DIGITS bull curve
+      // this complex set of math gets us a bell curve with the ouput in SIG_DIGITS worth of decimals
       return (10 ** (18 - SIG_DIGITS)) * ((d * decimals * decimals) / (decimals + (((xDiffC * decimals) / a))**(2 * b) / decimals));
     }
 }

@@ -11,5 +11,4 @@ export const BELL_CURVE_D = BigNumber.from(1559);
 
 export const SIG_DIGITS = BigNumber.from(3);
 
-// TENETATIVE VALUE
-export const BLOCK_NUMBER_UP_TO = 12833000;
+export const BLOCK_NUMBER_UP_TO = 12965000;
