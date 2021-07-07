@@ -87,6 +87,10 @@ export const Mint: FC<{}> = ({}) => {
   const gasInfo = useGasInfo();
 
   const currentGasPrice = useMemo(() => {
+    if (chooseOption === '1559-gwei') {
+      return utils.parseUnits('15.59', 'gwei');
+    }
+    
     if (!gasInfo.data) {
       return;
     }
@@ -105,9 +109,6 @@ export const Mint: FC<{}> = ({}) => {
         gasInfo.data.fast.sub(MORE_LOWER_DELTA).toString(),
         'gwei',
       );
-    }
-    if (chooseOption === '1559-gwei') {
-      return utils.parseUnits('15.59', 'gwei');
     }
     return undefined;
   }, [gasInfo, chooseOption]);
