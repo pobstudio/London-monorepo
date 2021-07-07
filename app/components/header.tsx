@@ -6,18 +6,18 @@ import { A } from './anchor';
 import { DISCORD_LINK, LONDON_EMOJI, TWITTER_LINK } from '../constants';
 
 const HeaderContainer = styled.div`
-  padding: 0 12px;
+  /* padding: 0 12px; */
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   background: white;
   z-index: 100;
+  border-bottom: 1px solid black;
 `;
 
 const HeaderRow = styled(FlexEnds)`
-  padding: 4px 0;
-  border-bottom: 2px solid black;
+  padding: 4px 12px;
 `;
 
 const AnchorRow = styled(Flex)`

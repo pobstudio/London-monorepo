@@ -10,6 +10,7 @@ import {
   SubTitle,
   RightAlignedText,
   Title,
+  Caption,
   Italic,
   ASpan,
   MiniText,
@@ -153,16 +154,20 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <Header />
-      <PageWrapper ref={pageWrapperRef}>
+      <PageWrapper>
+        {/* <Countdown /> */}
         {/* <IconCircle>
           <Icon src={'/icon.svg'} />
         </IconCircle> */}
-        <Title style={{ marginBottom: 36 }}>
-          <Bold>{TOKEN_SYMBOL}</Bold>: A social currency backed by the lasting
-          impact of minting, gas price manipulation, and EIP 1559
+        <Title>
+          <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
-        <Text>
-          <A href={STUDIO_PROD_LINK} target={'_blank'}>
+        <Caption style={{ marginBottom: 12 }}>
+          A social currency backed by the lasting
+          impact of minting, gas price manipulation, and EIP 1559
+        </Caption>
+        <Text style={{ marginBottom: 36 }}>
+          <A href={STUDIO_PROD_LINK} target={'_blank'} style={{textDecoration: 'none'}}>
             <Italic>Proof of Beauty Studios</Italic>
           </A>
         </Text>
