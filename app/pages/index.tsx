@@ -154,7 +154,7 @@ const IndexPage: NextPage = () => {
   return (
     <>
       <Header />
-      <PageWrapper>
+      <PageWrapper ref={pageWrapperRef as any}>
         {/* <Countdown /> */}
         {/* <IconCircle>
           <Icon src={'/icon.svg'} />
@@ -163,11 +163,15 @@ const IndexPage: NextPage = () => {
           <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
         <Caption style={{ marginBottom: 12 }}>
-          A social currency backed by the lasting
-          impact of minting, gas price manipulation, and EIP 1559
+          A social currency backed by the lasting impact of minting, gas price
+          manipulation, and EIP 1559
         </Caption>
         <Text style={{ marginBottom: 36 }}>
-          <A href={STUDIO_PROD_LINK} target={'_blank'} style={{textDecoration: 'none'}}>
+          <A
+            href={STUDIO_PROD_LINK}
+            target={'_blank'}
+            style={{ textDecoration: 'none' }}
+          >
             <Italic>Proof of Beauty Studios</Italic>
           </A>
         </Text>
