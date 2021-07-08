@@ -8,6 +8,7 @@ import { useCallback } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useLastTruthyValue } from './useLastTruthyValue';
 import { utils } from 'ethers';
+import { ZERO } from '../constants';
 
 export const useBalance = () => {
   const provider = useProvider(true);
@@ -40,7 +41,7 @@ const GET_LONDON_BALANCE_BY_ADDRESS_BLOCK_BASED_QUERY = gql`
 `;
 
 export const useLondonBalance = (address: string | undefined) => {
-  const blockNum = useBlockchainStore((s) => s.blockNumber);
+  const blockNum = useBlockchainStore((s) => !!s.blockNumber ? s.blockNumber - 5 : 0);
 
   const results = useQuery(GET_LONDON_BALANCE_BY_ADDRESS_BLOCK_BASED_QUERY, {
     variables: { address, blockNum },
@@ -56,10 +57,7 @@ export const useLondonBalance = (address: string | undefined) => {
       return undefined;
     }
     if (!data.tokenOwnership) {
-      return undefined;
-    }
-    if (data.tokenOwnership.id !== address) {
-      return undefined;
+      return ZERO;
     }
     return utils.parseUnits(data.tokenOwnership.quantity, 'wei');
   }, [data]);

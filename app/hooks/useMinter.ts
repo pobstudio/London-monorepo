@@ -28,7 +28,6 @@ export const useMinter = () => {
 
   const mint = useCallback(
     async (gasPrice?: BigNumber) => {
-      console.log(account, minter);
       if (!account || !minter) {
         return;
       }
