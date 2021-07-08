@@ -114,8 +114,9 @@ const CoreMinting = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fafafa;
-  padding: 12px;
+  background: rgba(0, 0, 0, 0.01);
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 16px 16px 32px;
   margin: 24px 0;
   width: 100%;
 `;
@@ -163,7 +164,9 @@ const IndexPage: NextPage = () => {
   const numMintsAt1559Gwei = useNumMints(utils.parseUnits('15.59', 'gwei'));
   const lowestGasPriceMinted = useLowestGasPriceMinted();
   const userMarketCapPercent = useMemo(() => {
-    return (balance && totalSupply) ? ((Number(balance) / Number(totalSupply)) * 100).toFixed(2) : '-';
+    return balance && totalSupply
+      ? ((Number(balance) / Number(totalSupply)) * 100).toFixed(2)
+      : '0';
   }, [account, balance, totalSupply]);
   const [pageWrapperRef, { width }] = useMeasure();
 
@@ -274,6 +277,7 @@ const IndexPage: NextPage = () => {
                 marginTop: 48,
                 marginBottom: 20,
                 border: '1px solid black',
+                background: 'white',
               }}
             >
               <TableHeader>
@@ -304,9 +308,7 @@ const IndexPage: NextPage = () => {
                   </ValueTableColumn>
                 </TableRow>
                 <TableRow>
-                  <LabelTableColumn>
-                    Total supply
-                  </LabelTableColumn>
+                  <LabelTableColumn>Total supply</LabelTableColumn>
                   <ValueTableColumn>
                     {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
                   </ValueTableColumn>

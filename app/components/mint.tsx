@@ -18,6 +18,7 @@ import { BREAKPTS } from '../styles';
 
 const MintWrapper = styled.div`
   border: 1px solid black;
+  background: white;
   width: 450px;
   @media (max-width: ${BREAKPTS.MD}px) {
     max-width: 100%;
