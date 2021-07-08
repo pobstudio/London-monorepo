@@ -19,7 +19,6 @@ import { BREAKPTS } from '../styles';
 const MintWrapper = styled.div`
   border: 1px solid black;
   width: 450px;
-  margin: 48px 0 20px 0;
   @media (max-width: ${BREAKPTS.MD}px) {
     max-width: 100%;
   }
@@ -90,7 +89,7 @@ export const Mint: FC<{}> = ({}) => {
     if (chooseOption === '1559-gwei') {
       return utils.parseUnits('15.59', 'gwei');
     }
-    
+
     if (!gasInfo.data) {
       return;
     }

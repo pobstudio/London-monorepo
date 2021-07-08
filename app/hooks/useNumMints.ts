@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 
 const GET_LONDON_LOWEST_GAS_PRICE_BLOCK_BASED_QUERY = gql`
   query GetLowestLondonMint($blockNum: Int!) {
-    tokenMints(first: 1 , block: { number: $blockNum }) {
+    tokenMints(first: 1, block: { number: $blockNum }) {
       id
       gasPrice
       numMints
@@ -27,17 +27,14 @@ const GET_LONDON_NUM_MINTS_BY_GAS_PRICE_BLOCK_BASED_QUERY = gql`
 export const useLowestGasPriceMinted = () => {
   const blockNum = useBlockchainStore((s) => s.blockNumber);
 
-  const results = useQuery(
-    GET_LONDON_LOWEST_GAS_PRICE_BLOCK_BASED_QUERY,
-    {
-      variables: { blockNum },
-    },
-  );
+  const results = useQuery(GET_LONDON_LOWEST_GAS_PRICE_BLOCK_BASED_QUERY, {
+    variables: { blockNum },
+  });
 
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data)
+    console.log(data);
     if (!data) {
       return undefined;
     }
@@ -47,7 +44,6 @@ export const useLowestGasPriceMinted = () => {
     return BigNumber.from(data.tokenMints[0].gasPrice);
   }, [data]);
 };
-
 
 export const useNumMints = (gasPrice: BigNumber | undefined) => {
   const blockNum = useBlockchainStore((s) => s.blockNumber);

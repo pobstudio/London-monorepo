@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { FlexEnds, Flex } from './flex';
 import { Web3Status } from './web3Status';
 import { A } from './anchor';
-import { CHAIN_ID, DISCORD_LINK, LONDON_EMOJI, TWITTER_LINK } from '../constants';
+import {
+  CHAIN_ID,
+  DISCORD_LINK,
+  LONDON_EMOJI,
+  TWITTER_LINK,
+} from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
 import { getEtherscanAddressUrl, getEtherscanTokenUrl } from '../utils/urls';
@@ -34,7 +39,6 @@ const AddressA = styled(A)`
     display: none;
   }
 `;
-
 
 export const Header: FC = () => {
   return (

@@ -110,6 +110,21 @@ const Icon = styled.img`
   height: 70px;
 `;
 
+const CoreMinting = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fafafa;
+  padding: 12px;
+  margin: 24px 0;
+  width: 100%;
+`;
+const CoreMintingInner = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+`;
+
 const IndexPage: NextPage = () => {
   const [tooltipDatum, setTooltipDatum] = useState<Datum | undefined>(
     undefined,
@@ -231,61 +246,83 @@ const IndexPage: NextPage = () => {
           a memento of your part in this experience.
         </RightAlignedText>
         <RightAlignedText>
-          Mint <Italic>{TOKEN_SYMBOL}</Italic> via Form 1.
+          Mint <Italic>{TOKEN_SYMBOL}</Italic> via the bonding curve below. Max
+          output @ 15.59 gwei.
         </RightAlignedText>
         <BellCurve
           onTooltip={setTooltipDatum}
           width={graphWidth}
           height={200}
         />
-        <Text>Figure 1: The minting bonding curve.</Text>
-        <Mint />
-        <Text>
-          Form 1: Mint <Italic>{TOKEN_SYMBOL}</Italic>.
-        </Text>
-        <TableContainer style={{ marginTop: 48, marginBottom: 20 }}>
-          <TableHeader>
-            <LabelTableColumn></LabelTableColumn>
-            <ValueTableColumn>Value</ValueTableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <LabelTableColumn>Current gas price in gwei</LabelTableColumn>
-              <ValueTableColumn>
-                {gasInfo.data?.fast.toString() ?? '-'}
-              </ValueTableColumn>
-            </TableRow>
-            <TableRow>
-              <LabelTableColumn>Total {TOKEN_SYMBOL} supply</LabelTableColumn>
-              <ValueTableColumn>
-                {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
-              </ValueTableColumn>
-            </TableRow>
-            <TableRow>
-              <LabelTableColumn>Lowest gas price used in gwei</LabelTableColumn>
-              <ValueTableColumn>
-                {!!lowestGasPriceMinted ? utils.formatUnits(lowestGasPriceMinted, 'gwei') : '-'}
-              </ValueTableColumn>
-            </TableRow>
-            <TableRow>
-              <LabelTableColumn># of mints at 15.59 gwei</LabelTableColumn>
-              <ValueTableColumn>{numMintsAt1559Gwei ?? '-'}</ValueTableColumn>
-            </TableRow>
-            {account && balance && (
-              <TableRow>
-                <LabelTableColumn>
-                  User ({shortenHexString(account)}) {TOKEN_SYMBOL} balance
-                </LabelTableColumn>
-                <ValueTableColumn>
-                  {utils.formatEther(balance)}
-                </ValueTableColumn>
-              </TableRow>
-            )}
-          </TableBody>
-        </TableContainer>
-        <Text>
-          Table 1: Stats on the <Italic>{TOKEN_SYMBOL}</Italic> project.
-        </Text>
+
+        <CoreMinting>
+          <CoreMintingInner>
+            <div style={{ marginTop: 20, marginBottom: 20 }}>
+              <Text style={{ marginBottom: 20 }}>
+                <strong>
+                  Play <Italic>{TOKEN_SYMBOL}</Italic>
+                </strong>
+              </Text>
+              <Mint />
+            </div>
+
+            <TableContainer
+              style={{
+                marginTop: 48,
+                marginBottom: 20,
+                border: '1px solid black',
+              }}
+            >
+              <TableHeader>
+                <LabelTableColumn>Stats</LabelTableColumn>
+                <ValueTableColumn>Value</ValueTableColumn>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <LabelTableColumn>Current gas price in gwei</LabelTableColumn>
+                  <ValueTableColumn>
+                    {gasInfo.data?.fast.toString() ?? '-'}
+                  </ValueTableColumn>
+                </TableRow>
+                <TableRow>
+                  <LabelTableColumn>
+                    Total {TOKEN_SYMBOL} supply
+                  </LabelTableColumn>
+                  <ValueTableColumn>
+                    {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
+                  </ValueTableColumn>
+                </TableRow>
+                <TableRow>
+                  <LabelTableColumn>
+                    Lowest gas price used in gwei
+                  </LabelTableColumn>
+                  <ValueTableColumn>
+                    {!!lowestGasPriceMinted
+                      ? utils.formatUnits(lowestGasPriceMinted, 'gwei')
+                      : '-'}
+                  </ValueTableColumn>
+                </TableRow>
+                <TableRow>
+                  <LabelTableColumn># of mints at 15.59 gwei</LabelTableColumn>
+                  <ValueTableColumn>
+                    {numMintsAt1559Gwei ?? '-'}
+                  </ValueTableColumn>
+                </TableRow>
+                {account && balance && (
+                  <TableRow>
+                    <LabelTableColumn>
+                      User ({shortenHexString(account)}) {TOKEN_SYMBOL} balance
+                    </LabelTableColumn>
+                    <ValueTableColumn>
+                      {utils.formatEther(balance)}
+                    </ValueTableColumn>
+                  </TableRow>
+                )}
+              </TableBody>
+            </TableContainer>
+          </CoreMintingInner>
+        </CoreMinting>
+
         <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
         <RightAlignedText>
           We will be launching a NFT store called{' '}
