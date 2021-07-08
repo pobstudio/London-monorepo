@@ -14,7 +14,9 @@ export const getEtherscanTxUrl = (txhash: string) => {
 };
 
 export const getEtherscanTokenUrl = (txhash: string) => {
-  return `https://${CHAIN_ID === 1 ? '' : 'rinkeby.'}etherscan.io/token/${txhash}`;
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'rinkeby.'
+  }etherscan.io/token/${txhash}`;
 };
 
 export const getEtherscanAddressUrl = (address: string) => {

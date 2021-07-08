@@ -51,7 +51,12 @@ export const Header: FC = () => {
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
           </A>
-          <AddressA href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)} target={'_blank'}>ERC20: {deployments[CHAIN_ID].erc20}</AddressA>
+          <AddressA
+            href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
+            target={'_blank'}
+          >
+            ERC20: {deployments[CHAIN_ID].erc20}
+          </AddressA>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>
