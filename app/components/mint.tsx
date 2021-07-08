@@ -89,7 +89,7 @@ export const Mint: FC<{}> = ({}) => {
     if (chooseOption === '1559-gwei') {
       return utils.parseUnits('15.59', 'gwei');
     }
-    
+
     if (!gasInfo.data) {
       return;
     }

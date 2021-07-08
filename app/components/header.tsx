@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import { FlexEnds, Flex } from './flex';
 import { Web3Status } from './web3Status';
 import { A } from './anchor';
-import { CHAIN_ID, DISCORD_LINK, LONDON_EMOJI, TWITTER_LINK } from '../constants';
+import {
+  CHAIN_ID,
+  DISCORD_LINK,
+  LONDON_EMOJI,
+  TWITTER_LINK,
+} from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
 import { getEtherscanAddressUrl } from '../utils/urls';
@@ -35,7 +40,6 @@ const AddressA = styled(A)`
   }
 `;
 
-
 export const Header: FC = () => {
   return (
     <HeaderContainer>
@@ -47,7 +51,12 @@ export const Header: FC = () => {
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
           </A>
-          <AddressA href={getEtherscanAddressUrl(deployments[CHAIN_ID].erc20)} target={'_blank'}>ERC20: {deployments[CHAIN_ID].erc20}</AddressA>
+          <AddressA
+            href={getEtherscanAddressUrl(deployments[CHAIN_ID].erc20)}
+            target={'_blank'}
+          >
+            ERC20: {deployments[CHAIN_ID].erc20}
+          </AddressA>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>

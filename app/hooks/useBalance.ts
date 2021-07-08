@@ -41,7 +41,9 @@ const GET_LONDON_BALANCE_BY_ADDRESS_BLOCK_BASED_QUERY = gql`
 `;
 
 export const useLondonBalance = (address: string | undefined) => {
-  const blockNum = useBlockchainStore((s) => !!s.blockNumber ? s.blockNumber - 5 : 0);
+  const blockNum = useBlockchainStore((s) =>
+    !!s.blockNumber ? s.blockNumber - 5 : 0,
+  );
 
   const results = useQuery(GET_LONDON_BALANCE_BY_ADDRESS_BLOCK_BASED_QUERY, {
     variables: { address, blockNum },
