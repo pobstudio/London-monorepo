@@ -162,6 +162,9 @@ const IndexPage: NextPage = () => {
   const totalSupply = useTotalSupply();
   const numMintsAt1559Gwei = useNumMints(utils.parseUnits('15.59', 'gwei'));
   const lowestGasPriceMinted = useLowestGasPriceMinted();
+  const userMarketCapPercent = useMemo(() => {
+    return (balance && totalSupply) ? ((Number(balance) / Number(totalSupply)) * 100).toFixed(2) : '-';
+  }, [account, balance, totalSupply]);
   const [pageWrapperRef, { width }] = useMeasure();
 
   const graphWidth = useMemo(() => (width > 450 ? 450 : width), [width]);
@@ -274,7 +277,7 @@ const IndexPage: NextPage = () => {
               }}
             >
               <TableHeader>
-                <LabelTableColumn>Stats</LabelTableColumn>
+                <LabelTableColumn>{TOKEN_SYMBOL} Stats</LabelTableColumn>
                 <ValueTableColumn>Value</ValueTableColumn>
               </TableHeader>
               <TableBody>
@@ -282,14 +285,6 @@ const IndexPage: NextPage = () => {
                   <LabelTableColumn>Current gas price in gwei</LabelTableColumn>
                   <ValueTableColumn>
                     {gasInfo.data?.fast.toString() ?? '-'}
-                  </ValueTableColumn>
-                </TableRow>
-                <TableRow>
-                  <LabelTableColumn>
-                    Total {TOKEN_SYMBOL} supply
-                  </LabelTableColumn>
-                  <ValueTableColumn>
-                    {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
                   </ValueTableColumn>
                 </TableRow>
                 <TableRow>
@@ -308,13 +303,21 @@ const IndexPage: NextPage = () => {
                     {numMintsAt1559Gwei ?? '-'}
                   </ValueTableColumn>
                 </TableRow>
+                <TableRow>
+                  <LabelTableColumn>
+                    Total supply
+                  </LabelTableColumn>
+                  <ValueTableColumn>
+                    {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
+                  </ValueTableColumn>
+                </TableRow>
                 {account && balance && (
                   <TableRow>
                     <LabelTableColumn>
-                      User ({shortenHexString(account)}) {TOKEN_SYMBOL} balance
+                      User's ({shortenHexString(account)}) balance
                     </LabelTableColumn>
                     <ValueTableColumn>
-                      {utils.formatEther(balance)}
+                      {utils.formatEther(balance)} ({userMarketCapPercent}%)
                     </ValueTableColumn>
                   </TableRow>
                 )}
