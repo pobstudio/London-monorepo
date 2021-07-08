@@ -96,7 +96,7 @@ contract GasPriceBasedMinter is BellCurveParametersStorage, Context, Ownable {
     ERC20Mintable public erc20;
 
     uint256 immutable public blockNumberUpTo;
-    bytes32 constant ZERO_HASH = 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a;
+    bytes32 constant ZERO_HASH = keccak256(0x00);
 
     constructor(uint256 _blockNumberUpTo, uint256 _a, uint256 _b, uint256 _c, uint256 _d) BellCurveParametersStorage(_a, _b, _c, _d) {
       blockNumberUpTo = _blockNumberUpTo;

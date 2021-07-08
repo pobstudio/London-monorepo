@@ -6,7 +6,7 @@ import { A } from './anchor';
 import { CHAIN_ID, DISCORD_LINK, LONDON_EMOJI, TWITTER_LINK } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
-import { getEtherscanAddressUrl } from '../utils/urls';
+import { getEtherscanAddressUrl, getEtherscanTokenUrl } from '../utils/urls';
 
 const HeaderContainer = styled.div`
   /* padding: 0 12px; */
@@ -47,7 +47,7 @@ export const Header: FC = () => {
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
           </A>
-          <AddressA href={getEtherscanAddressUrl(deployments[CHAIN_ID].erc20)} target={'_blank'}>ERC20: {deployments[CHAIN_ID].erc20}</AddressA>
+          <AddressA href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)} target={'_blank'}>ERC20: {deployments[CHAIN_ID].erc20}</AddressA>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>

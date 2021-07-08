@@ -44,7 +44,7 @@ import { useTotalSupply } from '../hooks/useTotalSupply';
 import { useLowestGasPriceMinted, useNumMints } from '../hooks/useNumMints';
 import { Header } from '../components/header';
 import { ERC20Code, MinterCode } from '../components/code';
-import { getEtherscanAddressUrl } from '../utils/urls';
+import { getEtherscanAddressUrl, getEtherscanTokenUrl } from '../utils/urls';
 import { deployments } from '@pob/protocol';
 import { POBIcon } from '../components/icons/pob';
 import { BREAKPTS } from '../styles';
@@ -380,7 +380,7 @@ const IndexPage: NextPage = () => {
         <MinterCode />
         <RightAlignedText>
           <A
-            href={getEtherscanAddressUrl(deployments[CHAIN_ID].erc20)}
+            href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
             target={'_blank'}
           >
             ERC20 Contract
