@@ -41,7 +41,7 @@ import { shortenHexString } from '../utils/hex';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useMemo } from 'react';
 import { useTotalSupply } from '../hooks/useTotalSupply';
-import { useNumMints } from '../hooks/useNumMints';
+import { useLowestGasPriceMinted, useNumMints } from '../hooks/useNumMints';
 import { Header } from '../components/header';
 import { ERC20Code, MinterCode } from '../components/code';
 import { getEtherscanAddressUrl } from '../utils/urls';
@@ -146,7 +146,7 @@ const IndexPage: NextPage = () => {
 
   const totalSupply = useTotalSupply();
   const numMintsAt1559Gwei = useNumMints(utils.parseUnits('15.59', 'gwei'));
-
+  const lowestGasPriceMinted = useLowestGasPriceMinted();
   const [pageWrapperRef, { width }] = useMeasure();
 
   const graphWidth = useMemo(() => (width > 450 ? 450 : width), [width]);
@@ -259,6 +259,12 @@ const IndexPage: NextPage = () => {
               <LabelTableColumn>Total {TOKEN_SYMBOL} supply</LabelTableColumn>
               <ValueTableColumn>
                 {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
+              </ValueTableColumn>
+            </TableRow>
+            <TableRow>
+              <LabelTableColumn>Lowest gas price used in gwei</LabelTableColumn>
+              <ValueTableColumn>
+                {!!lowestGasPriceMinted ? utils.formatUnits(lowestGasPriceMinted, 'gwei') : '-'}
               </ValueTableColumn>
             </TableRow>
             <TableRow>
