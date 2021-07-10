@@ -37,6 +37,8 @@ export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
 
 export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;
 
+export const SNAPSHOT_LINK = `https://snapshot.org/#/london.pob.eth`;
+
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
 // strings

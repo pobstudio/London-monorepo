@@ -19,6 +19,7 @@ import { A, AButton } from '../components/anchor';
 import {
   CHAIN_ID,
   LONDON_EMOJI,
+  SNAPSHOT_LINK,
   STUDIO_PROD_LINK,
   TOKEN_SYMBOL,
 } from '../constants';
@@ -347,7 +348,14 @@ const IndexPage: NextPage = () => {
         </RightAlignedText>
         <RightAlignedText>
           <Bold>
-            {LONDON_EMOJI} <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+            {LONDON_EMOJI}{' '}
+            <A
+              href={`${SNAPSHOT_LINK}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+            </A>
           </Bold>
         </RightAlignedText>
         <RightAlignedText>
