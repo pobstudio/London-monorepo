@@ -338,7 +338,7 @@ const IndexPage: NextPage = () => {
           <Bold>
             <Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe
           </Bold>{' '}
-          will contain 1559 generative mementos of the{' '}
+          will contain generative mementos of the{' '}
           <Italic>{TOKEN_SYMBOL}</Italic> project, each only redeemable with{' '}
           <Italic>{TOKEN_SYMBOL}</Italic>.
         </RightAlignedText>

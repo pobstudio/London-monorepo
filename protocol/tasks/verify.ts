@@ -58,26 +58,26 @@ task(
     //   constructorArguments: [deployments[CHAIN_ID].erc1155],
     // });
 
-    await hre.run('verify:verify', {
-      address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
-      constructorArguments: [
-        12965000,
-        BigNumber.from(6000).mul(ONE_MWEI).toString(),
-        BigNumber.from(1).toString(),
-        BigNumber.from(15590).mul(ONE_MWEI).toString(),
-        BigNumber.from(1559).toString(),
-      ],
-    });
-
     // await hre.run('verify:verify', {
-    //   address:
-    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+    //   address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
     //   constructorArguments: [
-    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
-    //     'LONDON',
-    //     'LONDON'
+    //     12965000,
+    //     BigNumber.from(6000).mul(ONE_MWEI).toString(),
+    //     BigNumber.from(1).toString(),
+    //     BigNumber.from(15590).mul(ONE_MWEI).toString(),
+    //     BigNumber.from(1559).toString(),
     //   ],
     // });
+
+    await hre.run('verify:verify', {
+      address:
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+      constructorArguments: [
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
+        'LONDON',
+        'LONDON'
+      ],
+    });
 
     // await hre.run('verify:verify', {
     //   address:
