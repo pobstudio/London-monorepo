@@ -8,6 +8,7 @@ import {
   DISCORD_LINK,
   LONDON_EMOJI,
   TWITTER_LINK,
+  UNISWAP_TRADE_LINK,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -50,6 +51,9 @@ export const Header: FC = () => {
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
+          </A>
+          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
+            Trade
           </A>
           <AddressA
             href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
