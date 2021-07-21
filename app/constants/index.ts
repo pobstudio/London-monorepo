@@ -27,6 +27,8 @@ export const GRAPH_TEST_SUBGRAPH_LINK =
 export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY;
 
 // links
+export const UNISWAP_TRADE_LINK = 'https://app.uniswap.org/#/swap?inputCurrency=0x491d6b7d6822d5d4bc88a1264e1b47791fd8e904&outputCurrency=ETH';
+
 export const STUDIO_PROD_LINK = 'https://pob.studio';
 
 export const LONDON_PROD_LINK = 'https://london.pob.studio';
