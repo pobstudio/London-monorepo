@@ -7,6 +7,7 @@ import {
   CHAIN_ID,
   DISCORD_LINK,
   LONDON_EMOJI,
+  SNAPSHOT_LINK,
   TWITTER_LINK,
   UNISWAP_TRADE_LINK,
 } from '../constants';
@@ -55,11 +56,14 @@ export const Header: FC = () => {
           <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
             Trade
           </A>
+          <A href={SNAPSHOT_LINK} target={'_blank'}>
+            DAO
+          </A>
           <AddressA
             href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
             target={'_blank'}
           >
-            ERC20: {deployments[CHAIN_ID].erc20}
+            ERC20
           </AddressA>
         </AnchorRow>
         <Web3Status />

@@ -184,6 +184,15 @@ const IndexPage: NextPage = () => {
         <Title>
           <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
+        <Text style={{ marginBottom: 12 }}>
+          <A
+            href={'https://snapshot.org/#/london.pob.eth/proposal/QmXt13Fr3zaCbG7G25Ero7BhrraP9JraDzXmCs7iQb332m'}
+            target={'_blank'}
+            style={{ color: 'blue', textDecoration: 'underline' }}
+          >
+            VOTE ON THE GIFT SHOPPE
+          </A>
+        </Text>
         <Caption style={{ marginBottom: 12 }}>
           A social currency backed by the lasting impact of minting, gas price
           manipulation, and EIP 1559
