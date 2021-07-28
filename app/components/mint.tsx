@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { LONDON_EMOJI, ONE_GWEI, TOKEN_SYMBOL } from '../constants';
+import { LONDON_EMOJI, LONDON_PROD_LINK, ONE_GWEI, TOKEN_SYMBOL } from '../constants';
 import { useMinter } from '../hooks/useMinter';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
@@ -158,7 +158,7 @@ export const Mint: FC<{}> = ({}) => {
         <FlexCenterColumn>
           <A
             target={'_blank'}
-            href={getTwitterShareLink(undefined, `${LONDON_EMOJI}`)}
+            href={getTwitterShareLink(LONDON_PROD_LINK, `${LONDON_EMOJI}`)}
             style={{ cursor: 'pointer' }}
           >
             Tweet {LONDON_EMOJI}

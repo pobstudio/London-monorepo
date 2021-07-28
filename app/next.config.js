@@ -1,6 +1,7 @@
 const withTM = require('next-transpile-modules')([
   '@pob/protocol',
   '@pob/common',
+  '@pob/sketches',
 ]);
 
 module.exports = withTM({

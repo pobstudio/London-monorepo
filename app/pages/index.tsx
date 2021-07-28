@@ -23,6 +23,7 @@ import {
   STUDIO_PROD_LINK,
   TOKEN_SYMBOL,
 } from '../constants';
+import Link from 'next/link';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
 import { FlexCenter, Flex, FlexEnds } from '../components/flex';
 import { Web3Status } from '../components/web3Status';
@@ -50,6 +51,8 @@ import { deployments } from '@pob/protocol';
 import { POBIcon } from '../components/icons/pob';
 import { BREAKPTS } from '../styles';
 import { useMeasure } from 'react-use';
+import { ROUTES } from '../constants/routes';
+import { useShopState } from '../hooks/useShopState';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -173,6 +176,8 @@ const IndexPage: NextPage = () => {
 
   const graphWidth = useMemo(() => (width > 450 ? 450 : width), [width]);
 
+  const shopState = useShopState();
+
   return (
     <>
       <Header />
@@ -185,13 +190,13 @@ const IndexPage: NextPage = () => {
           <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
         <Text style={{ marginBottom: 12 }}>
-          <A
-            href={'https://snapshot.org/#/london.pob.eth/proposal/QmXt13Fr3zaCbG7G25Ero7BhrraP9JraDzXmCs7iQb332m'}
-            target={'_blank'}
-            style={{ color: 'blue', textDecoration: 'underline' }}
-          >
-            VOTE ON THE GIFT SHOPPE
-          </A>
+          <Link href={ROUTES.SHOPPE} passHref>
+            <A style={{ color: 'blue', textDecoration: 'underline' }}>
+              {shopState === 'open' && 'SHOPPE IS OPEN!'}
+              {shopState === 'sold-out' && 'SHOPPE HAS SOLD OUT!'}
+              {shopState === 'not-open' && 'CHECK OUT THE SHOPPE!'}
+            </A>
+          </Link>
         </Text>
         <Caption style={{ marginBottom: 12 }}>
           A social currency backed by the lasting impact of minting, gas price

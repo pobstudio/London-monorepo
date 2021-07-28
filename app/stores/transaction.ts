@@ -10,7 +10,18 @@ export interface MintingTransactionMetadata {
   type: 'minting';
   gasPrice?: BigNumber;
 }
-export type TransactionMetadata = MintingTransactionMetadata;
+
+export interface ApprovalTransactionMetadata {
+  type: 'approval';
+}
+
+export interface MintingGiftTransactionMetadata {
+  type: 'minting-gift';
+}
+export type TransactionMetadata =
+  | MintingGiftTransactionMetadata
+  | ApprovalTransactionMetadata
+  | MintingTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;

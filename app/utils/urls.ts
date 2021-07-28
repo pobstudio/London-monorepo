@@ -9,6 +9,24 @@ export const getOpenSeaAccountUrl = (address: string) => {
   }opensea.io/accounts/${address}`;
 };
 
+export const getOpenSeaAssetUrl = (address: string) => {
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }opensea.io/assets/${address}`;
+};
+
+export const getOpenSeaUserAssetUrl = (address: string, asset: string) => {
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }opensea.io/${address}/${asset}`;
+};
+
+export const getOpenSeaCollectionUrl = (name: string) => {
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }opensea.io/collection/${name}`;
+};
+
 export const getEtherscanTxUrl = (txhash: string) => {
   return `https://${CHAIN_ID === 1 ? '' : 'rinkeby.'}etherscan.io/tx/${txhash}`;
 };

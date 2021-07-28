@@ -11,7 +11,7 @@
     "app",
     "scripts",
     "common",
-    "preview"
+    "sketches"
   ],
   "scripts": {
     "build": "yarn workspaces run build",
