@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "."
+  },
+  "ts-node": {
+    "files": true
+  },
+  "files": ["./src/globals.d.ts"],
+  "include": ["./src/**/*", "./src/data/colors.json"]
+}

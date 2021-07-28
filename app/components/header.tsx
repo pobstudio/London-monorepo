@@ -14,7 +14,8 @@ import {
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
 import { getEtherscanAddressUrl, getEtherscanTokenUrl } from '../utils/urls';
-
+import { ROUTES } from '../constants/routes';
+import Link from 'next/link';
 const HeaderContainer = styled.div`
   /* padding: 0 12px; */
   position: fixed;
@@ -47,18 +48,21 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
-          <A href={TWITTER_LINK} target={'_blank'}>
+          {/* <A href={TWITTER_LINK} target={'_blank'}>
             Twitter
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
-          </A>
+          </A> */}
           <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
             Trade
           </A>
           <A href={SNAPSHOT_LINK} target={'_blank'}>
             DAO
           </A>
+          <Link href={ROUTES.SHOPPE} passHref>
+            <A>Shoppe</A>
+          </Link>
           <AddressA
             href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
             target={'_blank'}

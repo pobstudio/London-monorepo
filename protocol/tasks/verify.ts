@@ -69,13 +69,26 @@ task(
     //   ],
     // });
 
+    // await hre.run('verify:verify', {
+    //   address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+    //   constructorArguments: [
+    //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
+    //     'LONDON',
+    //     'LONDON',
+    //   ],
+    // });
+
+    const ONE_TOKEN_IN_BASE_UNITS = utils.parseEther('1');
+
     await hre.run('verify:verify', {
-      address:
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+      address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].gift,
       constructorArguments: [
-        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].minter,
-        'LONDON',
-        'LONDON'
+        '$LONDON Gift',
+        'GIFT',
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+        ONE_TOKEN_IN_BASE_UNITS.mul(1559).toString(),
+        1559 * 3,
+        '0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
       ],
     });
 

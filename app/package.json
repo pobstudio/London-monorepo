@@ -16,6 +16,7 @@
     "@ethersproject/providers": "^5.0.17",
     "@pob/common": "1.0.0",
     "@pob/protocol": "1.0.0",
+    "@pob/sketches": "1.0.0",
     "@reach/listbox": "^0.12.1",
     "@reach/menu-button": "^0.12.1",
     "@reach/tooltip": "^0.15.0",
