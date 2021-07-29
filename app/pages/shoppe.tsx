@@ -187,6 +187,10 @@ const FAQ = () => {
     <>
       <SubTitle style={{ marginTop: 48 }}>FAQ</SubTitle>
       <RightAlignedText>
+        <Bold>How many LONDON gift will exist?</Bold>
+      </RightAlignedText>
+      <RightAlignedText>There will be a supply of 8888.</RightAlignedText>
+      <RightAlignedText>
         <Bold>When does the shoppe open?</Bold>
       </RightAlignedText>
       <RightAlignedText>Right after the LONDON hardfork.</RightAlignedText>
