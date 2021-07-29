@@ -31,7 +31,7 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
   // const generate = generateTokenMetadata(STARTING_INDEX);
 
   // const stats: any = {};
-  // for (let i = 0; i < SUPPLY; ++i) {
+  // for (let i = 1559 * 3; i < SUPPLY; ++i) {
   //   const metadata = generate(i + STARTING_INDEX);
   //   if (!stats[metadata.rarity]) {
   //     stats[metadata.rarity] = 0;
@@ -39,7 +39,7 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
   //   stats[metadata.rarity]++;
   //   console.log(`building token ${i}`)
   //   await writeFileAsync(
-  //     path.resolve(METADATA_DIR, `${i}.json`),
+  //     path.resolve(BASE_METADATA_DIR, `${i}.json`),
   //     JSON.stringify(metadata),
   //   );
   //   await sketchFactory(metadata, path.resolve(IMAGE_DIR, `${i}.png`))
@@ -50,71 +50,71 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
   //   console.log(`${s[0]}: ${(s[1] / SUPPLY).toString().slice(0, 6)}%`);
   // });
 
-  // console.log('Building provenance');
-  // let imageConcatStr = '';
+  console.log('Building provenance');
+  let imageConcatStr = '';
 
-  // const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
-  // for (let i = 0; i < SUPPLY; ++i) {
-  //   const imageHash = await new Promise((res) => {
-  //     let hash = createHash('sha256');
-  //     const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
-  //     // s.on("error", err => reject(err));
-  //     s.on('data', (chunk) => hash.update(chunk));
-  //     s.on('end', () => res(hash.digest('hex')));
-  //   });
-  //   imageConcatStr += imageHash;
-  // }
-  // const provenanceMetadata = {
-  //   provenance,
-  //   imageConcatStr,
-  //   startingIndex: STARTING_INDEX,
-  // };
-  // console.log('Provenance created.');
-  // console.log();
+  for (let i = 0; i < SUPPLY; ++i) {
+    const imageHash = await new Promise((res) => {
+      let hash = createHash('sha256');
+      const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
+      // s.on("error", err => reject(err));
+      s.on('data', (chunk) => hash.update(chunk));
+      s.on('end', () => res(hash.digest('hex')));
+    });
+    imageConcatStr += imageHash;
+  }
+  const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
+  const provenanceMetadata = {
+    provenance,
+    imageConcatStr,
+    startingIndex: STARTING_INDEX,
+  };
+  console.log('Provenance created.');
+  console.log();
   console.log('Uploading to IPFS');
 
+  await writeFileAsync(
+    PROVENANCE_FILE,
+    JSON.stringify({ ...provenanceMetadata }),
+  );
   const files: File[] = [];
 
   const getName = generateNameFromSeed(STARTING_INDEX);
 
-  for (let i = 0; i < SUPPLY; ++i) {
-    const metadataBlob = await readFileAsync(
-      path.resolve(BASE_METADATA_DIR, `${i}.json`),
-    );
-    const traits = JSON.parse(metadataBlob.toString());
-    // const blob = await readFileAsync(path.resolve(IMAGE_DIR, `${i}.png`));
-    // const imageCid = await client.storeBlob(
-    //   new File([blob], `${i}.png`, { type: 'image/png' }),
-    // );
-    const tokenMetadataBlob = await readFileAsync(
-      path.resolve(METADATA_DIR, `${i}`),
-    );
-    const oldtoken = JSON.parse(tokenMetadataBlob.toString());
-    const name = getName();
-    const token = {
-      name,
-      description: `In celebration of EIP-1559.`,
-      image: oldtoken.image,
-      attributes: [
-        ...mapTokenMetadataToAttributes(traits),
-        { trait_type: 'name length', value: name.split(' ').length },
-      ],
-    };
-    files.push(
-      new File([JSON.stringify(token)], `${i}`, { type: 'application/json' }),
-    );
-    await writeFileAsync(
-      path.resolve(METADATA_DIR, `${i}`),
-      JSON.stringify(token),
-    );
-    console.log(`written token metadata for ${i}`);
-  }
+  // for (let i = 9737; i < SUPPLY; ++i) {
+  //   const metadataBlob = await readFileAsync(
+  //     path.resolve(BASE_METADATA_DIR, `${i}.json`),
+  //   );
+  //   const traits = JSON.parse(metadataBlob.toString());
+  //   const blob = await readFileAsync(path.resolve(IMAGE_DIR, `${i}.png`));
+  //   const imageCid = await client.storeBlob(
+  //     new File([blob], `${i}.png`, { type: 'image/png' }),
+  //   );
+  //   // const tokenMetadataBlob = await readFileAsync(
+  //   //   path.resolve(METADATA_DIR, `${i}`),
+  //   // );
+  //   // const oldtoken = JSON.parse(tokenMetadataBlob.toString());
+  //   const name = getName();
+  //   const token = {
+  //     name,
+  //     description: `In celebration of EIP-1559.`,
+  //     image: `ipfs://${imageCid}`,
+  //     attributes: [
+  //       ...mapTokenMetadataToAttributes(traits),
+  //       { trait_type: 'name length', value: name.split(' ').length },
+  //     ],
+  //   };
+  //   files.push(
+  //     new File([JSON.stringify(token)], `${i}`, { type: 'application/json' }),
+  //   );
+  //   await writeFileAsync(
+  //     path.resolve(METADATA_DIR, `${i}`),
+  //     JSON.stringify(token),
+  //   );
+  //   console.log(`written token metadata for ${i}`);
+  // }
   console.log();
   // const rootCid = await client.storeDirectory(files);
   // console.log(`root cid`, rootCid);
-  // await writeFileAsync(
-  //   PROVENANCE_FILE,
-  //   JSON.stringify({ ...provenanceMetadata, rootCid }),
-  // );
   console.log('complete.');
 })();

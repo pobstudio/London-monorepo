@@ -25,9 +25,9 @@ task('deploy-nft', 'Deploys $LONDON ', async (args, hre) => {
   const symbol = 'GIFT';
   const blockNumberUpTo = 12965000;
   const mintPrice = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
-  const maxSupply = 1559 * 3;
+  const maxSupply = 10000;
   const provenance =
-    '0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
+    '0xddfde0cbb2006d2ee546852720d9774e7f844148969a64c76a758f261b9016ec';
 
   // deploy erc1155
   const ERC20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
