@@ -77,9 +77,9 @@ const client = new NFTStorage({ token: NFT_STORAGE_API_KEY ?? '' });
     PROVENANCE_FILE,
     JSON.stringify({ ...provenanceMetadata }),
   );
-  const files: File[] = [];
+  // const files: File[] = [];
 
-  const getName = generateNameFromSeed(STARTING_INDEX);
+  // const getName = generateNameFromSeed(STARTING_INDEX);
 
   // for (let i = 9737; i < SUPPLY; ++i) {
   //   const metadataBlob = await readFileAsync(

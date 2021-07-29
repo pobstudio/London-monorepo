@@ -1,7 +1,7 @@
 import { Bound, Cord } from './types';
 
 export const STARTING_INDEX = 1559;
-export const SUPPLY = 10000;
+export const SUPPLY = 8888;
 
 export const DEFAULT_DRAW_SETTINGS = {
   canvasSketchSettings: {
