@@ -1,8 +1,8 @@
 import {
   deployments,
-  ERC20Mintable__factory,
-  GasPriceBasedMinter__factory,
-  LondonGift__factory,
+  Erc20MintableFactory,
+  GasPriceBasedMinterFactory,
+  LondonGiftFactory,
 } from '@pob/protocol';
 import { useMemo } from 'react';
 import { CHAIN_ID } from '../constants';
@@ -10,38 +10,6 @@ import { getProviderOrSigner } from '../utils/provider';
 import { JsonRpcProvider } from '@ethersproject/providers';
 import { useProvider } from './useProvider';
 import { useWeb3React } from '@web3-react/core';
-
-// export const usePobContract = (shouldUseFallback: boolean = false) => {
-//   const { account } = useWeb3React();
-//   const provider = useProvider(shouldUseFallback);
-
-//   return useMemo(() => {
-//     if (!account && !provider) {
-//       return;
-//     }
-
-//     return POBMinterFactory.connect(
-//       deployments[CHAIN_ID].pobMinterV2,
-//       getProviderOrSigner(provider as JsonRpcProvider, account as string),
-//     );
-//   }, [account, provider]);
-// };
-
-// export const usePobContractV1 = (shouldUseFallback: boolean = false) => {
-//   const { account } = useWeb3React();
-//   const provider = useProvider(shouldUseFallback);
-
-//   return useMemo(() => {
-//     if (!account && !provider) {
-//       return;
-//     }
-
-//     return POBMinterFactory.connect(
-//       deployments[CHAIN_ID].pobMinter,
-//       getProviderOrSigner(provider as JsonRpcProvider, account as string),
-//     );
-//   }, [account, provider]);
-// };
 
 export const useLondonContract = (shouldUseFallback: boolean = false) => {
   const { account } = useWeb3React();
@@ -52,7 +20,7 @@ export const useLondonContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return ERC20Mintable__factory.connect(
+    return Erc20MintableFactory.connect(
       deployments[CHAIN_ID].erc20,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
@@ -68,7 +36,7 @@ export const useLondonGiftContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return LondonGift__factory.connect(
+    return LondonGiftFactory.connect(
       deployments[CHAIN_ID].gift,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
@@ -84,7 +52,7 @@ export const useMinterContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return GasPriceBasedMinter__factory.connect(
+    return GasPriceBasedMinterFactory.connect(
       deployments[CHAIN_ID].minter,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );

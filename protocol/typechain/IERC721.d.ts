@@ -20,7 +20,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface IERC721Interface extends ethers.utils.Interface {
+interface Ierc721Interface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
@@ -106,7 +106,7 @@ interface IERC721Interface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class IERC721 extends Contract {
+export class Ierc721 extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -117,7 +117,7 @@ export class IERC721 extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': IERC721Interface;
+  'interface': Ierc721Interface;
 
   'functions': {
     approve(
@@ -135,44 +135,66 @@ export class IERC721 extends Contract {
     balanceOf(
       owner: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { balance: BigNumber }>;
+    ): Promise<{
+      balance: BigNumber;
+      0: BigNumber;
+    }>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { balance: BigNumber }>;
+    ): Promise<{
+      balance: BigNumber;
+      0: BigNumber;
+    }>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<[string] & { operator: string }>;
+    ): Promise<{
+      operator: string;
+      0: string;
+    }>;
 
     'getApproved(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<[string] & { operator: string }>;
+    ): Promise<{
+      operator: string;
+      0: string;
+    }>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<[string] & { owner: string }>;
+    ): Promise<{
+      owner: string;
+      0: string;
+    }>;
 
     'ownerOf(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<[string] & { owner: string }>;
+    ): Promise<{
+      owner: string;
+      0: string;
+    }>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -204,12 +226,16 @@ export class IERC721 extends Contract {
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     'supportsInterface(bytes4)'(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<[boolean]>;
+    ): Promise<{
+      0: boolean;
+    }>;
 
     transferFrom(
       from: string,

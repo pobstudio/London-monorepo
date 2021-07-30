@@ -20,7 +20,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface ERC20MintableInterface extends ethers.utils.Interface {
+interface Erc20MintableInterface extends ethers.utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -136,7 +136,7 @@ interface ERC20MintableInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class ERC20Mintable extends Contract {
+export class Erc20Mintable extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -147,20 +147,24 @@ export class ERC20Mintable extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': ERC20MintableInterface;
+  'interface': Erc20MintableInterface;
 
   'functions': {
     allowance(
       owner: string,
       spender: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     'allowance(address,address)'(
       owner: string,
       spender: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     approve(
       spender: string,
@@ -174,16 +178,31 @@ export class ERC20Mintable extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      account: string,
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     'balanceOf(address)'(
       account: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    decimals(overrides?: CallOverrides): Promise<[number]>;
+    decimals(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: number;
+    }>;
 
-    'decimals()'(overrides?: CallOverrides): Promise<[number]>;
+    'decimals()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: number;
+    }>;
 
     decreaseAllowance(
       spender: string,
@@ -221,17 +240,41 @@ export class ERC20Mintable extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    minter(overrides?: CallOverrides): Promise<[string]>;
+    minter(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'minter()'(overrides?: CallOverrides): Promise<[string]>;
+    'minter()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
+    name(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'name()'(overrides?: CallOverrides): Promise<[string]>;
+    'name()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    owner(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'owner()'(overrides?: CallOverrides): Promise<[string]>;
+    'owner()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
@@ -247,13 +290,29 @@ export class ERC20Mintable extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
+    symbol(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<[string]>;
+    'symbol()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupply(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'totalSupply()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     transfer(
       recipient: string,
