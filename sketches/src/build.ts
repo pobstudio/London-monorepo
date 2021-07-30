@@ -86,32 +86,32 @@ const CUSTOM_NAMES = [
   // });
 
   // console.log('Building provenance');
-  // let imageConcatStr = '';
+  let imageConcatStr = '';
 
-  // for (let i = 0; i < SUPPLY; ++i) {
-  //   const imageHash = await new Promise((res) => {
-  //     let hash = createHash('sha256');
-  //     const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
-  //     // s.on("error", err => reject(err));
-  //     s.on('data', (chunk) => hash.update(chunk));
-  //     s.on('end', () => res(hash.digest('hex')));
-  //   });
-  //   imageConcatStr += imageHash;
-  // }
-  // const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
-  // const provenanceMetadata = {
-  //   provenance,
-  //   imageConcatStr,
-  //   startingIndex: STARTING_INDEX,
-  // };
-  // console.log('Provenance created.');
-  // console.log();
-  // console.log('Uploading to IPFS');
+  for (let i = 0; i < SUPPLY; ++i) {
+    const imageHash = await new Promise((res) => {
+      let hash = createHash('sha256');
+      const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
+      // s.on("error", err => reject(err));
+      s.on('data', (chunk) => hash.update(chunk));
+      s.on('end', () => res(hash.digest('hex')));
+    });
+    imageConcatStr += imageHash;
+  }
+  const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
+  const provenanceMetadata = {
+    provenance,
+    imageConcatStr,
+    startingIndex: STARTING_INDEX,
+  };
+  console.log('Provenance created.');
+  console.log();
+  console.log('Uploading to IPFS');
 
-  // await writeFileAsync(
-  //   PROVENANCE_FILE,
-  //   JSON.stringify({ ...provenanceMetadata }),
-  // );
+  await writeFileAsync(
+    PROVENANCE_FILE,
+    JSON.stringify({ ...provenanceMetadata }),
+  );
   // const files: File[] = [];
 
   const randSrc = seedrandom(STARTING_INDEX.toString());
