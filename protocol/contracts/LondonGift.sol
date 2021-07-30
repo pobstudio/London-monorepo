@@ -10,6 +10,8 @@ import "./utils/Strings.sol";
 contract LondonGift is Ownable, ERC721 {
     using Strings for uint256;
 
+    uint256 constant MAX_MINT_PER_TX = 20;
+
     ERC20Mintable public immutable payableErc20;
     uint256 public immutable mintPrice;
     // uint256 public immutable maxMintPerAddress;
@@ -64,8 +66,8 @@ contract LondonGift is Ownable, ERC721 {
       mintStartAtBlockNum = _mintStartAtBlockNum;
     }
 
-    modifier onlyUnderMaxSupply() {
-      require(tokenIndex < maxSupply, 'max supply minted');
+    modifier onlyUnderMaxSupply(uint mintAmount) {
+      require(tokenIndex + mintAmount <= maxSupply, 'max supply minted');
       _;
     }
 
@@ -73,6 +75,11 @@ contract LondonGift is Ownable, ERC721 {
     //   require(mintedAmounts[_msgSender()] < maxMintPerAddress, 'Max supply per address minted');
     //   _;
     // }
+
+    modifier onlyMintUnderMaxPerTx(uint256 mintAmount) {
+      require(mintAmount < MAX_MINT_PER_TX, 'too many mints in one go');
+      _;
+    }
 
     modifier onlyAfterMintStartAtBlockNum() {
       require(mintStartAtBlockNum != 0 && block.number > mintStartAtBlockNum, 'too early');
@@ -96,16 +103,18 @@ contract LondonGift is Ownable, ERC721 {
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, id.toString())) : "";
     }
     
-    function mint() onlyAfterMintStartAtBlockNum() onlyUnderMaxSupply() public {
+    function mint(uint mintAmount) onlyAfterMintStartAtBlockNum() onlyUnderMaxSupply(mintAmount) onlyMintUnderMaxPerTx(mintAmount) public {
       // ensure approval is met
-      require(payableErc20.allowance(_msgSender(), address(this)) >= mintPrice, "Allowance not set to mint");
-      require(payableErc20.balanceOf(_msgSender()) >= mintPrice, "Not enough token to mint");
+      require(payableErc20.allowance(_msgSender(), address(this)) >= (mintPrice * mintAmount), "Allowance not set to mint");
+      require(payableErc20.balanceOf(_msgSender()) >= (mintPrice * mintAmount), "Not enough token to mint");
       // transfer payableERC20
-      payableErc20.transferFrom(_msgSender(), treasury, mintPrice);
-      // mint token
-      _safeMint(_msgSender(), tokenIndex);
-      // increment
-      tokenIndex++;
+      payableErc20.transferFrom(_msgSender(), treasury, (mintPrice * mintAmount));
+      for (uint i = 0; i < mintAmount; ++i) {
+        // mint token
+        _safeMint(_msgSender(), tokenIndex);
+        // increment
+        tokenIndex++;
+      }
 
       if (startingIndex == 0 && (tokenIndex == maxSupply || (block.number > revealStartAtBlockNum && revealStartAtBlockNum != 0))) {
         startingIndex = uint(blockhash(block.number - 1)) % maxSupply;

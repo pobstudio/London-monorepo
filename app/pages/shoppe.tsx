@@ -170,6 +170,11 @@ const Rarity = () => {
         </TableBody>
       </TableContainer>
       <RightAlignedText>
+        {shopState === 'open' || shopState === 'sold-out' ? `${88}` : '???'}{' '}
+        NFTs will have unique hand written names. The rest will be
+        pseudo-random.
+      </RightAlignedText>
+      <RightAlignedText>
         There is a few other attributes <Italic>(Complexity, Framed)</Italic>{' '}
         that influence the artwork that occur rarer than others. We will let the
         folks figure those out.
@@ -198,7 +203,7 @@ const FAQ = () => {
         <Bold>Is there any restrictions to minting?</Bold>
       </RightAlignedText>
       <RightAlignedText>
-        Just pay the fare of 1559 {TOKEN_SYMBOL}.
+        Just pay the fare of 1559 {TOKEN_SYMBOL}. You can mint 20 gifts per txn.
       </RightAlignedText>
       <RightAlignedText>
         <Bold>When will the tokens be revealed?</Bold>

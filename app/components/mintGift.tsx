@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
   CHAIN_ID,
@@ -17,6 +17,7 @@ import {
   BELL_CURVE_C,
   BLOCK_NUMBER_UP_TO,
   MAX_SUPPLY,
+  MINT_PRICE,
 } from '../constants/parameters';
 import { BigNumber } from '@ethersproject/bignumber';
 import { utils } from 'ethers';
@@ -171,18 +172,40 @@ const SoldOutMintContent: FC = () => {
   );
 };
 
+const MintInput = styled.input`
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid black;
+  padding: 6px;
+  font-size: 18px;
+  margin: 0;
+`;
+
 const MintContent: FC = () => {
   const tokenIndex = useGiftStore((s) => s.tokenIndex);
   const { account } = useWeb3React();
   const isApproved = useIsApproved();
 
   const { txStatus: approvalTxStatus, approve } = useSetApprove();
+
+  const [mintedAmount, setMintedAmount] = useState<number | undefined>(1);
+
+  const [safeMintedAmount, setSafeMintedAmount] = useState(1);
+
+  useEffect(() => {
+    if (!!mintedAmount) {
+      setSafeMintedAmount(mintedAmount);
+    }
+  }, [mintedAmount]);
   const {
     txStatus: mintingTxStatus,
     mint,
     isMintable,
     isEnoughBalance,
-  } = useMintGift();
+  } = useMintGift(safeMintedAmount);
 
   const loadingText = useLoadingText();
 
@@ -191,8 +214,7 @@ const MintContent: FC = () => {
       !account ||
       (isApproved && !isMintable) ||
       mintingTxStatus === 'in-progress' ||
-      approvalTxStatus === 'in-progress' ||
-      approvalTxStatus === 'success'
+      approvalTxStatus === 'in-progress'
     );
   }, [account, isApproved, isMintable, mintingTxStatus, approvalTxStatus]);
 
@@ -208,9 +230,11 @@ const MintContent: FC = () => {
         return ``;
       }
       if (mintingTxStatus === 'success') {
-        return `Success, mint again?`;
+        return `Success, mint again for ${
+          safeMintedAmount * 1559
+        } ${TOKEN_SYMBOL}?`;
       }
-      return 'Mint';
+      return `Mint for ${safeMintedAmount * 1559} ${TOKEN_SYMBOL}`;
     }
     if (approvalTxStatus === 'failed') {
       return 'Oop try again?';
@@ -223,6 +247,7 @@ const MintContent: FC = () => {
     }
     return `Approve ${TOKEN_SYMBOL}`;
   }, [
+    safeMintedAmount,
     isEnoughBalance,
     mintingTxStatus,
     loadingText,
@@ -263,6 +288,17 @@ const MintContent: FC = () => {
           </A>
         </FlexCenterColumn>
       </MintBody>
+      <MintInput
+        max={'20'}
+        placeholder={'Choose between 1-20'}
+        value={mintedAmount}
+        type={'number'}
+        onChange={(e) =>
+          setMintedAmount(
+            parseInt(e.target.value) > 20 ? 20 : parseInt(e.target.value),
+          )
+        }
+      />
       <Button disabled={isButtonDisabled} onClick={onButtonClick}>
         {mintingTxStatus === 'in-progress' || approvalTxStatus === 'in-progress'
           ? loadingText + ' '
@@ -270,60 +306,5 @@ const MintContent: FC = () => {
         {buttonText}
       </Button>
     </>
-  );
-};
-
-export const MintButton: FC<{ gasPriceInWei?: BigNumber }> = ({
-  gasPriceInWei,
-}) => {
-  const { account } = useWeb3React();
-  const { txStatus, mint, error } = useMinter();
-
-  const buttonText = useMemo(() => {
-    if (!account) {
-      return 'PLUG URSELF IN';
-    }
-    if (!!error || txStatus === 'failed') {
-      if (!!gasPriceInWei) {
-        return `OOF. TRY AGAIN AT ${utils.formatUnits(
-          gasPriceInWei,
-          'gwei',
-        )} GWEI`;
-      }
-      return 'OOF. TRY AGAIN';
-    }
-    if (txStatus === 'in-progress') {
-      return '';
-    }
-    if (txStatus === 'success') {
-      return 'MINTED';
-    }
-    if (!!gasPriceInWei) {
-      return `MINT AT ${utils.formatUnits(gasPriceInWei, 'gwei')} GWEI`;
-    }
-    return `MINT`;
-  }, [gasPriceInWei, txStatus, error, account]);
-
-  const isDisabled = useMemo(() => {
-    return !account || txStatus === 'in-progress' || txStatus === 'success';
-  }, [account, txStatus]);
-
-  const onClick = useCallback(() => {
-    mint(gasPriceInWei);
-  }, [mint, gasPriceInWei]);
-
-  const loadingText = useLoadingText();
-
-  const blockNumber = useBlockchainStore((s) => s.blockNumber);
-  const blocksLeft = useMemo(
-    () => (blockNumber ? BLOCK_NUMBER_UP_TO - blockNumber : undefined),
-    [blockNumber],
-  );
-
-  return (
-    <Button onClick={onClick} disabled={isDisabled}>
-      {txStatus === 'in-progress' ? loadingText + ' ' : ''}
-      {buttonText}
-    </Button>
   );
 };

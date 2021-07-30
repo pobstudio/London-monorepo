@@ -29,7 +29,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     'getApproved(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'maxSupply()': FunctionFragment;
-    'mint()': FunctionFragment;
+    'mint(uint256)': FunctionFragment;
     'mintPrice()': FunctionFragment;
     'mintStartAtBlockNum()': FunctionFragment;
     'name()': FunctionFragment;
@@ -78,7 +78,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     values: [string, string],
   ): string;
   encodeFunctionData(functionFragment: 'maxSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'mintPrice', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'mintStartAtBlockNum',
@@ -328,9 +328,15 @@ export class LondonGift extends Contract {
 
     'maxSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    mint(overrides?: Overrides): Promise<ContractTransaction>;
+    mint(
+      mintAmount: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
 
-    'mint()'(overrides?: Overrides): Promise<ContractTransaction>;
+    'mint(uint256)'(
+      mintAmount: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
 
     mintPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -565,9 +571,15 @@ export class LondonGift extends Contract {
 
   'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mint'(overrides?: Overrides): Promise<ContractTransaction>;
+  'mint'(
+    mintAmount: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
 
-  'mint()'(overrides?: Overrides): Promise<ContractTransaction>;
+  'mint(uint256)'(
+    mintAmount: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
 
   'mintPrice'(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -796,9 +808,12 @@ export class LondonGift extends Contract {
 
     'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(overrides?: CallOverrides): Promise<void>;
+    mint(mintAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'mint()'(overrides?: CallOverrides): Promise<void>;
+    'mint(uint256)'(
+      mintAmount: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1050,9 +1065,12 @@ export class LondonGift extends Contract {
 
     'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(overrides?: Overrides): Promise<BigNumber>;
+    mint(mintAmount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
-    'mint()'(overrides?: Overrides): Promise<BigNumber>;
+    'mint(uint256)'(
+      mintAmount: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
 
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1290,9 +1308,15 @@ export class LondonGift extends Contract {
 
     'maxSupply()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mint(overrides?: Overrides): Promise<PopulatedTransaction>;
+    mint(
+      mintAmount: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
 
-    'mint()'(overrides?: Overrides): Promise<PopulatedTransaction>;
+    'mint(uint256)'(
+      mintAmount: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
 
     mintPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -21,7 +21,7 @@ import { useIsApproved } from './useIsApproved';
 import { MINT_PRICE } from '../constants/parameters';
 import { useShopState } from './useShopState';
 
-export const useMintGift = () => {
+export const useMintGift = (mintedAmount: number = 1) => {
   const { account } = useWeb3React();
   const gift = useLondonGiftContract();
   const shopState = useShopState();
@@ -33,33 +33,31 @@ export const useMintGift = () => {
   const [error, setError] = useState<any | undefined>(undefined);
 
   const isApproved = useIsApproved();
-  const isEnoughBalance = useMemo(() => tokenBalance.gte(MINT_PRICE), [
-    tokenBalance,
-  ]);
+  const isEnoughBalance = useMemo(
+    () => tokenBalance.gte(MINT_PRICE.mul(mintedAmount)),
+    [tokenBalance, mintedAmount],
+  );
 
   const isMintable = useMemo(() => {
     return shopState === 'open' && isApproved && isEnoughBalance;
   }, [shopState, isApproved, isEnoughBalance]);
 
-  const mint = useCallback(
-    async (gasPrice?: BigNumber) => {
-      if (!account || !gift) {
-        return;
-      }
-      try {
-        const res = await gift.mint();
+  const mint = useCallback(async () => {
+    if (!account || !gift) {
+      return;
+    }
+    try {
+      const res = await gift.mint(mintedAmount);
 
-        addTransaction(res.hash, {
-          type: 'minting-gift',
-        });
-        setError(undefined);
-      } catch (e) {
-        console.error(e);
-        setError(e);
-      }
-    },
-    [gift, account],
-  );
+      addTransaction(res.hash, {
+        type: 'minting-gift',
+      });
+      setError(undefined);
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    }
+  }, [gift, account, mintedAmount]);
 
   const tx = useMemo(() => {
     const justAddedTxs = Object.values(transactionMap).filter(
@@ -90,6 +88,6 @@ export const useMintGift = () => {
       isMintable,
       isEnoughBalance,
     }),
-    [isEnoughBalance, isMintable, gift, txStatus, tx, error],
+    [mint, isEnoughBalance, isMintable, gift, txStatus, tx, error],
   );
 };
