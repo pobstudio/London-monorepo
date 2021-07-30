@@ -16,6 +16,7 @@ import { useLoadingText } from '../hooks/useLoadingText';
 import {
   BELL_CURVE_C,
   BLOCK_NUMBER_UP_TO,
+  MAX_MINT_PER_TX,
   MAX_SUPPLY,
   MINT_PRICE,
 } from '../constants/parameters';
@@ -289,13 +290,13 @@ const MintContent: FC = () => {
         </FlexCenterColumn>
       </MintBody>
       <MintInput
-        max={'20'}
-        placeholder={'Choose between 1-20'}
+        max={MAX_MINT_PER_TX.toString()}
+        placeholder={`Choose between 1-${MAX_MINT_PER_TX}`}
         value={mintedAmount}
         type={'number'}
         onChange={(e) =>
           setMintedAmount(
-            parseInt(e.target.value) > 20 ? 20 : parseInt(e.target.value),
+            parseInt(e.target.value) > MAX_MINT_PER_TX ? MAX_MINT_PER_TX : parseInt(e.target.value),
           )
         }
       />

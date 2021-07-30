@@ -10,7 +10,7 @@ import "./utils/Strings.sol";
 contract LondonGift is Ownable, ERC721 {
     using Strings for uint256;
 
-    uint256 constant MAX_MINT_PER_TX = 20;
+    uint256 constant MAX_MINT_PER_TX = 8;
 
     ERC20Mintable public immutable payableErc20;
     uint256 public immutable mintPrice;

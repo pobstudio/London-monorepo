@@ -203,7 +203,7 @@ const FAQ = () => {
         <Bold>Is there any restrictions to minting?</Bold>
       </RightAlignedText>
       <RightAlignedText>
-        Just pay the fare of 1559 {TOKEN_SYMBOL}. You can mint 20 gifts per txn.
+        Just pay the fare of 1559 {TOKEN_SYMBOL}. You can mint {MAX_MINT_PER_TX} gifts per txn.
       </RightAlignedText>
       <RightAlignedText>
         <Bold>When will the tokens be revealed?</Bold>
