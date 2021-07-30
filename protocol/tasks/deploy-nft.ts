@@ -25,7 +25,7 @@ task('deploy-nft', 'Deploys $LONDON ', async (args, hre) => {
   const symbol = 'GIFT';
   const blockNumberUpTo = 12965000;
   const mintPrice = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
-  const maxSupply = 8888;
+  const maxSupply = 4 * 1559;
   const provenance =
     '0xd46179dd40ee3254e5dff531d0cea44ddf279de734635a2fa75ee4a86ebfcc43';
 

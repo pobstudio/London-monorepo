@@ -87,7 +87,7 @@ task(
         'GIFT',
         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
         ONE_TOKEN_IN_BASE_UNITS.mul(1559).toString(),
-        8888,
+        4 * 1559,
         '0xd46179dd40ee3254e5dff531d0cea44ddf279de734635a2fa75ee4a86ebfcc43',
       ],
     });

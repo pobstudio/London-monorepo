@@ -194,7 +194,7 @@ const FAQ = () => {
       <RightAlignedText>
         <Bold>How many LONDON gift will exist?</Bold>
       </RightAlignedText>
-      <RightAlignedText>There will be a supply of 8888.</RightAlignedText>
+      <RightAlignedText>There will be a supply of {MAX_SUPPLY}.</RightAlignedText>
       <RightAlignedText>
         <Bold>When does the shoppe open?</Bold>
       </RightAlignedText>
