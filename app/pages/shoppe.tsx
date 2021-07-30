@@ -20,7 +20,7 @@ import {
   SNAPSHOT_LINK,
   TOKEN_SYMBOL,
 } from '../constants';
-import { BLOCK_NUMBER_UP_TO, MAX_SUPPLY } from '../constants/parameters';
+import { BLOCK_NUMBER_UP_TO, MAX_MINT_PER_TX, MAX_SUPPLY } from '../constants/parameters';
 import { Header } from '../components/header';
 import { NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
 import {
