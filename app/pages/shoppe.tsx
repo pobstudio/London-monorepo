@@ -170,7 +170,7 @@ const Rarity = () => {
         </TableBody>
       </TableContainer>
       <RightAlignedText>
-        {shopState === 'open' || shopState === 'sold-out' ? `${88}` : '???'}{' '}
+        {shopState === 'open' || shopState === 'sold-out' ? `${30}` : '???'}{' '}
         NFTs will have unique hand written names. The rest will be
         pseudo-random.
       </RightAlignedText>
