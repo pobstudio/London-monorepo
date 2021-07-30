@@ -20,7 +20,7 @@ export const OPENSEA_ASSET_NAME = 'london-gift';
 
 export const OPENSEA_ASSET_URL = 'london-gift';
 
-export const CHAIN_ID = parseInt('4'); // parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
+export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 
 export const ALCHEMY_KEY =
   CHAIN_ID === 1
