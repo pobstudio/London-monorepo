@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
+import { Erc20Mintable } from '../typechain/ERC20Mintable';
 import { LondonGift } from '../typechain/LondonGift';
 import { expect } from 'chai';
 import { getAddress } from '@ethersproject/address';
@@ -15,7 +15,7 @@ const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 
 describe('LondonGift', function () {
   // constant values used in transfer tests
-  let erc20Mintable: ERC20Mintable;
+  let erc20Mintable: Erc20Mintable;
   let londonGift: LondonGift;
   let owner: Signer;
   let rando: Signer;
@@ -48,12 +48,12 @@ describe('LondonGift', function () {
   });
 
   beforeEach(async function () {
-    const ERC20Mintable = await ethers.getContractFactory('ERC20Mintable');
-    erc20Mintable = (await ERC20Mintable.deploy(
+    const Erc20Mintable = await ethers.getContractFactory('ERC20Mintable');
+    erc20Mintable = (await Erc20Mintable.deploy(
       await minter.getAddress(),
       TOKEN_NAME,
       TOKEN_SYMBOL,
-    )) as ERC20Mintable;
+    )) as Erc20Mintable;
     await erc20Mintable.deployed();
 
     const LondonGift = await ethers.getContractFactory('LondonGift');
@@ -343,9 +343,9 @@ describe('LondonGift', function () {
         'max supply minted',
       );
     });
-    it('should not mint over 8 per tx', async function () {
-      await londonGift.connect(owner).mint(8);
-      await expect(londonGift.connect(owner).mint(9)).to.revertedWith(
+    it('should not mint over 10 per tx', async function () {
+      await londonGift.connect(owner).mint(10);
+      await expect(londonGift.connect(owner).mint(11)).to.revertedWith(
         'too many mints in one go',
       );
     });

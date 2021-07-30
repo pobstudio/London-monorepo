@@ -54,21 +54,53 @@ export class BellCurveParametersStorage extends Contract {
   'interface': BellCurveParametersStorageInterface;
 
   'functions': {
-    a(overrides?: CallOverrides): Promise<[BigNumber]>;
+    a(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'a()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'a()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    b(overrides?: CallOverrides): Promise<[BigNumber]>;
+    b(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'b()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'b()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    c(overrides?: CallOverrides): Promise<[BigNumber]>;
+    c(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'c()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'c()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    d(overrides?: CallOverrides): Promise<[BigNumber]>;
+    d(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'd()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'd()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
   };
 
   'a'(overrides?: CallOverrides): Promise<BigNumber>;

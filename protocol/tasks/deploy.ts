@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { utils } from 'ethers';
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
+import { Erc20Mintable } from '../typechain/ERC20Mintable';
 import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
@@ -40,15 +40,15 @@ task('deploy', 'Deploys $LONDON ', async (args, hre) => {
   console.log('GasPriceBasedMinter deployed to:', minter.address);
 
   // deploy erc1155
-  const ERC20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
+  const Erc20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
 
-  const erc20 = (await ERC20Mintable.deploy(
+  const erc20 = (await Erc20Mintable.deploy(
     minter.address,
     tokenName,
     tokenSymbol,
-  )) as ERC20Mintable;
+  )) as Erc20Mintable;
   await erc20.deployed();
-  console.log('ERC20Mintable deployed to:', erc20.address);
+  console.log('Erc20Mintable deployed to:', erc20.address);
 
   // wire minting rights
   console.log('wiring minting rights');

@@ -1,11 +1,11 @@
 import { AlchemyProvider } from '@ethersproject/providers';
-import { deployments, LondonGift__factory } from '@pob/protocol';
+import { deployments, LondonGiftFactory } from '@pob/protocol';
 import { BigNumber } from 'ethers';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { CHAIN_ID } from '../../constants';
 import { PROVIDER } from '../../constants/providers';
 
-const gift = LondonGift__factory.connect(deployments[CHAIN_ID].gift, PROVIDER);
+const gift = LondonGiftFactory.connect(deployments[CHAIN_ID].gift, PROVIDER);
 const handleTokenIndex = async (req: NextApiRequest, res: NextApiResponse) => {
   const { blockNum } = req.query;
 

@@ -20,7 +20,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface IERC20MetadataInterface extends ethers.utils.Interface {
+interface Ierc20MetadataInterface extends ethers.utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -83,7 +83,7 @@ interface IERC20MetadataInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class IERC20Metadata extends Contract {
+export class Ierc20Metadata extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -94,20 +94,24 @@ export class IERC20Metadata extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': IERC20MetadataInterface;
+  'interface': Ierc20MetadataInterface;
 
   'functions': {
     allowance(
       owner: string,
       spender: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     'allowance(address,address)'(
       owner: string,
       spender: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     approve(
       spender: string,
@@ -121,28 +125,67 @@ export class IERC20Metadata extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      account: string,
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     'balanceOf(address)'(
       account: string,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    decimals(overrides?: CallOverrides): Promise<[number]>;
+    decimals(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: number;
+    }>;
 
-    'decimals()'(overrides?: CallOverrides): Promise<[number]>;
+    'decimals()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: number;
+    }>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
+    name(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'name()'(overrides?: CallOverrides): Promise<[string]>;
+    'name()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
+    symbol(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<[string]>;
+    'symbol()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: string;
+    }>;
 
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupply(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
-    'totalSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'totalSupply()'(
+      overrides?: CallOverrides,
+    ): Promise<{
+      0: BigNumber;
+    }>;
 
     transfer(
       recipient: string,
