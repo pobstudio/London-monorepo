@@ -6,7 +6,10 @@ import useSWR from 'swr';
 import { fetcher } from '../utils/fetcher';
 import { useTokensStore } from '../stores/token';
 import { PROVIDER } from '../constants/providers';
-import { useLondonContract } from '../hooks/useContracts';
+import {
+  useLondonContract,
+  useLondonGiftContract,
+} from '../hooks/useContracts';
 import { useWeb3React } from '@web3-react/core';
 import { deployments } from '@pob/protocol';
 import { CHAIN_ID } from '../constants';
@@ -17,9 +20,11 @@ export const TokensEffect: FC = () => {
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
   const setApprovalBalance = useTokensStore((s) => s.setApprovalBalance);
   const setTokenBalance = useTokensStore((s) => s.setTokenBalance);
+  const setNftMintedAmount = useGiftStore((s) => s.setNftMintedAmount);
   const setTokenIndex = useGiftStore((s) => s.setTokenIndex);
   const { account } = useWeb3React();
   const london = useLondonContract();
+  const gift = useLondonGiftContract();
 
   const { data: tokenIndexData } = useSWR(
     useMemo(() => `/api/token-index?blockNum=${blockNumber}}`, [blockNumber]),
@@ -45,13 +50,25 @@ export const TokensEffect: FC = () => {
     if (!account) {
       return;
     }
-    console.log('calling');
     london.allowance(account, deployments[CHAIN_ID].gift).then((v) => {
       console.log('v', v.toString());
       setApprovalBalance(v);
     });
     london.balanceOf(account).then(setTokenBalance);
   }, [shopState, account, london, blockNumber]);
+
+  useEffect(() => {
+    if (shopState !== 'preview') {
+      return;
+    }
+    if (!gift) {
+      return;
+    }
+    if (!account) {
+      return;
+    }
+    gift.mintedAmounts(account).then((b) => setNftMintedAmount(b.toNumber()));
+  }, [shopState, account, gift, blockNumber]);
 
   return <></>;
 };

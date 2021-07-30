@@ -192,7 +192,9 @@ const IndexPage: NextPage = () => {
         <Text style={{ marginBottom: 12 }}>
           <Link href={ROUTES.SHOPPE} passHref>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
+              {shopState === 'preview' && 'SHOPPE IS OPEN!'}
               {shopState === 'open' && 'SHOPPE IS OPEN!'}
+              {shopState === 'revealed' && 'SHOPPE IS OPEN!'}
               {shopState === 'sold-out' && 'SHOPPE HAS SOLD OUT!'}
               {shopState === 'not-open' && 'CHECK OUT THE SHOPPE!'}
             </A>

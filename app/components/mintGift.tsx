@@ -15,7 +15,10 @@ import { useCallback } from 'react';
 import { useLoadingText } from '../hooks/useLoadingText';
 import {
   BELL_CURVE_C,
+  BLOCK_NUMBER_REVEAL_START_AT,
+  BLOCK_NUMBER_UNLOCK_START_AT,
   BLOCK_NUMBER_UP_TO,
+  MAX_MINT_NOT_UNLOCKED,
   MAX_MINT_PER_TX,
   MAX_SUPPLY,
   MINT_PRICE,
@@ -88,21 +91,14 @@ type MintingChooseOption =
   | 'let-wallet-decide'
   | '1559-gwei';
 
-const LITTLE_LOWER_DELTA = 10;
-const MORE_LOWER_DELTA = 20;
-
-const MintOptionRow = styled(FlexEnds)``;
-
-const MintOptionRowContainer = styled.div`
-  padding: 8px 0;
-`;
-
 export const MintGift: FC<{}> = ({}) => {
   const shopState = useShopState();
   return (
     <MintWrapper>
       {shopState === 'not-open' && <NotOpenMintContent />}
       {shopState === 'open' && <MintContent />}
+      {shopState === 'revealed' && <MintContent />}
+      {shopState === 'preview' && <PreviewMintContent />}
       {shopState === 'sold-out' && <SoldOutMintContent />}
     </MintWrapper>
   );
@@ -296,10 +292,123 @@ const MintContent: FC = () => {
         type={'number'}
         onChange={(e) =>
           setMintedAmount(
-            parseInt(e.target.value) > MAX_MINT_PER_TX ? MAX_MINT_PER_TX : parseInt(e.target.value),
+            parseInt(e.target.value) > MAX_MINT_PER_TX
+              ? MAX_MINT_PER_TX
+              : parseInt(e.target.value),
           )
         }
       />
+      <Button disabled={isButtonDisabled} onClick={onButtonClick}>
+        {mintingTxStatus === 'in-progress' || approvalTxStatus === 'in-progress'
+          ? loadingText + ' '
+          : ''}
+        {buttonText}
+      </Button>
+    </>
+  );
+};
+
+const PreviewMintContent: FC = () => {
+  const tokenIndex = useGiftStore((s) => s.tokenIndex);
+  const { account } = useWeb3React();
+  const isApproved = useIsApproved();
+  const blockNumber = useBlockchainStore((s) => s.blockNumber);
+  const mintedAmount = useGiftStore((s) => s.nftMintedAmount);
+  const { txStatus: approvalTxStatus, approve } = useSetApprove();
+
+  const {
+    txStatus: mintingTxStatus,
+    mint,
+    isMintable,
+    isEnoughBalance,
+  } = useMintGift(MAX_MINT_NOT_UNLOCKED);
+
+  const loadingText = useLoadingText();
+
+  const isButtonDisabled = useMemo(() => {
+    return (
+      !account ||
+      (isApproved && !isMintable) ||
+      mintingTxStatus === 'in-progress' ||
+      approvalTxStatus === 'in-progress'
+    );
+  }, [account, isApproved, isMintable, mintingTxStatus, approvalTxStatus]);
+
+  const buttonText = useMemo(() => {
+    if (isApproved) {
+      if (!isEnoughBalance) {
+        return `Not enough ${TOKEN_SYMBOL}`;
+      }
+      if (mintingTxStatus === 'failed') {
+        return 'Oop try again?';
+      }
+      if (mintingTxStatus === 'in-progress') {
+        return ``;
+      }
+      if (mintingTxStatus === 'success') {
+        return `Success, wait ${
+          blockNumber ? BLOCK_NUMBER_UNLOCK_START_AT - blockNumber : '-'
+        } to mint more.`;
+      }
+      return `Mint`;
+    }
+    if (mintedAmount >= MAX_MINT_NOT_UNLOCKED) {
+      return `Minted, wait ${
+        blockNumber ? BLOCK_NUMBER_UNLOCK_START_AT - blockNumber : '-'
+      } to mint more.`;
+    }
+    if (approvalTxStatus === 'failed') {
+      return 'Oop try again?';
+    }
+    if (approvalTxStatus === 'in-progress') {
+      return ``;
+    }
+    if (approvalTxStatus === 'success') {
+      return `Approved`;
+    }
+    return `Approve ${TOKEN_SYMBOL}`;
+  }, [
+    isEnoughBalance,
+    mintingTxStatus,
+    loadingText,
+    isApproved,
+    approvalTxStatus,
+    blockNumber,
+  ]);
+
+  const onButtonClick = useCallback(() => {
+    if (isApproved) {
+      mint();
+    } else {
+      approve();
+    }
+  }, [mint, approve, isApproved]);
+
+  return (
+    <>
+      <MintBody>
+        <FlexCenterColumn style={{ margin: '36px 0' }}>
+          <Title>
+            <Bold>
+              {MAX_SUPPLY - tokenIndex} / {MAX_SUPPLY}
+            </Bold>
+          </Title>
+          <Text>gifts left</Text>
+        </FlexCenterColumn>
+        <FlexCenterColumn>
+          <A
+            target={'_blank'}
+            href={
+              !!account
+                ? getOpenSeaUserAssetUrl(account, OPENSEA_ASSET_NAME)
+                : getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)
+            }
+            style={{ cursor: 'pointer' }}
+          >
+            View collection on OpenSea
+          </A>
+        </FlexCenterColumn>
+      </MintBody>
       <Button disabled={isButtonDisabled} onClick={onButtonClick}>
         {mintingTxStatus === 'in-progress' || approvalTxStatus === 'in-progress'
           ? loadingText + ' '

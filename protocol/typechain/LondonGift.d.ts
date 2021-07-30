@@ -32,6 +32,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     'mint(uint256)': FunctionFragment;
     'mintPrice()': FunctionFragment;
     'mintStartAtBlockNum()': FunctionFragment;
+    'mintedAmounts(address)': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
@@ -46,6 +47,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     'setMintStartAtBlockNum(uint256)': FunctionFragment;
     'setRevealStartAtBlockNum(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
+    'setUnlockStartAtBlockNum(uint256)': FunctionFragment;
     'startingIndex()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
@@ -54,6 +56,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'treasury()': FunctionFragment;
+    'unlockStartAtBlockNum()': FunctionFragment;
   };
 
   encodeFunctionData(
@@ -83,6 +86,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: 'mintStartAtBlockNum',
     values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mintedAmounts',
+    values: [string],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
@@ -132,6 +139,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
+    functionFragment: 'setUnlockStartAtBlockNum',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'startingIndex',
     values?: undefined,
   ): string;
@@ -157,6 +168,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     values: [string],
   ): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'unlockStartAtBlockNum',
+    values?: undefined,
+  ): string;
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -181,6 +196,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: 'mintPrice', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'mintStartAtBlockNum',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintedAmounts',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
@@ -228,6 +247,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'setUnlockStartAtBlockNum',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'startingIndex',
     data: BytesLike,
   ): Result;
@@ -247,6 +270,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'unlockStartAtBlockNum',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
@@ -345,6 +372,16 @@ export class LondonGift extends Contract {
     mintStartAtBlockNum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    mintedAmounts(
+      arg0: string,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
+    'mintedAmounts(address)'(
+      arg0: string,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -457,6 +494,16 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    setUnlockStartAtBlockNum(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setUnlockStartAtBlockNum(uint256)'(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
     startingIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'startingIndex()'(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -516,6 +563,10 @@ export class LondonGift extends Contract {
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     'treasury()'(overrides?: CallOverrides): Promise<[string]>;
+
+    unlockStartAtBlockNum(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   'approve'(
@@ -588,6 +639,13 @@ export class LondonGift extends Contract {
   'mintStartAtBlockNum'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'mintedAmounts'(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  'mintedAmounts(address)'(
+    arg0: string,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'name'(overrides?: CallOverrides): Promise<string>;
 
@@ -697,6 +755,16 @@ export class LondonGift extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'setUnlockStartAtBlockNum'(
+    _unlockStartAtBlockNum: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setUnlockStartAtBlockNum(uint256)'(
+    _unlockStartAtBlockNum: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
   'startingIndex'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -753,6 +821,10 @@ export class LondonGift extends Contract {
   'treasury'(overrides?: CallOverrides): Promise<string>;
 
   'treasury()'(overrides?: CallOverrides): Promise<string>;
+
+  'unlockStartAtBlockNum'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'callStatic': {
     approve(
@@ -822,6 +894,13 @@ export class LondonGift extends Contract {
     mintStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
     'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    'mintedAmounts(address)'(
+      arg0: string,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -928,6 +1007,16 @@ export class LondonGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    setUnlockStartAtBlockNum(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setUnlockStartAtBlockNum(uint256)'(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -984,6 +1073,10 @@ export class LondonGift extends Contract {
     treasury(overrides?: CallOverrides): Promise<string>;
 
     'treasury()'(overrides?: CallOverrides): Promise<string>;
+
+    unlockStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   'filters': {
@@ -1079,6 +1172,13 @@ export class LondonGift extends Contract {
     mintStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
     'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    'mintedAmounts(address)'(
+      arg0: string,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1188,6 +1288,16 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    setUnlockStartAtBlockNum(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setUnlockStartAtBlockNum(uint256)'(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1247,6 +1357,10 @@ export class LondonGift extends Contract {
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
     'treasury()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    unlockStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   'populateTransaction': {
@@ -1327,6 +1441,16 @@ export class LondonGift extends Contract {
     ): Promise<PopulatedTransaction>;
 
     'mintStartAtBlockNum()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    mintedAmounts(
+      arg0: string,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'mintedAmounts(address)'(
+      arg0: string,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1445,6 +1569,16 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    setUnlockStartAtBlockNum(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setUnlockStartAtBlockNum(uint256)'(
+      _unlockStartAtBlockNum: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
     startingIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'startingIndex()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1504,5 +1638,13 @@ export class LondonGift extends Contract {
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'treasury()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    unlockStartAtBlockNum(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'unlockStartAtBlockNum()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

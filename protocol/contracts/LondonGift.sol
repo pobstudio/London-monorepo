@@ -10,7 +10,8 @@ import "./utils/Strings.sol";
 contract LondonGift is Ownable, ERC721 {
     using Strings for uint256;
 
-    uint256 constant MAX_MINT_PER_TX = 8;
+    uint256 constant MAX_MINT_PER_TX = 10;
+    uint256 constant MAX_MINT_BEFORE_UNLOCKED = 1;
 
     ERC20Mintable public immutable payableErc20;
     uint256 public immutable mintPrice;
@@ -20,6 +21,7 @@ contract LondonGift is Ownable, ERC721 {
 
     uint256 public startingIndex = 0;
     uint256 public mintStartAtBlockNum;
+    uint256 public unlockStartAtBlockNum;
     uint256 public revealStartAtBlockNum;
 
     address public treasury;
@@ -28,7 +30,7 @@ contract LondonGift is Ownable, ERC721 {
 
     uint256 public tokenIndex;
 
-    // mapping(address => uint256) public mintedAmounts;
+    mapping(address => uint256) public mintedAmounts;
 
     constructor (
       string memory name_,
@@ -62,8 +64,12 @@ contract LondonGift is Ownable, ERC721 {
       revealStartAtBlockNum = _revealStartAtBlockNum;
     }
 
-   function setMintStartAtBlockNum(uint256 _mintStartAtBlockNum) public onlyOwner {
+    function setMintStartAtBlockNum(uint256 _mintStartAtBlockNum) public onlyOwner {
       mintStartAtBlockNum = _mintStartAtBlockNum;
+    }
+
+   function setUnlockStartAtBlockNum(uint256 _unlockStartAtBlockNum) public onlyOwner {
+      unlockStartAtBlockNum = _unlockStartAtBlockNum;
     }
 
     modifier onlyUnderMaxSupply(uint mintAmount) {
@@ -71,13 +77,14 @@ contract LondonGift is Ownable, ERC721 {
       _;
     }
 
-    // modifier onlyUnderMaxMintPerAddress() {
-    //   require(mintedAmounts[_msgSender()] < maxMintPerAddress, 'Max supply per address minted');
-    //   _;
-    // }
+    modifier onlyUnderMaxMintPerAddressWhenNotUnlocked(uint mintAmount) {
+      require(unlockStartAtBlockNum != 0, 'unlockStartAtBlockNum not set');
+      require(block.number > unlockStartAtBlockNum || mintedAmounts[_msgSender()] + mintAmount <= MAX_MINT_BEFORE_UNLOCKED, 'Max supply per address minted');
+      _;
+    }
 
     modifier onlyMintUnderMaxPerTx(uint256 mintAmount) {
-      require(mintAmount < MAX_MINT_PER_TX, 'too many mints in one go');
+      require(mintAmount <= MAX_MINT_PER_TX, 'too many mints in one go');
       _;
     }
 
@@ -103,7 +110,7 @@ contract LondonGift is Ownable, ERC721 {
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, id.toString())) : "";
     }
     
-    function mint(uint mintAmount) onlyAfterMintStartAtBlockNum() onlyUnderMaxSupply(mintAmount) onlyMintUnderMaxPerTx(mintAmount) public {
+    function mint(uint mintAmount) onlyAfterMintStartAtBlockNum() onlyUnderMaxSupply(mintAmount) onlyMintUnderMaxPerTx(mintAmount) onlyUnderMaxMintPerAddressWhenNotUnlocked(mintAmount) public {
       // ensure approval is met
       require(payableErc20.allowance(_msgSender(), address(this)) >= (mintPrice * mintAmount), "Allowance not set to mint");
       require(payableErc20.balanceOf(_msgSender()) >= (mintPrice * mintAmount), "Not enough token to mint");
@@ -115,7 +122,7 @@ contract LondonGift is Ownable, ERC721 {
         // increment
         tokenIndex++;
       }
-
+      mintedAmounts[_msgSender()] += mintAmount;
       if (startingIndex == 0 && (tokenIndex == maxSupply || (block.number > revealStartAtBlockNum && revealStartAtBlockNum != 0))) {
         startingIndex = uint(blockhash(block.number - 1)) % maxSupply;
         if (startingIndex == 0) {

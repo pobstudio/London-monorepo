@@ -14,7 +14,7 @@ export const deployments: Deployments = {
     multisig: '0x37F64fB7Fa2fBC5f6056301273fAF8A1Fc803b7A',
     erc20: '0x243901455D1B8ef76678b32b4459602CC6B730ae',
     minter: '0xf46004c50a7462F1B4E7e9e68473e6b687BEc597',
-    gift: '0xAA747d42c6FBDF8633a8E0C5E44D4987863E7fD7',
+    gift: '0xd803080fa9a37644601290CE3c6cc35325F999E9',
     contractURI: 'bafkreifmkpt535hxe4hd2sllvhdgnp5oubtos2bhqmc4sfgizwqssse45q',
     baseTokenURI: 'bafybeibbvkhhbt2kr67pgi4kdf6gf73wixpsjcefsjsm33ew7cnnsymvba',
   },

@@ -18,14 +18,16 @@ import { deployments } from '@pob/protocol';
 import { CHAIN_ID, MAX_APPROVAL } from '../constants';
 import { useTokensStore } from '../stores/token';
 import { useIsApproved } from './useIsApproved';
-import { MINT_PRICE } from '../constants/parameters';
+import { MINT_PRICE, MAX_MINT_NOT_UNLOCKED } from '../constants/parameters';
 import { useShopState } from './useShopState';
+import { useGiftStore } from '../stores/gift';
 
-export const useMintGift = (mintedAmount: number = 1) => {
+export const useMintGift = (mintAmount: number = 1) => {
   const { account } = useWeb3React();
   const gift = useLondonGiftContract();
   const shopState = useShopState();
   const tokenBalance = useTokensStore((s) => s.tokenBalance);
+  const mintedAmount = useGiftStore((s) => s.nftMintedAmount);
 
   const addTransaction = useTransactionsStore((s) => s.addTransaction);
   const transactionMap = useTransactionsStore((s) => s.transactionMap);
@@ -34,12 +36,18 @@ export const useMintGift = (mintedAmount: number = 1) => {
 
   const isApproved = useIsApproved();
   const isEnoughBalance = useMemo(
-    () => tokenBalance.gte(MINT_PRICE.mul(mintedAmount)),
-    [tokenBalance, mintedAmount],
+    () => tokenBalance.gte(MINT_PRICE.mul(mintAmount)),
+    [tokenBalance, mintAmount],
   );
 
   const isMintable = useMemo(() => {
-    return shopState === 'open' && isApproved && isEnoughBalance;
+    return (
+      (shopState === 'open' ||
+        shopState === 'revealed' ||
+        (shopState === 'preview' && mintedAmount < MAX_MINT_NOT_UNLOCKED)) &&
+      isApproved &&
+      isEnoughBalance
+    );
   }, [shopState, isApproved, isEnoughBalance]);
 
   const mint = useCallback(async () => {
@@ -47,7 +55,7 @@ export const useMintGift = (mintedAmount: number = 1) => {
       return;
     }
     try {
-      const res = await gift.mint(mintedAmount);
+      const res = await gift.mint(mintAmount);
 
       addTransaction(res.hash, {
         type: 'minting-gift',
@@ -57,7 +65,7 @@ export const useMintGift = (mintedAmount: number = 1) => {
       console.error(e);
       setError(e);
     }
-  }, [gift, account, mintedAmount]);
+  }, [gift, account, mintAmount]);
 
   const tx = useMemo(() => {
     const justAddedTxs = Object.values(transactionMap).filter(

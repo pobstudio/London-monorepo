@@ -20,7 +20,12 @@ import {
   SNAPSHOT_LINK,
   TOKEN_SYMBOL,
 } from '../constants';
-import { BLOCK_NUMBER_UP_TO, MAX_MINT_PER_TX, MAX_SUPPLY } from '../constants/parameters';
+import {
+  BLOCK_NUMBER_UNLOCK_START_AT,
+  MAX_MINT_NOT_UNLOCKED,
+  MAX_MINT_PER_TX,
+  MAX_SUPPLY,
+} from '../constants/parameters';
 import { Header } from '../components/header';
 import { NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
 import {
@@ -194,16 +199,27 @@ const FAQ = () => {
       <RightAlignedText>
         <Bold>How many LONDON gift will exist?</Bold>
       </RightAlignedText>
-      <RightAlignedText>There will be a supply of {MAX_SUPPLY}.</RightAlignedText>
+      <RightAlignedText>
+        There will be a supply of {MAX_SUPPLY}.
+      </RightAlignedText>
       <RightAlignedText>
         <Bold>When does the shoppe open?</Bold>
       </RightAlignedText>
       <RightAlignedText>Right after the LONDON hardfork.</RightAlignedText>
       <RightAlignedText>
+        <Bold>How much to mint?</Bold>
+      </RightAlignedText>
+      <RightAlignedText>
+        Just pay the fare of 1559 {TOKEN_SYMBOL}.
+      </RightAlignedText>
+      <RightAlignedText>
         <Bold>Is there any restrictions to minting?</Bold>
       </RightAlignedText>
       <RightAlignedText>
-        Just pay the fare of 1559 {TOKEN_SYMBOL}. You can mint {MAX_MINT_PER_TX} gifts per txn.
+        Up to {BLOCK_NUMBER_UNLOCK_START_AT} (12 hrs after the hardfork), there
+        is a {MAX_MINT_NOT_UNLOCKED} mint per address limit. After{' '}
+        {BLOCK_NUMBER_UNLOCK_START_AT} you can mint as many as you want. You can
+        mint {MAX_MINT_PER_TX} gifts per txn.
       </RightAlignedText>
       <RightAlignedText>
         <Bold>When will the tokens be revealed?</Bold>
@@ -296,6 +312,8 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'not-open' &&
               'Still setting up the register and shelving...'}
             {shopState === 'open' && 'Grand opening!'}
+            {shopState === 'preview' && 'We are open! 1 per address for now.'}
+            {shopState === 'revealed' && 'NFTs have been revealed!'}
             {shopState === 'sold-out' && 'Annnnnd its gone!'}
           </Italic>
         </Caption>

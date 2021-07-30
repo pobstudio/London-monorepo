@@ -1,12 +1,19 @@
 import { useMemo } from 'react';
 import {
   BLOCK_NUMBER_MINT_START_AT,
+  BLOCK_NUMBER_REVEAL_START_AT,
+  BLOCK_NUMBER_UNLOCK_START_AT,
   MAX_SUPPLY,
 } from '../constants/parameters';
 import { useBlockchainStore } from '../stores/blockchain';
 import { useGiftStore } from '../stores/gift';
 
-export type ShopState = 'not-open' | 'open' | 'sold-out';
+export type ShopState =
+  | 'not-open'
+  | 'preview'
+  | 'open'
+  | 'revealed'
+  | 'sold-out';
 
 export const useShopState = () => {
   const blockNumber = useBlockchainStore((s) => s.blockNumber);
@@ -20,6 +27,12 @@ export const useShopState = () => {
     }
     if (tokenIndex >= MAX_SUPPLY) {
       return 'sold-out';
+    }
+    if (blockNumber < BLOCK_NUMBER_UNLOCK_START_AT) {
+      return 'preview';
+    }
+    if (blockNumber < BLOCK_NUMBER_REVEAL_START_AT) {
+      return 'revealed';
     }
     return 'open';
   }, [tokenIndex, blockNumber]);

@@ -26,7 +26,7 @@ describe('LondonGift', function () {
   const symbol = 'GIFT';
 
   const mintPrice = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
-  const maxMintPerAddress = 5;
+  const maxMintPerAddress = 8;
   const maxSupply = 21;
   const prefixSequenceValue = 10;
   const provenance =
@@ -35,7 +35,9 @@ describe('LondonGift', function () {
   const baseMetadataURI = 'ipfs://test/';
   const contractURI = 'ipfs://contract/';
   const mintStartAtBlockNum = 1;
-  const revealStartAtBlockNum = 100;
+  const unlockStartAtBlockNum = 1;
+
+  const revealStartAtBlockNum = 1000;
 
   before(async function () {
     const accounts = await ethers.getSigners();
@@ -76,6 +78,24 @@ describe('LondonGift', function () {
       // expect(await londonGift.maxMintPerAddress()).to.eq(maxMintPerAddress);
       expect(await londonGift.maxSupply()).to.eq(maxSupply);
       expect(await londonGift.provenance()).to.eq(provenance);
+    });
+  });
+
+  describe('setUnlockStartAtBlockNum', () => {
+    it('should set new unlockStartAtBlockNum address', async function () {
+      await londonGift
+        .connect(owner)
+        .setUnlockStartAtBlockNum(unlockStartAtBlockNum);
+      expect(await londonGift.unlockStartAtBlockNum()).to.eq(
+        unlockStartAtBlockNum,
+      );
+    });
+    it('should not set new unlockStartAtBlockNum address by rando', async function () {
+      await expect(
+        londonGift
+          .connect(rando)
+          .setUnlockStartAtBlockNum(unlockStartAtBlockNum),
+      ).to.reverted;
     });
   });
 
@@ -150,14 +170,17 @@ describe('LondonGift', function () {
     beforeEach(async () => {
       await erc20Mintable
         .connect(minter)
-        .mint(await rando.getAddress(), mintPrice.mul(maxMintPerAddress + 1));
+        .mint(await owner.getAddress(), mintPrice.mul(100));
       await erc20Mintable
-        .connect(rando)
-        .approve(londonGift.address, mintPrice.mul(maxMintPerAddress + 1));
+        .connect(owner)
+        .approve(londonGift.address, mintPrice.mul(100));
       await londonGift.connect(owner).setTreasury(await treasury.getAddress());
       await londonGift
         .connect(owner)
         .setMintStartAtBlockNum(mintStartAtBlockNum);
+      await londonGift
+        .connect(owner)
+        .setUnlockStartAtBlockNum(unlockStartAtBlockNum);
       await londonGift
         .connect(owner)
         .setRevealStartAtBlockNum(revealStartAtBlockNum);
@@ -165,26 +188,15 @@ describe('LondonGift', function () {
     });
     it('should return empty tokenURI if startingIndex not set', async function () {
       expect(await londonGift.startingIndex()).to.eq(BigNumber.from(0));
-      await londonGift.connect(rando).mint(1);
+      await londonGift.connect(owner).mint(1);
       expect(await londonGift.tokenURI(0)).to.eq('');
     });
     it('should set starting index by last mint and return tokenURI', async function () {
       expect(await londonGift.startingIndex()).to.eq(BigNumber.from(0));
-      await erc20Mintable
-        .connect(minter)
-        .mint(await owner.getAddress(), mintPrice.mul(100));
-      await erc20Mintable
-        .connect(owner)
-        .approve(londonGift.address, mintPrice.mul(100));
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(owner).mint(15);
+      await londonGift.connect(owner).mint(8);
+      await londonGift.connect(owner).mint(8);
+      await londonGift.connect(owner).mint(5);
       const blockNumber = await ethers.provider.getBlockNumber();
-
       expect(blockNumber).to.be.lessThanOrEqual(revealStartAtBlockNum);
       expect(await londonGift.startingIndex()).to.not.eq(BigNumber.from(0));
       const startingIndex = await londonGift.startingIndex();
@@ -197,11 +209,10 @@ describe('LondonGift', function () {
     });
     it('should set starting index by revealStartAtBlockNum', async function () {
       expect(await londonGift.startingIndex()).to.eq(BigNumber.from(0));
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
+      await londonGift.connect(owner).mint(3);
       const blockNumber = await ethers.provider.getBlockNumber();
       await londonGift.connect(owner).setRevealStartAtBlockNum(blockNumber);
+      await londonGift.connect(owner).mint(1);
       expect(await londonGift.startingIndex()).to.not.eq(BigNumber.from(0));
       const startingIndex = await londonGift.startingIndex();
       expect(await londonGift.tokenURI(0)).to.eq(
@@ -225,6 +236,15 @@ describe('LondonGift', function () {
       await londonGift
         .connect(owner)
         .setMintStartAtBlockNum(mintStartAtBlockNum);
+      await londonGift
+        .connect(owner)
+        .setUnlockStartAtBlockNum(unlockStartAtBlockNum);
+      await erc20Mintable
+        .connect(minter)
+        .mint(await owner.getAddress(), mintPrice.mul(100));
+      await erc20Mintable
+        .connect(owner)
+        .approve(londonGift.address, mintPrice.mul(100));
     });
     it('should transfer LONDON payment correctly', async function () {
       const beforeLondonBalance = await erc20Mintable.balanceOf(
@@ -285,16 +305,23 @@ describe('LondonGift', function () {
         'Not enough token to mint',
       );
     });
-    // it('should not mint if exceeds per balance limit', async function () {
-    //   await londonGift.connect(rando).mint(1);
-    //   await londonGift.connect(rando).mint(1);
-    //   await londonGift.connect(rando).mint(1);
-    //   await londonGift.connect(rando).mint(1);
-    //   await londonGift.connect(rando).mint(1);
-    //   await expect(londonGift.connect(rando).mint(1)).to.revertedWith(
-    //     'Max supply per address minted',
-    //   );
-    // });
+    it('should not mint if exceeds per balance limit before unlock period', async function () {
+      await londonGift.connect(owner).setUnlockStartAtBlockNum(1000);
+      await londonGift.connect(rando).mint(1);
+      await londonGift.connect(owner).mint(1);
+      await expect(londonGift.connect(rando).mint(1)).to.revertedWith(
+        'Max supply per address minted',
+      );
+      await expect(londonGift.connect(owner).mint(1)).to.revertedWith(
+        'Max supply per address minted',
+      );
+      const blockNumber = await ethers.provider.getBlockNumber();
+      await londonGift.connect(owner).setUnlockStartAtBlockNum(blockNumber);
+      await londonGift.connect(owner).mint(2);
+      expect(await londonGift.ownerOf(BigNumber.from('2'))).to.eq(
+        await owner.getAddress(),
+      );
+    });
     it('should not mint if before mintStartAtBlockNum', async function () {
       const blockNumber = await ethers.provider.getBlockNumber();
       await londonGift.connect(owner).setMintStartAtBlockNum(blockNumber + 10);
@@ -303,22 +330,12 @@ describe('LondonGift', function () {
       );
     });
     it('should not mint if over max supply', async function () {
-      await erc20Mintable
-        .connect(minter)
-        .mint(await owner.getAddress(), mintPrice.mul(100));
-      await erc20Mintable
-        .connect(owner)
-        .approve(londonGift.address, mintPrice.mul(100));
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(rando).mint(1);
-      await londonGift.connect(owner).mint(1);
-      await expect(londonGift.connect(owner).mint(16)).to.revertedWith(
+      await londonGift.connect(owner).mint(8);
+      await londonGift.connect(owner).mint(8);
+      await expect(londonGift.connect(owner).mint(8)).to.revertedWith(
         'max supply minted',
       );
-      await londonGift.connect(owner).mint(15);
+      await londonGift.connect(owner).mint(5);
       await expect(londonGift.connect(owner).mint(1)).to.revertedWith(
         'max supply minted',
       );
@@ -326,12 +343,9 @@ describe('LondonGift', function () {
         'max supply minted',
       );
     });
-    it('should not mint over 20 per tx', async function () {
-      await erc20Mintable
-        .connect(minter)
-        .mint(await owner.getAddress(), mintPrice.mul(maxMintPerAddress));
-      await erc20Mintable.connect(owner).approve(londonGift.address, mintPrice);
-      await expect(londonGift.connect(owner).mint(21)).to.revertedWith(
+    it('should not mint over 8 per tx', async function () {
+      await londonGift.connect(owner).mint(8);
+      await expect(londonGift.connect(owner).mint(9)).to.revertedWith(
         'too many mints in one go',
       );
     });
