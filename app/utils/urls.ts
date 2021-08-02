@@ -43,6 +43,10 @@ export const getEtherscanAddressUrl = (address: string) => {
   }etherscan.io/address/${address}`;
 };
 
+export const getIPFSUrl = (cid: string) => {
+  return `https://${cid}.ipfs.dweb.link/`;
+};
+
 // export const getArtworkPreviewUrl = (hash: string) => {
 //   return `${PREVIEW_IMAGE_LINK}${PREVIEW_ROUTES.ART}?hash=${hash}`;
 // };

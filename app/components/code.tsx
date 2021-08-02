@@ -21,7 +21,7 @@ const CodeContainer = styled.div`
   }
 `;
 
-const Code = styled.code`
+export const Code = styled.code`
   font-family: 'Computer Modern Typewriter';
   white-space: pre-wrap;
 `;
