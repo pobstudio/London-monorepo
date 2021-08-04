@@ -26,6 +26,7 @@ interface LondonGiftInterface extends ethers.utils.Interface {
     'balanceOf(address)': FunctionFragment;
     'baseMetadataURI()': FunctionFragment;
     'contractURI()': FunctionFragment;
+    'emergencySetStartingIndex(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'maxSupply()': FunctionFragment;
@@ -71,6 +72,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'emergencySetStartingIndex',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
@@ -181,6 +186,10 @@ interface LondonGiftInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'emergencySetStartingIndex',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -351,6 +360,16 @@ export class LondonGift extends Contract {
     ): Promise<{
       0: string;
     }>;
+
+    emergencySetStartingIndex(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'emergencySetStartingIndex(uint256)'(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -747,6 +766,16 @@ export class LondonGift extends Contract {
 
   'contractURI()'(overrides?: CallOverrides): Promise<string>;
 
+  'emergencySetStartingIndex'(
+    _startingIndex: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'emergencySetStartingIndex(uint256)'(
+    _startingIndex: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
   'getApproved'(
     tokenId: BigNumberish,
     overrides?: CallOverrides,
@@ -1004,6 +1033,16 @@ export class LondonGift extends Contract {
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<string>;
+
+    emergencySetStartingIndex(
+      _startingIndex: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'emergencySetStartingIndex(uint256)'(
+      _startingIndex: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -1283,6 +1322,16 @@ export class LondonGift extends Contract {
 
     'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
 
+    emergencySetStartingIndex(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'emergencySetStartingIndex(uint256)'(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
@@ -1546,6 +1595,16 @@ export class LondonGift extends Contract {
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    emergencySetStartingIndex(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'emergencySetStartingIndex(uint256)'(
+      _startingIndex: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,

@@ -111,6 +111,28 @@ describe('LondonGift', function () {
     });
   });
 
+  describe('emergencySetStartingIndex', () => {
+    it('should set new startingIndex', async function () {
+      await londonGift.connect(owner).emergencySetStartingIndex(4);
+      expect(await londonGift.startingIndex()).to.eq(4);
+    });
+    it('should not set new treasury address by rando', async function () {
+      await expect(londonGift.connect(rando).emergencySetStartingIndex(4)).to
+        .reverted;
+    });
+    it('should not set new startingIndex if it is 0', async function () {
+      await expect(
+        londonGift.connect(owner).emergencySetStartingIndex(0),
+      ).to.revertedWith('starting index can not be zero');
+    });
+    it('should not set new startingIndex if it is already set', async function () {
+      await londonGift.connect(owner).emergencySetStartingIndex(4);
+      await expect(
+        londonGift.connect(owner).emergencySetStartingIndex(5),
+      ).to.revertedWith('starting index already set');
+    });
+  });
+
   describe('setBaseMetadataURI', () => {
     it('should set new baseMetadataURI', async function () {
       await londonGift.connect(owner).setBaseMetadataURI(baseMetadataURI);

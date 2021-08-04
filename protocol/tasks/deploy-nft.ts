@@ -23,9 +23,9 @@ task('deploy-nft', 'Deploys $LONDON ', async (args, hre) => {
 
   const name = '$LONDON Gift';
   const symbol = 'GIFT';
-  const blockNumberUpTo = 9029798;
-  const mintPrice = ONE_TOKEN_IN_BASE_UNITS.mul(16);
-  const maxSupply = 21;
+  const blockNumberUpTo = 12965000;
+  const mintPrice = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
+  const maxSupply = 1559 * 4;
   const provenance =
     '0x114a591573bb8462490294a28611e70d7886363a4b3080f3084a9c0d3af0c516';
 
@@ -62,13 +62,15 @@ task('deploy-nft', 'Deploys $LONDON ', async (args, hre) => {
       deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].contractURI
     }/`,
   );
-  await londonGift.setBaseMetadataURI(
-    `ipfs://${
-      deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].baseTokenURI
-    }/`,
-  );
+  // await londonGift.setBaseMetadataURI(
+  //   `ipfs://${
+  //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].baseTokenURI
+  //   }/`,
+  // );
   await londonGift.setMintStartAtBlockNum(blockNumberUpTo);
-  await londonGift.setUnlockStartAtBlockNum(blockNumberUpTo);
+  await londonGift.setUnlockStartAtBlockNum(
+    blockNumberUpTo + BLOCKS_PER_24_HRS * 0.5,
+  );
   await londonGift.setRevealStartAtBlockNum(
     blockNumberUpTo + BLOCKS_PER_24_HRS * 1.5,
   );

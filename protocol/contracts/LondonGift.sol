@@ -72,6 +72,12 @@ contract LondonGift is Ownable, ERC721 {
       unlockStartAtBlockNum = _unlockStartAtBlockNum;
     }
 
+    function emergencySetStartingIndex(uint256 _startingIndex) public onlyOwner {
+      require(_startingIndex != 0, 'starting index can not be zero');
+      require(startingIndex == 0, 'starting index already set');
+      startingIndex = _startingIndex;
+    }
+
     modifier onlyUnderMaxSupply(uint mintAmount) {
       require(tokenIndex + mintAmount <= maxSupply, 'max supply minted');
       _;
