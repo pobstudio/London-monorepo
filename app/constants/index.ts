@@ -42,7 +42,7 @@ export const STUDIO_PROD_LINK = 'https://pob.studio';
 
 export const LONDON_PROD_LINK = 'https://london.pob.studio';
 
-export const BLOG_LINK = `https://pobstudio.substack.com`;
+export const BLOG_LINK = `https://pob.mirror.xyz`;
 
 export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
 

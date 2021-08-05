@@ -6,6 +6,7 @@ import { A } from './anchor';
 import {
   CHAIN_ID,
   DISCORD_LINK,
+  BLOG_LINK,
   LONDON_EMOJI,
   SNAPSHOT_LINK,
   TWITTER_LINK,
@@ -48,6 +49,9 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
+          <A href={BLOG_LINK} target={'_blank'}>
+            Blog
+          </A>
           <A href={TWITTER_LINK} target={'_blank'}>
             Twitter
           </A>

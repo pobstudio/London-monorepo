@@ -91,6 +91,16 @@ const Rarity = () => {
 
   return (
     <>
+      <a
+        href={`https://pob.mirror.xyz/jNuwasIPdCnUfJNCgibslzIcUsSFWmPV8hDailzwDAs`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}
+      >
+        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+          Read: The story behind <i>$LONDON Gift Shoppe</i> art
+        </SubTitle>
+      </a>
       <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
       <RightAlignedText>
         The generative art comes with varying rarity mainly captured by the{' '}
