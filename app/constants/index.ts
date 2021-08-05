@@ -16,9 +16,9 @@ export const BLOCKS_PER_24_HRS = 6300;
 
 export const ONE_GWEI = utils.parseUnits('1', 'gwei');
 
-export const OPENSEA_ASSET_NAME = 'london-gift';
+export const OPENSEA_ASSET_NAME = 'london-gift-v2';
 
-export const OPENSEA_ASSET_URL = 'london-gift';
+export const OPENSEA_ASSET_URL = 'london-gift-v2';
 
 export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 

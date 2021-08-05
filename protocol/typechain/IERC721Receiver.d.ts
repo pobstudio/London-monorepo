@@ -9,135 +9,135 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from 'ethers';
+} from "ethers";
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from '@ethersproject/contracts';
-import { BytesLike } from '@ethersproject/bytes';
-import { Listener, Provider } from '@ethersproject/providers';
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
+} from "@ethersproject/contracts";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface Ierc721ReceiverInterface extends ethers.utils.Interface {
   functions: {
-    'onERC721Received(address,address,uint256,bytes)': FunctionFragment;
+    "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'onERC721Received',
-    values: [string, string, BigNumberish, BytesLike],
+    functionFragment: "onERC721Received",
+    values: [string, string, BigNumberish, BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'onERC721Received',
-    data: BytesLike,
+    functionFragment: "onERC721Received",
+    data: BytesLike
   ): Result;
 
   events: {};
 }
 
 export class Ierc721Receiver extends Contract {
-  'connect'(signerOrProvider: Signer | Provider | string): this;
-  'attach'(addressOrName: string): this;
-  'deployed'(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  'on'(event: EventFilter | string, listener: Listener): this;
-  'once'(event: EventFilter | string, listener: Listener): this;
-  'addListener'(eventName: EventFilter | string, listener: Listener): this;
-  'removeAllListeners'(eventName: EventFilter | string): this;
-  'removeListener'(eventName: any, listener: Listener): this;
+  on(event: EventFilter | string, listener: Listener): this;
+  once(event: EventFilter | string, listener: Listener): this;
+  addListener(eventName: EventFilter | string, listener: Listener): this;
+  removeAllListeners(eventName: EventFilter | string): this;
+  removeListener(eventName: any, listener: Listener): this;
 
-  'interface': Ierc721ReceiverInterface;
+  interface: Ierc721ReceiverInterface;
 
-  'functions': {
+  functions: {
     onERC721Received(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'onERC721Received(address,address,uint256,bytes)'(
+    "onERC721Received(address,address,uint256,bytes)"(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
   };
 
-  'onERC721Received'(
+  onERC721Received(
     operator: string,
     from: string,
     tokenId: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'onERC721Received(address,address,uint256,bytes)'(
+  "onERC721Received(address,address,uint256,bytes)"(
     operator: string,
     from: string,
     tokenId: BigNumberish,
     data: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'callStatic': {
+  callStatic: {
     onERC721Received(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
-    'onERC721Received(address,address,uint256,bytes)'(
+    "onERC721Received(address,address,uint256,bytes)"(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
   };
 
-  'filters': {};
+  filters: {};
 
-  'estimateGas': {
+  estimateGas: {
     onERC721Received(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'onERC721Received(address,address,uint256,bytes)'(
+    "onERC721Received(address,address,uint256,bytes)"(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
   };
 
-  'populateTransaction': {
+  populateTransaction: {
     onERC721Received(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'onERC721Received(address,address,uint256,bytes)'(
+    "onERC721Received(address,address,uint256,bytes)"(
       operator: string,
       from: string,
       tokenId: BigNumberish,
       data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };
 }

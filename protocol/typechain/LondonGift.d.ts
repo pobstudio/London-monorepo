@@ -9,378 +9,378 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from 'ethers';
+} from "ethers";
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from '@ethersproject/contracts';
-import { BytesLike } from '@ethersproject/bytes';
-import { Listener, Provider } from '@ethersproject/providers';
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
+} from "@ethersproject/contracts";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface LondonGiftInterface extends ethers.utils.Interface {
   functions: {
-    'approve(address,uint256)': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
-    'contractURI()': FunctionFragment;
-    'emergencySetStartingIndex(uint256)': FunctionFragment;
-    'getApproved(uint256)': FunctionFragment;
-    'isApprovedForAll(address,address)': FunctionFragment;
-    'maxSupply()': FunctionFragment;
-    'mint(uint256)': FunctionFragment;
-    'mintPrice()': FunctionFragment;
-    'mintStartAtBlockNum()': FunctionFragment;
-    'mintedAmounts(address)': FunctionFragment;
-    'name()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'ownerOf(uint256)': FunctionFragment;
-    'payableErc20()': FunctionFragment;
-    'provenance()': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'revealStartAtBlockNum()': FunctionFragment;
-    'safeTransferFrom(address,address,uint256)': FunctionFragment;
-    'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
-    'setContractURI(string)': FunctionFragment;
-    'setMintStartAtBlockNum(uint256)': FunctionFragment;
-    'setRevealStartAtBlockNum(uint256)': FunctionFragment;
-    'setTreasury(address)': FunctionFragment;
-    'setUnlockStartAtBlockNum(uint256)': FunctionFragment;
-    'startingIndex()': FunctionFragment;
-    'supportsInterface(bytes4)': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'tokenIndex()': FunctionFragment;
-    'tokenURI(uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'treasury()': FunctionFragment;
-    'unlockStartAtBlockNum()': FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "baseMetadataURI()": FunctionFragment;
+    "contractURI()": FunctionFragment;
+    "emergencySetStartingIndex(uint256)": FunctionFragment;
+    "getApproved(uint256)": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "maxSupply()": FunctionFragment;
+    "mint(uint256)": FunctionFragment;
+    "mintPrice()": FunctionFragment;
+    "mintStartAtBlockNum()": FunctionFragment;
+    "mintedAmounts(address)": FunctionFragment;
+    "name()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "ownerOf(uint256)": FunctionFragment;
+    "payableErc20()": FunctionFragment;
+    "provenance()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "revealStartAtBlockNum()": FunctionFragment;
+    "safeTransferFrom(address,address,uint256)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "setBaseMetadataURI(string)": FunctionFragment;
+    "setContractURI(string)": FunctionFragment;
+    "setMintStartAtBlockNum(uint256)": FunctionFragment;
+    "setRevealStartAtBlockNum(uint256)": FunctionFragment;
+    "setTreasury(address)": FunctionFragment;
+    "setUnlockStartAtBlockNum(uint256)": FunctionFragment;
+    "startingIndex()": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "tokenIndex()": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "treasury()": FunctionFragment;
+    "unlockStartAtBlockNum()": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'approve',
-    values: [string, BigNumberish],
+    functionFragment: "approve",
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'contractURI',
-    values?: undefined,
+    functionFragment: "baseMetadataURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'emergencySetStartingIndex',
-    values: [BigNumberish],
+    functionFragment: "contractURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'getApproved',
-    values: [BigNumberish],
+    functionFragment: "emergencySetStartingIndex",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
-    values: [string, string],
-  ): string;
-  encodeFunctionData(functionFragment: 'maxSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mintPrice', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'mintStartAtBlockNum',
-    values?: undefined,
+    functionFragment: "getApproved",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintedAmounts',
-    values: [string],
+    functionFragment: "isApprovedForAll",
+    values: [string, string]
   ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: "maxSupply", values?: undefined): string;
+  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: "mintPrice", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'ownerOf',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'payableErc20',
-    values?: undefined,
+    functionFragment: "mintStartAtBlockNum",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'provenance',
-    values?: undefined,
+    functionFragment: "mintedAmounts",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ownerOf",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'renounceOwnership',
-    values?: undefined,
+    functionFragment: "payableErc20",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'revealStartAtBlockNum',
-    values?: undefined,
+    functionFragment: "provenance",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
-    values: [string, boolean],
+    functionFragment: "revealStartAtBlockNum",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
-    values: [string],
+    functionFragment: "safeTransferFrom",
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setContractURI',
-    values: [string],
+    functionFragment: "setApprovalForAll",
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setMintStartAtBlockNum',
-    values: [BigNumberish],
+    functionFragment: "setBaseMetadataURI",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setRevealStartAtBlockNum',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'setUnlockStartAtBlockNum',
-    values: [BigNumberish],
+    functionFragment: "setContractURI",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'startingIndex',
-    values?: undefined,
+    functionFragment: "setMintStartAtBlockNum",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
-    values: [BytesLike],
+    functionFragment: "setRevealStartAtBlockNum",
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'tokenIndex',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'tokenURI',
-    values: [BigNumberish],
+    functionFragment: "setUnlockStartAtBlockNum",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "startingIndex",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferOwnership',
-    values: [string],
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
   ): string;
-  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'unlockStartAtBlockNum',
-    values?: undefined,
+    functionFragment: "tokenIndex",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenURI",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "unlockStartAtBlockNum",
+    values?: undefined
   ): string;
 
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
-    data: BytesLike,
+    functionFragment: "baseMetadataURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'contractURI',
-    data: BytesLike,
+    functionFragment: "contractURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'emergencySetStartingIndex',
-    data: BytesLike,
+    functionFragment: "emergencySetStartingIndex",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getApproved',
-    data: BytesLike,
+    functionFragment: "getApproved",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
-    data: BytesLike,
+    functionFragment: "isApprovedForAll",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'maxSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mintPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxSupply", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintPrice", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'mintStartAtBlockNum',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'mintedAmounts',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'payableErc20',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'provenance', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'renounceOwnership',
-    data: BytesLike,
+    functionFragment: "mintStartAtBlockNum",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'revealStartAtBlockNum',
-    data: BytesLike,
+    functionFragment: "mintedAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "payableErc20",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "provenance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
-    data: BytesLike,
+    functionFragment: "revealStartAtBlockNum",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
-    data: BytesLike,
+    functionFragment: "safeTransferFrom",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
-    data: BytesLike,
+    functionFragment: "setApprovalForAll",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
-    data: BytesLike,
+    functionFragment: "setBaseMetadataURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setMintStartAtBlockNum',
-    data: BytesLike,
+    functionFragment: "setContractURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setRevealStartAtBlockNum',
-    data: BytesLike,
+    functionFragment: "setMintStartAtBlockNum",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setTreasury',
-    data: BytesLike,
+    functionFragment: "setRevealStartAtBlockNum",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setUnlockStartAtBlockNum',
-    data: BytesLike,
+    functionFragment: "setTreasury",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'startingIndex',
-    data: BytesLike,
+    functionFragment: "setUnlockStartAtBlockNum",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenIndex', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'transferFrom',
-    data: BytesLike,
+    functionFragment: "startingIndex",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'transferOwnership',
-    data: BytesLike,
+    functionFragment: "supportsInterface",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tokenIndex", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'unlockStartAtBlockNum',
-    data: BytesLike,
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "unlockStartAtBlockNum",
+    data: BytesLike
   ): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'ApprovalForAll(address,address,bool)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export class LondonGift extends Contract {
-  'connect'(signerOrProvider: Signer | Provider | string): this;
-  'attach'(addressOrName: string): this;
-  'deployed'(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  'on'(event: EventFilter | string, listener: Listener): this;
-  'once'(event: EventFilter | string, listener: Listener): this;
-  'addListener'(eventName: EventFilter | string, listener: Listener): this;
-  'removeAllListeners'(eventName: EventFilter | string): this;
-  'removeListener'(eventName: any, listener: Listener): this;
+  on(event: EventFilter | string, listener: Listener): this;
+  once(event: EventFilter | string, listener: Listener): this;
+  addListener(eventName: EventFilter | string, listener: Listener): this;
+  removeAllListeners(eventName: EventFilter | string): this;
+  removeListener(eventName: any, listener: Listener): this;
 
-  'interface': LondonGiftInterface;
+  interface: LondonGiftInterface;
 
-  'functions': {
+  functions: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     balanceOf(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     baseMetadataURI(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
+    "baseMetadataURI()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     contractURI(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'contractURI()'(
-      overrides?: CallOverrides,
+    "contractURI()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     emergencySetStartingIndex(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'emergencySetStartingIndex(uint256)'(
+    "emergencySetStartingIndex(uint256)"(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
@@ -388,304 +388,304 @@ export class LondonGift extends Contract {
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: boolean;
     }>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: boolean;
     }>;
 
     maxSupply(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'maxSupply()'(
-      overrides?: CallOverrides,
+    "maxSupply()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     mint(
       mintAmount: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'mint(uint256)'(
+    "mint(uint256)"(
       mintAmount: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     mintPrice(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'mintPrice()'(
-      overrides?: CallOverrides,
+    "mintPrice()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     mintStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'mintStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "mintStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     mintedAmounts(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'mintedAmounts(address)'(
+    "mintedAmounts(address)"(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     name(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'name()'(
-      overrides?: CallOverrides,
+    "name()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     owner(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'owner()'(
-      overrides?: CallOverrides,
+    "owner()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     payableErc20(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'payableErc20()'(
-      overrides?: CallOverrides,
+    "payableErc20()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     provenance(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'provenance()'(
-      overrides?: CallOverrides,
+    "provenance()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
     revealStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'revealStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "revealStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setBaseMetadataURI(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setBaseMetadataURI(string)'(
+    "setBaseMetadataURI(string)"(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setMintStartAtBlockNum(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setMintStartAtBlockNum(uint256)'(
+    "setMintStartAtBlockNum(uint256)"(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setRevealStartAtBlockNum(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setRevealStartAtBlockNum(uint256)'(
+    "setRevealStartAtBlockNum(uint256)"(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setUnlockStartAtBlockNum(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setUnlockStartAtBlockNum(uint256)'(
+    "setUnlockStartAtBlockNum(uint256)"(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     startingIndex(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'startingIndex()'(
-      overrides?: CallOverrides,
+    "startingIndex()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: boolean;
     }>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: boolean;
     }>;
 
     symbol(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'symbol()'(
-      overrides?: CallOverrides,
+    "symbol()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     tokenIndex(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'tokenIndex()'(
-      overrides?: CallOverrides,
+    "tokenIndex()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
@@ -694,1167 +694,1167 @@ export class LondonGift extends Contract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     treasury(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
-    'treasury()'(
-      overrides?: CallOverrides,
+    "treasury()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: string;
     }>;
 
     unlockStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
 
-    'unlockStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "unlockStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<{
       0: BigNumber;
     }>;
   };
 
-  'approve'(
+  approve(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'approve(address,uint256)'(
+  "approve(address,uint256)"(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'balanceOf'(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'balanceOf(address)'(
+  "balanceOf(address)"(
     owner: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
+  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
+  "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
 
-  'contractURI'(overrides?: CallOverrides): Promise<string>;
+  contractURI(overrides?: CallOverrides): Promise<string>;
 
-  'contractURI()'(overrides?: CallOverrides): Promise<string>;
+  "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
-  'emergencySetStartingIndex'(
+  emergencySetStartingIndex(
     _startingIndex: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'emergencySetStartingIndex(uint256)'(
+  "emergencySetStartingIndex(uint256)"(
     _startingIndex: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'getApproved'(
+  getApproved(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'getApproved(uint256)'(
+  "getApproved(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'isApprovedForAll'(
+  isApprovedForAll(
     owner: string,
     operator: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'isApprovedForAll(address,address)'(
+  "isApprovedForAll(address,address)"(
     owner: string,
     operator: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'maxSupply'(overrides?: CallOverrides): Promise<BigNumber>;
+  maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "maxSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mint'(
+  mint(
     mintAmount: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mint(uint256)'(
+  "mint(uint256)"(
     mintAmount: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintPrice'(overrides?: CallOverrides): Promise<BigNumber>;
+  mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintPrice()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "mintPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintStartAtBlockNum'(overrides?: CallOverrides): Promise<BigNumber>;
+  mintStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "mintStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintedAmounts'(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  mintedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintedAmounts(address)'(
+  "mintedAmounts(address)"(
     arg0: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'name'(overrides?: CallOverrides): Promise<string>;
+  name(overrides?: CallOverrides): Promise<string>;
 
-  'name()'(overrides?: CallOverrides): Promise<string>;
+  "name()"(overrides?: CallOverrides): Promise<string>;
 
-  'owner'(overrides?: CallOverrides): Promise<string>;
+  owner(overrides?: CallOverrides): Promise<string>;
 
-  'owner()'(overrides?: CallOverrides): Promise<string>;
+  "owner()"(overrides?: CallOverrides): Promise<string>;
 
-  'ownerOf'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  'ownerOf(uint256)'(
+  "ownerOf(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'payableErc20'(overrides?: CallOverrides): Promise<string>;
+  payableErc20(overrides?: CallOverrides): Promise<string>;
 
-  'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+  "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
-  'provenance'(overrides?: CallOverrides): Promise<string>;
+  provenance(overrides?: CallOverrides): Promise<string>;
 
-  'provenance()'(overrides?: CallOverrides): Promise<string>;
+  "provenance()"(overrides?: CallOverrides): Promise<string>;
 
-  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
-  'revealStartAtBlockNum'(overrides?: CallOverrides): Promise<BigNumber>;
+  revealStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'revealStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "revealStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'safeTransferFrom(address,address,uint256)'(
+  "safeTransferFrom(address,address,uint256)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'safeTransferFrom(address,address,uint256,bytes)'(
+  "safeTransferFrom(address,address,uint256,bytes)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
     _data: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setApprovalForAll'(
+  setApprovalForAll(
     operator: string,
     approved: boolean,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setApprovalForAll(address,bool)'(
+  "setApprovalForAll(address,bool)"(
     operator: string,
     approved: boolean,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI'(
+  setBaseMetadataURI(
     _baseMetadataURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI(string)'(
+  "setBaseMetadataURI(string)"(
     _baseMetadataURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setContractURI'(
+  setContractURI(
     newContractURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setContractURI(string)'(
+  "setContractURI(string)"(
     newContractURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setMintStartAtBlockNum'(
+  setMintStartAtBlockNum(
     _mintStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setMintStartAtBlockNum(uint256)'(
+  "setMintStartAtBlockNum(uint256)"(
     _mintStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setRevealStartAtBlockNum'(
+  setRevealStartAtBlockNum(
     _revealStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setRevealStartAtBlockNum(uint256)'(
+  "setRevealStartAtBlockNum(uint256)"(
     _revealStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setTreasury'(
+  setTreasury(
     _treasury: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setTreasury(address)'(
+  "setTreasury(address)"(
     _treasury: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setUnlockStartAtBlockNum'(
+  setUnlockStartAtBlockNum(
     _unlockStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setUnlockStartAtBlockNum(uint256)'(
+  "setUnlockStartAtBlockNum(uint256)"(
     _unlockStartAtBlockNum: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'startingIndex'(overrides?: CallOverrides): Promise<BigNumber>;
+  startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "startingIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'supportsInterface'(
+  supportsInterface(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'supportsInterface(bytes4)'(
+  "supportsInterface(bytes4)"(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'symbol'(overrides?: CallOverrides): Promise<string>;
+  symbol(overrides?: CallOverrides): Promise<string>;
 
-  'symbol()'(overrides?: CallOverrides): Promise<string>;
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
 
-  'tokenIndex'(overrides?: CallOverrides): Promise<BigNumber>;
+  tokenIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'tokenIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "tokenIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'tokenURI'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  'tokenURI(uint256)'(
+  "tokenURI(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'transferFrom'(
+  transferFrom(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferFrom(address,address,uint256)'(
+  "transferFrom(address,address,uint256)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferOwnership'(
+  transferOwnership(
     newOwner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferOwnership(address)'(
+  "transferOwnership(address)"(
     newOwner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'treasury'(overrides?: CallOverrides): Promise<string>;
+  treasury(overrides?: CallOverrides): Promise<string>;
 
-  'treasury()'(overrides?: CallOverrides): Promise<string>;
+  "treasury()"(overrides?: CallOverrides): Promise<string>;
 
-  'unlockStartAtBlockNum'(overrides?: CallOverrides): Promise<BigNumber>;
+  unlockStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "unlockStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'callStatic': {
+  callStatic: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
+    "baseMetadataURI()"(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<string>;
+    "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
     emergencySetStartingIndex(
       _startingIndex: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'emergencySetStartingIndex(uint256)'(
+    "emergencySetStartingIndex(uint256)"(
       _startingIndex: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "maxSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(mintAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'mint(uint256)'(
+    "mint(uint256)"(
       mintAmount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintPrice()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "mintPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "mintStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintedAmounts(address)'(
+    "mintedAmounts(address)"(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    'name()'(overrides?: CallOverrides): Promise<string>;
+    "name()"(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    'owner()'(overrides?: CallOverrides): Promise<string>;
+    "owner()"(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     payableErc20(overrides?: CallOverrides): Promise<string>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
     provenance(overrides?: CallOverrides): Promise<string>;
 
-    'provenance()'(overrides?: CallOverrides): Promise<string>;
+    "provenance()"(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
+    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
 
     revealStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'revealStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "revealStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setBaseMetadataURI(
       _baseMetadataURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setBaseMetadataURI(string)'(
+    "setBaseMetadataURI(string)"(
       _baseMetadataURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setMintStartAtBlockNum(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setMintStartAtBlockNum(uint256)'(
+    "setMintStartAtBlockNum(uint256)"(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setRevealStartAtBlockNum(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setRevealStartAtBlockNum(uint256)'(
+    "setRevealStartAtBlockNum(uint256)"(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setUnlockStartAtBlockNum(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setUnlockStartAtBlockNum(uint256)'(
+    "setUnlockStartAtBlockNum(uint256)"(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "startingIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<string>;
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
 
     tokenIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'tokenIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "tokenIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<string>;
+    "treasury()"(overrides?: CallOverrides): Promise<string>;
 
     unlockStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "unlockStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
-  'filters': {
+  filters: {
     Approval(
       owner: string | null,
       approved: string | null,
-      tokenId: BigNumberish | null,
+      tokenId: BigNumberish | null
     ): EventFilter;
 
     ApprovalForAll(
       owner: string | null,
       operator: string | null,
-      approved: null,
+      approved: null
     ): EventFilter;
 
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null,
+      newOwner: string | null
     ): EventFilter;
 
     Transfer(
       from: string | null,
       to: string | null,
-      tokenId: BigNumberish | null,
+      tokenId: BigNumberish | null
     ): EventFilter;
   };
 
-  'estimateGas': {
+  estimateGas: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "baseMetadataURI()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencySetStartingIndex(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'emergencySetStartingIndex(uint256)'(
+    "emergencySetStartingIndex(uint256)"(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'maxSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "maxSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(mintAmount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
-    'mint(uint256)'(
+    "mint(uint256)"(
       mintAmount: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     mintPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintPrice()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "mintPrice()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "mintStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'mintedAmounts(address)'(
+    "mintedAmounts(address)"(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'name()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     payableErc20(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     provenance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'provenance()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "provenance()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
 
     revealStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'revealStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "revealStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setBaseMetadataURI(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setBaseMetadataURI(string)'(
+    "setBaseMetadataURI(string)"(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setMintStartAtBlockNum(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setMintStartAtBlockNum(uint256)'(
+    "setMintStartAtBlockNum(uint256)"(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setRevealStartAtBlockNum(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setRevealStartAtBlockNum(uint256)'(
+    "setRevealStartAtBlockNum(uint256)"(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setUnlockStartAtBlockNum(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setUnlockStartAtBlockNum(uint256)'(
+    "setUnlockStartAtBlockNum(uint256)"(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     startingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'startingIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "startingIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'tokenIndex()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "tokenIndex()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "treasury()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     unlockStartAtBlockNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "unlockStartAtBlockNum()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
-  'populateTransaction': {
+  populateTransaction: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
+    "baseMetadataURI()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencySetStartingIndex(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'emergencySetStartingIndex(uint256)'(
+    "emergencySetStartingIndex(uint256)"(
       _startingIndex: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'maxSupply()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "maxSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
       mintAmount: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'mint(uint256)'(
+    "mint(uint256)"(
       mintAmount: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     mintPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'mintPrice()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "mintPrice()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'mintStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "mintStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mintedAmounts(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'mintedAmounts(address)'(
+    "mintedAmounts(address)"(
       arg0: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'name()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     payableErc20(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     provenance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'provenance()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "provenance()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     revealStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'revealStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "revealStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setBaseMetadataURI(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setBaseMetadataURI(string)'(
+    "setBaseMetadataURI(string)"(
       _baseMetadataURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setMintStartAtBlockNum(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setMintStartAtBlockNum(uint256)'(
+    "setMintStartAtBlockNum(uint256)"(
       _mintStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setRevealStartAtBlockNum(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setRevealStartAtBlockNum(uint256)'(
+    "setRevealStartAtBlockNum(uint256)"(
       _revealStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setUnlockStartAtBlockNum(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setUnlockStartAtBlockNum(uint256)'(
+    "setUnlockStartAtBlockNum(uint256)"(
       _unlockStartAtBlockNum: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     startingIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'startingIndex()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "startingIndex()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'tokenIndex()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "tokenIndex()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "treasury()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unlockStartAtBlockNum(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'unlockStartAtBlockNum()'(
-      overrides?: CallOverrides,
+    "unlockStartAtBlockNum()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
