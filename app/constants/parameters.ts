@@ -23,7 +23,7 @@ export const BLOCK_NUMBER_REVEAL_START_AT =
 
 export const MINT_PRICE = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
 
-export const MAX_SUPPLY = 4 * 1559;
+export const MAX_SUPPLY = 8888;
 
 export const MAX_MINT_PER_TX = 10;
 
