@@ -6,7 +6,7 @@ import { Signer } from "ethers";
 import { Provider, TransactionRequest } from "@ethersproject/providers";
 import { Contract, ContractFactory, Overrides } from "@ethersproject/contracts";
 
-import type { Erc20 } from "./Erc20";
+import { Erc20 } from "./Erc20";
 
 export class Erc20Factory extends ContractFactory {
   constructor(signer?: Signer) {

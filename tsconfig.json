@@ -3,7 +3,6 @@
     "module": "commonjs",
     "target": "es6",
     "lib": ["es2017", "dom"],
-    "moduleResolution": "node",
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "noImplicitReturns": true,
