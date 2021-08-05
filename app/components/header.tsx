@@ -48,12 +48,12 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
-          {/* <A href={TWITTER_LINK} target={'_blank'}>
+          <A href={TWITTER_LINK} target={'_blank'}>
             Twitter
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
-          </A> */}
+          </A>
           <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
             Trade
           </A>
