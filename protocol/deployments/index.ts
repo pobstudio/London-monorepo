@@ -8,14 +8,14 @@ export const deployments: Deployments = {
     multisig: '0x5766ab511a204C34661e85af5ba498E2e715A420',
     gift: '0x7645eeC8bB51862A5aa855c40971b2877dAe81AF',
     contractURI: 'bafkreifmkpt535hxe4hd2sllvhdgnp5oubtos2bhqmc4sfgizwqssse45q',
-    baseTokenURI: 'bafybeibbvkhhbt2kr67pgi4kdf6gf73wixpsjcefsjsm33ew7cnnsymvba',
+    baseTokenURI: 'bafybeifjgv53l7dj46igfla76rvrvutjupzamdxtj3aeuqqw5fned343ue',
   },
   4: {
     multisig: '0x37F64fB7Fa2fBC5f6056301273fAF8A1Fc803b7A',
     erc20: '0x243901455D1B8ef76678b32b4459602CC6B730ae',
     minter: '0xf46004c50a7462F1B4E7e9e68473e6b687BEc597',
-    gift: '0xd803080fa9a37644601290CE3c6cc35325F999E9',
+    gift: '0xa1Bb8cD33Ad9E56fc27FdB22c536C6E23bA53996',
     contractURI: 'bafkreifmkpt535hxe4hd2sllvhdgnp5oubtos2bhqmc4sfgizwqssse45q',
-    baseTokenURI: 'bafybeibbvkhhbt2kr67pgi4kdf6gf73wixpsjcefsjsm33ew7cnnsymvba',
+    baseTokenURI: 'bafybeifjgv53l7dj46igfla76rvrvutjupzamdxtj3aeuqqw5fned343ue',
   },
 };
