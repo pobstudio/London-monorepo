@@ -14,11 +14,13 @@ import { createHash } from 'crypto';
 import { NFTStorage, File } from 'nft.storage';
 import seedrandom from 'seedrandom';
 import { randomRangeFactory } from './utils/random';
+import fetch from 'isomorphic-fetch';
 
 const writeFileAsync = promisify(writeFile);
 const readFileAsync = promisify(readFile);
 
 const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY;
+const NEW_METADATA_DIR = path.resolve(__dirname, '..', 'out', 'new-token-metadata');
 const METADATA_DIR = path.resolve(__dirname, '..', 'out', 'token-metadata');
 const BASE_METADATA_DIR = path.resolve(__dirname, '..', 'out', 'metadata');
 const IMAGE_DIR = path.resolve(__dirname, '..', 'out', 'image');
@@ -86,97 +88,121 @@ const CUSTOM_NAMES = [
   // });
 
   // console.log('Building provenance');
-  let imageConcatStr = '';
+  // let imageConcatStr = '';
 
-  for (let i = 0; i < SUPPLY; ++i) {
-    const imageHash = await new Promise((res) => {
-      let hash = createHash('sha256');
-      const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
-      // s.on("error", err => reject(err));
-      s.on('data', (chunk) => hash.update(chunk));
-      s.on('end', () => res(hash.digest('hex')));
-    });
-    imageConcatStr += imageHash;
-  }
-  const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
-  const provenanceMetadata = {
-    provenance,
-    imageConcatStr,
-    startingIndex: STARTING_INDEX,
-  };
+  // for (let i = 0; i < SUPPLY; ++i) {
+  //   const imageHash = await new Promise((res) => {
+  //     let hash = createHash('sha256');
+  //     const s = createReadStream(path.resolve(IMAGE_DIR, `${i}.png`));
+  //     // s.on("error", err => reject(err));
+  //     s.on('data', (chunk) => hash.update(chunk));
+  //     s.on('end', () => res(hash.digest('hex')));
+  //   });
+  //   imageConcatStr += imageHash;
+  // }
+  // const provenance = createHash('sha256').update(imageConcatStr).digest('hex');
+  // const provenanceMetadata = {
+  //   provenance,
+  //   imageConcatStr,
+  //   startingIndex: STARTING_INDEX,
+  // };
   console.log('Provenance created.');
   console.log();
   console.log('Uploading to IPFS');
 
-  await writeFileAsync(
-    PROVENANCE_FILE,
-    JSON.stringify({ ...provenanceMetadata }),
-  );
+  // await writeFileAsync(
+  //   PROVENANCE_FILE,
+  //   JSON.stringify({ ...provenanceMetadata }),
+  // );
   // const files: File[] = [];
 
-  const randSrc = seedrandom(STARTING_INDEX.toString());
-  const seedRandomFactory = randomRangeFactory(randSrc);
+  // for (let i = 0; i < 8888; ++i) {
+  //   const tokenRes = await fetch(`https://dweb.link/ipfs/bafybeianvcjm7iaimmdarbm4dvkq7trbhyz6qecyfyvtlz23xixunda4ly/${i}`)
+  //   await writeFileAsync(
+  //     path.resolve(METADATA_DIR, `${i}`),
+  //     JSON.stringify(await tokenRes.json()),
+  //   );
+  //   console.log(`written token metadata for ${i}`);
+  // }
 
-  const getName = generateNameFromSeed(STARTING_INDEX);
+  // const randSrc = seedrandom(STARTING_INDEX.toString());
+  // const seedRandomFactory = randomRangeFactory(randSrc);
 
-  const customNameIndexes: number[] = [];
-  while (customNameIndexes.length < CUSTOM_NAMES.length) {
-    const randomIndex = seedRandomFactory.random(0, SUPPLY, 'int');
-    if (!customNameIndexes.includes(randomIndex)) {
-      customNameIndexes.push(randomIndex);
-    }
-  }
+  // const getName = generateNameFromSeed(STARTING_INDEX);
 
-  const customNameAtIndex: [string, number][] = [];
+  // const customNameIndexes: number[] = [];
+  // while (customNameIndexes.length < CUSTOM_NAMES.length) {
+  //   const randomIndex = seedRandomFactory.random(0, SUPPLY, 'int');
+  //   if (!customNameIndexes.includes(randomIndex)) {
+  //     customNameIndexes.push(randomIndex);
+  //   }
+  // }
 
-  for (let i = 0; i < SUPPLY; ++i) {
-    const metadataBlob = await readFileAsync(
-      path.resolve(BASE_METADATA_DIR, `${i}.json`),
-    );
-    const traits = JSON.parse(metadataBlob.toString());
-    // const blob = await readFileAsync(path.resolve(IMAGE_DIR, `${i}.png`));
-    // const imageCid = await client.storeBlob(
-    //   new File([blob], `${i}.png`, { type: 'image/png' }),
-    // );
+  // const customNameAtIndex: [string, number][] = [];
+
+  for (let i = 0; i < 8888; ++i) {
     const tokenMetadataBlob = await readFileAsync(
       path.resolve(METADATA_DIR, `${i}`),
     );
+    const newId = i < 3655 ? i + 8888 : i;
     const oldtoken = JSON.parse(tokenMetadataBlob.toString());
-    const randomName = getName();
-    const customName = customNameIndexes.includes(i)
-      ? CUSTOM_NAMES[customNameIndexes.findIndex((a) => a === i)]
-      : undefined;
-    if (!!customName) {
-      customNameAtIndex.push([customName, i]);
-    }
+    await writeFileAsync(
+      path.resolve(NEW_METADATA_DIR, `${newId}`),
+      JSON.stringify(oldtoken),
+    );
 
-    const token = {
-      name: customName ?? randomName,
-      description: `In celebration of EIP-1559.`,
-      image: oldtoken.image,
-      attributes: [
-        ...mapTokenMetadataToAttributes(traits),
-        {
-          trait_type: 'name',
-          value: !!customName
-            ? 'unique'
-            : randomName.split(' ').length.toString(),
-        },
-      ],
-    };
+    // const metadataBlob = await readFileAsync(
+    //   path.resolve(BASE_METADATA_DIR, `${i}.json`),
+    // );
+    // const traits = JSON.parse(metadataBlob.toString());
+    // const randomName = getName();
+    // const customName = customNameIndexes.includes(i)
+    //   ? CUSTOM_NAMES[customNameIndexes.findIndex((a) => a === i)]
+    //   : undefined;
+    // if (!!customName) {
+    //   customNameAtIndex.push([customName, i]);
+    // }
+
+    // let cid: string | undefined = undefined;
+    // if (i > 6235) {
+    //   const blob = await readFileAsync(path.resolve(IMAGE_DIR, `${i}.png`));
+    //   cid = await client.storeBlob(
+    //     new File([blob], `${i}.png`, { type: 'image/png' }),
+    //   );
+    // } else {
+    //   const tokenMetadataBlob = await readFileAsync(
+    //     path.resolve(METADATA_DIR, `${i}`),
+    //   );
+    //   const oldtoken = JSON.parse(tokenMetadataBlob.toString());
+    //   cid = oldtoken.image;
+    // }
+
+    // const token = {
+    //   name: customName ?? randomName,
+    //   description: `In celebration of EIP-1559.`,
+    //   image: cid,
+    //   attributes: [
+    //     ...mapTokenMetadataToAttributes(traits),
+    //     {
+    //       trait_type: 'name',
+    //       value: !!customName
+    //         ? 'unique'
+    //         : randomName.split(' ').length.toString(),
+    //     },
+    //   ],
+    // };
     // files.push(
     //   new File([JSON.stringify(token)], `${i}`, { type: 'application/json' }),
     // );
-    await writeFileAsync(
-      path.resolve(METADATA_DIR, `${i}`),
-      JSON.stringify(token),
-    );
+    // await writeFileAsync(
+    //   path.resolve(METADATA_DIR, `${i}`),
+    //   JSON.stringify(token),
+    // );
     console.log(`written token metadata for ${i}`);
   }
   console.log();
   console.log(CUSTOM_NAMES.length);
 
-  customNameAtIndex.forEach((c) => console.log(c[0], c[1]));
   // const rootCid = await client.storeDirectory(files);
   // console.log(`root cid`, rootCid);
   console.log('complete.');
