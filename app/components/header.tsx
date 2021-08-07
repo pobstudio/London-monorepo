@@ -11,6 +11,7 @@ import {
   SNAPSHOT_LINK,
   TWITTER_LINK,
   UNISWAP_TRADE_LINK,
+  OPENSEA_LINK,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -73,6 +74,9 @@ export const Header: FC = () => {
           >
             ERC20
           </AddressA>
+          <A href={OPENSEA_LINK} target={'_blank'}>
+            OPENSEA
+          </A>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>

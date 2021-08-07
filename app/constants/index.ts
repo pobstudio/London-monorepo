@@ -50,6 +50,8 @@ export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;
 
 export const SNAPSHOT_LINK = `https://snapshot.org/#/london.pob.eth`;
 
+export const OPENSEA_LINK = `https://opensea.io/collection/london-gift-v2`;
+
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
 // strings
