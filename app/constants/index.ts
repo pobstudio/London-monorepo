@@ -42,13 +42,15 @@ export const STUDIO_PROD_LINK = 'https://pob.studio';
 
 export const LONDON_PROD_LINK = 'https://london.pob.studio';
 
-export const BLOG_LINK = `https://pobstudio.substack.com`;
+export const BLOG_LINK = `https://pob.mirror.xyz`;
 
 export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
 
 export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;
 
 export const SNAPSHOT_LINK = `https://snapshot.org/#/london.pob.eth`;
+
+export const OPENSEA_LINK = `https://opensea.io/collection/london-gift-v2`;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 

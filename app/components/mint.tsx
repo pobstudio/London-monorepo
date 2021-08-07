@@ -171,7 +171,9 @@ export const Mint: FC<{}> = ({}) => {
         </FlexCenterColumn>
       </MintBody>
       {cardState === 'uninitialized' && (
-        <Button onClick={() => setCardState('choose')}>MINT</Button>
+        <Button onClick={() => setCardState('choose')} disabled={true}>
+          MINT
+        </Button>
       )}
       {cardState === 'choose' && <MintButton gasPriceInWei={currentGasPrice} />}
     </MintWrapper>

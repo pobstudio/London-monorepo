@@ -6,10 +6,12 @@ import { A } from './anchor';
 import {
   CHAIN_ID,
   DISCORD_LINK,
+  BLOG_LINK,
   LONDON_EMOJI,
   SNAPSHOT_LINK,
   TWITTER_LINK,
   UNISWAP_TRADE_LINK,
+  OPENSEA_LINK,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -48,12 +50,15 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
-          {/* <A href={TWITTER_LINK} target={'_blank'}>
+          <A href={BLOG_LINK} target={'_blank'}>
+            Blog
+          </A>
+          <A href={TWITTER_LINK} target={'_blank'}>
             Twitter
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
-          </A> */}
+          </A>
           <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
             Trade
           </A>
@@ -69,6 +74,9 @@ export const Header: FC = () => {
           >
             ERC20
           </AddressA>
+          <A href={OPENSEA_LINK} target={'_blank'}>
+            OPENSEA
+          </A>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>
