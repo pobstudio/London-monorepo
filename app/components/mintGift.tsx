@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
   CHAIN_ID,
@@ -44,6 +44,9 @@ import { useGiftStore } from '../stores/gift';
 import { useIsApproved } from '../hooks/useIsApproved';
 import { useSetApprove } from '../hooks/useSetApproval';
 import { useMintGift } from '../hooks/useMintGift';
+import { TableContainer, TableHeader, TableBody, TableRow } from './table';
+import { LabelTableColumn, ValueTableColumn } from '../pages';
+import { useOpenSeaStats } from '../hooks/useOpenSea';
 const MintWrapper = styled.div`
   border: 1px solid black;
   background: white;
@@ -94,13 +97,16 @@ type MintingChooseOption =
 export const MintGift: FC<{}> = ({}) => {
   const shopState = useShopState();
   return (
-    <MintWrapper>
-      {shopState === 'not-open' && <NotOpenMintContent />}
-      {shopState === 'open' && <MintContent />}
-      {shopState === 'revealed' && <MintContent />}
-      {shopState === 'preview' && <PreviewMintContent />}
-      {shopState === 'sold-out' && <SoldOutMintContent />}
-    </MintWrapper>
+    <>
+      <MintWrapper>
+        {shopState === 'not-open' && <NotOpenMintContent />}
+        {shopState === 'open' && <MintContent />}
+        {shopState === 'revealed' && <MintContent />}
+        {shopState === 'preview' && <PreviewMintContent />}
+        {shopState === 'sold-out' && <SoldOutMintContent />}
+      </MintWrapper>
+      <OpenSeaStats />
+    </>
   );
 };
 
@@ -166,6 +172,53 @@ const SoldOutMintContent: FC = () => {
         Head to OpenSea
       </Button>
     </>
+  );
+};
+
+export const OpenSeaStats = () => {
+  const {
+    total_volume,
+    floor_price,
+    num_owners,
+    avg_price,
+    market_cap,
+  } = useOpenSeaStats();
+  return (
+    <TableContainer
+      style={{
+        marginTop: 48,
+        marginBottom: 20,
+        border: '1px solid black',
+        background: 'white',
+      }}
+    >
+      <TableHeader>
+        <LabelTableColumn>OpenSea Stats</LabelTableColumn>
+        <ValueTableColumn>Value</ValueTableColumn>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <LabelTableColumn>Total Volume</LabelTableColumn>
+          <ValueTableColumn>{total_volume?.toFixed(2)} ETH</ValueTableColumn>
+        </TableRow>
+        <TableRow>
+          <LabelTableColumn>Floor Price</LabelTableColumn>
+          <ValueTableColumn>{floor_price?.toFixed(2)} ETH</ValueTableColumn>
+        </TableRow>
+        <TableRow>
+          <LabelTableColumn>Avg Price</LabelTableColumn>
+          <ValueTableColumn>{avg_price?.toFixed(2)} ETH</ValueTableColumn>
+        </TableRow>
+        <TableRow>
+          <LabelTableColumn>Owners</LabelTableColumn>
+          <ValueTableColumn>{num_owners?.toFixed(0)} wallets</ValueTableColumn>
+        </TableRow>
+        <TableRow>
+          <LabelTableColumn>Market Cap</LabelTableColumn>
+          <ValueTableColumn>{market_cap?.toFixed(2)} ETH</ValueTableColumn>
+        </TableRow>
+      </TableBody>
+    </TableContainer>
   );
 };
 
