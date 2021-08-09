@@ -50,6 +50,12 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
+          <AddressA
+            href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
+            target={'_blank'}
+          >
+            ERC20
+          </AddressA>
           <A href={BLOG_LINK} target={'_blank'}>
             Blog
           </A>
@@ -68,14 +74,8 @@ export const Header: FC = () => {
           <Link href={ROUTES.SHOPPE} passHref>
             <A>Shoppe</A>
           </Link>
-          <AddressA
-            href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
-            target={'_blank'}
-          >
-            ERC20
-          </AddressA>
           <A href={OPENSEA_LINK} target={'_blank'}>
-            OPENSEA
+            OpenSea
           </A>
         </AnchorRow>
         <Web3Status />
