@@ -53,6 +53,7 @@ import { BREAKPTS } from '../styles';
 import { useMeasure } from 'react-use';
 import { ROUTES } from '../constants/routes';
 import { useShopState } from '../hooks/useShopState';
+import { AvatarCanvas } from '../components/avatar';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -130,65 +131,45 @@ const CoreMintingInner = styled.div`
   height: fit-content;
 `;
 
+const AvatarConsole = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid black;
+  margin-top: 24px;
+`;
+
+const AvatarLeftWell = styled.div`
+  height: 100%;
+  border-right: 1px solid black;
+`;
+
 const IndexPage: NextPage = () => {
-  const [tooltipDatum, setTooltipDatum] = useState<Datum | undefined>(
-    undefined,
-  );
-
-  const gasInfo = useGasInfo();
-
-  const [gasPriceInWei, setGasPriceInWei] = useState<BigNumber | undefined>(
-    undefined,
-  );
-
-  const onCurrentGasUseClick = useCallback(() => {
-    if (!gasInfo.data?.fast) {
-      return;
-    }
-    setGasPriceInWei(utils.parseUnits(gasInfo.data.fast.toString(), 'gwei'));
-  }, [gasInfo]);
-
-  const onGraphUseClick = useCallback(() => {
-    if (!tooltipDatum) {
-      return;
-    }
-    setGasPriceInWei(utils.parseUnits(tooltipDatum[0].toString(), 'gwei'));
-  }, [tooltipDatum]);
-
-  const { account } = useWeb3React();
-  const balance = useLondonBalance(account?.toLowerCase() ?? undefined);
-
-  const blockNumber = useBlockchainStore((s) => s.blockNumber);
-  const blocksLeft = useMemo(
-    () => (blockNumber ? BLOCK_NUMBER_UP_TO - blockNumber : undefined),
-    [blockNumber],
-  );
-
-  const totalSupply = useTotalSupply();
-  const numMintsAt1559Gwei = useNumMints(utils.parseUnits('15.59', 'gwei'));
-  const lowestGasPriceMinted = useLowestGasPriceMinted();
-  const userMarketCapPercent = useMemo(() => {
-    return balance && totalSupply
-      ? ((Number(balance) / Number(totalSupply)) * 100).toFixed(2)
-      : '0';
-  }, [account, balance, totalSupply]);
-  const [pageWrapperRef, { width }] = useMeasure();
-
-  const graphWidth = useMemo(() => (width > 450 ? 450 : width), [width]);
-
-  const shopState = useShopState();
-
   return (
     <>
       <Header />
-      <PageWrapper ref={pageWrapperRef as any}>
+      <PageWrapper>
         {/* <Countdown /> */}
         {/* <IconCircle>
           <Icon src={'/icon.svg'} />
         </IconCircle> */}
         <Title>
-          <Bold>Switch avatar background to $LONDON</Bold>
+          <Bold>$LONDON</Bold> background change service
         </Title>
+        <Caption>
+          <Italic>Complementary service for all avatars!</Italic>
+        </Caption>
+        <AvatarConsole>
+          <AvatarLeftWell>
+            <AvatarCanvas
+              foregroundImageSrc={
+                'https://lh3.googleusercontent.com/JDz86_qE-kHyYOoumnxQtOTHsd3IqknC7cv7-zemonq709CrBCLU7G4IR0C4DyTMT-go7DjHi_4Q-dgW7ZSHOapM8VmfahURwnIH=w600'
+              }
+              backgroundImageSrc={
+                'https://bafybeiaxk2s7ma4p4jjh2j6ix5zxvnynekfa6ey4q5iyvch4kqyrdnynzy.ipfs.dweb.link/'
+              }
+            />
+          </AvatarLeftWell>
+        </AvatarConsole>
       </PageWrapper>
     </>
   );
@@ -208,4 +189,3 @@ const AnchorList = styled.div`
 `;
 
 export default React.memo(IndexPage);
-
