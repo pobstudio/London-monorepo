@@ -86,14 +86,14 @@ const BottomContainer = styled(FlexEnds)`
   left: 14px;
 `;
 
-const LabelTableColumn = styled(TableColumn)`
+export const LabelTableColumn = styled(TableColumn)`
   width: 320px;
   @media (max-width: ${BREAKPTS.MD}px) {
     width: 220px;
   }
 `;
 
-const ValueTableColumn = styled(TableColumn)`
+export const ValueTableColumn = styled(TableColumn)`
   text-align: right;
 `;
 
