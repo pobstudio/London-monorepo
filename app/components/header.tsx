@@ -74,6 +74,9 @@ export const Header: FC = () => {
           <Link href={ROUTES.SHOPPE} passHref>
             <A>Shoppe</A>
           </Link>
+          <Link href={ROUTES.PFP} passHref>
+            <A>PFP</A>
+          </Link>
           <A href={OPENSEA_LINK} target={'_blank'}>
             OpenSea
           </A>

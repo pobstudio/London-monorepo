@@ -54,19 +54,7 @@ import { useMeasure } from 'react-use';
 import { ROUTES } from '../constants/routes';
 import { useShopState } from '../hooks/useShopState';
 
-// import { ContentWrapper } from '../components/content';
-// import { Header } from '../components/header';
-// import { Footer } from '../components/footer';
-// import { BREAKPTS } from '../styles';
-// import { YourSagaSection } from '../components/saga-hero-section';
-// import { HashInfoSection } from '../components/hash-info-section';
-// import { SagaPricingSection } from '../components/saga-pricing-section';
-// import { HeroContent } from '../components/home-hero';
-
-const PageWrapper = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.4fr 1fr 0.4fr; */
+export const PageWrapper = styled.div`
   display: flex;
   align-items: center;
   min-height: 100vh;

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
+import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { fetcher } from '../utils/fetcher';
 
 const OS_SINGLE_ASSET = (contract: string, token: string) =>
@@ -32,3 +33,24 @@ export const useOpenSeaStats = () => {
     [stats],
   );
 };
+
+const OS_LIMIT_DEFAULT = 30;
+
+const OS_OWNER_ASSETS = (owner: string, limit: number = OS_LIMIT_DEFAULT) =>
+  `https://api.opensea.io/api/v1/assets?owner=${owner}&limit=${limit}&exclude_currencies=true&offset=0`;
+
+const OS_OWNER_FILTER_ASSETS = (
+  owner: string,
+  limit: number = OS_LIMIT_DEFAULT,
+  contracts: string[],
+) => {
+  let link = OS_OWNER_ASSETS(owner, limit);
+  contracts.forEach(
+    (contract: string) =>
+      (link = `${link}&asset_contract_addresses=${contract}`),
+  );
+  return link;
+};
+
+const OS_OWNER_POB_ASSETS = (owner: string, limit: number = OS_LIMIT_DEFAULT) =>
+  OS_OWNER_FILTER_ASSETS(owner, limit, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);

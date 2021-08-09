@@ -101,6 +101,16 @@ const Rarity = () => {
           Read: The story behind <i>$LONDON Gift Shoppe</i> art
         </SubTitle>
       </a>
+      <a
+        href={`https://rarity.tools/london-gift-v2`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}
+      >
+        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+          See: Rarity.Tools dashboard
+        </SubTitle>
+      </a>
       <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
       <RightAlignedText>
         The generative art comes with varying rarity mainly captured by the{' '}
