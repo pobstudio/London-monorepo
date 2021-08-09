@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { Bold, Title, Caption, Italic } from '../components/text';
@@ -7,27 +7,14 @@ import { AvatarCanvas } from '../components/avatar';
 import { useWeb3React } from '@web3-react/core';
 import { WalletState, Web3Status } from '../components/web3Status';
 import { usePrevious } from 'react-use';
+import { getUserPobAssets } from '../hooks/useOpenSea';
+
+export const SUPPORTED_PFPS = [
+  '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', // BAYC
+  '0x1a92f7381b9f03921564a437210bb9396471050c', // Cool Cats
+];
 
 const IndexPage: NextPage = () => {
-  const { active, connector, error } = useWeb3React();
-  const [walletView, setWalletView] = useState<WalletState>('connect');
-  const activePrevious = usePrevious(active);
-  const connectorPrevious = usePrevious(connector);
-  useEffect(() => {
-    if (
-      (active && !activePrevious) ||
-      (connector && connector !== connectorPrevious && !error)
-    ) {
-      setWalletView('account');
-    }
-  }, [
-    setWalletView,
-    active,
-    error,
-    connector,
-    activePrevious,
-    connectorPrevious,
-  ]);
   return (
     <>
       <Header />
@@ -51,18 +38,47 @@ const IndexPage: NextPage = () => {
               />
             </AvatarLeftWell>
             <AvatarRightWell>
-              {walletView !== 'account' && (
-                <Web3Cover>
-                  <Web3Status />
-                </Web3Cover>
-              )}
-
+              <Web3Handler />
               <RightWellBox>wiggle</RightWellBox>
               <RightWellBox>wiggle</RightWellBox>
             </AvatarRightWell>
           </AvatarConsole>
         </AvatarConsoleWrapper>
       </PageWrapper>
+    </>
+  );
+};
+export default React.memo(IndexPage);
+
+const Web3Handler: FC = () => {
+  const { account, active, connector, error } = useWeb3React();
+  const [walletView, setWalletView] = useState<WalletState>('connect');
+  const activePrevious = usePrevious(active);
+  const connectorPrevious = usePrevious(connector);
+  const wiggle = getUserPobAssets(account ?? '');
+  console.log(wiggle);
+  useEffect(() => {
+    if (
+      (active && !activePrevious) ||
+      (connector && connector !== connectorPrevious && !error)
+    ) {
+      setWalletView('account');
+    }
+  }, [
+    setWalletView,
+    active,
+    error,
+    connector,
+    activePrevious,
+    connectorPrevious,
+  ]);
+  return (
+    <>
+      {walletView !== 'account' && (
+        <Web3Cover>
+          <Web3Status />
+        </Web3Cover>
+      )}
     </>
   );
 };
@@ -126,5 +142,3 @@ const AvatarLeftWell = styled.div`
   height: 100%;
   border-right: 1px solid black;
 `;
-
-export default React.memo(IndexPage);
