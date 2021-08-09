@@ -20,7 +20,12 @@ const writeFileAsync = promisify(writeFile);
 const readFileAsync = promisify(readFile);
 
 const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY;
-const NEW_METADATA_DIR = path.resolve(__dirname, '..', 'out', 'new-token-metadata');
+const NEW_METADATA_DIR = path.resolve(
+  __dirname,
+  '..',
+  'out',
+  'new-token-metadata',
+);
 const METADATA_DIR = path.resolve(__dirname, '..', 'out', 'token-metadata');
 const BASE_METADATA_DIR = path.resolve(__dirname, '..', 'out', 'metadata');
 const IMAGE_DIR = path.resolve(__dirname, '..', 'out', 'image');
