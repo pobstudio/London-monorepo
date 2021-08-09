@@ -34,7 +34,6 @@ export const useLowestGasPriceMinted = () => {
   const data = useLastTruthyValue(results.data);
 
   return useMemo(() => {
-    console.log(data);
     if (!data) {
       return undefined;
     }
