@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { Bold, Title, Caption, Italic } from '../components/text';
 import { Header } from '../components/header';
 import { AvatarCanvas } from '../components/avatar';
+import { useWeb3React } from '@web3-react/core';
+import { WalletState, Web3Status } from '../components/web3Status';
+import { usePrevious } from 'react-use';
 
 const IndexPage: NextPage = () => {
+  const { active, connector, error } = useWeb3React();
+  const [walletView, setWalletView] = useState<WalletState>('connect');
+  const activePrevious = usePrevious(active);
+  const connectorPrevious = usePrevious(connector);
+  useEffect(() => {
+    if (
+      (active && !activePrevious) ||
+      (connector && connector !== connectorPrevious && !error)
+    ) {
+      setWalletView('account');
+    }
+  }, [
+    setWalletView,
+    active,
+    error,
+    connector,
+    activePrevious,
+    connectorPrevious,
+  ]);
   return (
     <>
       <Header />
@@ -16,27 +38,36 @@ const IndexPage: NextPage = () => {
         <Caption>
           <Italic>Complementary service for all avatars!</Italic>
         </Caption>
-        <AvatarConsole>
-          <AvatarLeftWell>
-            <AvatarCanvas
-              foregroundImageSrc={
-                'https://lh3.googleusercontent.com/JDz86_qE-kHyYOoumnxQtOTHsd3IqknC7cv7-zemonq709CrBCLU7G4IR0C4DyTMT-go7DjHi_4Q-dgW7ZSHOapM8VmfahURwnIH=w600'
-              }
-              backgroundImageSrc={
-                'https://bafybeiaxk2s7ma4p4jjh2j6ix5zxvnynekfa6ey4q5iyvch4kqyrdnynzy.ipfs.dweb.link/'
-              }
-            />
-          </AvatarLeftWell>
-        </AvatarConsole>
+        <AvatarConsoleWrapper>
+          <AvatarConsole>
+            <AvatarLeftWell>
+              <AvatarCanvas
+                foregroundImageSrc={
+                  'https://lh3.googleusercontent.com/JDz86_qE-kHyYOoumnxQtOTHsd3IqknC7cv7-zemonq709CrBCLU7G4IR0C4DyTMT-go7DjHi_4Q-dgW7ZSHOapM8VmfahURwnIH=w600'
+                }
+                backgroundImageSrc={
+                  'https://bafybeiaxk2s7ma4p4jjh2j6ix5zxvnynekfa6ey4q5iyvch4kqyrdnynzy.ipfs.dweb.link/'
+                }
+              />
+            </AvatarLeftWell>
+            <AvatarRightWell>
+              {walletView !== 'account' && (
+                <Web3Cover>
+                  <Web3Status />
+                </Web3Cover>
+              )}
+
+              <RightWellBox>wiggle</RightWellBox>
+              <RightWellBox>wiggle</RightWellBox>
+            </AvatarRightWell>
+          </AvatarConsole>
+        </AvatarConsoleWrapper>
       </PageWrapper>
     </>
   );
 };
 
 const PageWrapper = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.4fr 1fr 0.4fr; */
   display: flex;
   align-items: center;
   min-height: 100vh;
@@ -48,14 +79,50 @@ const PageWrapper = styled.div`
   }
 `;
 
+const AvatarConsoleWrapper = styled.div`
+  padding: 24px;
+  width: 100%;
+`;
 const AvatarConsole = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   border: 1px solid black;
-  margin-top: 24px;
+`;
+
+const RightWellBox = styled.div`
+  display: flex;
+  flex: 1;
+`;
+const AvatarRightWell = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  ${RightWellBox} {
+    &:first-child {
+      border-bottom: 1px solid black;
+    }
+  }
+`;
+const Web3Cover = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const AvatarLeftWell = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   border-right: 1px solid black;
 `;
