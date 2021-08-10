@@ -58,7 +58,7 @@ const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
   // },
 };
 
-type WalletState = 'options' | 'connect' | 'account' | 'pending';
+export type WalletState = 'options' | 'connect' | 'account' | 'pending';
 
 export const Web3Status: FC = () => {
   const router = useRouter();

@@ -2,6 +2,10 @@ import { BigNumber, utils } from 'ethers';
 
 export const NULL_ADDRESS = '0x0000000000000000000000000000000000000000';
 
+export const LONDON_GIFT_CONTRACT = `0x7645eec8bb51862a5aa855c40971b2877dae81af`;
+
+export const HASH_CONTRACT = `0xe18a32192ed95b0fe9d70d19e5025f103475d7ba`;
+
 export const ZERO = BigNumber.from(0);
 
 export const MAX_APPROVAL = BigNumber.from(2).pow(256).sub(1);

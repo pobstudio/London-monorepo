@@ -17,11 +17,14 @@ import {
 } from '../components/text';
 import { A, AButton } from '../components/anchor';
 import {
+  BLOG_LINK,
   CHAIN_ID,
+  DISCORD_LINK,
   LONDON_EMOJI,
   SNAPSHOT_LINK,
   STUDIO_PROD_LINK,
   TOKEN_SYMBOL,
+  TWITTER_LINK,
 } from '../constants';
 import Link from 'next/link';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
@@ -54,19 +57,7 @@ import { useMeasure } from 'react-use';
 import { ROUTES } from '../constants/routes';
 import { useShopState } from '../hooks/useShopState';
 
-// import { ContentWrapper } from '../components/content';
-// import { Header } from '../components/header';
-// import { Footer } from '../components/footer';
-// import { BREAKPTS } from '../styles';
-// import { YourSagaSection } from '../components/saga-hero-section';
-// import { HashInfoSection } from '../components/hash-info-section';
-// import { SagaPricingSection } from '../components/saga-pricing-section';
-// import { HeroContent } from '../components/home-hero';
-
-const PageWrapper = styled.div`
-  /* display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0.4fr 1fr 0.4fr; */
+export const PageWrapper = styled.div`
   display: flex;
   align-items: center;
   min-height: 100vh;
@@ -189,22 +180,25 @@ const IndexPage: NextPage = () => {
         <Title>
           <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
-        <Text style={{ marginBottom: 12 }}>
-          <Link href={ROUTES.SHOPPE} passHref>
+        <Text style={{ marginBottom: 8 }}>
+          <Link href={ROUTES.PFP} passHref>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
+              GET YOUR AVATAR BACKGROUND UPGRADED!
+            </A>
+            {/* <A style={{ color: 'blue', textDecoration: 'underline' }}>
               {shopState === 'preview' && 'SHOPPE IS OPEN!'}
               {shopState === 'open' && 'SHOPPE IS OPEN!'}
               {shopState === 'revealed' && 'SHOPPE IS OPEN!'}
               {shopState === 'sold-out' && 'SHOPPE HAS SOLD OUT!'}
               {shopState === 'not-open' && 'CHECK OUT THE SHOPPE!'}
-            </A>
+            </A> */}
           </Link>
         </Text>
-        <Caption style={{ marginBottom: 12 }}>
+        <Caption>
           A social currency backed by the lasting impact of minting, gas price
           manipulation, and EIP 1559
         </Caption>
-        <Text style={{ marginBottom: 36 }}>
+        <Text style={{ marginBottom: 4 }}>
           <A
             href={STUDIO_PROD_LINK}
             target={'_blank'}
@@ -213,6 +207,17 @@ const IndexPage: NextPage = () => {
             <Italic>Proof of Beauty Studios</Italic>
           </A>
         </Text>
+        <Flex style={{ marginBottom: 36 }}>
+          <A href={BLOG_LINK} target={'_blank'}>
+            Blog
+          </A>
+          <A style={{ margin: '0 12px' }} href={TWITTER_LINK} target={'_blank'}>
+            Twitter
+          </A>
+          <A href={DISCORD_LINK} target={'_blank'}>
+            Discord
+          </A>
+        </Flex>
         <Text style={{ marginTop: 28 }}>
           <Bold>Abstract</Bold>
         </Text>
@@ -280,18 +285,18 @@ const IndexPage: NextPage = () => {
 
         <CoreMinting>
           <CoreMintingInner>
-            <div style={{ marginTop: 20, marginBottom: 20 }}>
-              <Text style={{ marginBottom: 20 }}>
+            <div style={{ marginTop: 20, marginBottom: 0 }}>
+              <Text style={{ marginBottom: 0 }}>
                 <strong>
-                  Play <Italic>{TOKEN_SYMBOL}</Italic>
+                  <Italic>{TOKEN_SYMBOL}</Italic> Stats
                 </strong>
               </Text>
-              <Mint />
+              {/* <Mint /> */}
             </div>
 
             <TableContainer
               style={{
-                marginTop: 48,
+                marginTop: 20,
                 marginBottom: 20,
                 border: '1px solid black',
                 background: 'white',

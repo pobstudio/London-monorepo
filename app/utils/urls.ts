@@ -9,10 +9,10 @@ export const getOpenSeaAccountUrl = (address: string) => {
   }opensea.io/accounts/${address}`;
 };
 
-export const getOpenSeaAssetUrl = (address: string) => {
+export const getOpenSeaAssetUrl = (address: string, tokenId: string = '0') => {
   return `https://${
     CHAIN_ID === 1 ? '' : 'testnets.'
-  }opensea.io/assets/${address}`;
+  }opensea.io/assets/${address}/${tokenId}`;
 };
 
 export const getOpenSeaUserAssetUrl = (address: string, asset: string) => {

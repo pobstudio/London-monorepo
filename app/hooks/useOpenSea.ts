@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
+import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { fetcher } from '../utils/fetcher';
 
 const OS_SINGLE_ASSET = (contract: string, token: string) =>
@@ -31,4 +32,95 @@ export const useOpenSeaStats = () => {
     }),
     [stats],
   );
+};
+
+const OS_LIMIT_DEFAULT = 32;
+
+const OS_OWNER_ASSETS = (owner: string, limit: number = OS_LIMIT_DEFAULT) =>
+  `https://api.opensea.io/api/v1/assets?owner=${owner}&limit=${limit}&offset=0`;
+
+const OS_OWNER_FILTER_ASSETS = (owner: string, contracts: string[]) => {
+  let link = OS_OWNER_ASSETS(owner);
+  contracts.forEach(
+    (contract: string) =>
+      (link = `${link}&asset_contract_addresses=${contract}`),
+  );
+  return link;
+};
+
+const OS_OWNER_POB_ASSETS = (owner: string) =>
+  OS_OWNER_FILTER_ASSETS(owner, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);
+
+export interface OPENSEA_ASSET {
+  name: string;
+  image: string;
+  id: string;
+  metadata: string;
+  link: string;
+}
+export interface OPENSEA_COLLECTION {
+  name: string;
+  contract: string;
+  avatar: string;
+  url: string;
+  assets: OPENSEA_ASSET[];
+}
+
+const useOpenSeaAssets = (data: any) => {
+  const assets = data?.assets;
+  let collections: OPENSEA_COLLECTION[] = [];
+  assets?.forEach((asset: any) => {
+    const contract = asset?.asset_contract?.address;
+    const collectionInList = collections.find(
+      (collection) => collection?.contract === contract,
+    );
+    if (collectionInList) {
+      const index = collections.findIndex(
+        (collection) => collection?.contract === contract,
+      );
+      collections[index].assets.push({
+        name: asset?.name,
+        image: asset?.image_original_url,
+        id: asset?.token_id,
+        metadata: asset?.token_metadata,
+        link: asset?.permalink,
+      });
+    } else {
+      const name = asset?.collection?.name;
+      const avatar = asset?.collection?.image_url;
+      const url = `https://opensea.io/collection/${asset?.collection?.slug}`;
+      collections.push({
+        name,
+        contract,
+        avatar,
+        url,
+        assets: [
+          {
+            name: asset?.name,
+            image: asset?.image_original_url,
+            id: asset?.token_id,
+            metadata: asset?.token_metadata,
+            link: asset?.permalink,
+          },
+        ],
+      });
+    }
+  });
+
+  return collections;
+};
+
+export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
+  const fetchUrl = OS_OWNER_POB_ASSETS(owner);
+  const { data } = useSWR(fetchUrl, fetcher, {});
+  return useOpenSeaAssets(data);
+};
+
+export const useOtherAssets = (
+  owner: string,
+  contracts: string[],
+): OPENSEA_COLLECTION[] => {
+  const fetchUrl = OS_OWNER_FILTER_ASSETS(owner, contracts);
+  const { data } = useSWR(fetchUrl, fetcher, {});
+  return useOpenSeaAssets(data);
 };
