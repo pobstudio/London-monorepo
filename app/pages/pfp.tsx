@@ -7,7 +7,12 @@ import { AvatarCanvas } from '../components/avatar';
 import { useWeb3React } from '@web3-react/core';
 import { WalletState, Web3Status } from '../components/web3Status';
 import { usePrevious } from 'react-use';
-import { getUserPobAssets } from '../hooks/useOpenSea';
+import {
+  OPENSEA_ASSET,
+  OPENSEA_COLLECTION,
+  useOtherAssets,
+  usePobAssets,
+} from '../hooks/useOpenSea';
 import { BREAKPTS } from '../styles';
 import { Flex, FlexCenter } from '../components/flex';
 
@@ -39,11 +44,7 @@ const IndexPage: NextPage = () => {
                 }
               />
             </AvatarLeftWell>
-            <AvatarRightWell>
-              <Web3Handler />
-              <RightWellBox>wiggle</RightWellBox>
-              <RightWellBox>wiggle</RightWellBox>
-            </AvatarRightWell>
+            <RightColumn />
           </AvatarConsole>
         </AvatarConsoleWrapper>
       </PageWrapper>
@@ -52,13 +53,57 @@ const IndexPage: NextPage = () => {
 };
 export default React.memo(IndexPage);
 
+const UserSection: FC<{ items: OPENSEA_COLLECTION[] }> = ({ items }) => (
+  <>
+    <RightWellBox>
+      {items.map((collection: OPENSEA_COLLECTION) => (
+        <div>
+          <img
+            src={collection.avatar}
+            width={40}
+            height={40}
+            style={{ borderRadius: 999 }}
+          />
+          <div>{collection.name}</div>
+          {collection.assets.map((asset: OPENSEA_ASSET) => (
+            <div>
+              <img src={asset.image} height={128} />
+              {asset.name}
+            </div>
+          ))}
+        </div>
+      ))}
+    </RightWellBox>
+  </>
+);
+
+const UserAssets: FC<{ account: string }> = ({ account }) => {
+  const otherAssets = useOtherAssets(account, SUPPORTED_PFPS);
+  const pobAssets = usePobAssets(account);
+  return (
+    <>
+      <UserSection items={otherAssets} />
+      <UserSection items={pobAssets} />
+    </>
+  );
+};
+
+const RightColumn: FC = () => {
+  const { account } = useWeb3React();
+  return (
+    <>
+      <AvatarRightWell>
+        {!!account ? <UserAssets account={account} /> : <Web3Handler />}
+      </AvatarRightWell>
+    </>
+  );
+};
+
 const Web3Handler: FC = () => {
-  const { account, active, connector, error } = useWeb3React();
+  const { active, connector, error } = useWeb3React();
   const [walletView, setWalletView] = useState<WalletState>('connect');
   const activePrevious = usePrevious(active);
   const connectorPrevious = usePrevious(connector);
-  const wiggle = getUserPobAssets(account ?? '');
-  console.log(wiggle);
   useEffect(() => {
     if (
       (active && !activePrevious) ||

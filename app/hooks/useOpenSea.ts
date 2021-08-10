@@ -1,8 +1,6 @@
-import { stringify } from 'query-string';
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
-import { SUPPORTED_PFPS } from '../pages/pfp';
 import { fetcher } from '../utils/fetcher';
 
 const OS_SINGLE_ASSET = (contract: string, token: string) =>
@@ -53,20 +51,19 @@ const OS_OWNER_FILTER_ASSETS = (owner: string, contracts: string[]) => {
 const OS_OWNER_POB_ASSETS = (owner: string) =>
   OS_OWNER_FILTER_ASSETS(owner, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);
 
-interface OPENSEA_COLLECTION {
+export interface OPENSEA_ASSET {
+  name: string;
+  image: string;
+  id: string;
+  metadata: string;
+  link: string;
+}
+export interface OPENSEA_COLLECTION {
   name: string;
   contract: string;
   avatar: string;
   url: string;
-  assets: [
-    {
-      name: string;
-      image: string;
-      id: string;
-      metadata: string;
-      link: string;
-    },
-  ];
+  assets: OPENSEA_ASSET[];
 }
 
 const useOpenSeaAssets = (data: any) => {
@@ -113,14 +110,17 @@ const useOpenSeaAssets = (data: any) => {
   return collections;
 };
 
-export const getUserPobAssets = (owner: string): OPENSEA_COLLECTION[] => {
+export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
   const fetchUrl = OS_OWNER_POB_ASSETS(owner);
   const { data } = useSWR(fetchUrl, fetcher, {});
   return useOpenSeaAssets(data);
 };
 
-export const getUserOtherAssets = (owner: string): OPENSEA_COLLECTION[] => {
-  const fetchUrl = OS_OWNER_FILTER_ASSETS(owner, SUPPORTED_PFPS);
+export const useOtherAssets = (
+  owner: string,
+  contracts: string[],
+): OPENSEA_COLLECTION[] => {
+  const fetchUrl = OS_OWNER_FILTER_ASSETS(owner, contracts);
   const { data } = useSWR(fetchUrl, fetcher, {});
   return useOpenSeaAssets(data);
 };
