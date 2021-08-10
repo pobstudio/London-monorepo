@@ -149,7 +149,11 @@ const UserSection: FC<{
               value={selectedCollectionAddress}
             >
               {selectableAssetAndNames?.map((i) => {
-                return <option value={i[0]}>{i[1]}</option>;
+                return (
+                  <option value={i[0]} key={`option-1-${i}`}>
+                    {i[1]}
+                  </option>
+                );
               })}
             </StyledSelect>
           </Flex>
@@ -182,7 +186,11 @@ const UserSection: FC<{
             value={selectedCollectionAddress}
           >
             {selectableAssetAndNames?.map((i) => {
-              return <option value={i[0]}>{i[1]}</option>;
+              return (
+                <option value={i[0]} key={`option-2-${i}`}>
+                  {i[1]}
+                </option>
+              );
             })}
           </StyledSelect>
         </Flex>
@@ -194,9 +202,9 @@ const UserSection: FC<{
             onClick={() => {
               setImageSrc(asset.image);
             }}
+            key={`asset-${asset.name}`}
           >
-            <img src={asset.image} height={81} width={81} />
-            {/* {asset.name} */}
+            <img src={asset.image} />
           </Asset>
         ))}
       </CollectionBody>
@@ -212,6 +220,8 @@ const Asset = styled(FlexCenterColumn)<{ isSelected?: boolean }>`
   img {
     object-fit: cover;
     background: #f6f6f6;
+    height: 81px;
+    width: 81px;
   }
 `;
 

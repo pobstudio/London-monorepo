@@ -51,7 +51,6 @@ export const TokensEffect: FC = () => {
       return;
     }
     london.allowance(account, deployments[CHAIN_ID].gift).then((v) => {
-      console.log('v', v.toString());
       setApprovalBalance(v);
     });
     london.balanceOf(account).then(setTokenBalance);
