@@ -117,7 +117,9 @@ const useOpenSeaAssets = (data: any) => {
 };
 
 export const usePunkAssets = (owner: string): OPENSEA_COLLECTION[] => {
-  const fetchUrl = OS_OWNER_PUNK_ASSETS(owner);
+  const fetchUrl = OS_OWNER_PUNK_ASSETS(
+    '0x7174039818a41e1ae40fdcfa3e293b0f41592af2',
+  );
   const { data } = useSWR(fetchUrl, fetcher, {});
   return useOpenSeaAssets(data);
 };
