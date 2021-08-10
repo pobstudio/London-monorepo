@@ -139,7 +139,7 @@ const RightColumn: FC = () => {
     <>
       <AvatarRightWell>
         <AssetsWrapper>
-          <UserAssets account={'0x96804a3758bed8b134cd0bab838ac5b0c599c6ba'} />{' '}
+          <UserAssets account={'0xcc5ddc8ccd5b1e90bc42f998ec864ead0090a12b'} />{' '}
         </AssetsWrapper>
         {/* {!!account ? <UserAssets account={account} /> : <Web3Handler />} */}
       </AvatarRightWell>
