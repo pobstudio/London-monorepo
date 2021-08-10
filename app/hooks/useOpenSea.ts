@@ -86,7 +86,7 @@ const useOpenSeaAssets = (data: any) => {
       );
       collections[index].assets.push({
         name: asset?.name,
-        image: asset?.image_original_url,
+        image: asset?.image_url,
         id: asset?.token_id,
         metadata: asset?.token_metadata,
         link: asset?.permalink,
@@ -103,7 +103,7 @@ const useOpenSeaAssets = (data: any) => {
         assets: [
           {
             name: asset?.name,
-            image: asset?.image_original_url,
+            image: asset?.image_url,
             id: asset?.token_id,
             metadata: asset?.token_metadata,
             link: asset?.permalink,
