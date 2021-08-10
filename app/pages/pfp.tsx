@@ -205,8 +205,10 @@ const Asset = styled(FlexCenterColumn)<{ isSelected?: boolean }>`
   display: flex;
   align-items: center;
   opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
+  background: #F6F6F6;
   img {
     object-fit: cover;
+    background: #F6F6F6;
   }
 `;
 
