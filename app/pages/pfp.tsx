@@ -8,6 +8,8 @@ import { useWeb3React } from '@web3-react/core';
 import { WalletState, Web3Status } from '../components/web3Status';
 import { usePrevious } from 'react-use';
 import { getUserPobAssets } from '../hooks/useOpenSea';
+import { BREAKPTS } from '../styles';
+import { Flex, FlexCenter } from '../components/flex';
 
 export const SUPPORTED_PFPS = [
   '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', // BAYC
@@ -95,14 +97,19 @@ const PageWrapper = styled.div`
   }
 `;
 
-const AvatarConsoleWrapper = styled.div`
+const AvatarConsoleWrapper = styled(FlexCenter)`
   padding: 24px;
   width: 100%;
 `;
 const AvatarConsole = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 400px 1fr;
   border: 1px solid black;
+  width: 800px;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const RightWellBox = styled.div`

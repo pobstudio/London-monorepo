@@ -12,6 +12,7 @@ import {
   TWITTER_LINK,
   UNISWAP_TRADE_LINK,
   OPENSEA_LINK,
+  TOKEN_SYMBOL,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -50,13 +51,13 @@ export const Header: FC = () => {
     <HeaderContainer>
       <HeaderRow>
         <AnchorRow>
-          <AddressA
+          {/* <AddressA
             href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
             target={'_blank'}
           >
             ERC20
-          </AddressA>
-          <A href={BLOG_LINK} target={'_blank'}>
+          </AddressA> */}
+          {/* <A href={BLOG_LINK} target={'_blank'}>
             Blog
           </A>
           <A href={TWITTER_LINK} target={'_blank'}>
@@ -64,21 +65,24 @@ export const Header: FC = () => {
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
-          </A>
-          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
-            Trade
-          </A>
+          </A> */}
+          <Link href={ROUTES.INDEX} passHref>
+            <A style={{fontWeight: 'bold'}}>$LONDON</A>
+          </Link>
           <A href={SNAPSHOT_LINK} target={'_blank'}>
-            DAO
+            Governance
           </A>
           <Link href={ROUTES.SHOPPE} passHref>
             <A>Shoppe</A>
           </Link>
           <Link href={ROUTES.PFP} passHref>
-            <A>PFP</A>
+            <A>Change pfp</A>
           </Link>
           <A href={OPENSEA_LINK} target={'_blank'}>
             OpenSea
+          </A>
+          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
+            Buy {TOKEN_SYMBOL}
           </A>
         </AnchorRow>
         <Web3Status />

@@ -5,8 +5,8 @@ import { keyOutColorToAlpha } from '../utils/chromaKey';
 import { getImage, getMostUsedColors, getImageData } from '../utils/image';
 
 const Canvas = styled.canvas`
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  /* height: 400px; */
   display: block;
 `;
 
