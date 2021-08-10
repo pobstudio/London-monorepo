@@ -99,7 +99,7 @@ const CollectionBody = styled.div`
   flex-direction: column;
   border-left: 1px solid rgba(0, 0, 0, 0.5);
   margin-top: 8px;
-  margin-left: 16px;
+  margin-left: 18px;
 `;
 const CollectionBodyInner = styled.div`
   padding: 8px 16px;
@@ -119,7 +119,7 @@ const CollectionTitle = styled.div`
   color: black;
 `;
 const AssetsWrapper = styled.div`
-  padding: 16px;
+  padding: 16px 12px;
 `;
 
 const UserAssets: FC<{ account: string }> = ({ account }) => {
