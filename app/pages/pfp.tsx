@@ -191,7 +191,6 @@ const UserSection: FC<{
           <Asset
             isSelected={selectedImageSrc === asset.image}
             onClick={() => {
-              console.log(asset.image);
               setImageSrc(asset.image);
             }}
           >
@@ -208,10 +207,10 @@ const Asset = styled(FlexCenterColumn)<{ isSelected?: boolean }>`
   display: flex;
   align-items: center;
   opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
-  background: #F6F6F6;
+  background: #f6f6f6;
   img {
     object-fit: cover;
-    background: #F6F6F6;
+    background: #f6f6f6;
   }
 `;
 
@@ -257,7 +256,6 @@ const UserAssets: FC<{
     SELECTABLE_FOREGROUND.map((s) => s[0]),
   );
   const pobAssets = usePobAssets(account);
-  console.log(foregroundImageSrc, backgroundImageSrc);
   return (
     <>
       <ForegroundUserSectionWrapper>
