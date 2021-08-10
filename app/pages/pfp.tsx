@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
-import { Bold, Title, Caption, Italic } from '../components/text';
+import { Text, Bold, Title, Caption, Italic } from '../components/text';
 import { Header } from '../components/header';
 import { AvatarCanvas } from '../components/avatar';
 import { useWeb3React } from '@web3-react/core';
@@ -14,14 +14,41 @@ import {
   usePobAssets,
 } from '../hooks/useOpenSea';
 import { BREAKPTS } from '../styles';
-import { Flex, FlexCenter } from '../components/flex';
+import {
+  Flex,
+  FlexCenter,
+  FlexCenterColumn,
+  FlexEnds,
+} from '../components/flex';
+import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
+import { A, AButton } from '../components/anchor';
+import { getOpenSeaAssetUrl } from '../utils/urls';
+export const SELECTABLE_BACKGROUND: [string, string][] = [
+  [LONDON_GIFT_CONTRACT, '$LONDON gift'],
+  [HASH_CONTRACT, '$HASH'],
+];
 
-export const SUPPORTED_PFPS = [
-  '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', // BAYC
-  '0x1a92f7381b9f03921564a437210bb9396471050c', // Cool Cats
+export const SELECTABLE_FOREGROUND: [string, string][] = [
+  ['0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'BAYC'],
+  ['0x1a92f7381b9f03921564a437210bb9396471050c', 'Cool Cats'],
+  ['0x85f740958906b317de6ed79663012859067e745b', 'Wicked Cranium'],
+  ['0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb', 'CryptoPunk'],
+  ['0xf4ee95274741437636e748ddac70818b4ed7d043', 'The Doge Pound'],
+  ['0x099689220846644f87d1137665cded7bf3422747', 'Robotos'],
+  ['0xef0182dc0574cd5874494a120750fd222fdb909a', 'Rumble Kong'],
+  ['0xedb61f74b0d09b2558f1eeb79b247c1f363ae452', 'Gutter Cat Gang'],
+  ['0x31385d3520bced94f77aae104b406994d8f2168c', 'Bastard GAN punk v2'],
 ];
 
 const IndexPage: NextPage = () => {
+  const { account } = useWeb3React();
+  const [foregroundImageSrc, setForegroundImageSrc] = useState<
+    string | undefined
+  >();
+  const [backgroundImageSrc, setBackgroundImageSrc] = useState<
+    string | undefined
+  >();
+
   return (
     <>
       <Header />
@@ -36,15 +63,23 @@ const IndexPage: NextPage = () => {
           <AvatarConsole>
             <AvatarLeftWell>
               <AvatarCanvas
-                foregroundImageSrc={
-                  'https://lh3.googleusercontent.com/JDz86_qE-kHyYOoumnxQtOTHsd3IqknC7cv7-zemonq709CrBCLU7G4IR0C4DyTMT-go7DjHi_4Q-dgW7ZSHOapM8VmfahURwnIH=w600'
-                }
-                backgroundImageSrc={
-                  'https://bafybeiaxk2s7ma4p4jjh2j6ix5zxvnynekfa6ey4q5iyvch4kqyrdnynzy.ipfs.dweb.link/'
-                }
+                foregroundImageSrc={foregroundImageSrc}
+                backgroundImageSrc={backgroundImageSrc}
               />
             </AvatarLeftWell>
-            <RightColumn />
+            <AvatarRightWell>
+              {!!account ? (
+                <UserAssets
+                  foregroundImageSrc={foregroundImageSrc}
+                  backgroundImageSrc={backgroundImageSrc}
+                  setForegroundImageSrc={setForegroundImageSrc}
+                  setBackgroundImageSrc={setBackgroundImageSrc}
+                  account={'0xcc5ddc8ccd5b1e90bc42f998ec864ead0090a12b'}
+                />
+              ) : (
+                <Web3Handler />
+              )}
+            </AvatarRightWell>
           </AvatarConsole>
         </AvatarConsoleWrapper>
       </PageWrapper>
@@ -53,96 +88,192 @@ const IndexPage: NextPage = () => {
 };
 export default React.memo(IndexPage);
 
-const UserSection: FC<{ items: OPENSEA_COLLECTION[] }> = ({ items }) => (
-  <>
-    <RightWellBox>
-      {items.map((collection: OPENSEA_COLLECTION) => (
-        <Collection>
-          <CollectionTitle>
-            <img src={collection.avatar} />
-            {collection.name}
-          </CollectionTitle>
-          <CollectionBody>
-            <CollectionBodyInner>
-              {collection.assets.map((asset: OPENSEA_ASSET) => (
-                <Asset>
-                  <img src={asset.image} height={128} />
-                  {asset.name}
-                </Asset>
-              ))}
-            </CollectionBodyInner>
-          </CollectionBody>
-        </Collection>
-      ))}
-    </RightWellBox>
-  </>
-);
-const Asset = styled.div`
-  display: flex;
-  align-items: center;
-  &:not(:first-child) {
-    margin-top: 16px;
-  }
-  img {
-    margin-right: 16px;
-  }
-`;
-const Collection = styled.div`
-  display: flex;
-  flex-direction: column;
-  &:not(:first-child) {
-    margin-top: 8px;
-  }
-`;
-const CollectionBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
-  margin-top: 8px;
-  margin-left: 18px;
-`;
-const CollectionBodyInner = styled.div`
-  padding: 8px 16px;
-`;
-const CollectionTitle = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    margin-right: 12px;
-  }
-  font-size: 18px;
-  font-weight: 600;
-  text-decoration: none;
-  color: black;
-`;
-const AssetsWrapper = styled.div`
-  padding: 16px 12px;
+const StyledSelect = styled.select`
+  font-weight: bold;
+  border: none;
+  outline: none;
+  padding-right: 5px;
+  text-align-last: right;
 `;
 
-const UserAssets: FC<{ account: string }> = ({ account }) => {
-  const otherAssets = useOtherAssets(account, SUPPORTED_PFPS);
-  const pobAssets = usePobAssets(account);
+const UserSectionContainer = styled.div`
+  padding: 12px;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const UserSection: FC<{
+  isVerticalScroll?: boolean;
+  label: string;
+  setImageSrc: (src: string) => void;
+  selectedImageSrc?: string;
+  items: OPENSEA_COLLECTION[];
+  selectableAssetAndNames: [string, string][];
+}> = ({
+  selectableAssetAndNames,
+  setImageSrc,
+  selectedImageSrc,
+  label,
+  items,
+  isVerticalScroll,
+}) => {
+  const [selectedCollectionAddress, setSelectedCollectionAddress] = useState<
+    string | undefined
+  >();
+
+  const selectedCollection = useMemo(() => {
+    return items.find((i) => i.contract === selectedCollectionAddress);
+  }, [items, selectedCollectionAddress]);
+
+  useEffect(() => {
+    if (!selectableAssetAndNames?.[0]) {
+      return;
+    }
+    setSelectedCollectionAddress(selectableAssetAndNames[0][0]);
+  }, [selectableAssetAndNames]);
+
+  if (!items || items.length === 0 || !selectedCollection) {
+    return (
+      <UserSectionContainer>
+        <FlexEnds>
+          <Text>{label}</Text>
+          <Flex>
+            <StyledSelect
+              onChange={(e) => setSelectedCollectionAddress(e.target.value)}
+              value={selectedCollectionAddress}
+            >
+              {selectableAssetAndNames?.map((i) => {
+                return <option value={i[0]}>{i[1]}</option>;
+              })}
+            </StyledSelect>
+          </Flex>
+        </FlexEnds>
+        <FlexCenter
+          style={{ width: '100%', height: isVerticalScroll ? 178 : 81 }}
+        >
+          <Text style={{ opacity: 0.5 }}>
+            Do not own any. Buy{' '}
+            <A
+              target={'blank'}
+              href={getOpenSeaAssetUrl(selectedCollectionAddress ?? '-')}
+            >
+              here
+            </A>
+            .
+          </Text>
+        </FlexCenter>
+      </UserSectionContainer>
+    );
+  }
+
   return (
-    <>
-      {/* <UserSection items={otherAssets} /> */}
-      <UserSection items={pobAssets} />
-    </>
+    <UserSectionContainer>
+      <FlexEnds>
+        <Text>{label}</Text>
+        <Flex>
+          <StyledSelect
+            onChange={(e) => setSelectedCollectionAddress(e.target.value)}
+            value={selectedCollectionAddress}
+          >
+            {selectableAssetAndNames?.map((i) => {
+              return <option value={i[0]}>{i[1]}</option>;
+            })}
+          </StyledSelect>
+        </Flex>
+      </FlexEnds>
+      <CollectionBody isVerticalScroll={isVerticalScroll}>
+        {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
+          <Asset
+            isSelected={selectedImageSrc === asset.image}
+            onClick={() => {
+              console.log(asset.image);
+              setImageSrc(asset.image);
+            }}
+          >
+            <img src={asset.image} height={81} width={81} />
+            {/* {asset.name} */}
+          </Asset>
+        ))}
+      </CollectionBody>
+    </UserSectionContainer>
   );
 };
 
-const RightColumn: FC = () => {
-  const { account } = useWeb3React();
+const Asset = styled(FlexCenterColumn)<{ isSelected?: boolean }>`
+  display: flex;
+  align-items: center;
+  opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
+  img {
+    object-fit: cover;
+  }
+`;
+
+const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: ${(p) => (p.isVerticalScroll ? 'wrap' : 'nowrap')};
+  grid-auto-columns: 81px;
+  grid-auto-rows: 81px;
+  grid-gap: 12px;
+  overflow: auto;
+  margin: 0;
+  margin-top: 12px;
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    height: 0;
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+  }
+`;
+
+const ForegroundUserSectionWrapper = styled.div`
+  border-bottom: 1px solid black;
+`;
+
+const UserAssets: FC<{
+  foregroundImageSrc?: string;
+  backgroundImageSrc?: string;
+  setForegroundImageSrc: (src: string) => void;
+  setBackgroundImageSrc: (src: string) => void;
+  account: string;
+}> = ({
+  account,
+  setForegroundImageSrc,
+  setBackgroundImageSrc,
+  foregroundImageSrc,
+  backgroundImageSrc,
+}) => {
+  const otherAssets = useOtherAssets(
+    account,
+    SELECTABLE_FOREGROUND.map((s) => s[0]),
+  );
+  const pobAssets = usePobAssets(account);
+  console.log(foregroundImageSrc, backgroundImageSrc);
   return (
     <>
-      <AvatarRightWell>
-        <AssetsWrapper>
-          <UserAssets account={'0xcc5ddc8ccd5b1e90bc42f998ec864ead0090a12b'} />{' '}
-        </AssetsWrapper>
-        {/* {!!account ? <UserAssets account={account} /> : <Web3Handler />} */}
-      </AvatarRightWell>
+      <ForegroundUserSectionWrapper>
+        <UserSection
+          selectableAssetAndNames={SELECTABLE_BACKGROUND}
+          setImageSrc={setBackgroundImageSrc}
+          selectedImageSrc={backgroundImageSrc}
+          label={'Select Background'}
+          items={pobAssets}
+        />
+      </ForegroundUserSectionWrapper>
+      <div style={{ flexGrow: 1 }}>
+        <UserSection
+          selectableAssetAndNames={SELECTABLE_FOREGROUND}
+          setImageSrc={setForegroundImageSrc}
+          selectedImageSrc={foregroundImageSrc}
+          isVerticalScroll={true}
+          label={'Select Foreground'}
+          items={otherAssets}
+        />
+      </div>
     </>
   );
 };
@@ -196,12 +327,15 @@ const AvatarConsoleWrapper = styled(FlexCenter)`
 `;
 const AvatarConsole = styled.div`
   display: grid;
-  grid-template-columns: 400px 1fr;
+  grid-template-columns: minMax(0, 300px) minMax(0, 1fr);
   border: 1px solid black;
   width: 800px;
-  height: 450px;
+  min-height: 450px;
   @media (max-width: ${BREAKPTS.MD}px) {
     width: 100%;
+    grid-template-columns: minMax(0, 200px) minMax(0, 1fr);
+  }
+  @media (max-width: ${BREAKPTS.SM}px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -218,7 +352,6 @@ const AvatarRightWell = styled.div`
   align-items: stretch;
   width: 100%;
   height: 100%;
-  overflow: scroll;
   ${RightWellBox} {
     &:first-child {
       /* border-bottom: 1px solid black; */
@@ -238,10 +371,14 @@ const Web3Cover = styled.div`
 `;
 
 const AvatarLeftWell = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   height: 100%;
   border-right: 1px solid black;
+  background: #f6f6f6;
+  @media (max-width: ${BREAKPTS.SM}px) {
+    border-right: none;
+  }
 `;
