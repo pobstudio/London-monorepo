@@ -51,6 +51,12 @@ const OS_OWNER_FILTER_ASSETS = (owner: string, contracts: string[]) => {
 const OS_OWNER_POB_ASSETS = (owner: string) =>
   OS_OWNER_FILTER_ASSETS(owner, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);
 
+const OS_OWNER_PUNK_ASSETS = (
+  owner: string,
+  limit: number = OS_LIMIT_DEFAULT,
+) =>
+  `https://api.opensea.io/api/v1/assets?owner=${owner}&limit=${limit}&offset=0&collection=cryptopunks`;
+
 export interface OPENSEA_ASSET {
   name: string;
   image: string;
@@ -110,6 +116,12 @@ const useOpenSeaAssets = (data: any) => {
   return collections;
 };
 
+export const usePunkAssets = (owner: string): OPENSEA_COLLECTION[] => {
+  const fetchUrl = OS_OWNER_PUNK_ASSETS(owner);
+  const { data } = useSWR(fetchUrl, fetcher, {});
+  return useOpenSeaAssets(data);
+};
+
 export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
   const fetchUrl = OS_OWNER_POB_ASSETS(owner);
   const { data } = useSWR(fetchUrl, fetcher, {});
@@ -122,5 +134,5 @@ export const useOtherAssets = (
 ): OPENSEA_COLLECTION[] => {
   const fetchUrl = OS_OWNER_FILTER_ASSETS(owner, contracts);
   const { data } = useSWR(fetchUrl, fetcher, {});
-  return useOpenSeaAssets(data);
+  return [...useOpenSeaAssets(data), ...usePunkAssets(owner)];
 };
