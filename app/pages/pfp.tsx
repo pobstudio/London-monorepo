@@ -74,7 +74,7 @@ const IndexPage: NextPage = () => {
                   backgroundImageSrc={backgroundImageSrc}
                   setForegroundImageSrc={setForegroundImageSrc}
                   setBackgroundImageSrc={setBackgroundImageSrc}
-                  account={'0xcc5ddc8ccd5b1e90bc42f998ec864ead0090a12b'}
+                  account={account}
                 />
               ) : (
                 <Web3Handler />
