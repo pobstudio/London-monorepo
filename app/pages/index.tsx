@@ -208,10 +208,10 @@ const IndexPage: NextPage = () => {
           </A>
         </Text>
         <Flex style={{ marginBottom: 36 }}>
-        <A href={BLOG_LINK} target={'_blank'}>
+          <A href={BLOG_LINK} target={'_blank'}>
             Blog
           </A>
-          <A style={{margin: '0 12px'}} href={TWITTER_LINK} target={'_blank'}>
+          <A style={{ margin: '0 12px' }} href={TWITTER_LINK} target={'_blank'}>
             Twitter
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>

@@ -57,32 +57,77 @@ const UserSection: FC<{ items: OPENSEA_COLLECTION[] }> = ({ items }) => (
   <>
     <RightWellBox>
       {items.map((collection: OPENSEA_COLLECTION) => (
-        <div>
-          <img
-            src={collection.avatar}
-            width={40}
-            height={40}
-            style={{ borderRadius: 999 }}
-          />
-          <div>{collection.name}</div>
-          {collection.assets.map((asset: OPENSEA_ASSET) => (
-            <div>
-              <img src={asset.image} height={128} />
-              {asset.name}
-            </div>
-          ))}
-        </div>
+        <Collection>
+          <CollectionTitle>
+            <img src={collection.avatar} />
+            {collection.name}
+          </CollectionTitle>
+          <CollectionBody>
+            <CollectionBodyInner>
+              {collection.assets.map((asset: OPENSEA_ASSET) => (
+                <Asset>
+                  <img src={asset.image} height={128} />
+                  {asset.name}
+                </Asset>
+              ))}
+            </CollectionBodyInner>
+          </CollectionBody>
+        </Collection>
       ))}
     </RightWellBox>
   </>
 );
+const Asset = styled.div`
+  display: flex;
+  align-items: center;
+  &:not(:first-child) {
+    margin-top: 16px;
+  }
+  img {
+    margin-right: 16px;
+  }
+`;
+const Collection = styled.div`
+  display: flex;
+  flex-direction: column;
+  &:not(:first-child) {
+    margin-top: 8px;
+  }
+`;
+const CollectionBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  margin-top: 8px;
+  margin-left: 16px;
+`;
+const CollectionBodyInner = styled.div`
+  padding: 8px 16px;
+`;
+const CollectionTitle = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    margin-right: 12px;
+  }
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+`;
+const AssetsWrapper = styled.div`
+  padding: 16px;
+`;
 
 const UserAssets: FC<{ account: string }> = ({ account }) => {
   const otherAssets = useOtherAssets(account, SUPPORTED_PFPS);
   const pobAssets = usePobAssets(account);
   return (
     <>
-      <UserSection items={otherAssets} />
+      {/* <UserSection items={otherAssets} /> */}
       <UserSection items={pobAssets} />
     </>
   );
@@ -93,7 +138,10 @@ const RightColumn: FC = () => {
   return (
     <>
       <AvatarRightWell>
-        {!!account ? <UserAssets account={account} /> : <Web3Handler />}
+        <AssetsWrapper>
+          <UserAssets account={'0x96804a3758bed8b134cd0bab838ac5b0c599c6ba'} />{' '}
+        </AssetsWrapper>
+        {/* {!!account ? <UserAssets account={account} /> : <Web3Handler />} */}
       </AvatarRightWell>
     </>
   );
@@ -151,6 +199,7 @@ const AvatarConsole = styled.div`
   grid-template-columns: 400px 1fr;
   border: 1px solid black;
   width: 800px;
+  height: 450px;
   @media (max-width: ${BREAKPTS.MD}px) {
     width: 100%;
     grid-template-columns: 1fr;
@@ -159,6 +208,7 @@ const AvatarConsole = styled.div`
 
 const RightWellBox = styled.div`
   display: flex;
+  flex-direction: column;
   flex: 1;
 `;
 const AvatarRightWell = styled.div`
@@ -168,9 +218,10 @@ const AvatarRightWell = styled.div`
   align-items: stretch;
   width: 100%;
   height: 100%;
+  overflow: scroll;
   ${RightWellBox} {
     &:first-child {
-      border-bottom: 1px solid black;
+      /* border-bottom: 1px solid black; */
     }
   }
 `;
