@@ -32,7 +32,7 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'BAYC'],
   ['0x1a92f7381b9f03921564a437210bb9396471050c', 'Cool Cats'],
   ['0x85f740958906b317de6ed79663012859067e745b', 'Wicked Cranium'],
-  ['0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb', 'CryptoPunk'],
+  ['0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb', 'Wrapped CryptoPunk'],
   ['0xf4ee95274741437636e748ddac70818b4ed7d043', 'The Doge Pound'],
   ['0x099689220846644f87d1137665cded7bf3422747', 'Robotos'],
   ['0xef0182dc0574cd5874494a120750fd222fdb909a', 'Rumble Kong'],
