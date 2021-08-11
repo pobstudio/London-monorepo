@@ -84,7 +84,6 @@ export const AvatarCanvas: FC<{
 
   const [tick, setTick] = useState(0);
 
-  console.log(foregroundImageSrc)
   useEffect(() => {
     const processImage = async () => {
       if (!hiddenCanvasRef.current || !canvasRef.current) {
