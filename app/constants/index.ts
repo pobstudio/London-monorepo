@@ -46,6 +46,8 @@ export const LONDON_PROD_LINK = 'https://london.pob.studio';
 
 export const BLOG_LINK = `https://pob.mirror.xyz`;
 
+export const GITHUB_LINK = `https://github.com/proofofbeauty/LONDON-monorepo`;
+
 export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
 
 export const DISCORD_LINK = `https://discord.gg/x4SH5pGgvj`;

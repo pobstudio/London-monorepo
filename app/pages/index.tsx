@@ -20,6 +20,7 @@ import {
   BLOG_LINK,
   CHAIN_ID,
   DISCORD_LINK,
+  GITHUB_LINK,
   LONDON_EMOJI,
   SNAPSHOT_LINK,
   STUDIO_PROD_LINK,
@@ -216,6 +217,9 @@ const IndexPage: NextPage = () => {
           </A>
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
+          </A>
+          <A href={GITHUB_LINK} target={'_blank'}>
+            Github
           </A>
         </Flex>
         <Text style={{ marginTop: 28 }}>
