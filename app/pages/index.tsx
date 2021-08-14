@@ -218,7 +218,7 @@ const IndexPage: NextPage = () => {
           <A href={DISCORD_LINK} target={'_blank'}>
             Discord
           </A>
-          <A href={GITHUB_LINK} target={'_blank'}>
+          <A style={{ margin: '0 12px' }} href={GITHUB_LINK} target={'_blank'}>
             Github
           </A>
         </Flex>
