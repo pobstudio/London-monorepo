@@ -70,8 +70,11 @@ export const Header: FC = () => {
             <A style={{ fontWeight: 'bold' }}>$LONDON</A>
           </Link>
           <A href={SNAPSHOT_LINK} target={'_blank'}>
-            Governance
+            DAO
           </A>
+          <Link href={ROUTES.PROVENANCE} passHref>
+            <A>Provenance</A>
+          </Link>
           <Link href={ROUTES.SHOPPE} passHref>
             <A>Shoppe</A>
           </Link>

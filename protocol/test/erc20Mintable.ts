@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
+import { Erc20Mintable } from '../typechain/ERC20Mintable';
 import { expect } from 'chai';
 
 const TOKEN_SYMBOL = '$MINT';
@@ -9,7 +9,7 @@ const TOKEN_NAME = '$MINT';
 
 describe('Erc20Token', function () {
   // constant values used in transfer tests
-  let erc20Mintable: ERC20Mintable;
+  let erc20Mintable: Erc20Mintable;
   let owner: Signer;
   let minter: Signer;
   let rando: Signer;
@@ -21,12 +21,12 @@ describe('Erc20Token', function () {
   });
 
   beforeEach(async function () {
-    const ERC20Mintable = await ethers.getContractFactory('ERC20Mintable');
-    erc20Mintable = (await ERC20Mintable.deploy(
+    const Erc20Mintable = await ethers.getContractFactory('ERC20Mintable');
+    erc20Mintable = (await Erc20Mintable.deploy(
       await minter.getAddress(),
       TOKEN_NAME,
       TOKEN_SYMBOL,
-    )) as ERC20Mintable;
+    )) as Erc20Mintable;
     await erc20Mintable.deployed();
   });
 

@@ -334,7 +334,7 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'open' && 'Grand opening!'}
             {shopState === 'preview' && 'We are open! 1 per address for now.'}
             {shopState === 'revealed' && 'NFTs have been revealed!'}
-            {shopState === 'sold-out' && 'Annnnnd its gone!'}
+            {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
           </Italic>
         </Caption>
         <Caption style={{ marginBottom: 12 }}>

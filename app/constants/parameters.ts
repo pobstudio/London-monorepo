@@ -28,3 +28,5 @@ export const MAX_SUPPLY = 8888;
 export const MAX_MINT_PER_TX = 10;
 
 export const MAX_MINT_NOT_UNLOCKED = 1;
+
+export const STARTING_INDEX = 3655;

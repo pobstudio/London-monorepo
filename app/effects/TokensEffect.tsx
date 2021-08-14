@@ -26,48 +26,49 @@ export const TokensEffect: FC = () => {
   const london = useLondonContract();
   const gift = useLondonGiftContract();
 
-  const { data: tokenIndexData } = useSWR(
-    useMemo(() => `/api/token-index?blockNum=${blockNumber}}`, [blockNumber]),
-    fetcher,
-  );
-  useEffect(() => {
-    if (!tokenIndexData || !tokenIndexData.tokenIndex) {
-      return;
-    }
-    const { tokenIndex } = tokenIndexData;
-    setTokenIndex(tokenIndex);
-  }, [tokenIndexData]);
+  // const { data: tokenIndexData } = useSWR(
+  //   useMemo(() => `/api/token-index?blockNum=${blockNumber}}`, [blockNumber]),
+  //   fetcher,
+  // );
+  // useEffect(() => {
+  //   if (!tokenIndexData || !tokenIndexData.tokenIndex) {
+  //     return;
+  //   }
+  //   const { tokenIndex } = tokenIndexData;
+  //   setTokenIndex(tokenIndex);
+  // }, [tokenIndexData]);
 
-  const shopState = useShopState();
+  // const shopState = useShopState();
 
-  useEffect(() => {
-    if (shopState === 'sold-out') {
-      return;
-    }
-    if (!london) {
-      return;
-    }
-    if (!account) {
-      return;
-    }
-    london.allowance(account, deployments[CHAIN_ID].gift).then((v) => {
-      setApprovalBalance(v);
-    });
-    london.balanceOf(account).then(setTokenBalance);
-  }, [shopState, account, london, blockNumber]);
+  // useEffect(() => {
+  //   if (shopState === 'sold-out') {
+  //     return;
+  //   }
+  //   if (!london) {
+  //     return;
+  //   }
+  //   if (!account) {
+  //     return;
+  //   }
+  //   london.allowance(account, deployments[CHAIN_ID].gift).then((v: any) => {
+  //     console.log('v', v.toString());
+  //     setApprovalBalance(v);
+  //   });
+  //   london.balanceOf(account).then(setTokenBalance);
+  // }, [shopState, account, london, blockNumber]);
 
-  useEffect(() => {
-    if (shopState !== 'preview') {
-      return;
-    }
-    if (!gift) {
-      return;
-    }
-    if (!account) {
-      return;
-    }
-    gift.mintedAmounts(account).then((b) => setNftMintedAmount(b.toNumber()));
-  }, [shopState, account, gift, blockNumber]);
+  // useEffect(() => {
+  //   if (shopState !== 'preview') {
+  //     return;
+  //   }
+  //   if (!gift) {
+  //     return;
+  //   }
+  //   if (!account) {
+  //     return;
+  //   }
+  //   gift.mintedAmounts(account).then((b) => setNftMintedAmount(b.toNumber()));
+  // }, [shopState, account, gift, blockNumber]);
 
   return <></>;
 };

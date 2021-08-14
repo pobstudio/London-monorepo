@@ -30,9 +30,9 @@ task('deploy-nft', 'Deploys $LONDON ', async (args, hre) => {
     '0x114a591573bb8462490294a28611e70d7886363a4b3080f3084a9c0d3af0c516';
 
   // deploy erc1155
-  const ERC20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
+  const Erc20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
 
-  const erc20 = await ERC20Mintable.attach(
+  const erc20 = await Erc20Mintable.attach(
     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
   );
   await erc20.deployed();
