@@ -1,27 +1,29 @@
-# POB Monorepo boilerplate
+# $LONDON Monorepo 
 
 ---
 
-[UNDER CONSTRUCTION] POB monorepo boilerplate to get projects off the ground FAST. Contains project front ends, lambdas, admin scripts, and protocol.
+The official monorepo powering the $LONDON contracts, generative art, and front-end dapp.
 
 ## Useful links
 
-[vercel dashboard](https://vercel.com/pob)
+[production link](https://london.pob.studio)
 
-If you can not access the dashboard, ping David (@dave4506)
+[snapshot governance link](https://snapshot.org/#/london.pob.eth)
 
 ## Packages
 
-The POB repo is structured as a monorepo containing many packages that reach all aspects of the POB ecosystem.
+The $LONDON repo is structured as a monorepo containing many packages that reach all aspects of the $LONDON ecosystem.
 
 | Package                 | Description                                                                                  |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | [`app`](/app)           | Core next.js webapp of pob.studio and HASH and lambdas                                       |
-| [`protocol`](/protocol) | Core protocol of POB, contains the ERC1155 token, minter contracts, and other future things. |
+| [`protocol`](/protocol) | Core protocol of $LONDON, contains the ERC721 token, minter contracts, and other future things. |
 | [`sketches`](/sketches) | Shared generative algorithm utils                                                            |
 | [`scripts`](/scripts)   | Some administrative scripts to help with running POB (ie refresh opensea metadata)           |
 
-## Running the monorepo
+## Setting up the monorepo
+
+The `sketches` package depends on the `node-canvas` package which have external binary dependencies. Before running `yarn install` first consult the docs [here](https://github.com/Automattic/node-canvas).
 
 In the root of the directory:
 
@@ -31,50 +33,20 @@ $ yarn install
 
 ### Running app
 
-You will need the `vercel` CLI
+Visit the `app` repo and add a `.env` file with the following variables:
 
 ```
-$ npm i -g vercel
+NEXT_PUBLIC_CHAIN_ID="1"
+NEXT_PUBLIC_ALCHEMY_KEY="ALCHEMY_KEY"
 ```
 
-Then login to vercel
-
-```
-vercel login
-```
-
-Then run `vercel` and link to `app`
-
-Run
-
-```
-$ vercel dev
-```
-
-All the local dev envs will be automagically pulled.
+Setup an [alchemy](http://alchemy.com/) account and get an api key to be put in the .env file.
 
 Walla! visit `localhost:3000` to see your build running locally!
 
-## Contributing + Usage
+### Running protocol
 
-Node version 10.x is required.
-
-In the root of the directory:
-
-```
-$ yarn install
-```
-
-`sketches`
-
-```
-NETWORK_RPC_URL="OPTIONAL"
-PRIVATE_KEY="OPTIONAL"
-```
-
-The private key and rpc is used if you want to deploy the algorithmn to the Ethereum blockchain.
-
-`protocol`
+Visit the `protocol` repo and add a `.env` file with the following variables:
 
 ```
 RINKEBY_NETWORK_RPC_URL="OPTIONAL"
@@ -85,3 +57,17 @@ ETHERSCAN_API_KEY="OPTIONAL"
 ```
 
 Provide either networks corresponding url and key.
+
+With `npx` you can run hardhat tasks like so:
+
+```
+$ npx hardhat deploy-nft --network rinkeby
+```
+
+## Contributing
+
+As the project is now governed by the $LONDON DAO, this repo's continued development is incentived via DAO proposals and grants. As POB studios, we will maintain and host the production build of the website and review PRs. 
+
+## LICENSE
+
+[MIT](/LICENSE)
