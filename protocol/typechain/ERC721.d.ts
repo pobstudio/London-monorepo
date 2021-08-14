@@ -20,7 +20,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface Erc721Interface extends ethers.utils.Interface {
+interface ERC721Interface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
@@ -118,7 +118,7 @@ interface Erc721Interface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class Erc721 extends Contract {
+export class ERC721 extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -129,7 +129,7 @@ export class Erc721 extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': Erc721Interface;
+  'interface': ERC721Interface;
 
   'functions': {
     approve(
@@ -144,75 +144,48 @@ export class Erc721 extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      owner: string,
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber]>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'getApproved(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
-    name(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    name(overrides?: CallOverrides): Promise<[string]>;
 
-    'name()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'name()'(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'ownerOf(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -244,42 +217,26 @@ export class Erc721 extends Contract {
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
     'supportsInterface(bytes4)'(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
-    symbol(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    'symbol()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'symbol()'(overrides?: CallOverrides): Promise<[string]>;
 
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'tokenURI(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     transferFrom(
       from: string,

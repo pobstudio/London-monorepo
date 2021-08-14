@@ -3,7 +3,7 @@ import { utils } from 'ethers';
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
 import { LondonGift } from '../typechain/LondonGift';
-import { Erc20Mintable } from '../typechain/ERC20Mintable';
+import { ERC20Mintable } from '../typechain/ERC20Mintable';
 import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 

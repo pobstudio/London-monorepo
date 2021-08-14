@@ -9,7 +9,7 @@ type State = {
 };
 
 export const useGiftStore = create<State>((set, get) => ({
-  tokenIndex: 0,
+  tokenIndex: 8888,
   nftMintedAmount: 0,
   setTokenIndex: (tokenIndex: number) => {
     set(

@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { utils } from 'ethers';
 import { task } from 'hardhat/config';
 import { deployments } from '../deployments';
-import { Erc20Mintable } from '../typechain/ERC20Mintable';
+import { ERC20Mintable } from '../typechain/ERC20Mintable';
 import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
 import { NETWORK_NAME_CHAIN_ID } from '../utils';
 
@@ -46,7 +46,7 @@ task('deploy', 'Deploys $LONDON ', async (args, hre) => {
     minter.address,
     tokenName,
     tokenSymbol,
-  )) as Erc20Mintable;
+  )) as ERC20Mintable;
   await erc20.deployed();
   console.log('Erc20Mintable deployed to:', erc20.address);
 

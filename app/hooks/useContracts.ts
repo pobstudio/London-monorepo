@@ -1,8 +1,8 @@
 import {
   deployments,
-  Erc20MintableFactory,
-  GasPriceBasedMinterFactory,
-  LondonGiftFactory,
+  ERC20Mintable__factory,
+  GasPriceBasedMinter__factory,
+  LondonGift__factory,
 } from '@pob/protocol';
 import { useMemo } from 'react';
 import { CHAIN_ID } from '../constants';
@@ -20,7 +20,7 @@ export const useLondonContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return Erc20MintableFactory.connect(
+    return ERC20Mintable__factory.connect(
       deployments[CHAIN_ID].erc20,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
@@ -36,7 +36,7 @@ export const useLondonGiftContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return LondonGiftFactory.connect(
+    return LondonGift__factory.connect(
       deployments[CHAIN_ID].gift,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
@@ -52,7 +52,7 @@ export const useMinterContract = (shouldUseFallback: boolean = false) => {
       return;
     }
 
-    return GasPriceBasedMinterFactory.connect(
+    return GasPriceBasedMinter__factory.connect(
       deployments[CHAIN_ID].minter,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );

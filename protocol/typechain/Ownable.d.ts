@@ -68,17 +68,9 @@ export class Ownable extends Contract {
   'interface': OwnableInterface;
 
   'functions': {
-    owner(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
-    'owner()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 

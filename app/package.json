@@ -13,7 +13,7 @@
   "dependencies": {
     "@analytics/mixpanel": "^0.3.1",
     "@apollo/client": "^3.3.13",
-    "@ethersproject/providers": "^5.4.3",
+    "@ethersproject/providers": "^5.0.17",
     "@pob/common": "1.0.0",
     "@pob/protocol": "1.0.0",
     "@pob/sketches": "1.0.0",
@@ -34,7 +34,7 @@
     "chrome-aws-lambda": "^8.0.1",
     "date-fns": "^2.19.0",
     "downloadjs": "^1.4.7",
-    "ethers": "^5.4.3",
+    "ethers": "^5.0.24",
     "gl": "^4.9.0",
     "graphql": "^15.5.0",
     "immer": "^8.0.0",

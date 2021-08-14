@@ -20,7 +20,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface Ierc721ReceiverInterface extends ethers.utils.Interface {
+interface IERC721ReceiverInterface extends ethers.utils.Interface {
   functions: {
     'onERC721Received(address,address,uint256,bytes)': FunctionFragment;
   };
@@ -38,7 +38,7 @@ interface Ierc721ReceiverInterface extends ethers.utils.Interface {
   events: {};
 }
 
-export class Ierc721Receiver extends Contract {
+export class IERC721Receiver extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -49,7 +49,7 @@ export class Ierc721Receiver extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': Ierc721ReceiverInterface;
+  'interface': IERC721ReceiverInterface;
 
   'functions': {
     onERC721Received(

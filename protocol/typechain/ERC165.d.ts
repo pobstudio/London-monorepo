@@ -19,7 +19,7 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface Erc165Interface extends ethers.utils.Interface {
+interface ERC165Interface extends ethers.utils.Interface {
   functions: {
     'supportsInterface(bytes4)': FunctionFragment;
   };
@@ -37,7 +37,7 @@ interface Erc165Interface extends ethers.utils.Interface {
   events: {};
 }
 
-export class Erc165 extends Contract {
+export class ERC165 extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -48,22 +48,18 @@ export class Erc165 extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': Erc165Interface;
+  'interface': ERC165Interface;
 
   'functions': {
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
     'supportsInterface(bytes4)'(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
   };
 
   'supportsInterface'(

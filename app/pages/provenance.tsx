@@ -137,7 +137,7 @@ const IndexPage: NextPage = () => {
           <Bold>Formula to determine ipfs metadata index:</Bold>
         </RightAlignedText>
         <Code style={{ margin: 36 }}>
-          (tokenIndex + startingIndex) % {MAX_SUPPLY} = ipfs metadata index
+          tokenIndex + startingIndex = ipfs metadata index
         </Code>
         <RightAlignedText>
           <Bold>Important parameters</Bold>
@@ -157,10 +157,9 @@ const IndexPage: NextPage = () => {
         {Array.apply(null, Array(MAX_SUPPLY)).map((_, i) => {
           return (
             <Code key={`asset-row-${i}`}>
-              {`${i.toString().padStart(4, '0')} | ${(
-                (i + STARTING_INDEX) %
-                MAX_SUPPLY
-              )
+              {`${((i < STARTING_INDEX ? i + 8888 : i) - STARTING_INDEX)
+                .toString()
+                .padStart(4, '0')} | ${(i < STARTING_INDEX ? i + 8888 : i)
                 .toString()
                 .padStart(4, '0')} | 0x${
                 provenance.provenanceAndImage[i][0]

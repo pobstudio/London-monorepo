@@ -104,105 +104,43 @@ export class GasPriceBasedMinter extends Contract {
   'interface': GasPriceBasedMinterInterface;
 
   'functions': {
-    a(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    a(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'a()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'a()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    b(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    b(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'b()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'b()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    blockNumberUpTo(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    blockNumberUpTo(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'blockNumberUpTo()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'blockNumberUpTo()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    c(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    c(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'c()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'c()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    d(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    d(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'd()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'd()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    erc20(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    erc20(overrides?: CallOverrides): Promise<[string]>;
 
-    'erc20()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'erc20()'(overrides?: CallOverrides): Promise<[string]>;
 
     mintableTokenAtGasPrice(
       gasPrice: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      amount: BigNumber;
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     'mintableTokenAtGasPrice(uint256)'(
       gasPrice: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      amount: BigNumber;
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
-    owner(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
-    'owner()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 

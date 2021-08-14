@@ -314,85 +314,46 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    balanceOf(
-      owner: string,
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber]>;
 
-    baseMetadataURI(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
 
-    contractURI(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
 
-    'contractURI()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'getApproved(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
-    maxSupply(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    maxSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'maxSupply()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'maxSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
       mintAmount: BigNumberish,
@@ -404,121 +365,57 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    mintPrice(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    mintPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'mintPrice()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'mintPrice()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    mintStartAtBlockNum(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    mintStartAtBlockNum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'mintStartAtBlockNum()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'mintStartAtBlockNum()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintedAmounts(
       arg0: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber]>;
 
     'mintedAmounts(address)'(
       arg0: string,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    ): Promise<[BigNumber]>;
 
-    name(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    name(overrides?: CallOverrides): Promise<[string]>;
 
-    'name()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'name()'(overrides?: CallOverrides): Promise<[string]>;
 
-    owner(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
-    'owner()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'ownerOf(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
-    payableErc20(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    payableErc20(overrides?: CallOverrides): Promise<[string]>;
 
-    'payableErc20()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'payableErc20()'(overrides?: CallOverrides): Promise<[string]>;
 
-    provenance(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    provenance(overrides?: CallOverrides): Promise<[string]>;
 
-    'provenance()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'provenance()'(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
     'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
-    revealStartAtBlockNum(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    revealStartAtBlockNum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'revealStartAtBlockNum()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'revealStartAtBlockNum()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -607,69 +504,37 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    startingIndex(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    startingIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'startingIndex()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'startingIndex()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
     'supportsInterface(bytes4)'(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: boolean;
-    }>;
+    ): Promise<[boolean]>;
 
-    symbol(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    'symbol()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'symbol()'(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenIndex(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    tokenIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'tokenIndex()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'tokenIndex()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tokenURI(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     'tokenURI(uint256)'(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    ): Promise<[string]>;
 
     transferFrom(
       from: string,
@@ -695,29 +560,13 @@ export class LondonGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    treasury(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    'treasury()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: string;
-    }>;
+    'treasury()'(overrides?: CallOverrides): Promise<[string]>;
 
-    unlockStartAtBlockNum(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    unlockStartAtBlockNum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'unlockStartAtBlockNum()'(
-      overrides?: CallOverrides,
-    ): Promise<{
-      0: BigNumber;
-    }>;
+    'unlockStartAtBlockNum()'(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   'approve'(
