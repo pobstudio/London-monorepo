@@ -49,6 +49,8 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0x495f947276749ce646f68ac8c248420045cb7b5e', 'DystoPunks V1'],
   ['0x5fd335e64400eabecc9ebe80e3d2fcfb6c001adb', 'Niftysistas'],
   ['0x892555e75350e11f2058d086c72b9c94c9493d72', 'Niftydudes'],
+  ['0x2acab3dea77832c09420663b0e1cb386031ba17b', 'DeadFellaz'],
+  ['0x495f947276749ce646f68ac8c248420045cb7b5e', '24px Cats'],
 ];
 
 const IndexPage: NextPage = () => {
