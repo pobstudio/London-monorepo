@@ -22,10 +22,13 @@ import {
   DISCORD_LINK,
   GITHUB_LINK,
   LONDON_EMOJI,
+  NOTION_WIKI_LINK,
+  OPENSEA_LINK,
   SNAPSHOT_LINK,
   STUDIO_PROD_LINK,
   TOKEN_SYMBOL,
   TWITTER_LINK,
+  UNISWAP_TRADE_LINK,
 } from '../constants';
 import Link from 'next/link';
 import { BLOCK_NUMBER_UP_TO } from '../constants/parameters';
@@ -89,21 +92,10 @@ export const ValueTableColumn = styled(TableColumn)`
   text-align: right;
 `;
 
-const IconCircle = styled.div`
-  width: 140px;
-  height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #c5efff;
-  border-radius: 999px;
-  margin-bottom: 40px;
-`;
-
-const Icon = styled.img`
-  display: block;
-  width: 70px;
-  height: 70px;
+export const LinksRow = styled(Flex)`
+  a + a {
+    margin-left: 12px;
+  }
 `;
 
 const CoreMinting = styled.div`
@@ -196,8 +188,8 @@ const IndexPage: NextPage = () => {
           </Link>
         </Text>
         <Caption>
-          A social currency backed by the lasting impact of minting, gas price
-          manipulation, and EIP 1559
+          A community borne out of a social experiment around EIP-1559, gas
+          bidding wars, and the London hardfork.
         </Caption>
         <Text style={{ marginBottom: 4 }}>
           <A
@@ -208,261 +200,72 @@ const IndexPage: NextPage = () => {
             <Italic>Proof of Beauty Studios</Italic>
           </A>
         </Text>
-        <Flex style={{ marginBottom: 36 }}>
-          <A href={BLOG_LINK} target={'_blank'}>
-            Blog
-          </A>
-          <A style={{ margin: '0 12px' }} href={TWITTER_LINK} target={'_blank'}>
-            Twitter
-          </A>
-          <A href={DISCORD_LINK} target={'_blank'}>
-            Discord
-          </A>
-          <A style={{ margin: '0 12px' }} href={GITHUB_LINK} target={'_blank'}>
-            Github
-          </A>
-        </Flex>
         <Text style={{ marginTop: 28 }}>
           <Bold>Abstract</Bold>
         </Text>
         <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL}</Italic> is an{' '}
-          <A
-            href={getEtherscanAddressUrl(deployments[CHAIN_ID].erc20)}
-            target={'_blank'}
-          >
-            ERC20
-          </A>{' '}
-          where the amount of tokens minted is directly tied to gas price via a
-          bonding curve (See Figure 1). The bonding curve doesn't reward gas
-          bidding wars; users will need to coordinate in new ways to optimize
-          their <Italic>{TOKEN_SYMBOL}</Italic> returns.
+          Borne out of a{' '}
+          <Link passHref href={ROUTES.TOKEN}>
+            <A>social experiment</A>
+          </Link>
+          , <Italic>{TOKEN_SYMBOL}</Italic> is a community of crypto-native
+          tinkerers, thought leaders, and makers interested in furthering the
+          capacity of the blockchain to create cultural experiences.
         </RightAlignedText>
         <RightAlignedText>
-          Any user can mint until the{' '}
-          <A
-            href={'https://github.com/openethereum/openethereum/issues/395'}
-            target={'_blank'}
-          >
-            London hardfork
-          </A>{' '}
-          since{' '}
-          <A
-            href={
-              'https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md'
-            }
-            target={'_blank'}
-          >
-            EIP 1559
-          </A>{' '}
-          radically changes the fee market mechanics.{' '}
-          <Italic>{TOKEN_SYMBOL}</Italic> is a fair launch project, there is no
-          starting supply.
-        </RightAlignedText>
-        <RightAlignedText>
-          Blocks left until{' '}
-          <A
-            href={'https://github.com/openethereum/openethereum/issues/395'}
-            target={'_blank'}
-          >
-            London hardfork
-          </A>{' '}
-          + <Italic>{TOKEN_SYMBOL}</Italic> minting shut off:{' '}
-          <Bold>{blocksLeft ?? '-'}</Bold>
-        </RightAlignedText>
-        <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL}</Italic> is a highly experimental project
-          designed to show the fragility/robustness of the ETH fee markets. It
-          is a celebration and critique of our relationship with miners and core
-          developers. Join the movement, each <Italic>{TOKEN_SYMBOL}</Italic> is
-          a memento of your part in this experience.
-        </RightAlignedText>
-        <RightAlignedText>
-          Mint <Italic>{TOKEN_SYMBOL}</Italic> via the bonding curve below. Max
-          output @ 15.59 gwei.
-        </RightAlignedText>
-        <BellCurve
-          onTooltip={setTooltipDatum}
-          width={graphWidth}
-          height={200}
-        />
-
-        <CoreMinting>
-          <CoreMintingInner>
-            <div style={{ marginTop: 20, marginBottom: 0 }}>
-              <Text style={{ marginBottom: 0 }}>
-                <strong>
-                  <Italic>{TOKEN_SYMBOL}</Italic> Stats
-                </strong>
-              </Text>
-              {/* <Mint /> */}
-            </div>
-
-            <TableContainer
-              style={{
-                marginTop: 20,
-                marginBottom: 20,
-                border: '1px solid black',
-                background: 'white',
-              }}
-            >
-              <TableHeader>
-                <LabelTableColumn>{TOKEN_SYMBOL} Stats</LabelTableColumn>
-                <ValueTableColumn>Value</ValueTableColumn>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <LabelTableColumn>Current gas price in gwei</LabelTableColumn>
-                  <ValueTableColumn>
-                    {gasInfo.data?.fast.toString() ?? '-'}
-                  </ValueTableColumn>
-                </TableRow>
-                <TableRow>
-                  <LabelTableColumn>
-                    Lowest gas price used in gwei
-                  </LabelTableColumn>
-                  <ValueTableColumn>
-                    {!!lowestGasPriceMinted
-                      ? utils.formatUnits(lowestGasPriceMinted, 'gwei')
-                      : '-'}
-                  </ValueTableColumn>
-                </TableRow>
-                <TableRow>
-                  <LabelTableColumn># of mints at 15.59 gwei</LabelTableColumn>
-                  <ValueTableColumn>
-                    {numMintsAt1559Gwei ?? '-'}
-                  </ValueTableColumn>
-                </TableRow>
-                <TableRow>
-                  <LabelTableColumn>Total supply</LabelTableColumn>
-                  <ValueTableColumn>
-                    {!!totalSupply ? utils.formatEther(totalSupply) : '-'}
-                  </ValueTableColumn>
-                </TableRow>
-                {account && balance && (
-                  <TableRow>
-                    <LabelTableColumn>
-                      User's ({shortenHexString(account)}) balance
-                    </LabelTableColumn>
-                    <ValueTableColumn>
-                      {utils.formatEther(balance)} ({userMarketCapPercent}%)
-                    </ValueTableColumn>
-                  </TableRow>
-                )}
-              </TableBody>
-            </TableContainer>
-          </CoreMintingInner>
-        </CoreMinting>
-
-        <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
-        <RightAlignedText>
-          We will be launching a NFT store called{' '}
-          <Bold>
-            <Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe
-          </Bold>
-          . The{' '}
-          <Bold>
-            <Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe
-          </Bold>{' '}
-          will contain generative mementos of the{' '}
-          <Italic>{TOKEN_SYMBOL}</Italic> project, each only redeemable with{' '}
-          <Italic>{TOKEN_SYMBOL}</Italic>.
-        </RightAlignedText>
-        <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL}</Italic> holders will be participants in the
-        </RightAlignedText>
-        <RightAlignedText>
-          <Bold>
-            {LONDON_EMOJI}{' '}
-            <A
-              href={`${SNAPSHOT_LINK}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+          To participate in the community and DAO, acquire either 1559{' '}
+          <Italic>{TOKEN_SYMBOL}</Italic> via a{' '}
+          <A href={UNISWAP_TRADE_LINK}>DEX</A> or buy a{' '}
+          <Link href={ROUTES.GIFT} passHref>
+            <A>
+              <Italic>{TOKEN_SYMBOL} Gift NFT</Italic>
             </A>
+          </Link>{' '}
+          from <A href={OPENSEA_LINK}>Opensea</A>
+        </RightAlignedText>
+        <RightAlignedText>
+          About 43 million <Italic>{TOKEN_SYMBOL}</Italic> tokens and 8888{' '}
+          <Italic>{TOKEN_SYMBOL} Gifts</Italic> exist and represent the core
+          governance token of the{' '}
+          <Bold>
+            <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>
           </Bold>
+          .
         </RightAlignedText>
-        <RightAlignedText>
-          The DAO will control a pool of <Italic>{TOKEN_SYMBOL}</Italic> tokens
-          capitalized via the proceeds from{' '}
-          <Bold>
-            <Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe
-          </Bold>
-          .{' '}
-          <Bold>
-            <Italic>{TOKEN_SYMBOL}</Italic> Night Club
-          </Bold>{' '}
-          will govern the use of the pool to serve community projects and fund
-          other highly experimentive crypto-experiences.
-        </RightAlignedText>
-        <RightAlignedText>
-          <Bold>
-            <Italic>{TOKEN_SYMBOL}</Italic> Night Club
-          </Bold>{' '}
-          +{' '}
-          <Bold>
-            {' '}
-            <Italic>{TOKEN_SYMBOL}</Italic> Gift Shoppe
-          </Bold>{' '}
-          will be launched post London hardfork.
-        </RightAlignedText>
-        <SubTitle style={{ marginTop: 48 }}>Background</SubTitle>
-        <RightAlignedText>
-          <Bold>Gas price is how we get our say in this crypto-future.</Bold>
-        </RightAlignedText>
-        <RightAlignedText>
-          Can we use gas price and its mechanics to say something we never have
-          before? How can we manipulate gas markets in ways never before?
-        </RightAlignedText>
-        <RightAlignedText>
-          With the stars aligning, the London hardfork + EIP 1559 provides a
-          perfect 'meme' for this project. EIP 1559 fundamentally changes gas
-          price mechanics, so what better thing to create a project about gas
-          prices around? We also wanted the project to 'expire' to not
-          needlessly clog the mempool with transactions, the hardfork became the
-          perfect 'epxiry' date.
-        </RightAlignedText>
-        <RightAlignedText>
-          This is why the bonding curve (a bell curve) is centered at precisely
-          15.59 gwei in homage to EIP 1559 and your maximum returns is 1559{' '}
-          <Italic>{TOKEN_SYMBOL}</Italic>. As people mint closer and closer to
-          15.59 gwei and even get it exactly, people in the future will know of{' '}
-          <Bold>
-            the measurable impact of <Italic>{TOKEN_SYMBOL}</Italic> without
-            knowing about the project.
-          </Bold>{' '}
-        </RightAlignedText>
-        <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL}</Italic> is a meme token. It is backed by our
-          ability to manipulate the gas market. It is backed by the number of
-          15.59 GWEI transactions happening during this span of time. It is
-          backed by the rallying cries and commentary on crypto-twitter. It is
-          backed by you. By using gas price as not just a means to an end, but
-          also a form of communication, <Italic>{TOKEN_SYMBOL}</Italic> minters
-          will demonstrate where our relationship truly lies with gas fee
-          mechanics.
-        </RightAlignedText>
-        <SubTitle style={{ marginTop: 48 }}>Appendix: Contract Code</SubTitle>
-        <RightAlignedText>
-          <A
-            href={getEtherscanAddressUrl(deployments[CHAIN_ID].minter)}
-            target={'_blank'}
-          >
-            Minter Contract
-          </A>
-        </RightAlignedText>
-        <MinterCode />
-        <RightAlignedText>
-          <A
-            href={getEtherscanTokenUrl(deployments[CHAIN_ID].erc20)}
-            target={'_blank'}
-          >
-            ERC20 Contract
-          </A>
-        </RightAlignedText>
-        <ERC20Code />
-        <MiniText>Omne quod movetur ab alio movetur</MiniText>
+        <a
+          href={DISCORD_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'blue' }}
+        >
+          <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+            Join the POB Discord
+          </SubTitle>
+        </a>
+        <a
+          href={NOTION_WIKI_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'blue' }}
+        >
+          <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+            Read the DAO wiki
+          </SubTitle>
+        </a>
+        <a
+          href={`/token`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'blue' }}
+        >
+          <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+            Learn more about the {TOKEN_SYMBOL} token
+          </SubTitle>
+        </a>
+        <MiniText style={{ marginTop: 48 }}>
+          Omne quod movetur ab alio movetur
+        </MiniText>
+
         <FlexCenter style={{ margin: '24px 0' }}>
           <POBIcon />
         </FlexCenter>

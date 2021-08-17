@@ -13,4 +13,13 @@ module.exports = withTM({
     config.module.rules.push({ test: /react-spring/, sideEffects: true });
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/shoppe',
+        destination: '/gift', // Matched parameters can be used in the destination
+        permanent: true,
+      },
+    ];
+  },
 });

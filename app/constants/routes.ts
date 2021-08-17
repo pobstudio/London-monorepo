@@ -1,6 +1,7 @@
 export const ROUTES = {
   INDEX: '/',
-  SHOPPE: '/shoppe',
+  GIFT: '/gift',
   PFP: '/pfp',
   PROVENANCE: '/provenance',
+  TOKEN: '/token',
 };

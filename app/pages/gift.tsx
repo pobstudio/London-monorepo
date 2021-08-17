@@ -16,6 +16,7 @@ import {
 import { A } from '../components/anchor';
 import {
   CHAIN_ID,
+  NOTION_WIKI_LINK,
   OPENSEA_ASSET_NAME,
   SNAPSHOT_LINK,
   TOKEN_SYMBOL,
@@ -46,6 +47,8 @@ import { deployments } from '@pob/protocol';
 import { FlexCenter } from '../components/flex';
 import { POBIcon } from '../components/icons/pob';
 import { MintGift } from '../components/mintGift';
+import { ROUTES } from '../constants/routes';
+import Link from 'next/link';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -91,26 +94,6 @@ const Rarity = () => {
 
   return (
     <>
-      <a
-        href={`https://pob.mirror.xyz/jNuwasIPdCnUfJNCgibslzIcUsSFWmPV8hDailzwDAs`}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: 'blue' }}
-      >
-        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
-          Read: The story behind <i>$LONDON Gift Shoppe</i> art
-        </SubTitle>
-      </a>
-      <a
-        href={`https://rarity.tools/london-gift-v2`}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{ color: 'blue' }}
-      >
-        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
-          See: Rarity.Tools dashboard
-        </SubTitle>
-      </a>
       <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
       <RightAlignedText>
         The generative art comes with varying rarity mainly captured by the{' '}
@@ -207,6 +190,72 @@ const Rarity = () => {
       <RightAlignedText>
         With the right combination of attributes, some truly cool/beautiful
         pieces may be <Bold>one of a kind</Bold>.
+      </RightAlignedText>
+    </>
+  );
+};
+
+const ShouldReads = () => {
+  return (
+    <>
+      <a
+        href={`https://pob.mirror.xyz/jNuwasIPdCnUfJNCgibslzIcUsSFWmPV8hDailzwDAs`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}
+      >
+        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+          Read: The story behind <i>$LONDON Gift</i> art
+        </SubTitle>
+      </a>
+      <a
+        href={`https://rarity.tools/london-gift-v2`}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}
+      >
+        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+          See: Rarity.Tools dashboard
+        </SubTitle>
+      </a>
+      <a
+        href={ROUTES.PROVENANCE}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: 'blue' }}
+      >
+        <SubTitle style={{ marginTop: 48, color: 'blue' }}>
+          See: Gift Provenance
+        </SubTitle>
+      </a>
+    </>
+  );
+};
+const Utility = () => {
+  const shopState = useShopState();
+
+  return (
+    <>
+      <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
+      <RightAlignedText>
+        You can easily use any <Bold>{TOKEN_SYMBOL}</Bold> gift you own as the
+        background of your pfp via our{' '}
+        <Link passHref href={ROUTES.PFP}>
+          <A>app</A>
+        </Link>
+        . If you do so, please share on twitter!
+      </RightAlignedText>
+      <RightAlignedText>
+        <Italic>Coming soon:</Italic> a twitter background editor.
+      </RightAlignedText>
+      <RightAlignedText>
+        Owning a <Bold>{TOKEN_SYMBOL}</Bold> gift enables you to participate in
+        the <Bold>{TOKEN_SYMBOL}</Bold>{' '}
+        <A target={'_blank'} href={NOTION_WIKI_LINK}>
+          Night Club DAO
+        </A>
+        . Each <Bold>{TOKEN_SYMBOL}</Bold> gift has the equivalent voting power
+        of 1559 <Bold>{TOKEN_SYMBOL}</Bold>.
       </RightAlignedText>
     </>
   );
@@ -325,9 +374,9 @@ const GiftShopPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>{TOKEN_SYMBOL}</Bold> Gift Shoppe
+          <Bold>{TOKEN_SYMBOL}</Bold> Gift
         </Title>
-        <Caption>
+        {/* <Caption>
           <Italic>
             {shopState === 'not-open' &&
               'Still setting up the register and shelving...'}
@@ -336,7 +385,7 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'revealed' && 'NFTs have been revealed!'}
             {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
           </Italic>
-        </Caption>
+        </Caption> */}
         <Caption style={{ marginBottom: 12 }}>
           {MAX_SUPPLY}{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>
@@ -347,7 +396,7 @@ const GiftShopPage: NextPage = () => {
         <div style={{ margin: '24px 0' }}>
           <PreviewImg src={'/preview.gif'} />
           <MiniText style={{ paddingTop: 8, textAlign: 'center' }}>
-            Sneak preview of 10 NFTs.
+            Preview of 10 NFTs.
           </MiniText>
         </div>
         <CoreMinting>
@@ -362,6 +411,8 @@ const GiftShopPage: NextPage = () => {
             </div>
           </CoreMintingInner>
         </CoreMinting>
+        <ShouldReads />
+        <Utility />
         <Rarity />
         <FAQ />
         <MiniText style={{ marginTop: 48 }}>
