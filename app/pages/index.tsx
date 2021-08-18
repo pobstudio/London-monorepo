@@ -207,8 +207,7 @@ const IndexPage: NextPage = () => {
           Borne out of a{' '}
           <Link passHref href={ROUTES.TOKEN}>
             <A>social experiment</A>
-          </Link>
-          , <Italic>{TOKEN_SYMBOL}</Italic> is a community of crypto-native
+          </Link> staged in conjunction with the August 2021 London Hard Fork, <Italic>{TOKEN_SYMBOL}</Italic> is a community of crypto-native
           tinkerers, thought leaders, and makers interested in furthering the
           capacity of the blockchain to create cultural experiences.
         </RightAlignedText>
@@ -221,12 +220,12 @@ const IndexPage: NextPage = () => {
               <Italic>{TOKEN_SYMBOL} Gift NFT</Italic>
             </A>
           </Link>{' '}
-          from <A href={OPENSEA_LINK}>Opensea</A>
+          from <A href={OPENSEA_LINK}>OpenSea</A>
         </RightAlignedText>
         <RightAlignedText>
-          About 43 million <Italic>{TOKEN_SYMBOL}</Italic> tokens and 8888{' '}
-          <Italic>{TOKEN_SYMBOL} Gifts</Italic> exist and represent the core
-          governance token of the{' '}
+        8888{' '}
+          <Italic>{TOKEN_SYMBOL} Gifts</Italic> and about 43 million <Italic>{TOKEN_SYMBOL}</Italic> tokens exist and represent the core
+          governance tokens of the{' '}
           <Bold>
             <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>
           </Bold>
