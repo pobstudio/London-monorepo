@@ -58,6 +58,8 @@ export const OPENSEA_LINK = `https://opensea.io/collection/london-gift-v2`;
 
 export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
+export const NOTION_WIKI_LINK = `https://london-dao.notion.site/LONDON-Night-Club-DAO-bb3fcec4c153427894d279602d5c78de`;
+
 // strings
 export const LONDON_EMOJI = `🏙🌙💃🏻`;
 

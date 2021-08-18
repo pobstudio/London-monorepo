@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { FlexEnds, Flex } from './flex';
 import { Web3Status } from './web3Status';
@@ -13,6 +13,8 @@ import {
   UNISWAP_TRADE_LINK,
   OPENSEA_LINK,
   TOKEN_SYMBOL,
+  GITHUB_LINK,
+  NOTION_WIKI_LINK,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -35,18 +37,45 @@ const HeaderRow = styled(FlexEnds)`
 `;
 
 const AnchorRow = styled(Flex)`
-  a + a {
+  > * + * {
     margin-left: 16px;
   }
 `;
 
+const AnchorColumn = styled.div`
+  a {
+    display: block;
+  }
+  > * + * {
+    margin-top: 8px;
+  }
+`;
 const AddressA = styled(A)`
   @media (max-width: ${BREAKPTS.MD}px) {
     display: none;
   }
 `;
 
+const DropdownA = styled(A)`
+  cursor: pointer;
+`;
+
+const DropdownBody = styled.div`
+  padding: 8px;
+  background: white;
+  border: 1px solid black;
+  position: absolute;
+  left: 0;
+  margin-top: 4px;
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+`;
+
 export const Header: FC = () => {
+  const [showMore, setShowMore] = useState(false);
+
   return (
     <HeaderContainer>
       <HeaderRow>
@@ -69,24 +98,45 @@ export const Header: FC = () => {
           <Link href={ROUTES.INDEX} passHref>
             <A style={{ fontWeight: 'bold' }}>$LONDON</A>
           </Link>
-          <A href={SNAPSHOT_LINK} target={'_blank'}>
+          <A href={NOTION_WIKI_LINK} target={'_blank'}>
             DAO
           </A>
-          <Link href={ROUTES.PROVENANCE} passHref>
+          {/* <Link href={ROUTES.PROVENANCE} passHref>
             <A>Provenance</A>
-          </Link>
-          <Link href={ROUTES.SHOPPE} passHref>
-            <A>Shoppe</A>
+          </Link> */}
+          <Link href={ROUTES.GIFT} passHref>
+            <A>Gift</A>
           </Link>
           <Link href={ROUTES.PFP} passHref>
             <A>Change pfp</A>
           </Link>
-          <A href={OPENSEA_LINK} target={'_blank'}>
-            OpenSea
-          </A>
-          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
-            Buy {TOKEN_SYMBOL}
-          </A>
+          <Link href={ROUTES.TOKEN} passHref>
+            <A>Token-nomics</A>
+          </Link>
+          <DropdownContainer>
+            <DropdownA onClick={() => setShowMore((s) => !s)}>More</DropdownA>
+            {showMore && (
+              <DropdownBody>
+                <AnchorColumn>
+                  <A href={BLOG_LINK} target={'_blank'}>
+                    Blog
+                  </A>
+                  <A href={TWITTER_LINK} target={'_blank'}>
+                    Twitter
+                  </A>
+                  <A href={DISCORD_LINK} target={'_blank'}>
+                    Discord
+                  </A>
+                  <A href={OPENSEA_LINK} target={'_blank'}>
+                    OpenSea
+                  </A>
+                  <A href={GITHUB_LINK} target={'_blank'}>
+                    Github
+                  </A>
+                </AnchorColumn>
+              </DropdownBody>
+            )}
+          </DropdownContainer>
         </AnchorRow>
         <Web3Status />
       </HeaderRow>
