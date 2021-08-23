@@ -15,6 +15,7 @@ import {
   TOKEN_SYMBOL,
   GITHUB_LINK,
   NOTION_WIKI_LINK,
+  ADD_LIQUIDITY_LINK,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -121,6 +122,9 @@ export const Header: FC = () => {
             {showMore && (
               <DropdownBody>
                 <AnchorColumn>
+                  <A href={ADD_LIQUIDITY_LINK} target={'_blank'}>
+                    Add liquidity
+                  </A>
                   <A href={BLOG_LINK} target={'_blank'}>
                     Blog
                   </A>

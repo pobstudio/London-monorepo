@@ -17,6 +17,7 @@ import {
 } from '../components/text';
 import { A, AButton } from '../components/anchor';
 import {
+  ADD_LIQUIDITY_LINK,
   BLOG_LINK,
   CHAIN_ID,
   DISCORD_LINK,
@@ -174,9 +175,8 @@ const IndexPage: NextPage = () => {
           <Bold>{TOKEN_SYMBOL}</Bold>
         </Title>
         <Text style={{ marginBottom: 8 }}>
-          <Link href={ROUTES.PFP} passHref>
-            <A style={{ color: 'blue', textDecoration: 'underline' }}>
-              GET YOUR AVATAR BACKGROUND UPGRADED!
+            <A href={ADD_LIQUIDITY_LINK} target={'_blank'} style={{ color: 'blue', textDecoration: 'underline' }}>
+              BECOME A $LONDON LP ON SUSHISWAP!
             </A>
             {/* <A style={{ color: 'blue', textDecoration: 'underline' }}>
               {shopState === 'preview' && 'SHOPPE IS OPEN!'}
@@ -185,7 +185,6 @@ const IndexPage: NextPage = () => {
               {shopState === 'sold-out' && 'SHOPPE HAS SOLD OUT!'}
               {shopState === 'not-open' && 'CHECK OUT THE SHOPPE!'}
             </A> */}
-          </Link>
         </Text>
         <Caption>
           A community borne out of a social experiment around EIP-1559, gas
