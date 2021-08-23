@@ -113,6 +113,9 @@ export const Header: FC = () => {
           <Link href={ROUTES.TOKEN} passHref>
             <A>Token-nomics</A>
           </Link>
+          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
+            Trade
+          </A>
           <DropdownContainer>
             <DropdownA onClick={() => setShowMore((s) => !s)}>More</DropdownA>
             {showMore && (
