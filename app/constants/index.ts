@@ -38,7 +38,7 @@ export const GRAPH_TEST_SUBGRAPH_LINK =
 
 // links
 export const UNISWAP_TRADE_LINK =
-  'https://app.uniswap.org/#/swap?inputCurrency=0x491d6b7d6822d5d4bc88a1264e1b47791fd8e904&outputCurrency=ETH';
+  'https://app.sushi.com/swap#/swap?inputCurrency=0x491d6b7d6822d5d4bc88a1264e1b47791fd8e904&outputCurrency=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 
 export const STUDIO_PROD_LINK = 'https://pob.studio';
 
