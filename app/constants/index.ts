@@ -38,7 +38,7 @@ export const GRAPH_TEST_SUBGRAPH_LINK =
 
 // links
 export const UNISWAP_TRADE_LINK =
-  'https://app.1inch.io/#/1/swap/ETH/0x491d6b7d6822d5d4bc88a1264e1b47791fd8e904';
+  'https://matcha.xyz/markets/1/0x491d6b7d6822d5d4bc88a1264e1b47791fd8e904/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 
 export const ADD_LIQUIDITY_LINK =
   'https://sushiswap.vision/pair/0xd5a7d56ea8a36f855be3720cec1c9b8e4d30c732';
