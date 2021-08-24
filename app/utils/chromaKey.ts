@@ -65,6 +65,9 @@ const shouldKeyOut = (keyHsv: [number, number, number]) => (
   satThreshold: number,
 ) => {
   const [H, S, V] = rgbToHsv(...rgb);
+  // if (!['000', '234217217'].includes(rgb.join(''))) {
+  //   console.log(rgb.join(''), Math.abs(keyHsv[0] - H), Math.abs(keyHsv[1] - S), Math.abs(keyHsv[2] - V), hueThreshold, satThreshold, valThreshold)
+  // }
   if (Math.abs(keyHsv[0] - H) >= hueThreshold) return false;
   if (Math.abs(keyHsv[1] - S) >= satThreshold) return false;
   if (Math.abs(keyHsv[2] - V) >= valThreshold) return false;
@@ -84,12 +87,14 @@ export const keyOutColorToAlpha = (
   const p = 100;
   console.log(
     shouldKeyOut(keyHsv)(
-      [pxs[p], pxs[p + 1], pxs[p + 2]],
+      [241, 223, 223],
       hueThreshold,
       valThreshold,
       satThreshold,
     ),
   );
+
+  const keyedValues: string[] = [];
 
   for (let p = 0; p < pxs.length; p += 4) {
     if (
@@ -100,8 +105,12 @@ export const keyOutColorToAlpha = (
         satThreshold,
       )
     ) {
+      if(!keyedValues.includes([pxs[p], pxs[p + 1], pxs[p + 2]].join(''))) {
+        keyedValues.push([pxs[p], pxs[p + 1], pxs[p + 2]].join(''));
+      }
       pxs[p + 3] = 0;
     }
   }
+  // console.log('keyedValues', keyedValues)
   return imageData;
 };

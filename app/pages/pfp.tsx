@@ -58,6 +58,10 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0x488a85d21ac95c9bb0cdaa0d2bfa427fcea88d1e', 'Bored Punk Yacht Club']
 ];
 
+const PER_PROJECT_SETTINGS: { [key: string]: any } = {
+  '0x031920cc2d9f5c10b444fd44009cd64f829e7be2': { thresholds: [0.01, 0.3, 0.3] },
+}
+
 const IndexPage: NextPage = () => {
   const { account } = useWeb3React();
   const [foregroundImageSrc, setForegroundImageSrc] = useState<
@@ -66,6 +70,12 @@ const IndexPage: NextPage = () => {
   const [backgroundImageSrc, setBackgroundImageSrc] = useState<
     string | undefined
   >();
+
+  const [selectedForegroundProject, setSelectedForegroundProject] = useState<
+  string | undefined
+>();
+ 
+  const canvasSettings = useMemo(() => !!selectedForegroundProject ? PER_PROJECT_SETTINGS[selectedForegroundProject] : {}, [selectedForegroundProject]);
 
   return (
     <>
@@ -83,6 +93,7 @@ const IndexPage: NextPage = () => {
           <AvatarConsole>
             <AvatarLeftWell>
               <AvatarCanvas
+                {...canvasSettings}
                 foregroundImageSrc={foregroundImageSrc}
                 backgroundImageSrc={backgroundImageSrc}
               />
@@ -94,6 +105,7 @@ const IndexPage: NextPage = () => {
                   backgroundImageSrc={backgroundImageSrc}
                   setForegroundImageSrc={setForegroundImageSrc}
                   setBackgroundImageSrc={setBackgroundImageSrc}
+                  setSelectedForegroundProject={setSelectedForegroundProject}
                   account={account}
                 />
               ) : (
@@ -130,6 +142,7 @@ const UserSection: FC<{
   setImageSrc: (src: string) => void;
   selectedImageSrc?: string;
   items: OPENSEA_COLLECTION[];
+  setSelectedProject?: (address: string) => void;
   selectableAssetAndNames: [string, string][];
 }> = ({
   selectableAssetAndNames,
@@ -138,6 +151,7 @@ const UserSection: FC<{
   label,
   items,
   isVerticalScroll,
+  setSelectedProject,
 }) => {
   const [selectedCollectionAddress, setSelectedCollectionAddress] = useState<
     string | undefined
@@ -161,7 +175,7 @@ const UserSection: FC<{
           <Text>{label}</Text>
           <Flex>
             <StyledSelect
-              onChange={(e) => setSelectedCollectionAddress(e.target.value)}
+              onChange={(e) => { setSelectedCollectionAddress(e.target.value); setSelectedProject?.(e.target.value)}}
               value={selectedCollectionAddress}
             >
               {selectableAssetAndNames?.map((i) => {
@@ -270,6 +284,7 @@ const UserAssets: FC<{
   backgroundImageSrc?: string;
   setForegroundImageSrc: (src: string) => void;
   setBackgroundImageSrc: (src: string) => void;
+  setSelectedForegroundProject: (address: string) => void;
   account: string;
 }> = ({
   account,
@@ -277,6 +292,7 @@ const UserAssets: FC<{
   setBackgroundImageSrc,
   foregroundImageSrc,
   backgroundImageSrc,
+  setSelectedForegroundProject,
 }) => {
   const otherAssets = useOtherAssets(
     account,
@@ -297,6 +313,7 @@ const UserAssets: FC<{
       <div style={{ flexGrow: 1 }}>
         <UserSection
           selectableAssetAndNames={SELECTABLE_FOREGROUND}
+          setSelectedProject={setSelectedForegroundProject}
           setImageSrc={setForegroundImageSrc}
           selectedImageSrc={foregroundImageSrc}
           isVerticalScroll={true}
