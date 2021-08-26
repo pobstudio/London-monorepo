@@ -44,9 +44,20 @@ import { useGiftStore } from '../stores/gift';
 import { useIsApproved } from '../hooks/useIsApproved';
 import { useSetApprove } from '../hooks/useSetApproval';
 import { useMintGift } from '../hooks/useMintGift';
-import { TableContainer, TableHeader, TableBody, TableRow } from './table';
-import { LabelTableColumn, ValueTableColumn } from '../pages';
+import { TableColumn, TableContainer, TableHeader, TableBody, TableRow } from './table';
 import { useOpenSeaStats } from '../hooks/useOpenSea';
+
+const LabelTableColumn = styled(TableColumn)`
+  width: 320px;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 220px;
+  }
+`;
+
+const ValueTableColumn = styled(TableColumn)`
+  text-align: right;
+`;
+
 const MintWrapper = styled.div`
   border: 1px solid black;
   background: white;

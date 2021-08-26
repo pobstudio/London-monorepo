@@ -21,6 +21,7 @@ import {
   CHAIN_ID,
   DISCORD_LINK,
   GITHUB_LINK,
+  LONDON_DAO_TITLE,
   LONDON_EMOJI,
   NOTION_WIKI_LINK,
   OPENSEA_LINK,
@@ -192,13 +193,12 @@ const IndexPage: NextPage = () => {
         <RightAlignedText>
           <Italic>{TOKEN_SYMBOL}</Italic> is the native governance token of the{' '}
           <Bold>
-            {LONDON_EMOJI}{' '}
             <A
               href={NOTION_WIKI_LINK}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+              {LONDON_DAO_TITLE}
             </A>
           </Bold>
           .
@@ -308,13 +308,12 @@ const IndexPage: NextPage = () => {
           <Italic>{TOKEN_SYMBOL}</Italic> is primarily a governance token for
           the{' '}
           <Bold>
-            {LONDON_EMOJI}{' '}
             <A
               href={NOTION_WIKI_LINK}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+              {LONDON_DAO_TITLE}
             </A>
           </Bold>
           .
@@ -322,7 +321,7 @@ const IndexPage: NextPage = () => {
         <RightAlignedText>
           One of the{' '}
           <Bold>
-            <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>
+            {LONDON_DAO_TITLE}
           </Bold>{' '}
           main directives is to develop a community of{' '}
           <Italic>{TOKEN_SYMBOL}</Italic> holders and create exclusive NFT
@@ -347,7 +346,7 @@ const IndexPage: NextPage = () => {
           is a celebration and critique of our relationship with miners and core
           developers. After the London hardfork,{' '}
           <Bold>
-            <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>
+                  {LONDON_DAO_TITLE}
           </Bold>{' '}
           will continue the spirit of the project in the form of funding new NFT
           token mechanics and experiment with new crypto-experiences.

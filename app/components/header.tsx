@@ -99,15 +99,17 @@ export const Header: FC = () => {
           <Link href={ROUTES.INDEX} passHref>
             <A style={{ fontWeight: 'bold' }}>$LONDON</A>
           </Link>
-          <A href={NOTION_WIKI_LINK} target={'_blank'}>
-            DAO
-          </A>
+          <Link href={ROUTES.DAO} passHref>
+            <A>
+              DAO
+            </A>
+          </Link>
           {/* <Link href={ROUTES.PROVENANCE} passHref>
             <A>Provenance</A>
           </Link> */}
-          <Link href={ROUTES.GIFT} passHref>
+          {/* <Link href={ROUTES.GIFT} passHref>
             <A>Gift</A>
-          </Link>
+          </Link> */}
           <Link href={ROUTES.PFP} passHref>
             <A>Change pfp</A>
           </Link>
@@ -127,6 +129,9 @@ export const Header: FC = () => {
                   </A>
                   <A href={BLOG_LINK} target={'_blank'}>
                     Blog
+                  </A>
+                  <A href={NOTION_WIKI_LINK} target={'_blank'}>
+                    DAO Docs
                   </A>
                   <A href={TWITTER_LINK} target={'_blank'}>
                     Twitter

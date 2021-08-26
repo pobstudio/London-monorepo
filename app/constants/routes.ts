@@ -4,4 +4,5 @@ export const ROUTES = {
   PFP: '/pfp',
   PROVENANCE: '/provenance',
   TOKEN: '/token',
+  DAO: '/dao',
 };

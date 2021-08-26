@@ -63,8 +63,12 @@ export const NFT_LICENSE_LINK = `https://www.nftlicense.org`;
 
 export const NOTION_WIKI_LINK = `https://london-dao.notion.site/LONDON-Night-Club-DAO-bb3fcec4c153427894d279602d5c78de`;
 
+export const DUNE_DASHBOARD_LINK = `https://dune.xyz/0xminion/Proof-of-Beauty%27s-dollarLONDON-Gift-Dashboard`;
+
 // strings
 export const LONDON_EMOJI = `🏙🌙💃🏻`;
+
+export const LONDON_DAO_TITLE = `💷LondonDAO`;
 
 // OG banners
 export const GLOBAL_OG_BANNER = `${LONDON_PROD_LINK}/banner/default.png`;
