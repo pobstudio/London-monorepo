@@ -111,7 +111,10 @@ export const Header: FC = () => {
             <A>Gift</A>
           </Link> */}
           <Link href={ROUTES.PFP} passHref>
-            <A>Change pfp</A>
+            <A>PFP</A>
+          </Link>
+          <Link href={ROUTES.RUG} passHref>
+            <A style={{color: 'blue'}}>Banner</A>
           </Link>
           <Link href={ROUTES.TOKEN} passHref>
             <A>Token-nomics</A>
