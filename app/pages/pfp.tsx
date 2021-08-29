@@ -34,6 +34,7 @@ export const SELECTABLE_BACKGROUND: [string, string][] = [
 
 export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'BAYC'],
+  ['0x60e4d786628fea6478f785a6d7e704777c86a7c6', 'MAYC'],
   ['0xbd3531da5cf5857e7cfaa92426877b022e612cf8', 'Pudgy Penguins'],
   ['0x1a92f7381b9f03921564a437210bb9396471050c', 'Cool Cats'],
   ['0x85f740958906b317de6ed79663012859067e745b', 'Wicked Cranium'],
@@ -55,7 +56,7 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0x892555e75350e11f2058d086c72b9c94c9493d72', 'Niftydudes'],
   ['0x2acab3dea77832c09420663b0e1cb386031ba17b', 'DeadFellaz'],
   ['0x495f947276749ce646f68ac8c248420045cb7b5e', '24px Cats'],
-  ['0x488a85d21ac95c9bb0cdaa0d2bfa427fcea88d1e', 'Bored Punk Yacht Club']
+  ['0x488a85d21ac95c9bb0cdaa0d2bfa427fcea88d1e', 'Bored Punk Yacht Club'],
 ];
 
 const PER_PROJECT_SETTINGS: { [key: string]: any } = {
