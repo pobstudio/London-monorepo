@@ -105,7 +105,7 @@ export const keyOutColorToAlpha = (
         satThreshold,
       )
     ) {
-      if(!keyedValues.includes([pxs[p], pxs[p + 1], pxs[p + 2]].join(''))) {
+      if (!keyedValues.includes([pxs[p], pxs[p + 1], pxs[p + 2]].join(''))) {
         keyedValues.push([pxs[p], pxs[p + 1], pxs[p + 2]].join(''));
       }
       pxs[p + 3] = 0;

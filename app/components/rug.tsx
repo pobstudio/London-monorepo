@@ -46,10 +46,10 @@ const ControlsRow = styled(FlexEnds)`
   background: none;
 `;
 
-export const RUG_PIXEL_WIDTH = 2000; 
+export const RUG_PIXEL_WIDTH = 2000;
 export const RUG_PIXEL_HEIGHT = 1000;
 
-const PROFILE_PIXEL_WIDTH = 500; 
+const PROFILE_PIXEL_WIDTH = 500;
 const PROFILE_PIXEL_HEIGHT = 500;
 
 const CanvasWrapper = styled(FlexCenterColumn)`
@@ -62,9 +62,36 @@ const CanvasContentWrapper = styled(FlexCenterColumn)`
   border-bottom: 1px solid black;
 `;
 
-export type RugImgSrcs = [string, string, string, string, string, string, string, string];
-export type RugImgRotations = [number, number, number, number, number, number, number, number];
-export type RugImgScales = [[number, number], [number, number], [number, number], [number, number], [number, number], [number, number], [number, number], [number, number]];
+export type RugImgSrcs = [
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+  string,
+];
+export type RugImgRotations = [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+];
+export type RugImgScales = [
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+];
 
 const FRAME_CUT_OFF = 32;
 
@@ -135,12 +162,12 @@ export const RugCanvas: FC<{
         const rotation = rugImgRotations?.[i] ?? 0;
         ctx.save();
         const [x, y] = [
-          (PROFILE_PIXEL_WIDTH * (i % 4)),
-          (PROFILE_PIXEL_HEIGHT * Math.floor(i / 4)),
-        ]
+          PROFILE_PIXEL_WIDTH * (i % 4),
+          PROFILE_PIXEL_HEIGHT * Math.floor(i / 4),
+        ];
         ctx.translate(
-          x + (PROFILE_PIXEL_WIDTH / 2),
-          y + (PROFILE_PIXEL_HEIGHT / 2)
+          x + PROFILE_PIXEL_WIDTH / 2,
+          y + PROFILE_PIXEL_HEIGHT / 2,
         );
         ctx.scale(...rugImgScales[i]);
         ctx.rotate(rotation);
@@ -148,7 +175,7 @@ export const RugCanvas: FC<{
           image,
           FRAME_CUT_OFF,
           FRAME_CUT_OFF,
-          image.height - FRAME_CUT_OFF * 2, 
+          image.height - FRAME_CUT_OFF * 2,
           image.width - FRAME_CUT_OFF * 2,
           PROFILE_PIXEL_WIDTH / -2,
           PROFILE_PIXEL_WIDTH / -2,
@@ -161,13 +188,7 @@ export const RugCanvas: FC<{
     };
 
     processImage();
-  }, [
-    canvasRef,
-    hiddenCanvasRef,
-    rugImgSrcs,
-    rugImgRotations,
-    rugImgScales,
-  ]);
+  }, [canvasRef, hiddenCanvasRef, rugImgSrcs, rugImgRotations, rugImgScales]);
 
   const imageHref = useMemo(() => {
     if (!canvasRef.current) {
@@ -181,21 +202,21 @@ export const RugCanvas: FC<{
   return (
     <CanvasWrapper>
       <ControlsRow>
-      <Button
-        style={{ borderRight: '1px solid black' }}
-        disabled={!rugImgSrcs}
-        onClick={() => setRotation(s => s + Math.PI * 0.5)}
-      >
-        Rotate
-      </Button>
-      <Button
-        style={{ borderLeft: '1px solid black' }}
-        as={'a'}
-        href={imageHref}
-        download={'banner.png'}
-      >
-        Download
-      </Button>
+        <Button
+          style={{ borderRight: '1px solid black' }}
+          disabled={!rugImgSrcs}
+          onClick={() => setRotation((s) => s + Math.PI * 0.5)}
+        >
+          Rotate
+        </Button>
+        <Button
+          style={{ borderLeft: '1px solid black' }}
+          as={'a'}
+          href={imageHref}
+          download={'banner.png'}
+        >
+          Download
+        </Button>
       </ControlsRow>
       <CanvasContentWrapper>
         <HiddenCanvas ref={hiddenCanvasRef} />

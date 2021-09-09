@@ -28,12 +28,7 @@ const NEW_METADATA_DIR = path.resolve(
   'out',
   'new-token-metadata',
 );
-const COLLAGE_DIR = path.resolve(
-  __dirname,
-  '..',
-  'out',
-  'collage',
-);
+const COLLAGE_DIR = path.resolve(__dirname, '..', 'out', 'collage');
 const METADATA_DIR = path.resolve(__dirname, '..', 'out', 'token-metadata');
 const BASE_METADATA_DIR = path.resolve(__dirname, '..', 'out', 'metadata');
 const IMAGE_DIR = path.resolve(__dirname, '..', 'out', 'image');
@@ -55,12 +50,12 @@ const NUM_COL = 101;
   for (let i = 0; i < SUPPLY; ++i) {
     const image = await loadImage(path.resolve(IMAGE_DIR, `${i}.png`));
     ctx.drawImage(
-      image, 
+      image,
       Math.floor(i / NUM_COL) * ARTWORK_SIZE,
-      Math.floor( i % NUM_COL) * ARTWORK_SIZE,
+      Math.floor(i % NUM_COL) * ARTWORK_SIZE,
       ARTWORK_SIZE,
       ARTWORK_SIZE,
-    )
+    );
     console.log(`drawing image ${i}`);
   }
   const out = createWriteStream(path.resolve(COLLAGE_DIR, 'collage.png'));

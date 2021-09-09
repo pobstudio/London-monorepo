@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { Erc20Mintable } from '../typechain/ERC20Mintable';
+import { ERC20Mintable } from '../typechain/ERC20Mintable';
 import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
 import { expect } from 'chai';
 
@@ -14,7 +14,7 @@ const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 
 describe('GasPriceBasedMinter', function () {
   // constant values used in transfer tests
-  let erc20Mintable: Erc20Mintable;
+  let erc20Mintable: ERC20Mintable;
   let gasPriceBasedMinter: GasPriceBasedMinter;
   let owner: Signer;
   let rando: Signer;
@@ -51,7 +51,7 @@ describe('GasPriceBasedMinter', function () {
       gasPriceBasedMinter.address,
       TOKEN_NAME,
       TOKEN_SYMBOL,
-    )) as Erc20Mintable;
+    )) as ERC20Mintable;
     await erc20Mintable.deployed();
   });
 

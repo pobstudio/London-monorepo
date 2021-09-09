@@ -100,9 +100,7 @@ export const Header: FC = () => {
             <A style={{ fontWeight: 'bold' }}>$LONDON</A>
           </Link>
           <Link href={ROUTES.DAO} passHref>
-            <A>
-              DAO
-            </A>
+            <A>DAO</A>
           </Link>
           {/* <Link href={ROUTES.PROVENANCE} passHref>
             <A>Provenance</A>
@@ -114,7 +112,7 @@ export const Header: FC = () => {
             <A>PFP</A>
           </Link>
           <Link href={ROUTES.RUG} passHref>
-            <A style={{color: 'blue'}}>Banner</A>
+            <A style={{ color: 'blue' }}>Banner</A>
           </Link>
           <Link href={ROUTES.TOKEN} passHref>
             <A>Token-nomics</A>

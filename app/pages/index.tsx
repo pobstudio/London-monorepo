@@ -263,9 +263,9 @@ const Utility = () => {
       </RightAlignedText>
       <RightAlignedText>
         Owning a <Bold>{TOKEN_SYMBOL}</Bold> gift enables you to participate in
-        the {' '}
+        the{' '}
         <A target={'_blank'} href={ROUTES.DAO}>
-          {LONDON_DAO_TITLE} 
+          {LONDON_DAO_TITLE}
         </A>
         . Each <Bold>{TOKEN_SYMBOL}</Bold> gift has the equivalent voting power
         of 1559 <Bold>{TOKEN_SYMBOL}</Bold>.
@@ -279,10 +279,13 @@ const FAQ = () => {
     <>
       <SubTitle style={{ marginTop: 48 }}>FAQ</SubTitle>
       <RightAlignedText>
-        <Bold>What is the difference between {TOKEN_SYMBOL} and {TOKEN_SYMBOL} gift?</Bold>
+        <Bold>
+          What is the difference between {TOKEN_SYMBOL} and {TOKEN_SYMBOL} gift?
+        </Bold>
       </RightAlignedText>
       <RightAlignedText>
-        {TOKEN_SYMBOL} is a erc20 token, you can learn more about it <A href={ROUTES.TOKEN}>here</A>. {TOKEN_SYMBOL} gift is a NFT.
+        {TOKEN_SYMBOL} is a erc20 token, you can learn more about it{' '}
+        <A href={ROUTES.TOKEN}>here</A>. {TOKEN_SYMBOL} gift is a NFT.
       </RightAlignedText>
       <RightAlignedText>
         <Bold>How many LONDON gift will exist?</Bold>
@@ -332,7 +335,7 @@ const FAQ = () => {
       <RightAlignedText>
         That is left to the{' '}
         <A href={`${SNAPSHOT_LINK}`} target="_blank" rel="noopener noreferrer">
-        {LONDON_DAO_TITLE}
+          {LONDON_DAO_TITLE}
         </A>{' '}
         to decide!
       </RightAlignedText>
@@ -405,19 +408,23 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
           </Italic>
         </Caption> */}
-                <Text style={{ marginBottom: 8 }}>
-            <Link passHref href={ROUTES.DAO}>
+        <Text style={{ marginBottom: 8 }}>
+          <Link passHref href={ROUTES.DAO}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
               Learn more about the {LONDON_DAO_TITLE}
             </A>
-            </Link>
-            </Text>
+          </Link>
+        </Text>
         <Caption style={{ marginBottom: 4 }}>
           [SOLD OUT] {MAX_SUPPLY}{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>
             generative art mementos
           </A>{' '}
-          each costing 1559 <Link passHref href={ROUTES.TOKEN}><A>{TOKEN_SYMBOL}</A></Link> to mint. While supplies last.
+          each costing 1559{' '}
+          <Link passHref href={ROUTES.TOKEN}>
+            <A>{TOKEN_SYMBOL}</A>
+          </Link>{' '}
+          to mint. While supplies last.
         </Caption>
         <Text style={{ marginBottom: 12 }}>
           <A

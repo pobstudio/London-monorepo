@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { Erc20Mintable } from '../typechain/ERC20Mintable';
+import { ERC20Mintable } from '../typechain/ERC20Mintable';
 import { LondonGift } from '../typechain/LondonGift';
 import { expect } from 'chai';
 import { getAddress } from '@ethersproject/address';
@@ -15,7 +15,7 @@ const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 
 describe('LondonGift', function () {
   // constant values used in transfer tests
-  let erc20Mintable: Erc20Mintable;
+  let erc20Mintable: ERC20Mintable;
   let londonGift: LondonGift;
   let owner: Signer;
   let rando: Signer;
@@ -53,7 +53,7 @@ describe('LondonGift', function () {
       await minter.getAddress(),
       TOKEN_NAME,
       TOKEN_SYMBOL,
-    )) as Erc20Mintable;
+    )) as ERC20Mintable;
     await erc20Mintable.deployed();
 
     const LondonGift = await ethers.getContractFactory('LondonGift');

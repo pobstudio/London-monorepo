@@ -44,7 +44,13 @@ import { useGiftStore } from '../stores/gift';
 import { useIsApproved } from '../hooks/useIsApproved';
 import { useSetApprove } from '../hooks/useSetApproval';
 import { useMintGift } from '../hooks/useMintGift';
-import { TableColumn, TableContainer, TableHeader, TableBody, TableRow } from './table';
+import {
+  TableColumn,
+  TableContainer,
+  TableHeader,
+  TableBody,
+  TableRow,
+} from './table';
 import { useOpenSeaStats } from '../hooks/useOpenSea';
 
 const LabelTableColumn = styled(TableColumn)`

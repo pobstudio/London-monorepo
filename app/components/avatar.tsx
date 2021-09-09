@@ -47,7 +47,11 @@ const DEFAULT_HUE_THRESHOLD = 10;
 const DEFAULT_SAT_THRESHOLD = 10;
 const DEFAULT_VAL_THRESHOLD = 10;
 
-const DEFAULT_THRESHOLDS: [number, number, number] = [DEFAULT_HUE_THRESHOLD, DEFAULT_SAT_THRESHOLD, DEFAULT_VAL_THRESHOLD];
+const DEFAULT_THRESHOLDS: [number, number, number] = [
+  DEFAULT_HUE_THRESHOLD,
+  DEFAULT_SAT_THRESHOLD,
+  DEFAULT_VAL_THRESHOLD,
+];
 
 export const PROFILE_PIXEL_WIDTH = 400;
 export const PROFILE_PIXEL_HEIGHT = 400;
@@ -65,8 +69,13 @@ export const AvatarCanvas: FC<{
   backgroundImageSrc?: string;
   foregroundImageSrc?: string;
   chromaKeyColor?: string;
-  thresholds?: [number, number, number]
-}> = ({ thresholds, backgroundImageSrc, foregroundImageSrc, chromaKeyColor }) => {
+  thresholds?: [number, number, number];
+}> = ({
+  thresholds,
+  backgroundImageSrc,
+  foregroundImageSrc,
+  chromaKeyColor,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const hiddenCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -129,11 +138,12 @@ export const AvatarCanvas: FC<{
           foregroundImageSrc,
         );
         const usedColors = getMostUsedColors(foregroundImageData);
-        const finalThresholds: [number, number, number] = thresholds ?? DEFAULT_THRESHOLDS;
+        const finalThresholds: [number, number, number] =
+          thresholds ?? DEFAULT_THRESHOLDS;
         const keyedOutForegroundImageData = keyOutColorToAlpha(
           foregroundImageData,
           usedColors[0],
-          ...finalThresholds, 
+          ...finalThresholds,
         );
         hiddenCtx.putImageData(keyedOutForegroundImageData, 0, 0);
         ctx.drawImage(

@@ -60,8 +60,10 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
 ];
 
 const PER_PROJECT_SETTINGS: { [key: string]: any } = {
-  '0x031920cc2d9f5c10b444fd44009cd64f829e7be2': { thresholds: [0.01, 0.3, 0.3] },
-}
+  '0x031920cc2d9f5c10b444fd44009cd64f829e7be2': {
+    thresholds: [0.01, 0.3, 0.3],
+  },
+};
 
 const IndexPage: NextPage = () => {
   const { account } = useWeb3React();
@@ -73,10 +75,16 @@ const IndexPage: NextPage = () => {
   >();
 
   const [selectedForegroundProject, setSelectedForegroundProject] = useState<
-  string | undefined
->();
- 
-  const canvasSettings = useMemo(() => !!selectedForegroundProject ? PER_PROJECT_SETTINGS[selectedForegroundProject] : {}, [selectedForegroundProject]);
+    string | undefined
+  >();
+
+  const canvasSettings = useMemo(
+    () =>
+      !!selectedForegroundProject
+        ? PER_PROJECT_SETTINGS[selectedForegroundProject]
+        : {},
+    [selectedForegroundProject],
+  );
 
   return (
     <>
@@ -176,7 +184,10 @@ const UserSection: FC<{
           <Text>{label}</Text>
           <Flex>
             <StyledSelect
-              onChange={(e) => { setSelectedCollectionAddress(e.target.value); setSelectedProject?.(e.target.value)}}
+              onChange={(e) => {
+                setSelectedCollectionAddress(e.target.value);
+                setSelectedProject?.(e.target.value);
+              }}
               value={selectedCollectionAddress}
             >
               {selectableAssetAndNames?.map((i) => {

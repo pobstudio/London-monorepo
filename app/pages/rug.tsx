@@ -61,19 +61,15 @@ const IndexPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>$LONDON</Bold> rug service 
+          <Bold>$LONDON</Bold> rug service
         </Title>
         <Caption>
-          <Italic>
-            Get rug pulled!
-          </Italic>
+          <Italic>Get rug pulled!</Italic>
         </Caption>
         <RugConsoleWrapper>
           <RugConsole>
             <LeftWell>
-              <RugCanvas
-                rugImgSrcs={rugImgSrcs}
-              />
+              <RugCanvas rugImgSrcs={rugImgSrcs} />
             </LeftWell>
             <BottomBox>
               {!!account ? (
@@ -149,7 +145,10 @@ const UserSection: FC<{
           <Text>{label}</Text>
           <Flex>
             <StyledSelect
-              onChange={(e) => { setSelectedCollectionAddress(e.target.value); setSelectedProject?.(e.target.value)}}
+              onChange={(e) => {
+                setSelectedCollectionAddress(e.target.value);
+                setSelectedProject?.(e.target.value);
+              }}
               value={selectedCollectionAddress}
             >
               {selectableAssetAndNames?.map((i) => {
@@ -249,18 +248,13 @@ const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
   }
 `;
 
-const ForegroundUserSectionWrapper = styled.div`
-`;
+const ForegroundUserSectionWrapper = styled.div``;
 
 const UserAssets: FC<{
   backgroundImageSrc?: string;
   setBackgroundImageSrc: (src: string) => void;
   account: string;
-}> = ({
-  account,
-  setBackgroundImageSrc,
-  backgroundImageSrc,
-}) => {
+}> = ({ account, setBackgroundImageSrc, backgroundImageSrc }) => {
   // const otherAssets = useOtherAssets(
   //   account,
   //   SELECTABLE_FOREGROUND.map((s) => s[0]),

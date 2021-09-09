@@ -176,9 +176,12 @@ const IndexPage: NextPage = () => {
           <Bold>{LONDON_DAO_TITLE}</Bold>
         </Title>
         <Text style={{ marginBottom: 8 }}>
-            <A href={NOTION_WIKI_LINK} style={{ color: 'blue', textDecoration: 'underline' }}>
-              Dive into the wiki 
-              </A>
+          <A
+            href={NOTION_WIKI_LINK}
+            style={{ color: 'blue', textDecoration: 'underline' }}
+          >
+            Dive into the wiki
+          </A>
         </Text>
         <Caption>
           A community borne out of a social experiment around EIP-1559, gas
@@ -191,7 +194,9 @@ const IndexPage: NextPage = () => {
           Borne out of a{' '}
           <Link passHref href={ROUTES.TOKEN}>
             <A>social experiment</A>
-          </Link> staged in conjunction with the August 2021 London Hard Fork, <Italic>{LONDON_DAO_TITLE}</Italic> is a community of crypto-native
+          </Link>{' '}
+          staged in conjunction with the August 2021 London Hard Fork,{' '}
+          <Italic>{LONDON_DAO_TITLE}</Italic> is a community of crypto-native
           tinkerers, thought leaders, and makers interested in furthering the
           capacity of the blockchain to create cultural experiences.
         </RightAlignedText>
@@ -207,8 +212,8 @@ const IndexPage: NextPage = () => {
           from <A href={OPENSEA_LINK}>OpenSea</A>
         </RightAlignedText>
         <RightAlignedText>
-        8888{' '}
-          <Italic>{TOKEN_SYMBOL} Gifts</Italic> and about 43 million <Italic>{TOKEN_SYMBOL}</Italic> tokens exist and represent the core
+          8888 <Italic>{TOKEN_SYMBOL} Gifts</Italic> and about 43 million{' '}
+          <Italic>{TOKEN_SYMBOL}</Italic> tokens exist and represent the core
           governance tokens of the{' '}
           <Bold>
             <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>

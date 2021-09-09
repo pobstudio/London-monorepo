@@ -319,13 +319,9 @@ const IndexPage: NextPage = () => {
           .
         </RightAlignedText>
         <RightAlignedText>
-          One of the{' '}
-          <Bold>
-            {LONDON_DAO_TITLE}
-          </Bold>{' '}
-          main directives is to develop a community of{' '}
-          <Italic>{TOKEN_SYMBOL}</Italic> holders and create exclusive NFT
-          drops, and experiment with new token mechanics.
+          One of the <Bold>{LONDON_DAO_TITLE}</Bold> main directives is to
+          develop a community of <Italic>{TOKEN_SYMBOL}</Italic> holders and
+          create exclusive NFT drops, and experiment with new token mechanics.
         </RightAlignedText>
         <RightAlignedText>
           Such experiments and NFT drops will be exclusive to{' '}
@@ -344,10 +340,7 @@ const IndexPage: NextPage = () => {
           <Italic>{TOKEN_SYMBOL}</Italic> is a highly experimental project
           designed to show the fragility/robustness of the ETH fee markets. It
           is a celebration and critique of our relationship with miners and core
-          developers. After the London hardfork,{' '}
-          <Bold>
-                  {LONDON_DAO_TITLE}
-          </Bold>{' '}
+          developers. After the London hardfork, <Bold>{LONDON_DAO_TITLE}</Bold>{' '}
           will continue the spirit of the project in the form of funding new NFT
           token mechanics and experiment with new crypto-experiences.
         </RightAlignedText>
