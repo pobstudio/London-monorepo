@@ -53,7 +53,7 @@ export const GITHUB_LINK = `https://github.com/proofofbeauty/LONDON-monorepo`;
 
 export const TWITTER_LINK = `https://twitter.com/prrfbeauty`;
 
-export const DISCORD_LINK = `https://discord.gg/QRamJkVkPF`;
+export const DISCORD_LINK = `https://discord.gg/pob`;
 
 export const SNAPSHOT_LINK = `https://snapshot.org/#/london.pob.eth`;
 
