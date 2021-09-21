@@ -117,9 +117,9 @@ const Rarity = () => {
           <ValueTableColumn>Chance</ValueTableColumn>
         </TableHeader>
         <TableBody>
-          {Object.entries(RARITY).map((r) => {
+          {Object.entries(RARITY).map((r, index) => {
             return (
-              <TableRow>
+              <TableRow key={`table-row-rarity-${index}`}>
                 <LabelTableColumn>{PRETTY_RARITY_LABEL[r[0]]}</LabelTableColumn>
                 <ValueTableColumn>
                   {shopState === 'open' || shopState === 'sold-out'
@@ -139,9 +139,9 @@ const Rarity = () => {
         Each tile set produces unique visual output, distinctive from one
         another.
       </RightAlignedText>
-      {Object.entries(RARITY_TILE_MAP).map((r) => {
+      {Object.entries(RARITY_TILE_MAP).map((r, index) => {
         return (
-          <RightAlignedText>
+          <RightAlignedText key={`right-aligned-rarity-${index}`}>
             <Bold>{PRETTY_RARITY_LABEL[r[0]]}</Bold>
             {' - '}
             {r[1].join(', ')}
@@ -166,9 +166,9 @@ const Rarity = () => {
           <ValueTableColumn>Chance</ValueTableColumn>
         </TableHeader>
         <TableBody>
-          {Object.entries(NAMES_RARITY_MAP).map((r) => {
+          {Object.entries(NAMES_RARITY_MAP).map((r, index) => {
             return (
-              <TableRow>
+              <TableRow key={`table-row-state-${index}`}>
                 <LabelTableColumn>{r[0]}</LabelTableColumn>
                 <ValueTableColumn>
                   {shopState === 'open' || shopState === 'sold-out'
