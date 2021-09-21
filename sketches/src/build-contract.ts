@@ -1,15 +1,8 @@
 require('dotenv').config();
 
-import { writeFile, readFile, createReadStream } from 'fs';
+import { writeFile, readFile } from 'fs';
 import { promisify } from 'util';
 import path from 'path';
-import { STARTING_INDEX, SUPPLY } from './constants';
-import {
-  generateTokenMetadata,
-  mapTokenMetadataToAttributes,
-} from './generate';
-import { sketchFactory } from './sketch';
-import { createHash } from 'crypto';
 import { NFTStorage, File, Blob } from 'nft.storage';
 
 const writeFileAsync = promisify(writeFile);

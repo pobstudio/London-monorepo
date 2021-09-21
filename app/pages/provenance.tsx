@@ -1,9 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
-import { BellCurve, Datum } from '../components/bellCurve';
-import { Countdown } from '../components/countdown';
-import { useWeb3React } from '@web3-react/core';
 import {
   Text,
   Bold,
@@ -12,65 +9,18 @@ import {
   Title,
   Caption,
   Italic,
-  ASpan,
   MiniText,
 } from '../components/text';
-import { A, AButton } from '../components/anchor';
-import {
-  CHAIN_ID,
-  LONDON_EMOJI,
-  SNAPSHOT_LINK,
-  STUDIO_PROD_LINK,
-  TOKEN_SYMBOL,
-} from '../constants';
-import Link from 'next/link';
-import {
-  BLOCK_NUMBER_UP_TO,
-  MAX_SUPPLY,
-  STARTING_INDEX,
-} from '../constants/parameters';
-import { FlexCenter, Flex, FlexEnds } from '../components/flex';
-import { Web3Status } from '../components/web3Status';
-import { Mint } from '../components/mint';
-import { useGasInfo } from '../hooks/useGasInfo';
-import { BigNumber } from '@ethersproject/bignumber';
-import { utils } from 'ethers';
-import {
-  TableColumn,
-  TableContainer,
-  TableHeader,
-  TableRow,
-  TableBody,
-} from '../components/table';
-import { useLondonBalance } from '../hooks/useBalance';
-import { shortenHexString } from '../utils/hex';
-import { useBlockchainStore } from '../stores/blockchain';
-import { useMemo } from 'react';
-import { useTotalSupply } from '../hooks/useTotalSupply';
-import { useLowestGasPriceMinted, useNumMints } from '../hooks/useNumMints';
+import { A } from '../components/anchor';
+import { CHAIN_ID, TOKEN_SYMBOL } from '../constants';
+import { MAX_SUPPLY, STARTING_INDEX } from '../constants/parameters';
+import { FlexCenter } from '../components/flex';
 import { Header } from '../components/header';
-import { Code, MinterCode } from '../components/code';
-import {
-  getEtherscanAddressUrl,
-  getEtherscanTokenUrl,
-  getIPFSUrl,
-} from '../utils/urls';
+import { Code } from '../components/code';
+import { getEtherscanAddressUrl, getIPFSUrl } from '../utils/urls';
 import { deployments } from '@pob/protocol';
 import { POBIcon } from '../components/icons/pob';
-import { BREAKPTS } from '../styles';
-import { useMeasure } from 'react-use';
-import { ROUTES } from '../constants/routes';
-import { useShopState } from '../hooks/useShopState';
 import { provenance } from '@pob/sketches';
-
-// import { ContentWrapper } from '../components/content';
-// import { Header } from '../components/header';
-// import { Footer } from '../components/footer';
-// import { BREAKPTS } from '../styles';
-// import { YourSagaSection } from '../components/saga-hero-section';
-// import { HashInfoSection } from '../components/hash-info-section';
-// import { SagaPricingSection } from '../components/saga-pricing-section';
-// import { HeroContent } from '../components/home-hero';
 
 const PageWrapper = styled.div`
   /* display: grid;
