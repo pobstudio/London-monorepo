@@ -1,32 +1,21 @@
 import canvasSketch from 'canvas-sketch';
-import { createCanvas } from 'canvas';
-import { createWriteStream } from 'fs';
 
 import seedrandom from 'seedrandom';
 import { randomRangeFactory } from './utils/random';
 import * as colors from './data/colors.json';
 import {
-  TilePolygons,
-  TileSideSocket,
   Tile,
   Node,
   Bound,
   Cord,
-  Line,
-  Polygon,
   TileDrawFunc,
   Rect,
   SketchContext,
   TokenMetadata,
 } from './types';
-import {
-  getPolygonAsLines,
-  getRectBounds,
-  getRectCorners,
-  scaleCord,
-} from './utils/geometry';
-import { clamp, flatten, uniqBy } from 'lodash';
-import { addVec2, getPermutations, mulVec2, subVec2 } from './utils/math';
+import { getRectBounds, scaleCord } from './utils/geometry';
+import { clamp } from 'lodash';
+import { addVec2, mulVec2, subVec2 } from './utils/math';
 import { newArray } from './utils/array';
 import { makeNoise2D } from 'fast-simplex-noise';
 import {
@@ -35,18 +24,28 @@ import {
   DEFAULT_DRAW_SETTINGS,
   MEMORY,
   COMPLEXITY,
+  DRAW_SETTINGS_TYPE,
 } from './constants';
 import { getTileDrawFunc, getTiles, getNodes } from './utils/tiles';
 import { TILES } from './data/tiles';
 
-export const sketchFactory = async (
+export const sketchFactoryRaw = (
   tokenMetadata: TokenMetadata,
-  outFile: string,
   settings = DEFAULT_DRAW_SETTINGS,
-) => {
+): ((ref: any) => void) => {
   const canvasSketchSettings = settings.canvasSketchSettings;
+  return (ref: any) =>
+    canvasSketch(sketchCanvas(tokenMetadata, settings), {
+      ...canvasSketchSettings,
+      canvas: ref,
+    });
+};
 
-  const sketch = () => {
+export const sketchCanvas = (
+  tokenMetadata: TokenMetadata,
+  settings: DRAW_SETTINGS_TYPE,
+) => {
+  return () => {
     // basic setup
     const seed = tokenMetadata.seed.toString();
     const randSrc = seedrandom(seed);
@@ -57,17 +56,17 @@ export const sketchFactory = async (
     const waveBounds: Bound = COMPLEXITY[tokenMetadata.complexity];
 
     // visual setup
-    const pallete = randomInArray((colors as any).default);
-    const palleteDistribution: { [key: string]: number } = {
-      [pallete[0]]: 1,
-      [pallete[1]]: 0.5,
-      [pallete[2]]: 0.25,
-      [pallete[3]]: 0.125,
+    const palette = randomInArray((colors as any).default);
+    const paletteDistribution: { [key: string]: number } = {
+      [palette[0]]: 1,
+      [palette[1]]: 0.5,
+      [palette[2]]: 0.25,
+      [palette[3]]: 0.125,
     };
 
     const tileSet = TILES[tokenMetadata.tileSet];
 
-    const tiles: Tile[] = getTiles(tileSet, pallete);
+    const tiles: Tile[] = getTiles(tileSet, palette);
 
     const margin = tokenMetadata.framed === 'yay' ? settings.marginInUnit : 0;
 
@@ -90,14 +89,14 @@ export const sketchFactory = async (
 
     const getRegionByCord = (cord: Cord) => {
       const preferredRegionIndex = Math.floor(
-        pallete.length *
+        palette.length *
           clamp(
             Math.abs(simplex(...mulVec2(cord, [pointilism, pointilism])) / 0.8),
             0,
             0.99,
           ),
       );
-      return pallete[preferredRegionIndex];
+      return palette[preferredRegionIndex];
     };
 
     const tileDrawFunc: TileDrawFunc[] = getTileDrawFunc(tiles);
@@ -174,7 +173,7 @@ export const sketchFactory = async (
           nodeIndexesBySingleRegion[getRegionByCord(cord)];
         const weights = nodeIndexes.map((i) => {
           const multiplier = tiles[i].polygonRegions.reduce(
-            (a, c) => (palleteDistribution[c] > a ? palleteDistribution[c] : a),
+            (a, c) => (paletteDistribution[c] > a ? paletteDistribution[c] : a),
             0,
           );
           if (memory.slice(-1 * memoryNum).find((p) => p === i))
@@ -290,13 +289,16 @@ export const sketchFactory = async (
 
       const drawableRect: Rect = [
         [margin, margin],
-        subVec2(canvasSketchSettings.dimensions as Bound, [margin, margin]),
+        subVec2(settings.canvasSketchSettings.dimensions as Bound, [
+          margin,
+          margin,
+        ]),
       ];
 
       const drawableBounds: Bound = getRectBounds(drawableRect);
 
-      ctx.fillStyle = pallete[0];
-      ctx.fillRect(...[0, 0], ...canvasSketchSettings.dimensions);
+      ctx.fillStyle = palette[0];
+      ctx.fillRect(...[0, 0], ...settings.canvasSketchSettings.dimensions);
 
       for (let i = 0; i < wave.length; ++i) {
         for (let j = 0; j < wave[i].length; ++j) {
@@ -314,17 +316,4 @@ export const sketchFactory = async (
       }
     };
   };
-
-  const canvas = createCanvas(
-    canvasSketchSettings.dimensions[0],
-    canvasSketchSettings.dimensions[1],
-  );
-
-  await canvasSketch(sketch, { ...canvasSketchSettings, canvas });
-  const out = createWriteStream(outFile);
-  const stream = canvas.createPNGStream();
-  stream.pipe(out);
-  await new Promise((res) => {
-    out.on('finish', res);
-  });
 };

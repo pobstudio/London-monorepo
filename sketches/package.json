@@ -14,11 +14,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/lodash": "^4.14.171",
+    "canvas": "^2.8.0",
     "ts-node": "^10.1.0"
   },
   "dependencies": {
     "@types/project-name-generator": "^2.1.1",
-    "canvas": "^2.8.0",
     "canvas-sketch": "^0.7.4",
     "dotenv": "^10.0.0",
     "fast-simplex-noise": "^4.0.0",
@@ -29,5 +29,8 @@
     "seedrandom": "^3.0.5",
     "typescript": "^4.3.5",
     "unique-names-generator": "^4.6.0"
+  },
+  "browser": {
+    "fs": false
   }
 }

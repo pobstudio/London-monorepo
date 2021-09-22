@@ -25,6 +25,8 @@ export const MINT_PRICE = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
 
 export const MAX_SUPPLY = 8888;
 
+export const MAX_TOKEN_ID = MAX_SUPPLY - 1;
+
 export const MAX_MINT_PER_TX = 10;
 
 export const MAX_MINT_NOT_UNLOCKED = 1;

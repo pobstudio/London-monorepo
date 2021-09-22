@@ -9,7 +9,7 @@ import {
   generateTokenMetadata,
   mapTokenMetadataToAttributes,
 } from './generate';
-import { sketchFactory } from './sketch';
+import { sketchFactory } from './sketch-factory';
 import { createHash } from 'crypto';
 import { NFTStorage, File } from 'nft.storage';
 import seedrandom from 'seedrandom';

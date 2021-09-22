@@ -1,12 +1,5 @@
 import seedrandom from 'seedrandom';
-import {
-  Complexity,
-  Composition,
-  COMPLEXITY,
-  MEMORY,
-  Rarity,
-  RARITY,
-} from './constants';
+import { Composition, MEMORY, RARITY } from './constants';
 import { TokenMetadata } from './types';
 import { randomRangeFactory } from './utils/random';
 import { TileSet } from './data/tiles';
