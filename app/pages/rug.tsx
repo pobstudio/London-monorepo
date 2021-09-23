@@ -29,7 +29,7 @@ import { A, AButton } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
 
 export const SELECTABLE_BACKGROUND: [string, string][] = [
-  [LONDON_GIFT_CONTRACT, '$LONDON gift'],
+  [LONDON_GIFT_CONTRACT, 'LONDON gift'],
 ];
 
 const IndexPage: NextPage = () => {
@@ -61,7 +61,7 @@ const IndexPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>$LONDON</Bold> rug service
+          <Bold>LONDON Gift</Bold> rug service
         </Title>
         <Caption>
           <Italic>Get rug pulled!</Italic>

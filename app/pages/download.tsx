@@ -49,7 +49,7 @@ const DownloadPage: NextPage = () => {
           spellCheck="false"
           onChange={typing}
           value={tokenID}
-          placeholder={`Enter valid $LONDON Gift Token ID (0 - ${MAX_TOKEN_ID})...`}
+          placeholder={`Enter valid LONDON Gift Token ID (0 - ${MAX_TOKEN_ID})...`}
         />
         <br />
         <br />

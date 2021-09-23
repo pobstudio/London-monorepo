@@ -208,7 +208,7 @@ const ShouldReads = () => {
         style={{ color: 'blue' }}
       >
         <SubTitle style={{ marginTop: 48, color: 'blue' }}>
-          Read: The story behind <i>$LONDON Gift</i> art
+          Read: The story behind <i>LONDON Gift</i> art
         </SubTitle>
       </a>
       <a
@@ -251,7 +251,7 @@ const Utility = () => {
     <>
       <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
       <RightAlignedText>
-        You can easily use any <Bold>{TOKEN_SYMBOL}</Bold> gift you own as the
+        You can easily use any <Bold>LONDON gift</Bold> you own as the
         background of your pfp via our{' '}
         <Link passHref href={ROUTES.PFP}>
           <A>app</A>
@@ -262,12 +262,12 @@ const Utility = () => {
         <Italic>Coming soon:</Italic> a twitter background editor.
       </RightAlignedText>
       <RightAlignedText>
-        Owning a <Bold>{TOKEN_SYMBOL}</Bold> gift enables you to participate in
+        Owning a <Bold>LONDON gift</Bold> enables you to participate in
         the{' '}
         <A target={'_blank'} href={ROUTES.DAO}>
           {LONDON_DAO_TITLE}
         </A>
-        . Each <Bold>{TOKEN_SYMBOL}</Bold> gift has the equivalent voting power
+        . Each <Bold>LONDON gift</Bold> has the equivalent voting power
         of 1559 <Bold>{TOKEN_SYMBOL}</Bold>.
       </RightAlignedText>
     </>
@@ -280,12 +280,12 @@ const FAQ = () => {
       <SubTitle style={{ marginTop: 48 }}>FAQ</SubTitle>
       <RightAlignedText>
         <Bold>
-          What is the difference between {TOKEN_SYMBOL} and {TOKEN_SYMBOL} gift?
+          What is the difference between {TOKEN_SYMBOL} and LONDON gift?
         </Bold>
       </RightAlignedText>
       <RightAlignedText>
         {TOKEN_SYMBOL} is a erc20 token, you can learn more about it{' '}
-        <A href={ROUTES.TOKEN}>here</A>. {TOKEN_SYMBOL} gift is a NFT.
+        <A href={ROUTES.TOKEN}>here</A>. <Bold>LONDON gift</Bold> is a NFT.
       </RightAlignedText>
       <RightAlignedText>
         <Bold>How many LONDON gift will exist?</Bold>
@@ -396,7 +396,7 @@ const GiftShopPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>{TOKEN_SYMBOL}</Bold> Gift
+          <Bold>LONDON</Bold> Gift
         </Title>
         {/* <Caption>
           <Italic>
@@ -446,7 +446,7 @@ const GiftShopPage: NextPage = () => {
             <div style={{ marginTop: 20, marginBottom: 20 }}>
               <Text style={{ marginBottom: 20 }}>
                 <strong>
-                  MINT <Italic>{TOKEN_SYMBOL} GIFT</Italic>
+                  MINT <Italic>LONDON GIFT</Italic>
                 </strong>
               </Text>
               <MintGift />

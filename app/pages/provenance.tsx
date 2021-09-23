@@ -61,7 +61,7 @@ const IndexPage: NextPage = () => {
           <Bold>Abstract</Bold>
         </Text>
         <RightAlignedText>
-          <Italic>{TOKEN_SYMBOL} Gift</Italic> is deeply inspired by{' '}
+          <Italic>LONDON Gift</Italic> is deeply inspired by{' '}
           <A
             href={'https://boredapeyachtclub.com/#/provenance'}
             target={'_blank'}

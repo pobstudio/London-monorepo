@@ -23,12 +23,11 @@ import {
 import {
   HASH_CONTRACT,
   LONDON_GIFT_CONTRACT,
-  TOKEN_SYMBOL,
 } from '../constants';
 import { A, AButton } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
 export const SELECTABLE_BACKGROUND: [string, string][] = [
-  [LONDON_GIFT_CONTRACT, '$LONDON gift'],
+  [LONDON_GIFT_CONTRACT, 'LONDON gift'],
   [HASH_CONTRACT, '$HASH'],
 ];
 
@@ -91,11 +90,11 @@ const IndexPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>$LONDON</Bold> background change service
+          <Bold>LONDON Gift</Bold> background change service
         </Title>
         <Caption>
           <Italic>
-            Complementary service for all avatars + {TOKEN_SYMBOL} gifts!
+            Complementary service for all avatars + LONDON gifts!
           </Italic>
         </Caption>
         <AvatarConsoleWrapper>

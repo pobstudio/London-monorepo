@@ -97,7 +97,7 @@ export const Header: FC = () => {
             Discord
           </A> */}
           <Link href={ROUTES.INDEX} passHref>
-            <A style={{ fontWeight: 'bold' }}>$LONDON</A>
+            <A style={{ fontWeight: 'bold' }}>LONDON</A>
           </Link>
           <Link href={ROUTES.DAO} passHref>
             <A>DAO</A>

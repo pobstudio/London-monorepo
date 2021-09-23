@@ -1,6 +1,6 @@
-# $LONDON Monorepo
+# LONDON Monorepo
 
-The official monorepo powering the $LONDON contracts, generative art, and front-end dapp.
+The official monorepo powering the LONDON contracts, generative art, and front-end dapp.
 
 ## Useful links
 
@@ -10,12 +10,12 @@ The official monorepo powering the $LONDON contracts, generative art, and front-
 
 ## Packages
 
-The $LONDON repo is structured as a monorepo containing many packages that reach all aspects of the $LONDON ecosystem.
+The LONDON repo is structured as a monorepo containing many packages that reach all aspects of the LONDON ecosystem.
 
 | Package                 | Description                                                                                     |
 | ----------------------- | ----------------------------------------------------------------------------------------------- |
 | [`app`](/app)           | Core next.js webapp of pob.studio and HASH and lambdas                                          |
-| [`protocol`](/protocol) | Core protocol of $LONDON, contains the ERC721 token, minter contracts, and other future things. |
+| [`protocol`](/protocol) | Core protocol of LONDON, contains the ERC721 token, minter contracts, and other future things. |
 | [`sketches`](/sketches) | Generative art and a development runtime                                                        |
 | [`scripts`](/scripts)   | Some administrative scripts to help with running POB (ie refresh opensea metadata)              |
 
@@ -64,7 +64,7 @@ $ npx hardhat deploy-nft --network rinkeby
 
 ## Contributing
 
-As the project is now governed by the $LONDON DAO, this repo's continued development is incentived via DAO proposals and grants. As POB studios, we will maintain and host the production build of the website and review PRs.
+As the project is now governed by the LONDON DAO, this repo's continued development is incentived via DAO proposals and grants. As POB studios, we will maintain and host the production build of the website and review PRs.
 
 ## LICENSE
 

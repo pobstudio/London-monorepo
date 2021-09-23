@@ -32,13 +32,13 @@ export default class PobApp extends App {
     return (
       <>
         <DefaultSeo
-          title={`$LONDON by POB - Mint at 15.59 GWEI`}
+          title={`LONDON by POB - Mint at 15.59 GWEI`}
           description={'Social currency backed by a minting bonding curve'}
           openGraph={{
             type: 'website',
             locale: 'en_US',
             url: LONDON_PROD_LINK,
-            title: `$LONDON by POB - Mint at 15.59 GWEI`,
+            title: `LONDON by POB - Mint at 15.59 GWEI`,
             description: 'Social currency backed by a minting bonding curve',
             site_name: 'POB',
             images: [

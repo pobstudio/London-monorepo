@@ -206,17 +206,17 @@ const IndexPage: NextPage = () => {
           <A href={UNISWAP_TRADE_LINK}>DEX</A> or buy a{' '}
           <Link href={ROUTES.GIFT} passHref>
             <A>
-              <Italic>{TOKEN_SYMBOL} Gift NFT</Italic>
+              <Italic>LONDON Gift NFT</Italic>
             </A>
           </Link>{' '}
           from <A href={OPENSEA_LINK}>OpenSea</A>
         </RightAlignedText>
         <RightAlignedText>
-          8888 <Italic>{TOKEN_SYMBOL} Gifts</Italic> and about 43 million{' '}
+          8888 <Italic>LONDON Gifts</Italic> and about 43 million{' '}
           <Italic>{TOKEN_SYMBOL}</Italic> tokens exist and represent the core
           governance tokens of the{' '}
           <Bold>
-            <Italic>{TOKEN_SYMBOL} Night Club DAO</Italic>
+            <Italic>{LONDON_DAO_TITLE}</Italic>
           </Bold>
           .
         </RightAlignedText>

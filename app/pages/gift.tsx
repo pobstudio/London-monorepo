@@ -16,6 +16,7 @@ import {
 import { A } from '../components/anchor';
 import {
   CHAIN_ID,
+  LONDON_DAO_TITLE,
   NOTION_WIKI_LINK,
   OPENSEA_ASSET_NAME,
   SNAPSHOT_LINK,
@@ -205,7 +206,7 @@ const ShouldReads = () => {
         style={{ color: 'blue' }}
       >
         <SubTitle style={{ marginTop: 48, color: 'blue' }}>
-          Read: The story behind <i>$LONDON Gift</i> art
+          Read: The story behind <i>LONDON Gift</i> art
         </SubTitle>
       </a>
       <a
@@ -238,7 +239,7 @@ const Utility = () => {
     <>
       <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
       <RightAlignedText>
-        You can easily use any <Bold>{TOKEN_SYMBOL}</Bold> gift you own as the
+        You can easily use any <Bold>LONDON gift</Bold> you own as the
         background of your pfp via our{' '}
         <Link passHref href={ROUTES.PFP}>
           <A>app</A>
@@ -249,12 +250,12 @@ const Utility = () => {
         <Italic>Coming soon:</Italic> a twitter background editor.
       </RightAlignedText>
       <RightAlignedText>
-        Owning a <Bold>{TOKEN_SYMBOL}</Bold> gift enables you to participate in
-        the <Bold>{TOKEN_SYMBOL}</Bold>{' '}
+        Owning a <Bold>LONDON gift</Bold> enables you to participate in
+        the {' '}
         <A target={'_blank'} href={NOTION_WIKI_LINK}>
-          Night Club DAO
+          {LONDON_DAO_TITLE}
         </A>
-        . Each <Bold>{TOKEN_SYMBOL}</Bold> gift has the equivalent voting power
+        . Each <Bold>LONDON gift</Bold> has the equivalent voting power
         of 1559 <Bold>{TOKEN_SYMBOL}</Bold>.
       </RightAlignedText>
     </>
@@ -302,7 +303,7 @@ const FAQ = () => {
       <RightAlignedText>
         Your {TOKEN_SYMBOL} still holds value as voting power in the{' '}
         <A href={`${SNAPSHOT_LINK}`} target="_blank" rel="noopener noreferrer">
-          <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+          {LONDON_DAO_TITLE}
         </A>
         . In the future, the DAO can comission more artistic experiments for{' '}
         {TOKEN_SYMBOL} holders.
@@ -313,7 +314,7 @@ const FAQ = () => {
       <RightAlignedText>
         That is left to the{' '}
         <A href={`${SNAPSHOT_LINK}`} target="_blank" rel="noopener noreferrer">
-          <Italic>{TOKEN_SYMBOL}</Italic> Night Club
+          {LONDON_DAO_TITLE}
         </A>{' '}
         to decide!
       </RightAlignedText>
