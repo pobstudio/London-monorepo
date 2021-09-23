@@ -32,10 +32,10 @@ import { TILES } from './data/tiles';
 export const sketchFactoryRaw = (
   tokenMetadata: TokenMetadata,
   settings = DEFAULT_DRAW_SETTINGS,
-): ((ref: any) => void) => {
+): ((ref: any) => Promise<any>) => {
   const canvasSketchSettings = settings.canvasSketchSettings;
-  return (ref: any) =>
-    canvasSketch(sketchCanvas(tokenMetadata, settings), {
+  return async (ref: any) =>
+    await canvasSketch(sketchCanvas(tokenMetadata, settings), {
       ...canvasSketchSettings,
       canvas: ref,
     });

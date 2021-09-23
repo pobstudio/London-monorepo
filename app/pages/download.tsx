@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect, useRef } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { Bold, Title, Caption, MiniText } from '../components/text';
@@ -10,8 +10,7 @@ import { PRINT_DIMENSIONS } from '@pob/sketches';
 import { MAX_TOKEN_ID } from '../constants/parameters';
 import { GIFT_TOKEN_ID_VALID } from '../utils/regex';
 import { useCanvas } from '../hooks/useCanvas';
-import { debounce } from '../utils/debounce';
-import { useEffect } from 'react';
+import { useDebounce } from '../hooks/useDebounce';
 
 const tokenIDfromString = (tokenID: string): number => {
   if (tokenID) {
@@ -24,14 +23,13 @@ const tokenIDfromString = (tokenID: string): number => {
 
 const DownloadPage: NextPage = () => {
   const [tokenID, setTokenID] = useState<string>('');
-  const [tokenIDNum, setTokenIDNum] = useState<number>(-1);
-  const typing = useCallback((e) => setTokenID(e.target.value), []);
-  useEffect(() => {
-    debounce(() => {
-      setTokenIDNum(tokenIDfromString(tokenID));
-    }, 1000)();
-  }, [tokenID]);
-  const { Canvas, canvasData } = useCanvas(tokenIDNum);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const typing = useCallback((e) => {
+    setTokenID(e.target.value);
+  }, []);
+  const debouncedTokenID = useDebounce(tokenID, 500);
+  const tokenNum = tokenID !== '' ? tokenIDfromString(debouncedTokenID) : -1;
+  const { canvasImgData } = useCanvas(tokenNum, canvasRef);
   return (
     <>
       <Header />
@@ -53,11 +51,15 @@ const DownloadPage: NextPage = () => {
         />
         <br />
         <br />
-        <a href={canvasData} download={`${tokenID}.png`}>
-          <Button disabled={!canvasData || !tokenID}>Download</Button>
+        <a href={canvasImgData} download={`${tokenNum}.png`}>
+          <Button disabled={!canvasImgData || !tokenID || tokenNum < 0}>
+            Download
+          </Button>
         </a>
 
-        <div style={{ opacity: 0, width: 1, height: 1 }}>{Canvas}</div>
+        <div style={{ opacity: 0, width: 1, height: 1 }}>
+          <canvas ref={canvasRef} />
+        </div>
 
         <MiniText style={{ marginTop: 256 }}>
           Omne quod movetur ab alio movetur

@@ -4,7 +4,7 @@ import {
   PRINT_DRAW_SETTINGS,
   sketchFactoryRaw,
 } from '@pob/sketches';
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import useSWR from 'swr';
 import { STARTING_INDEX } from '../constants/parameters';
 import { fetcher } from '../utils/fetcher';
@@ -14,49 +14,59 @@ type MetadataTrait = { trait_type: string; value: string | number };
 
 const getIPFSMetadataIndex = (tokenID: number) => tokenID + STARTING_INDEX;
 
-const getTokenMetadata = (tokenID: number): TokenMetadata => {
+const getTokenMetadata = (tokenID: number): TokenMetadata | undefined => {
+  const valid = GIFT_TOKEN_ID_VALID(tokenID);
   const metadataIndex = getIPFSMetadataIndex(tokenID);
   const { data } = useSWR(
-    `https://ipfs.io/ipfs/${deployments[1].baseTokenURI}/${metadataIndex}`,
+    valid
+      ? `https://ipfs.io/ipfs/${deployments[1].baseTokenURI}/${metadataIndex}`
+      : ``,
     fetcher,
   );
-  const filterWithDefault = (trait: string, defaultVal: string | number) =>
-    data?.attributes?.find(
-      (attribute: MetadataTrait) => attribute?.trait_type === trait,
-    )?.value ?? defaultVal;
+  const filter = useCallback(
+    (trait: string) =>
+      data?.attributes?.find(
+        (attribute: MetadataTrait) => attribute?.trait_type === trait,
+      )?.value,
+    [data],
+  );
 
   return useMemo(
     () =>
-      ({
-        seed: filterWithDefault('seed', 5214),
-        tileSet: filterWithDefault('tileSet', 'frizzle'),
-        framed: filterWithDefault('framed', 'yay'),
-        composition: filterWithDefault('composition', 'normal'),
-        rarity: filterWithDefault('rarity', 'common'),
-        complexity: filterWithDefault('complexity', 'normal'),
-      } as TokenMetadata),
-    [tokenID, metadataIndex, data],
+      valid && data
+        ? ({
+            seed: filter('seed'),
+            tileSet: filter('tileSet'),
+            framed: filter('framed'),
+            composition: filter('composition'),
+            rarity: filter('rarity'),
+            complexity: filter('complexity'),
+          } as TokenMetadata)
+        : undefined,
+    [valid, data, filter],
   );
 };
 
-export const useCanvas = (tokenID: number) => {
-  const [canvasData, setCanvasData] = useState('');
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+export const useCanvas = (
+  tokenID: number,
+  canvasRef: React.RefObject<HTMLCanvasElement>,
+) => {
+  const [canvasImgData, setCanvasImgData] = useState('');
   const metadata = getTokenMetadata(tokenID);
 
-  const Canvas = <canvas ref={canvasRef} />;
-
   useEffect(() => {
-    if (GIFT_TOKEN_ID_VALID(tokenID)) {
-      sketchFactoryRaw(metadata, PRINT_DRAW_SETTINGS)(canvasRef.current);
-      if (process.browser) {
-        setCanvasData(canvasRef?.current?.toDataURL('image/png') ?? '');
+    (async () => {
+      if (metadata && canvasRef.current) {
+        const factory = sketchFactoryRaw(metadata, PRINT_DRAW_SETTINGS);
+        await factory(canvasRef.current);
+        if (process.browser) {
+          setCanvasImgData(canvasRef.current.toDataURL('image/png'));
+        }
       }
-    }
-  }, [tokenID, metadata, Canvas, canvasRef, process.browser]);
+    })();
+  }, [metadata, canvasRef.current, process.browser]);
 
   return {
-    Canvas,
-    canvasData,
+    canvasImgData,
   };
 };
