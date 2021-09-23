@@ -250,13 +250,12 @@ const Utility = () => {
         <Italic>Coming soon:</Italic> a twitter background editor.
       </RightAlignedText>
       <RightAlignedText>
-        Owning a <Bold>LONDON gift</Bold> enables you to participate in
-        the {' '}
+        Owning a <Bold>LONDON gift</Bold> enables you to participate in the{' '}
         <A target={'_blank'} href={NOTION_WIKI_LINK}>
           {LONDON_DAO_TITLE}
         </A>
-        . Each <Bold>LONDON gift</Bold> has the equivalent voting power
-        of 1559 <Bold>{TOKEN_SYMBOL}</Bold>.
+        . Each <Bold>LONDON gift</Bold> has the equivalent voting power of 1559{' '}
+        <Bold>{TOKEN_SYMBOL}</Bold>.
       </RightAlignedText>
     </>
   );

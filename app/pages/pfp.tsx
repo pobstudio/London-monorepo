@@ -20,10 +20,7 @@ import {
   FlexCenterColumn,
   FlexEnds,
 } from '../components/flex';
-import {
-  HASH_CONTRACT,
-  LONDON_GIFT_CONTRACT,
-} from '../constants';
+import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { A, AButton } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
 export const SELECTABLE_BACKGROUND: [string, string][] = [
@@ -93,9 +90,7 @@ const IndexPage: NextPage = () => {
           <Bold>LONDON Gift</Bold> background change service
         </Title>
         <Caption>
-          <Italic>
-            Complementary service for all avatars + LONDON gifts!
-          </Italic>
+          <Italic>Complementary service for all avatars + LONDON gifts!</Italic>
         </Caption>
         <AvatarConsoleWrapper>
           <AvatarConsole>
