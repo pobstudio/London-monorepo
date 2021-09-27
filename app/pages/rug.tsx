@@ -21,11 +21,7 @@ import {
   FlexCenterColumn,
   FlexEnds,
 } from '../components/flex';
-import {
-  HASH_CONTRACT,
-  LONDON_GIFT_CONTRACT,
-  TOKEN_SYMBOL,
-} from '../constants';
+import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { A, AButton } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
 

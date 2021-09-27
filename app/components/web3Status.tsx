@@ -13,7 +13,6 @@ import { Flex } from './flex';
 import { isMobile } from 'react-device-detect';
 import { useLoadingText } from '../hooks/useLoadingText';
 import { useLondonBalance } from '../hooks/useBalance';
-import { TOKEN_SYMBOL } from '../constants';
 import { utils } from 'ethers';
 
 const AStatus = styled(A)`

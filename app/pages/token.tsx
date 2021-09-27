@@ -330,7 +330,7 @@ const IndexPage: NextPage = () => {
         <RightAlignedText>
           The first of such NFT drops was the{' '}
           <Bold>
-            <Italic>{TOKEN_SYMBOL} Gift</Italic>
+            <Italic>LONDON Gift</Italic>
           </Bold>
           , a generative art memento to memoralize the London hardfork, only
           redeemable with <Italic>{TOKEN_SYMBOL}</Italic>.
