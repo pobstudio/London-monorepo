@@ -9,104 +9,104 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from 'ethers';
+} from "ethers";
 import {
   Contract,
   ContractTransaction,
   CallOverrides,
-} from '@ethersproject/contracts';
-import { BytesLike } from '@ethersproject/bytes';
-import { Listener, Provider } from '@ethersproject/providers';
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
+} from "@ethersproject/contracts";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface ERC165Interface extends ethers.utils.Interface {
   functions: {
-    'supportsInterface(bytes4)': FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
-    values: [BytesLike],
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike,
+    functionFragment: "supportsInterface",
+    data: BytesLike
   ): Result;
 
   events: {};
 }
 
 export class ERC165 extends Contract {
-  'connect'(signerOrProvider: Signer | Provider | string): this;
-  'attach'(addressOrName: string): this;
-  'deployed'(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  'on'(event: EventFilter | string, listener: Listener): this;
-  'once'(event: EventFilter | string, listener: Listener): this;
-  'addListener'(eventName: EventFilter | string, listener: Listener): this;
-  'removeAllListeners'(eventName: EventFilter | string): this;
-  'removeListener'(eventName: any, listener: Listener): this;
+  on(event: EventFilter | string, listener: Listener): this;
+  once(event: EventFilter | string, listener: Listener): this;
+  addListener(eventName: EventFilter | string, listener: Listener): this;
+  removeAllListeners(eventName: EventFilter | string): this;
+  removeListener(eventName: any, listener: Listener): this;
 
-  'interface': ERC165Interface;
+  interface: ERC165Interface;
 
-  'functions': {
+  functions: {
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
-  'supportsInterface'(
+  supportsInterface(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'supportsInterface(bytes4)'(
+  "supportsInterface(bytes4)"(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'callStatic': {
+  callStatic: {
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
   };
 
-  'filters': {};
+  filters: {};
 
-  'estimateGas': {
+  estimateGas: {
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
-  'populateTransaction': {
+  populateTransaction: {
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

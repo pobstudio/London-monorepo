@@ -20,30 +20,36 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface LondonLootInterface extends ethers.utils.Interface {
+interface LondonBurnAshenInterface extends ethers.utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "baseMetadataURI()": FunctionFragment;
     "contractURI()": FunctionFragment;
+    "externalBurnableERC721()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "londonGift()": FunctionFragment;
-    "mint(uint256[])": FunctionFragment;
+    "londonNeededFromSelfAmount(uint256)": FunctionFragment;
+    "mintAshenType(address,uint256[])": FunctionFragment;
     "name()": FunctionFragment;
+    "numBurnFromSelfAmount(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "provenance()": FunctionFragment;
+    "payableErc20()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setBaseMetadataURI(string)": FunctionFragment;
     "setContractURI(string)": FunctionFragment;
+    "setTreasury(address)": FunctionFragment;
+    "setUltraSonicForkBlockNumber(uint256)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "treasury()": FunctionFragment;
+    "ultraSonicForkBlockNumber()": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -60,6 +66,10 @@ interface LondonLootInterface extends ethers.utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "externalBurnableERC721",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "getApproved",
     values: [BigNumberish]
   ): string;
@@ -68,21 +78,25 @@ interface LondonLootInterface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "londonGift",
-    values?: undefined
+    functionFragment: "londonNeededFromSelfAmount",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "mint",
-    values: [BigNumberish[]]
+    functionFragment: "mintAshenType",
+    values: [string, BigNumberish[]]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "numBurnFromSelfAmount",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "provenance",
+    functionFragment: "payableErc20",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -105,6 +119,11 @@ interface LondonLootInterface extends ethers.utils.Interface {
     functionFragment: "setContractURI",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setUltraSonicForkBlockNumber",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
@@ -122,6 +141,11 @@ interface LondonLootInterface extends ethers.utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ultraSonicForkBlockNumber",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -134,6 +158,10 @@ interface LondonLootInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "externalBurnableERC721",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
@@ -141,12 +169,25 @@ interface LondonLootInterface extends ethers.utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "londonGift", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "londonNeededFromSelfAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintAshenType",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "numBurnFromSelfAmount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "provenance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "payableErc20",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -168,6 +209,14 @@ interface LondonLootInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setTreasury",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setUltraSonicForkBlockNumber",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
@@ -179,6 +228,11 @@ interface LondonLootInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ultraSonicForkBlockNumber",
     data: BytesLike
   ): Result;
 
@@ -195,7 +249,7 @@ interface LondonLootInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
-export class LondonLoot extends Contract {
+export class LondonBurnAshen extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -206,7 +260,7 @@ export class LondonLoot extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: LondonLootInterface;
+  interface: LondonBurnAshenInterface;
 
   functions: {
     approve(
@@ -236,6 +290,10 @@ export class LondonLoot extends Contract {
 
     "contractURI()"(overrides?: CallOverrides): Promise<[string]>;
 
+    externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
+
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<[string]>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -258,16 +316,24 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    londonGift(overrides?: CallOverrides): Promise<[string]>;
+    londonNeededFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    "londonGift()"(overrides?: CallOverrides): Promise<[string]>;
+    "londonNeededFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    mint(
+    mintAshenType(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "mint(uint256[])"(
+    "mintAshenType(address,uint256[])"(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides
     ): Promise<ContractTransaction>;
@@ -275,6 +341,16 @@ export class LondonLoot extends Contract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     "name()"(overrides?: CallOverrides): Promise<[string]>;
+
+    numBurnFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "numBurnFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -290,9 +366,9 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    provenance(overrides?: CallOverrides): Promise<[string]>;
+    payableErc20(overrides?: CallOverrides): Promise<[string]>;
 
-    "provenance()"(overrides?: CallOverrides): Promise<[string]>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
@@ -345,6 +421,26 @@ export class LondonLoot extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
+    setTreasury(
+      _treasury: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setTreasury(address)"(
+      _treasury: string,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
+    "setUltraSonicForkBlockNumber(uint256)"(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<ContractTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -392,6 +488,16 @@ export class LondonLoot extends Contract {
       newOwner: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
+
+    treasury(overrides?: CallOverrides): Promise<[string]>;
+
+    "treasury()"(overrides?: CallOverrides): Promise<[string]>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
   };
 
   approve(
@@ -421,6 +527,10 @@ export class LondonLoot extends Contract {
 
   "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
+  externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
+
+  "externalBurnableERC721()"(overrides?: CallOverrides): Promise<string>;
+
   getApproved(
     tokenId: BigNumberish,
     overrides?: CallOverrides
@@ -443,16 +553,24 @@ export class LondonLoot extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  londonGift(overrides?: CallOverrides): Promise<string>;
+  londonNeededFromSelfAmount(
+    amount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  "londonGift()"(overrides?: CallOverrides): Promise<string>;
+  "londonNeededFromSelfAmount(uint256)"(
+    amount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  mint(
+  mintAshenType(
+    to: string,
     tokenIds: BigNumberish[],
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "mint(uint256[])"(
+  "mintAshenType(address,uint256[])"(
+    to: string,
     tokenIds: BigNumberish[],
     overrides?: Overrides
   ): Promise<ContractTransaction>;
@@ -460,6 +578,16 @@ export class LondonLoot extends Contract {
   name(overrides?: CallOverrides): Promise<string>;
 
   "name()"(overrides?: CallOverrides): Promise<string>;
+
+  numBurnFromSelfAmount(
+    amount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "numBurnFromSelfAmount(uint256)"(
+    amount: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -472,9 +600,9 @@ export class LondonLoot extends Contract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  provenance(overrides?: CallOverrides): Promise<string>;
+  payableErc20(overrides?: CallOverrides): Promise<string>;
 
-  "provenance()"(overrides?: CallOverrides): Promise<string>;
+  "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
@@ -527,6 +655,26 @@ export class LondonLoot extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  setTreasury(
+    _treasury: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setTreasury(address)"(
+    _treasury: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  setUltraSonicForkBlockNumber(
+    _ultraSonicForkBlockNumber: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
+  "setUltraSonicForkBlockNumber(uint256)"(
+    _ultraSonicForkBlockNumber: BigNumberish,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
@@ -572,6 +720,14 @@ export class LondonLoot extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
+  treasury(overrides?: CallOverrides): Promise<string>;
+
+  "treasury()"(overrides?: CallOverrides): Promise<string>;
+
+  ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "ultraSonicForkBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   callStatic: {
     approve(
       to: string,
@@ -600,6 +756,10 @@ export class LondonLoot extends Contract {
 
     "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
+    externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
+
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<string>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -622,13 +782,24 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    londonGift(overrides?: CallOverrides): Promise<string>;
+    londonNeededFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    "londonGift()"(overrides?: CallOverrides): Promise<string>;
+    "londonNeededFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    mint(tokenIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    mintAshenType(
+      to: string,
+      tokenIds: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    "mint(uint256[])"(
+    "mintAshenType(address,uint256[])"(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<void>;
@@ -636,6 +807,16 @@ export class LondonLoot extends Contract {
     name(overrides?: CallOverrides): Promise<string>;
 
     "name()"(overrides?: CallOverrides): Promise<string>;
+
+    numBurnFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "numBurnFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -648,9 +829,9 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    provenance(overrides?: CallOverrides): Promise<string>;
+    payableErc20(overrides?: CallOverrides): Promise<string>;
 
-    "provenance()"(overrides?: CallOverrides): Promise<string>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -703,6 +884,23 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+
+    "setTreasury(address)"(
+      _treasury: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setUltraSonicForkBlockNumber(uint256)"(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -747,6 +945,16 @@ export class LondonLoot extends Contract {
       newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    treasury(overrides?: CallOverrides): Promise<string>;
+
+    "treasury()"(overrides?: CallOverrides): Promise<string>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   filters: {
@@ -802,6 +1010,10 @@ export class LondonLoot extends Contract {
 
     "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
 
+    externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -824,13 +1036,24 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    londonGift(overrides?: CallOverrides): Promise<BigNumber>;
+    londonNeededFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    "londonGift()"(overrides?: CallOverrides): Promise<BigNumber>;
+    "londonNeededFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    mint(tokenIds: BigNumberish[], overrides?: Overrides): Promise<BigNumber>;
+    mintAshenType(
+      to: string,
+      tokenIds: BigNumberish[],
+      overrides?: Overrides
+    ): Promise<BigNumber>;
 
-    "mint(uint256[])"(
+    "mintAshenType(address,uint256[])"(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides
     ): Promise<BigNumber>;
@@ -838,6 +1061,16 @@ export class LondonLoot extends Contract {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     "name()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    numBurnFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "numBurnFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -853,9 +1086,9 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    provenance(overrides?: CallOverrides): Promise<BigNumber>;
+    payableErc20(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "provenance()"(overrides?: CallOverrides): Promise<BigNumber>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
@@ -908,6 +1141,23 @@ export class LondonLoot extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
+    setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
+
+    "setTreasury(address)"(
+      _treasury: string,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
+    "setUltraSonicForkBlockNumber(uint256)"(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -955,6 +1205,16 @@ export class LondonLoot extends Contract {
       newOwner: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
+
+    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "treasury()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -990,6 +1250,14 @@ export class LondonLoot extends Contract {
 
     "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    externalBurnableERC721(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "externalBurnableERC721()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
@@ -1012,16 +1280,24 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    londonGift(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    londonNeededFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    "londonGift()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "londonNeededFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    mint(
+    mintAshenType(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "mint(uint256[])"(
+    "mintAshenType(address,uint256[])"(
+      to: string,
       tokenIds: BigNumberish[],
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
@@ -1029,6 +1305,16 @@ export class LondonLoot extends Contract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    numBurnFromSelfAmount(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "numBurnFromSelfAmount(uint256)"(
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1044,9 +1330,9 @@ export class LondonLoot extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    provenance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    payableErc20(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "provenance()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
@@ -1099,6 +1385,26 @@ export class LondonLoot extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
+    setTreasury(
+      _treasury: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setTreasury(address)"(
+      _treasury: string,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    "setUltraSonicForkBlockNumber(uint256)"(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -1145,6 +1451,18 @@ export class LondonLoot extends Contract {
     "transferOwnership(address)"(
       newOwner: string,
       overrides?: Overrides
+    ): Promise<PopulatedTransaction>;
+
+    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "treasury()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ultraSonicForkBlockNumber(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -5,14 +5,14 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import type { IERC721Metadata } from "../IERC721Metadata";
+import type { LondonBurnGift } from "../LondonBurnGift";
 
-export class IERC721Metadata__factory {
+export class LondonBurnGift__factory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IERC721Metadata {
-    return new Contract(address, _abi, signerOrProvider) as IERC721Metadata;
+  ): LondonBurnGift {
+    return new Contract(address, _abi, signerOrProvider) as LondonBurnGift;
   }
 }
 
@@ -73,6 +73,25 @@ const _abi = [
       {
         indexed: true,
         internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
         name: "from",
         type: "address",
       },
@@ -122,8 +141,47 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "balance",
+        name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "baseMetadataURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "contractURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "externalBurnableERC721",
+    outputs: [
+      {
+        internalType: "contract ERC721",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -141,7 +199,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "operator",
+        name: "",
         type: "address",
       },
     ],
@@ -173,6 +231,43 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "londonNeededFromGiftAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "uint256[]",
+        name: "giftTokenIds",
+        type: "uint256[]",
+      },
+    ],
+    name: "mintGiftType",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "name",
     outputs: [
@@ -180,6 +275,38 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "numBurnFromGiftAmount",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -197,11 +324,31 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "owner",
+        name: "",
         type: "address",
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "payableErc20",
+    outputs: [
+      {
+        internalType: "contract ERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -246,7 +393,7 @@ const _abi = [
       },
       {
         internalType: "bytes",
-        name: "data",
+        name: "_data",
         type: "bytes",
       },
     ],
@@ -264,11 +411,63 @@ const _abi = [
       },
       {
         internalType: "bool",
-        name: "_approved",
+        name: "approved",
         type: "bool",
       },
     ],
     name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_baseMetadataURI",
+        type: "string",
+      },
+    ],
+    name: "setBaseMetadataURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "newContractURI",
+        type: "string",
+      },
+    ],
+    name: "setContractURI",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_treasury",
+        type: "address",
+      },
+    ],
+    name: "setTreasury",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_ultraSonicForkBlockNumber",
+        type: "uint256",
+      },
+    ],
+    name: "setUltraSonicForkBlockNumber",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -345,6 +544,45 @@ const _abi = [
     name: "transferFrom",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "treasury",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "ultraSonicForkBlockNumber",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];
