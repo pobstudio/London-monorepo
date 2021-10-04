@@ -43,6 +43,7 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0xf4ee95274741437636e748ddac70818b4ed7d043', 'The Doge Pound'],
   ['0x099689220846644f87d1137665cded7bf3422747', 'Robotos'],
   ['0xef0182dc0574cd5874494a120750fd222fdb909a', 'Rumble Kong'],
+  ['0x31d4da52c12542ac3d6aadba5ed26a3a563a86dc', 'Fly Frogs'],
   ['0xedb61f74b0d09b2558f1eeb79b247c1f363ae452', 'Gutter Cat Gang'],
   ['0x31385d3520bced94f77aae104b406994d8f2168c', 'Bastard GAN punk v2'],
   ['0xa3aee8bce55beea1951ef834b99f3ac60d1abeeb', 'Vee Friends'],
