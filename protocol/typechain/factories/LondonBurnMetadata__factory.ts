@@ -5,14 +5,14 @@
 import { Contract, Signer } from 'ethers';
 import { Provider } from '@ethersproject/providers';
 
-import type { LondonBurnAshen } from '../LondonBurnAshen';
+import type { LondonBurnMetadata } from '../LondonBurnMetadata';
 
-export class LondonBurnAshen__factory {
+export class LondonBurnMetadata__factory {
   static connect(
     address: string,
     signerOrProvider: Signer | Provider,
-  ): LondonBurnAshen {
-    return new Contract(address, _abi, signerOrProvider) as LondonBurnAshen;
+  ): LondonBurnMetadata {
+    return new Contract(address, _abi, signerOrProvider) as LondonBurnMetadata;
   }
 }
 
@@ -130,19 +130,6 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'ashenRevealBlockNumber',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
@@ -159,6 +146,25 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'constructTokenURI',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -185,6 +191,25 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'seed',
+        type: 'uint256',
+      },
+    ],
+    name: 'generateSVGImage',
+    outputs: [
+      {
+        internalType: 'string',
+        name: 'svg',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -231,43 +256,6 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'londonNeededFromSelfAmount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'tokenIds',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'mintAshenType',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
     name: 'name',
     outputs: [
@@ -278,25 +266,6 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'numBurnFromSelfAmount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -416,19 +385,6 @@ const _abi = [
       },
     ],
     name: 'setApprovalForAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_ashenRevealBlockNumber',
-        type: 'uint256',
-      },
-    ],
-    name: 'setAshenRevealBlockNumber',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

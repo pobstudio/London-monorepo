@@ -22,8 +22,6 @@ contract LondonBurnBase is Ownable, ERC721 {
 
     mapping(uint256 => uint256) tokenTypeSupply;
 
-    // metadata
-    string public baseMetadataURI;
     string public contractURI;
 
     // token types
@@ -48,10 +46,6 @@ contract LondonBurnBase is Ownable, ERC721 {
 
     function setTreasury(address _treasury) public onlyOwner {
       treasury = _treasury;
-    }
-
-    function setBaseMetadataURI(string memory _baseMetadataURI) public onlyOwner {
-      baseMetadataURI = _baseMetadataURI;
     }
 
     function setContractURI(string calldata newContractURI) external onlyOwner {

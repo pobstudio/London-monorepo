@@ -9,13 +9,19 @@ import "./LondonBurnBase.sol";
 abstract contract LondonBurnAshen is LondonBurnBase {
   uint256 constant MIN_SELF_AMOUNT_PER_BURN =    3;
   uint256 constant MAX_SELF_AMOUNT_PER_BURN =    7;
-  uint256 constant PRICE_PER_BURN_MINT =    1559; // TODO put in proper values
+  uint256 constant PRICE_PER_BURN_MINT =    1559 ether; // since $LONDON is 10^18 we can use ether as a unit of accounting
 
   uint256 totalSelfBurnAmount;
   uint256 numSelfBurns;
 
+  uint256 public ashenRevealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+  
   constructor(
   ) {
+  }
+
+  function setAshenRevealBlockNumber(uint256 _ashenRevealBlockNumber) external onlyOwner {
+      ashenRevealBlockNumber = _ashenRevealBlockNumber;
   }
 
   function numBurnFromSelfAmount(uint256 amount) public pure returns (uint256) {
@@ -34,6 +40,7 @@ abstract contract LondonBurnAshen is LondonBurnBase {
     address to,
     uint256[] calldata tokenIds
   ) public {
+    require(block.number > ashenRevealBlockNumber, 'ASHEN has not been revealed yet');
     require(tokenIds.length >= MIN_SELF_AMOUNT_PER_BURN && tokenIds.length <= MAX_SELF_AMOUNT_PER_BURN , "Exceeded self burn range");
     _payLondon(to, londonNeededFromSelfAmount(tokenIds.length));
     // burn gifts

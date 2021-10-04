@@ -24,12 +24,15 @@ interface LondonBurnInterface extends ethers.utils.Interface {
   functions: {
     'airdropSigner()': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
+    'ashenRevealBlockNumber()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
+    'constructTokenURI(uint256)': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
+    'generateSVGImage(uint256)': FunctionFragment;
     'getAirdropHash(address,uint8)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'giftRevealBlockNumber()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
     'londonNeededFromGiftAmount(uint256)': FunctionFragment;
@@ -40,6 +43,7 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     'mintNobleType(address,uint8,bytes)': FunctionFragment;
     'mintPristineType(address,uint256)': FunctionFragment;
     'name()': FunctionFragment;
+    'nobleRevealBlockNumber()': FunctionFragment;
     'numBurnFromGiftAmount(uint256)': FunctionFragment;
     'numBurnFromSelfAmount(uint256)': FunctionFragment;
     'owner()': FunctionFragment;
@@ -49,8 +53,10 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setAirdropSigner(address)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
+    'setAshenRevealBlockNumber(uint256)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
+    'setGiftRevealBlockNumber(uint256)': FunctionFragment;
+    'setNobleRevealBlockNumber(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
     'splitSignature(bytes)': FunctionFragment;
@@ -72,10 +78,14 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     functionFragment: 'approve',
     values: [string, BigNumberish],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'ashenRevealBlockNumber',
+    values?: undefined,
+  ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
-    values?: undefined,
+    functionFragment: 'constructTokenURI',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
@@ -86,12 +96,20 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: 'generateSVGImage',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'getAirdropHash',
     values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
     values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'giftRevealBlockNumber',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
@@ -131,6 +149,10 @@ interface LondonBurnInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
+    functionFragment: 'nobleRevealBlockNumber',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'numBurnFromGiftAmount',
     values: [BigNumberish],
   ): string;
@@ -164,12 +186,20 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
-    values: [string],
+    functionFragment: 'setAshenRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'setContractURI',
     values: [string],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setGiftRevealBlockNumber',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setNobleRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
@@ -212,9 +242,13 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'ashenRevealBlockNumber',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
+    functionFragment: 'constructTokenURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -226,11 +260,19 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'generateSVGImage',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'getAirdropHash',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'getApproved',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'giftRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -268,6 +310,10 @@ interface LondonBurnInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: 'nobleRevealBlockNumber',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'numBurnFromGiftAmount',
     data: BytesLike,
   ): Result;
@@ -298,11 +344,19 @@ interface LondonBurnInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setAshenRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'setContractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setGiftRevealBlockNumber',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setNobleRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -384,6 +438,10 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'balanceOf(address)'(
@@ -391,9 +449,15 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
@@ -402,6 +466,16 @@ export class LondonBurn extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<[string]>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { svg: string }>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { svg: string }>;
 
     getAirdropHash(
       to: string,
@@ -424,6 +498,10 @@ export class LondonBurn extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
@@ -533,6 +611,10 @@ export class LondonBurn extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<[string]>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     numBurnFromGiftAmount(
       amount: BigNumberish,
       overrides?: CallOverrides,
@@ -612,13 +694,13 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -629,6 +711,26 @@ export class LondonBurn extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -751,6 +853,10 @@ export class LondonBurn extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'ashenRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'balanceOf'(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   'balanceOf(address)'(
@@ -758,9 +864,15 @@ export class LondonBurn extends Contract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
+  'constructTokenURI'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
+  'constructTokenURI(uint256)'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
@@ -769,6 +881,16 @@ export class LondonBurn extends Contract {
   'externalBurnableERC721'(overrides?: CallOverrides): Promise<string>;
 
   'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
+
+  'generateSVGImage'(
+    seed: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateSVGImage(uint256)'(
+    seed: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   'getAirdropHash'(
     to: string,
@@ -791,6 +913,10 @@ export class LondonBurn extends Contract {
     tokenId: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  'giftRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'isApprovedForAll'(
     owner: string,
@@ -900,6 +1026,10 @@ export class LondonBurn extends Contract {
 
   'name()'(overrides?: CallOverrides): Promise<string>;
 
+  'nobleRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'numBurnFromGiftAmount'(
     amount: BigNumberish,
     overrides?: CallOverrides,
@@ -976,13 +1106,13 @@ export class LondonBurn extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI'(
-    _baseMetadataURI: string,
+  'setAshenRevealBlockNumber'(
+    _ashenRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI(string)'(
-    _baseMetadataURI: string,
+  'setAshenRevealBlockNumber(uint256)'(
+    _ashenRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -993,6 +1123,26 @@ export class LondonBurn extends Contract {
 
   'setContractURI(string)'(
     newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setGiftRevealBlockNumber'(
+    _giftRevealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setGiftRevealBlockNumber(uint256)'(
+    _giftRevealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setNobleRevealBlockNumber'(
+    _nobleRevealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setNobleRevealBlockNumber(uint256)'(
+    _nobleRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -1110,6 +1260,10 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     'balanceOf(address)'(
@@ -1117,9 +1271,15 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
@@ -1128,6 +1288,16 @@ export class LondonBurn extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     getAirdropHash(
       to: string,
@@ -1150,6 +1320,10 @@ export class LondonBurn extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -1259,6 +1433,10 @@ export class LondonBurn extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<string>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     numBurnFromGiftAmount(
       amount: BigNumberish,
       overrides?: CallOverrides,
@@ -1335,13 +1513,13 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1352,6 +1530,26 @@ export class LondonBurn extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1494,6 +1692,10 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     'balanceOf(address)'(
@@ -1501,9 +1703,15 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1512,6 +1720,16 @@ export class LondonBurn extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getAirdropHash(
       to: string,
@@ -1534,6 +1752,10 @@ export class LondonBurn extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -1643,6 +1865,10 @@ export class LondonBurn extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<BigNumber>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     numBurnFromGiftAmount(
       amount: BigNumberish,
       overrides?: CallOverrides,
@@ -1722,13 +1948,13 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1739,6 +1965,26 @@ export class LondonBurn extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1859,6 +2105,14 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    ashenRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'ashenRevealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       owner: string,
       overrides?: CallOverrides,
@@ -1869,9 +2123,13 @@ export class LondonBurn extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    'baseMetadataURI()'(
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1884,6 +2142,16 @@ export class LondonBurn extends Contract {
     ): Promise<PopulatedTransaction>;
 
     'externalBurnableERC721()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1906,6 +2174,14 @@ export class LondonBurn extends Contract {
 
     'getApproved(uint256)'(
       tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    giftRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'giftRevealBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -2019,6 +2295,14 @@ export class LondonBurn extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    nobleRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'nobleRevealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     numBurnFromGiftAmount(
       amount: BigNumberish,
       overrides?: CallOverrides,
@@ -2098,13 +2382,13 @@ export class LondonBurn extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
@@ -2115,6 +2399,26 @@ export class LondonBurn extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 

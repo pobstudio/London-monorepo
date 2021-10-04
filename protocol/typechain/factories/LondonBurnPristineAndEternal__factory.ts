@@ -154,19 +154,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'baseMetadataURI',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'contractURI',
     outputs: [
       {
@@ -395,19 +382,6 @@ const _abi = [
       },
     ],
     name: 'setApprovalForAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_baseMetadataURI',
-        type: 'string',
-      },
-    ],
-    name: 'setBaseMetadataURI',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

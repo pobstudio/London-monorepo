@@ -9,14 +9,15 @@ import "./LondonBurnBase.sol";
 abstract contract LondonBurnPristineAndEternal is LondonBurnBase {
   uint256 constant MIN_PRISTINE_AMOUNT_PER_MINT =    4;
   uint256 constant INITIAL_MINTABLE_SUPPLY =    500;
-  uint256 constant PRICE_PER_PRISTINE_MINT =    1559; // TODO put in proper values
-
+  uint256 constant PRICE_PER_PRISTINE_MINT =    1559 ether; // since $LONDON is 10^18 we can use ether as a unit of accounting
   address lastMinter;
 
   constructor(
   ) {
   }
-
+ 
+  // TODO REVEAL VALUES
+  
   // TODO
   function maxMintableSupply() public pure returns (uint256) {
     return INITIAL_MINTABLE_SUPPLY;

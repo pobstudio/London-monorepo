@@ -25,7 +25,6 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     'airdropSigner()': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getAirdropHash(address,uint8)': FunctionFragment;
@@ -34,6 +33,7 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
     'mintNobleType(address,uint8,bytes)': FunctionFragment;
     'name()': FunctionFragment;
+    'nobleRevealBlockNumber()': FunctionFragment;
     'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
     'payableErc20()': FunctionFragment;
@@ -41,8 +41,8 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setAirdropSigner(address)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
+    'setNobleRevealBlockNumber(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
     'splitSignature(bytes)': FunctionFragment;
@@ -65,10 +65,6 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     values: [string, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
-    values?: undefined,
-  ): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
@@ -98,6 +94,10 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     values: [string, BigNumberish, BytesLike],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'nobleRevealBlockNumber',
+    values?: undefined,
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'ownerOf',
@@ -124,12 +124,12 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setContractURI',
     values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setContractURI',
-    values: [string],
+    functionFragment: 'setNobleRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
@@ -174,10 +174,6 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
   ): Result;
@@ -203,6 +199,10 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'nobleRevealBlockNumber',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
   decodeFunctionResult(
@@ -226,11 +226,11 @@ interface LondonBurnNobleInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setContractURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
+    functionFragment: 'setNobleRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -319,10 +319,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
-
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
@@ -401,6 +397,10 @@ export class LondonBurnNoble extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<[string]>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     'owner()'(overrides?: CallOverrides): Promise<[string]>;
@@ -460,16 +460,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -477,6 +467,16 @@ export class LondonBurnNoble extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -606,10 +606,6 @@ export class LondonBurnNoble extends Contract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
-
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
   'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -688,6 +684,10 @@ export class LondonBurnNoble extends Contract {
 
   'name()'(overrides?: CallOverrides): Promise<string>;
 
+  'nobleRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'owner'(overrides?: CallOverrides): Promise<string>;
 
   'owner()'(overrides?: CallOverrides): Promise<string>;
@@ -744,16 +744,6 @@ export class LondonBurnNoble extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI'(
-    _baseMetadataURI: string,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
-  'setBaseMetadataURI(string)'(
-    _baseMetadataURI: string,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
   'setContractURI'(
     newContractURI: string,
     overrides?: Overrides,
@@ -761,6 +751,16 @@ export class LondonBurnNoble extends Contract {
 
   'setContractURI(string)'(
     newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setNobleRevealBlockNumber'(
+    _nobleRevealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setNobleRevealBlockNumber(uint256)'(
+    _nobleRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -885,10 +885,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -967,6 +963,10 @@ export class LondonBurnNoble extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<string>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<string>;
 
     'owner()'(overrides?: CallOverrides): Promise<string>;
@@ -1023,16 +1023,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     setContractURI(
       newContractURI: string,
       overrides?: CallOverrides,
@@ -1040,6 +1030,16 @@ export class LondonBurnNoble extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1189,10 +1189,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
-
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1271,6 +1267,10 @@ export class LondonBurnNoble extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<BigNumber>;
 
+    nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1330,16 +1330,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1347,6 +1337,16 @@ export class LondonBurnNoble extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1477,12 +1477,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1565,6 +1559,14 @@ export class LondonBurnNoble extends Contract {
 
     'name()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    nobleRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'nobleRevealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1624,16 +1626,6 @@ export class LondonBurnNoble extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1641,6 +1633,16 @@ export class LondonBurnNoble extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setNobleRevealBlockNumber(
+      _nobleRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setNobleRevealBlockNumber(uint256)'(
+      _nobleRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 

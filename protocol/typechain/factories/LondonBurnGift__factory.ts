@@ -150,19 +150,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'baseMetadataURI',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'contractURI',
     outputs: [
       {
@@ -201,6 +188,19 @@ const _abi = [
         internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'giftRevealBlockNumber',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -424,11 +424,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'string',
-        name: '_baseMetadataURI',
+        name: 'newContractURI',
         type: 'string',
       },
     ],
-    name: 'setBaseMetadataURI',
+    name: 'setContractURI',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -436,12 +436,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'string',
-        name: 'newContractURI',
-        type: 'string',
+        internalType: 'uint256',
+        name: '_giftRevealBlockNumber',
+        type: 'uint256',
       },
     ],
-    name: 'setContractURI',
+    name: 'setGiftRevealBlockNumber',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',

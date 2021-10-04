@@ -20,12 +20,14 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface LondonBurnBaseInterface extends ethers.utils.Interface {
+interface LondonBurnMetadataInterface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
+    'constructTokenURI(uint256)': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
+    'generateSVGImage(uint256)': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'name()': FunctionFragment;
@@ -53,12 +55,20 @@ interface LondonBurnBaseInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
+    functionFragment: 'constructTokenURI',
+    values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'externalBurnableERC721',
     values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'generateSVGImage',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'getApproved',
@@ -125,11 +135,19 @@ interface LondonBurnBaseInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: 'constructTokenURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'externalBurnableERC721',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'generateSVGImage',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -204,7 +222,7 @@ interface LondonBurnBaseInterface extends ethers.utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class LondonBurnBase extends Contract {
+export class LondonBurnMetadata extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -215,7 +233,7 @@ export class LondonBurnBase extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': LondonBurnBaseInterface;
+  'interface': LondonBurnMetadataInterface;
 
   'functions': {
     approve(
@@ -237,6 +255,16 @@ export class LondonBurnBase extends Contract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
@@ -244,6 +272,16 @@ export class LondonBurnBase extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<[string]>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { svg: string }>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { svg: string }>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -428,6 +466,16 @@ export class LondonBurnBase extends Contract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
+  'constructTokenURI'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'constructTokenURI(uint256)'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
   'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -435,6 +483,16 @@ export class LondonBurnBase extends Contract {
   'externalBurnableERC721'(overrides?: CallOverrides): Promise<string>;
 
   'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
+
+  'generateSVGImage'(
+    seed: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateSVGImage(uint256)'(
+    seed: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   'getApproved'(
     tokenId: BigNumberish,
@@ -611,6 +669,16 @@ export class LondonBurnBase extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -618,6 +686,16 @@ export class LondonBurnBase extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -819,6 +897,16 @@ export class LondonBurnBase extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -826,6 +914,16 @@ export class LondonBurnBase extends Contract {
     externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
 
     'externalBurnableERC721()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -1011,6 +1109,16 @@ export class LondonBurnBase extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    constructTokenURI(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'constructTokenURI(uint256)'(
+      tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1020,6 +1128,16 @@ export class LondonBurnBase extends Contract {
     ): Promise<PopulatedTransaction>;
 
     'externalBurnableERC721()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    generateSVGImage(
+      seed: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'generateSVGImage(uint256)'(
+      seed: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

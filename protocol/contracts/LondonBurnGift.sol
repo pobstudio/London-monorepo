@@ -18,6 +18,12 @@ abstract contract LondonBurnGift is LondonBurnBase {
   ) {
   }
 
+  uint256 public giftRevealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+
+  function setGiftRevealBlockNumber(uint256 _giftRevealBlockNumber) external onlyOwner {
+      giftRevealBlockNumber = _giftRevealBlockNumber;
+  }
+
   function numBurnFromGiftAmount(uint256 amount) public pure returns (uint256) {
     return (amount * 2) - 1;
   }
@@ -32,6 +38,7 @@ abstract contract LondonBurnGift is LondonBurnBase {
     address to,
     uint256[] calldata giftTokenIds
   ) public {
+    require(block.number > giftRevealBlockNumber, 'GIFT has not been revealed yet');
     require(totalGiftBurnAmount + giftTokenIds.length <= MAX_TOTAL_GIFT_BURN_AMOUNT, "Max GIFT burnt");
     require(giftTokenIds.length >= MIN_GIFT_AMOUNT_PER_BURN && giftTokenIds.length <= MAX_GIFT_AMOUNT_PER_BURN , "Exceeded gift burn range");
 

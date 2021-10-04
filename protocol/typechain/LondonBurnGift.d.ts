@@ -24,10 +24,10 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'giftRevealBlockNumber()': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
     'londonNeededFromGiftAmount(uint256)': FunctionFragment;
     'mintGiftType(address,uint256[])': FunctionFragment;
@@ -39,8 +39,8 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
     'renounceOwnership()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
+    'setGiftRevealBlockNumber(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
@@ -58,10 +58,6 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
   ): string;
@@ -72,6 +68,10 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: 'getApproved',
     values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'giftRevealBlockNumber',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'isApprovedForAll',
@@ -112,12 +112,12 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setContractURI',
     values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setContractURI',
-    values: [string],
+    functionFragment: 'setGiftRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
@@ -150,10 +150,6 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
   ): Result;
@@ -163,6 +159,10 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: 'getApproved',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'giftRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -201,11 +201,11 @@ interface LondonBurnGiftInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setContractURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
+    functionFragment: 'setGiftRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -282,10 +282,6 @@ export class LondonBurnGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
-
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
@@ -303,6 +299,10 @@ export class LondonBurnGift extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
@@ -401,16 +401,6 @@ export class LondonBurnGift extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -418,6 +408,16 @@ export class LondonBurnGift extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -519,10 +519,6 @@ export class LondonBurnGift extends Contract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
-
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
   'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -540,6 +536,10 @@ export class LondonBurnGift extends Contract {
     tokenId: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  'giftRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'isApprovedForAll'(
     owner: string,
@@ -635,16 +635,6 @@ export class LondonBurnGift extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI'(
-    _baseMetadataURI: string,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
-  'setBaseMetadataURI(string)'(
-    _baseMetadataURI: string,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
   'setContractURI'(
     newContractURI: string,
     overrides?: Overrides,
@@ -652,6 +642,16 @@ export class LondonBurnGift extends Contract {
 
   'setContractURI(string)'(
     newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setGiftRevealBlockNumber'(
+    _giftRevealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setGiftRevealBlockNumber(uint256)'(
+    _giftRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -748,10 +748,6 @@ export class LondonBurnGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -769,6 +765,10 @@ export class LondonBurnGift extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -864,16 +864,6 @@ export class LondonBurnGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     setContractURI(
       newContractURI: string,
       overrides?: CallOverrides,
@@ -881,6 +871,16 @@ export class LondonBurnGift extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1002,10 +1002,6 @@ export class LondonBurnGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
-
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1023,6 +1019,10 @@ export class LondonBurnGift extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
@@ -1121,16 +1121,6 @@ export class LondonBurnGift extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1138,6 +1128,16 @@ export class LondonBurnGift extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1240,12 +1240,6 @@ export class LondonBurnGift extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1265,6 +1259,14 @@ export class LondonBurnGift extends Contract {
 
     'getApproved(uint256)'(
       tokenId: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    giftRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'giftRevealBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1365,16 +1367,6 @@ export class LondonBurnGift extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1382,6 +1374,16 @@ export class LondonBurnGift extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setGiftRevealBlockNumber(
+      _giftRevealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setGiftRevealBlockNumber(uint256)'(
+      _giftRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 

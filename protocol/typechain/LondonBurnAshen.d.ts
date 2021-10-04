@@ -23,8 +23,8 @@ import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 interface LondonBurnAshenInterface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
+    'ashenRevealBlockNumber()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
@@ -39,7 +39,7 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     'renounceOwnership()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
+    'setAshenRevealBlockNumber(uint256)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
@@ -56,11 +56,11 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     functionFragment: 'approve',
     values: [string, BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
+    functionFragment: 'ashenRevealBlockNumber',
     values?: undefined,
   ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
@@ -112,8 +112,8 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
-    values: [string],
+    functionFragment: 'setAshenRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'setContractURI',
@@ -148,11 +148,11 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
+    functionFragment: 'ashenRevealBlockNumber',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
@@ -201,7 +201,7 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
+    functionFragment: 'setAshenRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -275,16 +275,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
-
-    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
@@ -401,13 +401,13 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -512,16 +512,16 @@ export class LondonBurnAshen extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'ashenRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'balanceOf'(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   'balanceOf(address)'(
     owner: string,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
-
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
-
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
@@ -635,13 +635,13 @@ export class LondonBurnAshen extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI'(
-    _baseMetadataURI: string,
+  'setAshenRevealBlockNumber'(
+    _ashenRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setBaseMetadataURI(string)'(
-    _baseMetadataURI: string,
+  'setAshenRevealBlockNumber(uint256)'(
+    _ashenRevealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -741,16 +741,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
-
-    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
@@ -864,13 +864,13 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -995,16 +995,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     'balanceOf(address)'(
       owner: string,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
-
-    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1121,13 +1121,13 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1230,6 +1230,14 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    ashenRevealBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'ashenRevealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
       owner: string,
       overrides?: CallOverrides,
@@ -1237,12 +1245,6 @@ export class LondonBurnAshen extends Contract {
 
     'balanceOf(address)'(
       owner: string,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'baseMetadataURI()'(
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1365,13 +1367,13 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
+    setAshenRevealBlockNumber(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
+    'setAshenRevealBlockNumber(uint256)'(
+      _ashenRevealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 

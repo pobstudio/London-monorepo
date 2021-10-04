@@ -8,7 +8,7 @@ import "./LondonBurnBase.sol";
 import "./utils/Signature.sol";
 
 abstract contract LondonBurnNoble is LondonBurnBase, Signature {
-  uint256 constant PRICE_PER_AIRDROP_MINT =    1559; // TODO put in proper values
+  uint256 constant PRICE_PER_AIRDROP_MINT =    1559 ether; // since $LONDON is 10^18 we can use ether as a unit of accounting
 
   address public airdropSigner;
 
@@ -21,6 +21,7 @@ abstract contract LondonBurnNoble is LondonBurnBase, Signature {
   
   mapping(Nobility => uint256) airdropAmount;
 
+  uint256 public nobleRevealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 
   constructor(
   ) {
@@ -29,7 +30,11 @@ abstract contract LondonBurnNoble is LondonBurnBase, Signature {
     airdropAmount[Nobility.Duke] = 16;
   }
 
-  mapping(address => bool) hasReceivedAirdrop; // TODO: should we change this to use airdrop hash?
+  mapping(address => bool) hasReceivedAirdrop; // NOTE: should we change this to use airdrop hash?
+
+  function setNobleRevealBlockNumber(uint256 _nobleRevealBlockNumber) external onlyOwner {
+      nobleRevealBlockNumber = _nobleRevealBlockNumber;
+  }
 
   function setAirdropSigner(address _airdropSigner) public onlyOwner {
     airdropSigner = _airdropSigner;
@@ -50,10 +55,12 @@ abstract contract LondonBurnNoble is LondonBurnBase, Signature {
   function mintNobleType(
     address to, Nobility nobility, bytes calldata signature
   ) public {
+    require(block.number > nobleRevealBlockNumber, 'NOBLE has not been revealed yet');
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
     _payLondon(to, PRICE_PER_AIRDROP_MINT);
     require(verifyAirdrop(to, nobility, signature), "Noble mint is not valid");
     _mintTokenType(to, NOBLE_TYPE, airdropAmount[nobility]);
+    hasReceivedAirdrop[to] = true;
   }
 
 }

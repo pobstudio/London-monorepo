@@ -24,7 +24,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'baseMetadataURI()': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
@@ -38,7 +37,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
     'renounceOwnership()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setBaseMetadataURI(string)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
@@ -56,10 +54,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
     values: [string, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'baseMetadataURI',
-    values?: undefined,
-  ): string;
   encodeFunctionData(
     functionFragment: 'contractURI',
     values?: undefined,
@@ -107,10 +101,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setBaseMetadataURI',
-    values: [string],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'setContractURI',
     values: [string],
   ): string;
@@ -144,10 +134,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'baseMetadataURI',
-    data: BytesLike,
-  ): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
     data: BytesLike,
@@ -189,10 +175,6 @@ interface LondonBurnPristineAndEternalInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: 'setApprovalForAll',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'setBaseMetadataURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -272,10 +254,6 @@ export class LondonBurnPristineAndEternal extends Contract {
       owner: string,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
-
-    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
@@ -373,16 +351,6 @@ export class LondonBurnPristineAndEternal extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -494,10 +462,6 @@ export class LondonBurnPristineAndEternal extends Contract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  'baseMetadataURI'(overrides?: CallOverrides): Promise<string>;
-
-  'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
   'contractURI'(overrides?: CallOverrides): Promise<string>;
 
   'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -591,16 +555,6 @@ export class LondonBurnPristineAndEternal extends Contract {
   'setApprovalForAll(address,bool)'(
     operator: string,
     approved: boolean,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
-  'setBaseMetadataURI'(
-    _baseMetadataURI: string,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
-  'setBaseMetadataURI(string)'(
-    _baseMetadataURI: string,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -707,10 +661,6 @@ export class LondonBurnPristineAndEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<string>;
-
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<string>;
@@ -804,16 +754,6 @@ export class LondonBurnPristineAndEternal extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -945,10 +885,6 @@ export class LondonBurnPristineAndEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'baseMetadataURI()'(overrides?: CallOverrides): Promise<BigNumber>;
-
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1045,16 +981,6 @@ export class LondonBurnPristineAndEternal extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1167,12 +1093,6 @@ export class LondonBurnPristineAndEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'baseMetadataURI()'(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1275,16 +1195,6 @@ export class LondonBurnPristineAndEternal extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    setBaseMetadataURI(
-      _baseMetadataURI: string,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    'setBaseMetadataURI(string)'(
-      _baseMetadataURI: string,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 

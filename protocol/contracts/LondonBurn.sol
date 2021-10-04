@@ -9,8 +9,9 @@ import "./LondonBurnGift.sol";
 import "./LondonBurnNoble.sol";
 import "./LondonBurnPristineAndEternal.sol";
 import "./LondonBurnBase.sol";
+import "./LondonBurnMetadata.sol";
 
-contract LondonBurn is LondonBurnBase, LondonBurnNoble, LondonBurnAshen, LondonBurnGift, LondonBurnPristineAndEternal {
+contract LondonBurn is LondonBurnBase, LondonBurnMetadata, LondonBurnNoble, LondonBurnAshen, LondonBurnGift, LondonBurnPristineAndEternal {
   constructor(
     string memory name_,
     string memory symbol_,
