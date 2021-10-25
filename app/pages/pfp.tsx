@@ -29,12 +29,13 @@ export const SELECTABLE_BACKGROUND: [string, string][] = [
 ];
 
 export const SELECTABLE_FOREGROUND: [string, string][] = [
+  ['0x8a90cab2b38dba80c64b7734e58ee1db38b8992e', 'Doodles'],
   ['0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'BAYC'],
   ['0x60e4d786628fea6478f785a6d7e704777c86a7c6', 'MAYC'],
   ['0xbd3531da5cf5857e7cfaa92426877b022e612cf8', 'Pudgy Penguins'],
   ['0x1a92f7381b9f03921564a437210bb9396471050c', 'Cool Cats'],
   ['0x85f740958906b317de6ed79663012859067e745b', 'Wicked Cranium'],
-  ['0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb', 'CryptoPunks'],
+  ['0xb47e3cd837ddf8e4c57f05d70ab86ga5de6e193bbb', 'CryptoPunks'],
   ['0x02aa731631c6d7f8241d74f906f5b51724ab98f8', 'BearsOnTheBlock'],
   ['0x031920cc2d9f5c10b444fd44009cd64f829e7be2', 'CryptoZunks'],
   ['0xdb55584e5104505a6b38776ee4dcba7dd6bb25fe', 'Imma Degen'],
@@ -43,7 +44,6 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0xf4ee95274741437636e748ddac70818b4ed7d043', 'The Doge Pound'],
   ['0x099689220846644f87d1137665cded7bf3422747', 'Robotos'],
   ['0xef0182dc0574cd5874494a120750fd222fdb909a', 'Rumble Kong'],
-  ['0x31d4da52c12542ac3d6aadba5ed26a3a563a86dc', 'Fly Frogs'],
   ['0xedb61f74b0d09b2558f1eeb79b247c1f363ae452', 'Gutter Cat Gang'],
   ['0x31385d3520bced94f77aae104b406994d8f2168c', 'Bastard GAN punk v2'],
   ['0xa3aee8bce55beea1951ef834b99f3ac60d1abeeb', 'Vee Friends'],
