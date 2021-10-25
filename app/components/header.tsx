@@ -99,28 +99,26 @@ export const Header: FC = () => {
           <Link href={ROUTES.INDEX} passHref>
             <A style={{ fontWeight: 'bold' }}>LONDON</A>
           </Link>
-          <Link href={ROUTES.DAO} passHref>
-            <A>DAO</A>
-          </Link>
+            <A href={NOTION_WIKI_LINK} target={'_blank'}>DAO</A>
           {/* <Link href={ROUTES.PROVENANCE} passHref>
             <A>Provenance</A>
           </Link> */}
           {/* <Link href={ROUTES.GIFT} passHref>
             <A>Gift</A>
           </Link> */}
-          <Link href={ROUTES.PFP} passHref>
+          {/* <Link href={ROUTES.PFP} passHref>
             <A>PFP</A>
-          </Link>
-          <Link href={ROUTES.RUG} passHref>
+          </Link> */}
+          {/* <Link href={ROUTES.RUG} passHref>
             <A style={{ color: 'blue' }}>Banner</A>
-          </Link>
+          </Link> */}
           <Link href={ROUTES.TOKEN} passHref>
             <A>Token-nomics</A>
           </Link>
-          <A href={UNISWAP_TRADE_LINK} target={'_blank'}>
-            Trade
+          <A style={{ color: 'blue' }} href={UNISWAP_TRADE_LINK} target={'_blank'}>
+            Buy {TOKEN_SYMBOL}
           </A>
-          <DropdownContainer>
+          {/* <DropdownContainer>
             <DropdownA onClick={() => setShowMore((s) => !s)}>More</DropdownA>
             {showMore && (
               <DropdownBody>
@@ -131,25 +129,10 @@ export const Header: FC = () => {
                   <A href={BLOG_LINK} target={'_blank'}>
                     Blog
                   </A>
-                  <A href={NOTION_WIKI_LINK} target={'_blank'}>
-                    DAO Docs
-                  </A>
-                  <A href={TWITTER_LINK} target={'_blank'}>
-                    Twitter
-                  </A>
-                  <A href={DISCORD_LINK} target={'_blank'}>
-                    Discord
-                  </A>
-                  <A href={OPENSEA_LINK} target={'_blank'}>
-                    OpenSea
-                  </A>
-                  <A href={GITHUB_LINK} target={'_blank'}>
-                    Github
-                  </A>
                 </AnchorColumn>
               </DropdownBody>
             )}
-          </DropdownContainer>
+          </DropdownContainer> */}
         </AnchorRow>
         <Web3Status />
       </HeaderRow>

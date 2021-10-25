@@ -52,6 +52,9 @@ import { POBIcon } from '../components/icons/pob';
 import { MintGift } from '../components/mintGift';
 import { ROUTES } from '../constants/routes';
 import Link from 'next/link';
+import { Footer } from '../components/footer';
+import { PFP } from '../components/pfp';
+import { Banner } from '../components/banner';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -251,19 +254,16 @@ const Utility = () => {
     <>
       <SubTitle style={{ marginTop: 48 }}>Utility</SubTitle>
       <RightAlignedText>
-        You can easily use any <Bold>LONDON gift</Bold> you own as the
-        background of your pfp via our{' '}
-        <Link passHref href={ROUTES.PFP}>
-          <A>app</A>
-        </Link>
-        . If you do so, please share on twitter!
+        Customize your PFP with a new background:
       </RightAlignedText>
+      <PFP/>
       <RightAlignedText>
-        <Italic>Coming soon:</Italic> a twitter background editor.
+        OR get a dope twitter banner:
       </RightAlignedText>
+      <Banner/>
       <RightAlignedText>
         Owning a <Bold>LONDON gift</Bold> enables you to participate in the{' '}
-        <A target={'_blank'} href={ROUTES.DAO}>
+        <A target={'_blank'} href={NOTION_WIKI_LINK}>
           {LONDON_DAO_TITLE}
         </A>
         . Each <Bold>LONDON gift</Bold> has the equivalent voting power of 1559{' '}
@@ -407,13 +407,13 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
           </Italic>
         </Caption> */}
-        <Text style={{ marginBottom: 8 }}>
+        {/* <Text style={{ marginBottom: 8 }}>
           <Link passHref href={ROUTES.DAO}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
               Learn more about the {LONDON_DAO_TITLE}
             </A>
           </Link>
-        </Text>
+        </Text> */}
         <Caption style={{ marginBottom: 4 }}>
           [SOLD OUT] {MAX_SUPPLY}{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>
@@ -452,16 +452,11 @@ const GiftShopPage: NextPage = () => {
             </div>
           </CoreMintingInner>
         </CoreMinting>
-        <ShouldReads />
         <Utility />
+        <ShouldReads />
         <Rarity />
         <FAQ />
-        <MiniText style={{ marginTop: 48 }}>
-          Omne quod movetur ab alio movetur
-        </MiniText>
-        <FlexCenter style={{ margin: '24px 0' }}>
-          <POBIcon />
-        </FlexCenter>
+        <Footer/> 
       </PageWrapper>
     </>
   );

@@ -7,7 +7,6 @@ import { RugCanvas, RugImgRotations, RugImgSrcs } from '../components/rug';
 import { useWeb3React } from '@web3-react/core';
 import { WalletState, Web3Status } from '../components/web3Status';
 import { usePrevious } from 'react-use';
-import { Banner } from '../components/banner';
 import {
   OPENSEA_ASSET,
   OPENSEA_COLLECTION,
@@ -33,7 +32,7 @@ export const SELECTABLE_BACKGROUND: [string, string][] = [
   [LONDON_GIFT_CONTRACT, 'LONDON gift'],
 ];
 
-const IndexPage: NextPage = () => {
+export const Banner: FC = () => {
   const { account } = useWeb3React();
   const [backgroundImageSrc, setBackgroundImageSrc] = useState<
     string | undefined
@@ -58,21 +57,26 @@ const IndexPage: NextPage = () => {
   }, [backgroundImageSrc]);
 
   return (
-    <>
-      <Header />
-      <PageWrapper>
-        <Title>
-          <Bold>LONDON Gift</Bold> rug service
-        </Title>
-        <Caption>
-          <Italic>Get rug pulled!</Italic>
-        </Caption>
-        <Banner/>
-      </PageWrapper>
-    </>
+        <RugConsoleWrapper>
+          <RugConsole>
+            <LeftWell>
+              <RugCanvas rugImgSrcs={rugImgSrcs} />
+            </LeftWell>
+            <BottomBox>
+              {!!account ? (
+                <UserAssets
+                  backgroundImageSrc={backgroundImageSrc}
+                  setBackgroundImageSrc={setBackgroundImageSrc}
+                  account={account}
+                />
+              ) : (
+                <Web3Handler />
+              )}
+            </BottomBox>
+          </RugConsole>
+        </RugConsoleWrapper>
   );
 };
-export default React.memo(IndexPage);
 
 const StyledSelect = styled.select`
   font-weight: bold;
