@@ -9,510 +9,472 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from 'ethers';
+} from "ethers";
 import {
   Contract,
   ContractTransaction,
   Overrides,
   CallOverrides,
-} from '@ethersproject/contracts';
-import { BytesLike } from '@ethersproject/bytes';
-import { Listener, Provider } from '@ethersproject/providers';
-import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
+} from "@ethersproject/contracts";
+import { BytesLike } from "@ethersproject/bytes";
+import { Listener, Provider } from "@ethersproject/providers";
+import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface LondonBurnInterface extends ethers.utils.Interface {
   functions: {
-    'airdropSigner()': FunctionFragment;
-    'approve(address,uint256)': FunctionFragment;
-    'ashenRevealBlockNumber()': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'constructTokenURI(uint256)': FunctionFragment;
-    'contractURI()': FunctionFragment;
-    'externalBurnableERC721()': FunctionFragment;
-    'generateSVGImage(uint256)': FunctionFragment;
-    'getAirdropHash(address,uint8)': FunctionFragment;
-    'getApproved(uint256)': FunctionFragment;
-    'giftRevealBlockNumber()': FunctionFragment;
-    'isApprovedForAll(address,address)': FunctionFragment;
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
-    'londonNeededFromGiftAmount(uint256)': FunctionFragment;
-    'londonNeededFromSelfAmount(uint256)': FunctionFragment;
-    'maxMintableSupply()': FunctionFragment;
-    'mintAshenType(address,uint256[])': FunctionFragment;
-    'mintGiftType(address,uint256[])': FunctionFragment;
-    'mintNobleType(address,uint8,bytes)': FunctionFragment;
-    'mintPristineType(address,uint256)': FunctionFragment;
-    'name()': FunctionFragment;
-    'nobleRevealBlockNumber()': FunctionFragment;
-    'numBurnFromGiftAmount(uint256)': FunctionFragment;
-    'numBurnFromSelfAmount(uint256)': FunctionFragment;
-    'owner()': FunctionFragment;
-    'ownerOf(uint256)': FunctionFragment;
-    'payableErc20()': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'safeTransferFrom(address,address,uint256)': FunctionFragment;
-    'setAirdropSigner(address)': FunctionFragment;
-    'setApprovalForAll(address,bool)': FunctionFragment;
-    'setAshenRevealBlockNumber(uint256)': FunctionFragment;
-    'setContractURI(string)': FunctionFragment;
-    'setGiftRevealBlockNumber(uint256)': FunctionFragment;
-    'setNobleRevealBlockNumber(uint256)': FunctionFragment;
-    'setTreasury(address)': FunctionFragment;
-    'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
-    'splitSignature(bytes)': FunctionFragment;
-    'supportsInterface(bytes4)': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'tokenURI(uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'treasury()': FunctionFragment;
-    'ultraSonicForkBlockNumber()': FunctionFragment;
-    'verifyAirdrop(address,uint8,bytes)': FunctionFragment;
+    "airdropSigner()": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "ashenRevealBlockNumber()": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "contractURI()": FunctionFragment;
+    "externalBurnableERC721()": FunctionFragment;
+    "getAirdropHash(address,uint8)": FunctionFragment;
+    "getApproved(uint256)": FunctionFragment;
+    "giftRevealBlockNumber()": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
+    "londonNeededFromGiftAmount(uint256)": FunctionFragment;
+    "londonNeededFromSelfAmount(uint256)": FunctionFragment;
+    "maxMintableSupply()": FunctionFragment;
+    "mintAshenType(address,uint256[])": FunctionFragment;
+    "mintGiftType(address,uint256[])": FunctionFragment;
+    "mintNobleType(address,uint8,bytes)": FunctionFragment;
+    "mintPristineType(address,uint256)": FunctionFragment;
+    "name()": FunctionFragment;
+    "nobleRevealBlockNumber()": FunctionFragment;
+    "numBurnFromGiftAmount(uint256)": FunctionFragment;
+    "numBurnFromSelfAmount(uint256)": FunctionFragment;
+    "owner()": FunctionFragment;
+    "ownerOf(uint256)": FunctionFragment;
+    "payableErc20()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "safeTransferFrom(address,address,uint256)": FunctionFragment;
+    "setAirdropSigner(address)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "setAshenRevealBlockNumber(uint256)": FunctionFragment;
+    "setContractURI(string)": FunctionFragment;
+    "setGiftRevealBlockNumber(uint256)": FunctionFragment;
+    "setNobleRevealBlockNumber(uint256)": FunctionFragment;
+    "setTreasury(address)": FunctionFragment;
+    "setUltraSonicForkBlockNumber(uint256)": FunctionFragment;
+    "splitSignature(bytes)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "treasury()": FunctionFragment;
+    "ultraSonicForkBlockNumber()": FunctionFragment;
+    "verifyAirdrop(address,uint8,bytes)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'airdropSigner',
-    values?: undefined,
+    functionFragment: "airdropSigner",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'approve',
-    values: [string, BigNumberish],
+    functionFragment: "approve",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'ashenRevealBlockNumber',
-    values?: undefined,
+    functionFragment: "ashenRevealBlockNumber",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'constructTokenURI',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'contractURI',
-    values?: undefined,
+    functionFragment: "contractURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'externalBurnableERC721',
-    values?: undefined,
+    functionFragment: "externalBurnableERC721",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'generateSVGImage',
-    values: [BigNumberish],
+    functionFragment: "getAirdropHash",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'getAirdropHash',
-    values: [string, BigNumberish],
+    functionFragment: "getApproved",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'getApproved',
-    values: [BigNumberish],
+    functionFragment: "giftRevealBlockNumber",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'giftRevealBlockNumber',
-    values?: undefined,
+    functionFragment: "isApprovedForAll",
+    values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
-    values: [string, string],
+    functionFragment: "isSigned",
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'isSigned',
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
+    functionFragment: "londonNeededFromGiftAmount",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'londonNeededFromGiftAmount',
-    values: [BigNumberish],
+    functionFragment: "londonNeededFromSelfAmount",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'londonNeededFromSelfAmount',
-    values: [BigNumberish],
+    functionFragment: "maxMintableSupply",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'maxMintableSupply',
-    values?: undefined,
+    functionFragment: "mintAshenType",
+    values: [string, BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintAshenType',
-    values: [string, BigNumberish[]],
+    functionFragment: "mintGiftType",
+    values: [string, BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintGiftType',
-    values: [string, BigNumberish[]],
+    functionFragment: "mintNobleType",
+    values: [string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintNobleType',
-    values: [string, BigNumberish, BytesLike],
+    functionFragment: "mintPristineType",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "nobleRevealBlockNumber",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintPristineType',
-    values: [string, BigNumberish],
-  ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'nobleRevealBlockNumber',
-    values?: undefined,
+    functionFragment: "numBurnFromGiftAmount",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'numBurnFromGiftAmount',
-    values: [BigNumberish],
+    functionFragment: "numBurnFromSelfAmount",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ownerOf",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'numBurnFromSelfAmount',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'ownerOf',
-    values: [BigNumberish],
+    functionFragment: "payableErc20",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'payableErc20',
-    values?: undefined,
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'renounceOwnership',
-    values?: undefined,
+    functionFragment: "safeTransferFrom",
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "setAirdropSigner",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setAirdropSigner',
-    values: [string],
+    functionFragment: "setApprovalForAll",
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
-    values: [string, boolean],
+    functionFragment: "setAshenRevealBlockNumber",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setAshenRevealBlockNumber',
-    values: [BigNumberish],
+    functionFragment: "setContractURI",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setContractURI',
-    values: [string],
+    functionFragment: "setGiftRevealBlockNumber",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setGiftRevealBlockNumber',
-    values: [BigNumberish],
+    functionFragment: "setNobleRevealBlockNumber",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setUltraSonicForkBlockNumber",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setNobleRevealBlockNumber',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'setUltraSonicForkBlockNumber',
-    values: [BigNumberish],
+    functionFragment: "splitSignature",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'splitSignature',
-    values: [BytesLike],
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "tokenURI",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
-    values: [BytesLike],
-  ): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'tokenURI',
-    values: [BigNumberish],
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ultraSonicForkBlockNumber",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferOwnership',
-    values: [string],
-  ): string;
-  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'ultraSonicForkBlockNumber',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'verifyAirdrop',
-    values: [string, BigNumberish, BytesLike],
+    functionFragment: "verifyAirdrop",
+    values: [string, BigNumberish, BytesLike]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'airdropSigner',
-    data: BytesLike,
+    functionFragment: "airdropSigner",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'ashenRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "ashenRevealBlockNumber",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'constructTokenURI',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'contractURI',
-    data: BytesLike,
+    functionFragment: "contractURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'externalBurnableERC721',
-    data: BytesLike,
+    functionFragment: "externalBurnableERC721",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'generateSVGImage',
-    data: BytesLike,
+    functionFragment: "getAirdropHash",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getAirdropHash',
-    data: BytesLike,
+    functionFragment: "getApproved",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getApproved',
-    data: BytesLike,
+    functionFragment: "giftRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'giftRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "isApprovedForAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "londonNeededFromGiftAmount",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'londonNeededFromGiftAmount',
-    data: BytesLike,
+    functionFragment: "londonNeededFromSelfAmount",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'londonNeededFromSelfAmount',
-    data: BytesLike,
+    functionFragment: "maxMintableSupply",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'maxMintableSupply',
-    data: BytesLike,
+    functionFragment: "mintAshenType",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'mintAshenType',
-    data: BytesLike,
+    functionFragment: "mintGiftType",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'mintGiftType',
-    data: BytesLike,
+    functionFragment: "mintNobleType",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'mintNobleType',
-    data: BytesLike,
+    functionFragment: "mintPristineType",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "nobleRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'mintPristineType',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'nobleRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "numBurnFromGiftAmount",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'numBurnFromGiftAmount',
-    data: BytesLike,
+    functionFragment: "numBurnFromSelfAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "payableErc20",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'numBurnFromSelfAmount',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'payableErc20',
-    data: BytesLike,
+    functionFragment: "renounceOwnership",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'renounceOwnership',
-    data: BytesLike,
+    functionFragment: "safeTransferFrom",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
-    data: BytesLike,
+    functionFragment: "setAirdropSigner",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setAirdropSigner',
-    data: BytesLike,
+    functionFragment: "setApprovalForAll",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
-    data: BytesLike,
+    functionFragment: "setAshenRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setAshenRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "setContractURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
-    data: BytesLike,
+    functionFragment: "setGiftRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setGiftRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "setNobleRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setNobleRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "setTreasury",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setTreasury',
-    data: BytesLike,
+    functionFragment: "setUltraSonicForkBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setUltraSonicForkBlockNumber',
-    data: BytesLike,
+    functionFragment: "splitSignature",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'splitSignature',
-    data: BytesLike,
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike,
+    functionFragment: "transferOwnership",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'transferFrom',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'transferOwnership',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'ultraSonicForkBlockNumber',
-    data: BytesLike,
+    functionFragment: "ultraSonicForkBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'verifyAirdrop',
-    data: BytesLike,
+    functionFragment: "verifyAirdrop",
+    data: BytesLike
   ): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'ApprovalForAll(address,address,bool)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export class LondonBurn extends Contract {
-  'connect'(signerOrProvider: Signer | Provider | string): this;
-  'attach'(addressOrName: string): this;
-  'deployed'(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this;
+  attach(addressOrName: string): this;
+  deployed(): Promise<this>;
 
-  'on'(event: EventFilter | string, listener: Listener): this;
-  'once'(event: EventFilter | string, listener: Listener): this;
-  'addListener'(eventName: EventFilter | string, listener: Listener): this;
-  'removeAllListeners'(eventName: EventFilter | string): this;
-  'removeListener'(eventName: any, listener: Listener): this;
+  on(event: EventFilter | string, listener: Listener): this;
+  once(event: EventFilter | string, listener: Listener): this;
+  addListener(eventName: EventFilter | string, listener: Listener): this;
+  removeAllListeners(eventName: EventFilter | string): this;
+  removeListener(eventName: any, listener: Listener): this;
 
-  'interface': LondonBurnInterface;
+  interface: LondonBurnInterface;
 
-  'functions': {
+  functions: {
     airdropSigner(overrides?: CallOverrides): Promise<[string]>;
 
-    'airdropSigner()'(overrides?: CallOverrides): Promise<[string]>;
+    "airdropSigner()"(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     ashenRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "ashenRevealBlockNumber()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
-
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
-
-    'constructTokenURI(uint256)'(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
+    "contractURI()"(overrides?: CallOverrides): Promise<[string]>;
 
     externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
 
-    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<[string]>;
-
-    generateSVGImage(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<[string] & { svg: string }>;
-
-    'generateSVGImage(uint256)'(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<[string] & { svg: string }>;
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<[string]>;
 
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
-    'getAirdropHash(address,uint8)'(
+    "getAirdropHash(address,uint8)"(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     giftRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "giftRevealBlockNumber()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     isSigned(
@@ -521,820 +483,780 @@ export class LondonBurn extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     londonNeededFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    'londonNeededFromGiftAmount(uint256)'(
+    "londonNeededFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     londonNeededFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    'londonNeededFromSelfAmount(uint256)'(
+    "londonNeededFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     maxMintableSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'maxMintableSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "maxMintableSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintAshenType(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'mintAshenType(address,uint256[])'(
+    "mintAshenType(address,uint256[])"(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     mintGiftType(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'mintGiftType(address,uint256[])'(
+    "mintGiftType(address,uint256[])"(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     mintNobleType(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'mintNobleType(address,uint8,bytes)'(
+    "mintNobleType(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     mintPristineType(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'mintPristineType(address,uint256)'(
+    "mintPristineType(address,uint256)"(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    'name()'(overrides?: CallOverrides): Promise<[string]>;
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
 
     nobleRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+    "nobleRevealBlockNumber()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     numBurnFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    'numBurnFromGiftAmount(uint256)'(
+    "numBurnFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     numBurnFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    'numBurnFromSelfAmount(uint256)'(
+    "numBurnFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    'owner()'(overrides?: CallOverrides): Promise<[string]>;
+    "owner()"(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     payableErc20(overrides?: CallOverrides): Promise<[string]>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<[string]>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setAirdropSigner(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setAirdropSigner(address)'(
+    "setAirdropSigner(address)"(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setAshenRevealBlockNumber(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setAshenRevealBlockNumber(uint256)'(
+    "setAshenRevealBlockNumber(uint256)"(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setGiftRevealBlockNumber(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setGiftRevealBlockNumber(uint256)'(
+    "setGiftRevealBlockNumber(uint256)"(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setNobleRevealBlockNumber(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setNobleRevealBlockNumber(uint256)'(
+    "setNobleRevealBlockNumber(uint256)"(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'setUltraSonicForkBlockNumber(uint256)'(
+    "setUltraSonicForkBlockNumber(uint256)"(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-    'splitSignature(bytes)'(
+    "splitSignature(bytes)"(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<[string]>;
+    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<[string]>;
+    "treasury()"(overrides?: CallOverrides): Promise<[string]>;
 
     ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'ultraSonicForkBlockNumber()'(
-      overrides?: CallOverrides,
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     verifyAirdrop(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    'verifyAirdrop(address,uint8,bytes)'(
+    "verifyAirdrop(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
-  'airdropSigner'(overrides?: CallOverrides): Promise<string>;
+  airdropSigner(overrides?: CallOverrides): Promise<string>;
 
-  'airdropSigner()'(overrides?: CallOverrides): Promise<string>;
+  "airdropSigner()"(overrides?: CallOverrides): Promise<string>;
 
-  'approve'(
+  approve(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'approve(address,uint256)'(
+  "approve(address,uint256)"(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'ashenRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+  ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "ashenRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'balanceOf'(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'balanceOf(address)'(
+  "balanceOf(address)"(
     owner: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'constructTokenURI'(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides,
-  ): Promise<string>;
+  contractURI(overrides?: CallOverrides): Promise<string>;
 
-  'constructTokenURI(uint256)'(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides,
-  ): Promise<string>;
+  "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
-  'contractURI'(overrides?: CallOverrides): Promise<string>;
+  externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
-  'contractURI()'(overrides?: CallOverrides): Promise<string>;
+  "externalBurnableERC721()"(overrides?: CallOverrides): Promise<string>;
 
-  'externalBurnableERC721'(overrides?: CallOverrides): Promise<string>;
-
-  'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
-
-  'generateSVGImage'(
-    seed: BigNumberish,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
-  'generateSVGImage(uint256)'(
-    seed: BigNumberish,
-    overrides?: CallOverrides,
-  ): Promise<string>;
-
-  'getAirdropHash'(
+  getAirdropHash(
     to: string,
     nobility: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'getAirdropHash(address,uint8)'(
+  "getAirdropHash(address,uint8)"(
     to: string,
     nobility: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'getApproved'(
+  getApproved(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'getApproved(uint256)'(
+  "getApproved(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'giftRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+  giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "giftRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'isApprovedForAll'(
+  isApprovedForAll(
     owner: string,
     operator: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'isApprovedForAll(address,address)'(
+  "isApprovedForAll(address,address)"(
     owner: string,
     operator: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'isSigned'(
+  isSigned(
     _address: string,
     messageHash: BytesLike,
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+  "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
     _address: string,
     messageHash: BytesLike,
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'londonNeededFromGiftAmount'(
+  londonNeededFromGiftAmount(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'londonNeededFromGiftAmount(uint256)'(
+  "londonNeededFromGiftAmount(uint256)"(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'londonNeededFromSelfAmount'(
+  londonNeededFromSelfAmount(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'londonNeededFromSelfAmount(uint256)'(
+  "londonNeededFromSelfAmount(uint256)"(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'maxMintableSupply'(overrides?: CallOverrides): Promise<BigNumber>;
+  maxMintableSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'maxMintableSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "maxMintableSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'mintAshenType'(
+  mintAshenType(
     to: string,
     tokenIds: BigNumberish[],
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintAshenType(address,uint256[])'(
+  "mintAshenType(address,uint256[])"(
     to: string,
     tokenIds: BigNumberish[],
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintGiftType'(
+  mintGiftType(
     to: string,
     giftTokenIds: BigNumberish[],
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintGiftType(address,uint256[])'(
+  "mintGiftType(address,uint256[])"(
     to: string,
     giftTokenIds: BigNumberish[],
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintNobleType'(
+  mintNobleType(
     to: string,
     nobility: BigNumberish,
     signature: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintNobleType(address,uint8,bytes)'(
+  "mintNobleType(address,uint8,bytes)"(
     to: string,
     nobility: BigNumberish,
     signature: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintPristineType'(
+  mintPristineType(
     to: string,
     numMints: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'mintPristineType(address,uint256)'(
+  "mintPristineType(address,uint256)"(
     to: string,
     numMints: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'name'(overrides?: CallOverrides): Promise<string>;
+  name(overrides?: CallOverrides): Promise<string>;
 
-  'name()'(overrides?: CallOverrides): Promise<string>;
+  "name()"(overrides?: CallOverrides): Promise<string>;
 
-  'nobleRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+  nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "nobleRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'numBurnFromGiftAmount'(
+  numBurnFromGiftAmount(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'numBurnFromGiftAmount(uint256)'(
+  "numBurnFromGiftAmount(uint256)"(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'numBurnFromSelfAmount'(
+  numBurnFromSelfAmount(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'numBurnFromSelfAmount(uint256)'(
+  "numBurnFromSelfAmount(uint256)"(
     amount: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  'owner'(overrides?: CallOverrides): Promise<string>;
+  owner(overrides?: CallOverrides): Promise<string>;
 
-  'owner()'(overrides?: CallOverrides): Promise<string>;
+  "owner()"(overrides?: CallOverrides): Promise<string>;
 
-  'ownerOf'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  'ownerOf(uint256)'(
+  "ownerOf(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'payableErc20'(overrides?: CallOverrides): Promise<string>;
+  payableErc20(overrides?: CallOverrides): Promise<string>;
 
-  'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+  "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
-  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
-  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+  "renounceOwnership()"(overrides?: Overrides): Promise<ContractTransaction>;
 
-  'safeTransferFrom(address,address,uint256)'(
+  "safeTransferFrom(address,address,uint256)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'safeTransferFrom(address,address,uint256,bytes)'(
+  "safeTransferFrom(address,address,uint256,bytes)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
     _data: BytesLike,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setAirdropSigner'(
+  setAirdropSigner(
     _airdropSigner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setAirdropSigner(address)'(
+  "setAirdropSigner(address)"(
     _airdropSigner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setApprovalForAll'(
+  setApprovalForAll(
     operator: string,
     approved: boolean,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setApprovalForAll(address,bool)'(
+  "setApprovalForAll(address,bool)"(
     operator: string,
     approved: boolean,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setAshenRevealBlockNumber'(
+  setAshenRevealBlockNumber(
     _ashenRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setAshenRevealBlockNumber(uint256)'(
+  "setAshenRevealBlockNumber(uint256)"(
     _ashenRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setContractURI'(
+  setContractURI(
     newContractURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setContractURI(string)'(
+  "setContractURI(string)"(
     newContractURI: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setGiftRevealBlockNumber'(
+  setGiftRevealBlockNumber(
     _giftRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setGiftRevealBlockNumber(uint256)'(
+  "setGiftRevealBlockNumber(uint256)"(
     _giftRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setNobleRevealBlockNumber'(
+  setNobleRevealBlockNumber(
     _nobleRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setNobleRevealBlockNumber(uint256)'(
+  "setNobleRevealBlockNumber(uint256)"(
     _nobleRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setTreasury'(
+  setTreasury(
     _treasury: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setTreasury(address)'(
+  "setTreasury(address)"(
     _treasury: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setUltraSonicForkBlockNumber'(
+  setUltraSonicForkBlockNumber(
     _ultraSonicForkBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'setUltraSonicForkBlockNumber(uint256)'(
+  "setUltraSonicForkBlockNumber(uint256)"(
     _ultraSonicForkBlockNumber: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'splitSignature'(
+  splitSignature(
     sig: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-  'splitSignature(bytes)'(
+  "splitSignature(bytes)"(
     sig: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-  'supportsInterface'(
+  supportsInterface(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'supportsInterface(bytes4)'(
+  "supportsInterface(bytes4)"(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'symbol'(overrides?: CallOverrides): Promise<string>;
+  symbol(overrides?: CallOverrides): Promise<string>;
 
-  'symbol()'(overrides?: CallOverrides): Promise<string>;
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
 
-  'tokenURI'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  'tokenURI(uint256)'(
+  "tokenURI(uint256)"(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
-  'transferFrom'(
+  transferFrom(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferFrom(address,address,uint256)'(
+  "transferFrom(address,address,uint256)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferOwnership'(
+  transferOwnership(
     newOwner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'transferOwnership(address)'(
+  "transferOwnership(address)"(
     newOwner: string,
-    overrides?: Overrides,
+    overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  'treasury'(overrides?: CallOverrides): Promise<string>;
+  treasury(overrides?: CallOverrides): Promise<string>;
 
-  'treasury()'(overrides?: CallOverrides): Promise<string>;
+  "treasury()"(overrides?: CallOverrides): Promise<string>;
 
-  'ultraSonicForkBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+  ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'ultraSonicForkBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+  "ultraSonicForkBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'verifyAirdrop'(
+  verifyAirdrop(
     to: string,
     nobility: BigNumberish,
     signature: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'verifyAirdrop(address,uint8,bytes)'(
+  "verifyAirdrop(address,uint8,bytes)"(
     to: string,
     nobility: BigNumberish,
     signature: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'callStatic': {
+  callStatic: {
     airdropSigner(overrides?: CallOverrides): Promise<string>;
 
-    'airdropSigner()'(overrides?: CallOverrides): Promise<string>;
+    "airdropSigner()"(overrides?: CallOverrides): Promise<string>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "ashenRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    'constructTokenURI(uint256)'(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<string>;
+    "contractURI()"(overrides?: CallOverrides): Promise<string>;
 
     externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
-    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
-
-    generateSVGImage(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<string>;
-
-    'generateSVGImage(uint256)'(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<string>;
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<string>;
 
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
-    'getAirdropHash(address,uint8)'(
+    "getAirdropHash(address,uint8)"(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "giftRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     isSigned(
@@ -1343,430 +1265,410 @@ export class LondonBurn extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     londonNeededFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'londonNeededFromGiftAmount(uint256)'(
+    "londonNeededFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     londonNeededFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'londonNeededFromSelfAmount(uint256)'(
+    "londonNeededFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxMintableSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'maxMintableSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "maxMintableSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAshenType(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'mintAshenType(address,uint256[])'(
+    "mintAshenType(address,uint256[])"(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     mintGiftType(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'mintGiftType(address,uint256[])'(
+    "mintGiftType(address,uint256[])"(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     mintNobleType(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'mintNobleType(address,uint8,bytes)'(
+    "mintNobleType(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     mintPristineType(
       to: string,
       numMints: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'mintPristineType(address,uint256)'(
+    "mintPristineType(address,uint256)"(
       to: string,
       numMints: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    'name()'(overrides?: CallOverrides): Promise<string>;
+    "name()"(overrides?: CallOverrides): Promise<string>;
 
     nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "nobleRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     numBurnFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'numBurnFromGiftAmount(uint256)'(
+    "numBurnFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     numBurnFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'numBurnFromSelfAmount(uint256)'(
+    "numBurnFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    'owner()'(overrides?: CallOverrides): Promise<string>;
+    "owner()"(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     payableErc20(overrides?: CallOverrides): Promise<string>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
+    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setAirdropSigner(
       _airdropSigner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setAirdropSigner(address)'(
+    "setAirdropSigner(address)"(
       _airdropSigner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setAshenRevealBlockNumber(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setAshenRevealBlockNumber(uint256)'(
+    "setAshenRevealBlockNumber(uint256)"(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setGiftRevealBlockNumber(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setGiftRevealBlockNumber(uint256)'(
+    "setGiftRevealBlockNumber(uint256)"(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setNobleRevealBlockNumber(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setNobleRevealBlockNumber(uint256)'(
+    "setNobleRevealBlockNumber(uint256)"(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'setUltraSonicForkBlockNumber(uint256)'(
+    "setUltraSonicForkBlockNumber(uint256)"(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
-    'splitSignature(bytes)'(
+    "splitSignature(bytes)"(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<string>;
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<string>;
+    "treasury()"(overrides?: CallOverrides): Promise<string>;
 
     ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'ultraSonicForkBlockNumber()'(
-      overrides?: CallOverrides,
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     verifyAirdrop(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'verifyAirdrop(address,uint8,bytes)'(
+    "verifyAirdrop(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
   };
 
-  'filters': {
+  filters: {
     Approval(
       owner: string | null,
       approved: string | null,
-      tokenId: BigNumberish | null,
+      tokenId: BigNumberish | null
     ): EventFilter;
 
     ApprovalForAll(
       owner: string | null,
       operator: string | null,
-      approved: null,
+      approved: null
     ): EventFilter;
 
     OwnershipTransferred(
       previousOwner: string | null,
-      newOwner: string | null,
+      newOwner: string | null
     ): EventFilter;
 
     Transfer(
       from: string | null,
       to: string | null,
-      tokenId: BigNumberish | null,
+      tokenId: BigNumberish | null
     ): EventFilter;
   };
 
-  'estimateGas': {
+  estimateGas: {
     airdropSigner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'airdropSigner()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "airdropSigner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "ashenRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    'constructTokenURI(uint256)'(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "contractURI()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<BigNumber>;
-
-    generateSVGImage(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    'generateSVGImage(uint256)'(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    "externalBurnableERC721()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'getAirdropHash(address,uint8)'(
+    "getAirdropHash(address,uint8)"(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     giftRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'giftRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "giftRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isSigned(
@@ -1775,426 +1677,406 @@ export class LondonBurn extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     londonNeededFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'londonNeededFromGiftAmount(uint256)'(
+    "londonNeededFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     londonNeededFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'londonNeededFromSelfAmount(uint256)'(
+    "londonNeededFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     maxMintableSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'maxMintableSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "maxMintableSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAshenType(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'mintAshenType(address,uint256[])'(
+    "mintAshenType(address,uint256[])"(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     mintGiftType(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'mintGiftType(address,uint256[])'(
+    "mintGiftType(address,uint256[])"(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     mintNobleType(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'mintNobleType(address,uint8,bytes)'(
+    "mintNobleType(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     mintPristineType(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'mintPristineType(address,uint256)'(
+    "mintPristineType(address,uint256)"(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'name()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     nobleRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'nobleRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "nobleRevealBlockNumber()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     numBurnFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'numBurnFromGiftAmount(uint256)'(
+    "numBurnFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     numBurnFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'numBurnFromSelfAmount(uint256)'(
+    "numBurnFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     payableErc20(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setAirdropSigner(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setAirdropSigner(address)'(
+    "setAirdropSigner(address)"(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setAshenRevealBlockNumber(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setAshenRevealBlockNumber(uint256)'(
+    "setAshenRevealBlockNumber(uint256)"(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setGiftRevealBlockNumber(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setGiftRevealBlockNumber(uint256)'(
+    "setGiftRevealBlockNumber(uint256)"(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setNobleRevealBlockNumber(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setNobleRevealBlockNumber(uint256)'(
+    "setNobleRevealBlockNumber(uint256)"(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'setUltraSonicForkBlockNumber(uint256)'(
+    "setUltraSonicForkBlockNumber(uint256)"(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'splitSignature(bytes)'(
+    "splitSignature(bytes)"(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<BigNumber>;
+    "treasury()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'ultraSonicForkBlockNumber()'(
-      overrides?: CallOverrides,
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     verifyAirdrop(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    'verifyAirdrop(address,uint8,bytes)'(
+    "verifyAirdrop(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
-  'populateTransaction': {
+  populateTransaction: {
     airdropSigner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'airdropSigner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "airdropSigner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'approve(address,uint256)'(
+    "approve(address,uint256)"(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     ashenRevealBlockNumber(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'ashenRevealBlockNumber()'(
-      overrides?: CallOverrides,
+    "ashenRevealBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'balanceOf(address)'(
+    "balanceOf(address)"(
       owner: string,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    'constructTokenURI(uint256)'(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "contractURI()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     externalBurnableERC721(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'externalBurnableERC721()'(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    generateSVGImage(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    'generateSVGImage(uint256)'(
-      seed: BigNumberish,
-      overrides?: CallOverrides,
+    "externalBurnableERC721()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'getAirdropHash(address,uint8)'(
+    "getAirdropHash(address,uint8)"(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'getApproved(uint256)'(
+    "getApproved(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     giftRevealBlockNumber(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'giftRevealBlockNumber()'(
-      overrides?: CallOverrides,
+    "giftRevealBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'isApprovedForAll(address,address)'(
+    "isApprovedForAll(address,address)"(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isSigned(
@@ -2203,327 +2085,327 @@ export class LondonBurn extends Contract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)"(
       _address: string,
       messageHash: BytesLike,
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     londonNeededFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'londonNeededFromGiftAmount(uint256)'(
+    "londonNeededFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     londonNeededFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'londonNeededFromSelfAmount(uint256)'(
+    "londonNeededFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     maxMintableSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'maxMintableSupply()'(
-      overrides?: CallOverrides,
+    "maxMintableSupply()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mintAshenType(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'mintAshenType(address,uint256[])'(
+    "mintAshenType(address,uint256[])"(
       to: string,
       tokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     mintGiftType(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'mintGiftType(address,uint256[])'(
+    "mintGiftType(address,uint256[])"(
       to: string,
       giftTokenIds: BigNumberish[],
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     mintNobleType(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'mintNobleType(address,uint8,bytes)'(
+    "mintNobleType(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     mintPristineType(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'mintPristineType(address,uint256)'(
+    "mintPristineType(address,uint256)"(
       to: string,
       numMints: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'name()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nobleRevealBlockNumber(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'nobleRevealBlockNumber()'(
-      overrides?: CallOverrides,
+    "nobleRevealBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     numBurnFromGiftAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'numBurnFromGiftAmount(uint256)'(
+    "numBurnFromGiftAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     numBurnFromSelfAmount(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'numBurnFromSelfAmount(uint256)'(
+    "numBurnFromSelfAmount(uint256)"(
       amount: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'ownerOf(uint256)'(
+    "ownerOf(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     payableErc20(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'payableErc20()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "payableErc20()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
+    "renounceOwnership()"(overrides?: Overrides): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setAirdropSigner(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setAirdropSigner(address)'(
+    "setAirdropSigner(address)"(
       _airdropSigner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setApprovalForAll(address,bool)'(
+    "setApprovalForAll(address,bool)"(
       operator: string,
       approved: boolean,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setAshenRevealBlockNumber(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setAshenRevealBlockNumber(uint256)'(
+    "setAshenRevealBlockNumber(uint256)"(
       _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setContractURI(string)'(
+    "setContractURI(string)"(
       newContractURI: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setGiftRevealBlockNumber(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setGiftRevealBlockNumber(uint256)'(
+    "setGiftRevealBlockNumber(uint256)"(
       _giftRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setNobleRevealBlockNumber(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setNobleRevealBlockNumber(uint256)'(
+    "setNobleRevealBlockNumber(uint256)"(
       _nobleRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setTreasury(address)'(
+    "setTreasury(address)"(
       _treasury: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'setUltraSonicForkBlockNumber(uint256)'(
+    "setUltraSonicForkBlockNumber(uint256)"(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'splitSignature(bytes)'(
+    "splitSignature(bytes)"(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'supportsInterface(bytes4)'(
+    "supportsInterface(bytes4)"(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'symbol()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'tokenURI(uint256)'(
+    "tokenURI(uint256)"(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'transferFrom(address,address,uint256)'(
+    "transferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    'transferOwnership(address)'(
+    "transferOwnership(address)"(
       newOwner: string,
-      overrides?: Overrides,
+      overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'treasury()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "treasury()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ultraSonicForkBlockNumber(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'ultraSonicForkBlockNumber()'(
-      overrides?: CallOverrides,
+    "ultraSonicForkBlockNumber()"(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     verifyAirdrop(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    'verifyAirdrop(address,uint8,bytes)'(
+    "verifyAirdrop(address,uint8,bytes)"(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

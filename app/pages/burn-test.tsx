@@ -74,6 +74,11 @@ const PageWrapper = styled.div`
   }
 `;
 
+const SQRT_3 = 1.73205080757;
+
+const getXForThirtyAngle = (y: number) => y / SQRT_3;
+const getYForThirtyAngle = (x: number) => x * SQRT_3;
+
 const TestPage: NextPage = () => {
   const shopState = useShopState();
 
@@ -81,9 +86,7 @@ const TestPage: NextPage = () => {
     <>
       <Header />
       <PageWrapper>
-        <svg width="600" height="600" viewBox="0 0 600 600">
-          <rect x="0" y="0" width="100%" height="100%" />
-        </svg>
+      <svg width="600" height="600" viewBox="0 0 600 600"><rect x="0" y="0" width="100%" height="100%"/><path fill="white" d="M 60.0000 25.0000 m 0 138.2794 l 239.5000 -138.2794 l 239.5000 138.2794 l 0 273.4412 l -239.5000 138.2794 l -239.5000 -138.2794"/></svg>
       </PageWrapper>
     </>
   );

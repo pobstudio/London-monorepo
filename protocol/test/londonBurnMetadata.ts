@@ -2,6 +2,7 @@ import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
 import { LondonBurn } from '../typechain/LondonBurn';
+import { LondonBurnMetadataFactory } from '../typechain/LondonBurnMetadataFactory';
 import { ERC20Mintable } from '../typechain/ERC20Mintable';
 import { ERC721Mintable } from '../typechain/ERC721Mintable';
 import { expect } from 'chai';
@@ -12,7 +13,7 @@ const ONE_GWEI = ethers.utils.parseUnits('1', 'gwei');
 
 describe('LondonBurnMetadata', function () {
   // constant values used in transfer tests
-  let londonBurn: LondonBurn;
+  let londonBurnFactory: LondonBurnMetadataFactory;
   let owner: Signer;
   let rando: Signer;
   let minter: Signer;
@@ -27,7 +28,7 @@ describe('LondonBurnMetadata', function () {
   });
 
   beforeEach(async function () {
-    const LondonBurn = await ethers.getContractFactory('LondonBurn');
+    const LondonBurnMetadataFactory = await ethers.getContractFactory('LondonBurnMetadataFactory');
 
     const Erc20Mintable = await ethers.getContractFactory('ERC20Mintable');
     erc20Mintable = (await Erc20Mintable.deploy(
@@ -44,18 +45,19 @@ describe('LondonBurnMetadata', function () {
     )) as ERC721Mintable;
     await erc721Mintable.deployed();
 
-    londonBurn = (await LondonBurn.deploy(
-      'Metadata',
-      'Metadata',
-      erc20Mintable.address,
-      erc721Mintable.address,
-    )) as LondonBurn;
-    await londonBurn.deployed();
+    londonBurnFactory = (await LondonBurnMetadataFactory.deploy()) as LondonBurnMetadataFactory;
+    await londonBurnFactory.deployed();
   });
 
   describe('generateSVGImage', () => {
     it('test', async function () {
-      console.log(await londonBurn.generateSVGImage('1'));
+
+      console.log(await londonBurnFactory.convertUintToFloatString(await londonBurnFactory.getXFromThirtyAngle('10000')));
+      console.log(await londonBurnFactory.convertUintToFloatString(await londonBurnFactory.getYFromThirtyAngle('10000')));
+      console.log(await londonBurnFactory.getPathForDownwardIso(1000000));
+      console.log(await londonBurnFactory.getPathForUpwardIso(1000000));
+      console.log(await londonBurnFactory.getPrismD(1000000, 1000000, 1460000, 1680000));
+      console.log((await londonBurnFactory.generateSVGImage(0))); 
     });
   });
 });
