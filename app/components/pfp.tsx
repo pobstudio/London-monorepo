@@ -85,31 +85,31 @@ export const PFP: FC = () => {
   );
 
   return (
-        <AvatarConsoleWrapper>
-          <AvatarConsole>
-            <AvatarLeftWell>
-              <AvatarCanvas
-                {...canvasSettings}
-                foregroundImageSrc={foregroundImageSrc}
-                backgroundImageSrc={backgroundImageSrc}
-              />
-            </AvatarLeftWell>
-            <AvatarRightWell>
-              {!!account ? (
-                <UserAssets
-                  foregroundImageSrc={foregroundImageSrc}
-                  backgroundImageSrc={backgroundImageSrc}
-                  setForegroundImageSrc={setForegroundImageSrc}
-                  setBackgroundImageSrc={setBackgroundImageSrc}
-                  setSelectedForegroundProject={setSelectedForegroundProject}
-                  account={account}
-                />
-              ) : (
-                <Web3Handler />
-              )}
-            </AvatarRightWell>
-          </AvatarConsole>
-        </AvatarConsoleWrapper>
+    <AvatarConsoleWrapper>
+      <AvatarConsole>
+        <AvatarLeftWell>
+          <AvatarCanvas
+            {...canvasSettings}
+            foregroundImageSrc={foregroundImageSrc}
+            backgroundImageSrc={backgroundImageSrc}
+          />
+        </AvatarLeftWell>
+        <AvatarRightWell>
+          {!!account ? (
+            <UserAssets
+              foregroundImageSrc={foregroundImageSrc}
+              backgroundImageSrc={backgroundImageSrc}
+              setForegroundImageSrc={setForegroundImageSrc}
+              setBackgroundImageSrc={setBackgroundImageSrc}
+              setSelectedForegroundProject={setSelectedForegroundProject}
+              account={account}
+            />
+          ) : (
+            <Web3Handler />
+          )}
+        </AvatarRightWell>
+      </AvatarConsole>
+    </AvatarConsoleWrapper>
   );
 };
 

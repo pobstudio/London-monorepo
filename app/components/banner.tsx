@@ -57,24 +57,24 @@ export const Banner: FC = () => {
   }, [backgroundImageSrc]);
 
   return (
-        <RugConsoleWrapper>
-          <RugConsole>
-            <LeftWell>
-              <RugCanvas rugImgSrcs={rugImgSrcs} />
-            </LeftWell>
-            <BottomBox>
-              {!!account ? (
-                <UserAssets
-                  backgroundImageSrc={backgroundImageSrc}
-                  setBackgroundImageSrc={setBackgroundImageSrc}
-                  account={account}
-                />
-              ) : (
-                <Web3Handler />
-              )}
-            </BottomBox>
-          </RugConsole>
-        </RugConsoleWrapper>
+    <RugConsoleWrapper>
+      <RugConsole>
+        <LeftWell>
+          <RugCanvas rugImgSrcs={rugImgSrcs} />
+        </LeftWell>
+        <BottomBox>
+          {!!account ? (
+            <UserAssets
+              backgroundImageSrc={backgroundImageSrc}
+              setBackgroundImageSrc={setBackgroundImageSrc}
+              account={account}
+            />
+          ) : (
+            <Web3Handler />
+          )}
+        </BottomBox>
+      </RugConsole>
+    </RugConsoleWrapper>
   );
 };
 

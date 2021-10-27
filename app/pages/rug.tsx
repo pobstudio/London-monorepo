@@ -63,7 +63,7 @@ const IndexPage: NextPage = () => {
         <Caption>
           <Italic>Get rug pulled!</Italic>
         </Caption>
-        <Banner/>
+        <Banner />
       </PageWrapper>
     </>
   );

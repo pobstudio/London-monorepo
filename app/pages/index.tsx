@@ -256,11 +256,9 @@ const Utility = () => {
       <RightAlignedText>
         Customize your PFP with a new background:
       </RightAlignedText>
-      <PFP/>
-      <RightAlignedText>
-        OR get a dope twitter banner:
-      </RightAlignedText>
-      <Banner/>
+      <PFP />
+      <RightAlignedText>OR get a dope twitter banner:</RightAlignedText>
+      <Banner />
       <RightAlignedText>
         Owning a <Bold>LONDON gift</Bold> enables you to participate in the{' '}
         <A target={'_blank'} href={NOTION_WIKI_LINK}>
@@ -456,7 +454,7 @@ const GiftShopPage: NextPage = () => {
         <ShouldReads />
         <Rarity />
         <FAQ />
-        <Footer/> 
+        <Footer />
       </PageWrapper>
     </>
   );

@@ -28,7 +28,9 @@ describe('LondonBurnMetadata', function () {
   });
 
   beforeEach(async function () {
-    const LondonBurnMetadataFactory = await ethers.getContractFactory('LondonBurnMetadataFactory');
+    const LondonBurnMetadataFactory = await ethers.getContractFactory(
+      'LondonBurnMetadataFactory',
+    );
 
     const Erc20Mintable = await ethers.getContractFactory('ERC20Mintable');
     erc20Mintable = (await Erc20Mintable.deploy(
@@ -51,13 +53,7 @@ describe('LondonBurnMetadata', function () {
 
   describe('generateSVGImage', () => {
     it('test', async function () {
-
-      console.log(await londonBurnFactory.convertUintToFloatString(await londonBurnFactory.getXFromThirtyAngle('10000')));
-      console.log(await londonBurnFactory.convertUintToFloatString(await londonBurnFactory.getYFromThirtyAngle('10000')));
-      console.log(await londonBurnFactory.getPathForDownwardIso(1000000));
-      console.log(await londonBurnFactory.getPathForUpwardIso(1000000));
-      console.log(await londonBurnFactory.getPrismD(1000000, 1000000, 1460000, 1680000));
-      console.log((await londonBurnFactory.generateSVGImage(0))); 
+      console.log(await londonBurnFactory.generateSVGImage(3));
     });
   });
 });

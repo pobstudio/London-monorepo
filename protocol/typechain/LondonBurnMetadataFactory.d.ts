@@ -21,22 +21,19 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
   functions: {
-    "constructTokenURI(uint256)": FunctionFragment;
     "convertUintToFloatString(uint256)": FunctionFragment;
     "generateSVGImage(uint256)": FunctionFragment;
+    "getCoinFlip(bytes)": FunctionFragment;
     "getPathForDownwardIso(uint256)": FunctionFragment;
     "getPathForUpwardIso(uint256)": FunctionFragment;
     "getPrismD(uint256,uint256,uint256,uint256)": FunctionFragment;
     "getPrismPath(string,string)": FunctionFragment;
+    "getRandomValue(uint256,uint256,bytes)": FunctionFragment;
     "getSquareRatio(uint256)": FunctionFragment;
     "getXFromThirtyAngle(uint256)": FunctionFragment;
     "getYFromThirtyAngle(uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "constructTokenURI",
-    values: [BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "convertUintToFloatString",
     values: [BigNumberish]
@@ -44,6 +41,10 @@ interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "generateSVGImage",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCoinFlip",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getPathForDownwardIso",
@@ -62,6 +63,10 @@ interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "getRandomValue",
+    values: [BigNumberish, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getSquareRatio",
     values: [BigNumberish]
   ): string;
@@ -75,15 +80,15 @@ interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "constructTokenURI",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "convertUintToFloatString",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "generateSVGImage",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCoinFlip",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -97,6 +102,10 @@ interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "getPrismD", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getPrismPath",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getRandomValue",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -129,16 +138,6 @@ export class LondonBurnMetadataFactory extends Contract {
   interface: LondonBurnMetadataFactoryInterface;
 
   functions: {
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    "constructTokenURI(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
     convertUintToFloatString(
       value: BigNumberish,
       overrides?: CallOverrides
@@ -158,6 +157,13 @@ export class LondonBurnMetadataFactory extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string] & { svg: string }>;
+
+    getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+
+    "getCoinFlip(bytes)"(
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     getPathForDownwardIso(
       length: BigNumberish,
@@ -207,6 +213,20 @@ export class LondonBurnMetadataFactory extends Contract {
       overrides?: CallOverrides
     ): Promise<[string] & { svg: string }>;
 
+    getRandomValue(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "getRandomValue(uint256,uint256,bytes)"(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     getSquareRatio(
       w: BigNumberish,
       overrides?: CallOverrides
@@ -238,16 +258,6 @@ export class LondonBurnMetadataFactory extends Contract {
     ): Promise<[BigNumber]>;
   };
 
-  constructTokenURI(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "constructTokenURI(uint256)"(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
   convertUintToFloatString(
     value: BigNumberish,
     overrides?: CallOverrides
@@ -267,6 +277,13 @@ export class LondonBurnMetadataFactory extends Contract {
     tokenId: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
+
+  getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+  "getCoinFlip(bytes)"(
+    seed: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   getPathForDownwardIso(
     length: BigNumberish,
@@ -316,6 +333,20 @@ export class LondonBurnMetadataFactory extends Contract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  getRandomValue(
+    min: BigNumberish,
+    max: BigNumberish,
+    seed: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "getRandomValue(uint256,uint256,bytes)"(
+    min: BigNumberish,
+    max: BigNumberish,
+    seed: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   getSquareRatio(
     w: BigNumberish,
     overrides?: CallOverrides
@@ -347,16 +378,6 @@ export class LondonBurnMetadataFactory extends Contract {
   ): Promise<BigNumber>;
 
   callStatic: {
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "constructTokenURI(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
     convertUintToFloatString(
       value: BigNumberish,
       overrides?: CallOverrides
@@ -376,6 +397,13 @@ export class LondonBurnMetadataFactory extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+    "getCoinFlip(bytes)"(
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     getPathForDownwardIso(
       length: BigNumberish,
@@ -424,6 +452,20 @@ export class LondonBurnMetadataFactory extends Contract {
       fill: string,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    getRandomValue(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getRandomValue(uint256,uint256,bytes)"(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     getSquareRatio(
       w: BigNumberish,
@@ -459,16 +501,6 @@ export class LondonBurnMetadataFactory extends Contract {
   filters: {};
 
   estimateGas: {
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "constructTokenURI(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     convertUintToFloatString(
       value: BigNumberish,
       overrides?: CallOverrides
@@ -486,6 +518,13 @@ export class LondonBurnMetadataFactory extends Contract {
 
     "generateSVGImage(uint256)"(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "getCoinFlip(bytes)"(
+      seed: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -534,6 +573,20 @@ export class LondonBurnMetadataFactory extends Contract {
     "getPrismPath(string,string)"(
       d: string,
       fill: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getRandomValue(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getRandomValue(uint256,uint256,bytes)"(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -569,16 +622,6 @@ export class LondonBurnMetadataFactory extends Contract {
   };
 
   populateTransaction: {
-    constructTokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "constructTokenURI(uint256)"(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     convertUintToFloatString(
       value: BigNumberish,
       overrides?: CallOverrides
@@ -596,6 +639,16 @@ export class LondonBurnMetadataFactory extends Contract {
 
     "generateSVGImage(uint256)"(
       tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getCoinFlip(
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getCoinFlip(bytes)"(
+      seed: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -644,6 +697,20 @@ export class LondonBurnMetadataFactory extends Contract {
     "getPrismPath(string,string)"(
       d: string,
       fill: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    getRandomValue(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getRandomValue(uint256,uint256,bytes)"(
+      min: BigNumberish,
+      max: BigNumberish,
+      seed: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
