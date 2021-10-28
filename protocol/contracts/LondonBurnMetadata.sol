@@ -161,8 +161,8 @@ library LondonBurnMetadataFactory {
 
     // go through op codes
     string memory paths = getPrismPath(getPrismD(posX, posY, sizeX, sizeY), 'white');
-    sizeX /= 2;
-    sizeY /= 2;
+    sizeX /= 4;
+    sizeY /= 4;
     uint tape = uint(seed);
     for (uint i = 0; i < 32; ++i) {
       uint opcode = tape & 0xF;
@@ -178,38 +178,44 @@ library LondonBurnMetadataFactory {
       //   sizeX *= 2;
       //   sizeY *= 2;
       // }
-      if (opcode == 0xE) {
+      if (opcode == 0xE || opcode == 0xF) {
         sizeX /= 2;
         sizeY /= 2;
         // more gradnularity
       }
+      // jump
+      if (opcode == 0xE || opcode == 0xF) {
+        posX = getRandomValue(0, 600, localSeed);
+        posY = getRandomValue(0, 600, abi.encodePacked(localSeed, i));
+        // more gradnularity
+      } 
       // translate 
-      if (opcode == 0x1 || opcode == 0x2 || opcode == 0x4) {
+      if (opcode == 0x1 || opcode == 0x2 || opcode == 0x4 || opcode == 0x5 || opcode == 0x6) {
         // translate X
-        uint scale = getRandomValue(0, 6, localSeed);
+        uint scale = getRandomValue(1, 4, localSeed);
         uint delta = (scale * sizeX) / 2;
         bool isNeg = getCoinFlip(abi.encodePacked(localSeed, i));
         if (isNeg && delta <= posX) {
-          posX = (posX - delta) % 600;
+          posX = (posX - delta);
         } else {
-          posX = (posX + delta) % 600;
+          posX = (posX + delta);
 
         }
       }
-      if (opcode == 0x7 || opcode == 0x8 || opcode == 0x9) {
+      if (opcode == 0x7 || opcode == 0x8 || opcode == 0x9 || opcode == 0xA || opcode == 0xB) {
         // translate Y
-        uint scale = getRandomValue(0, 6, localSeed);
+        uint scale = getRandomValue(1, 4, localSeed);
         uint delta = (scale * sizeY) / 2;
         bool isNeg = getCoinFlip(abi.encodePacked(localSeed, i));
         if (isNeg && delta <= posY) {
-          posY = (posY - delta) % 600;
+          posY = (posY - delta);
         } else {
-          posY = (posY + delta) % 600;
+          posY = (posY + delta);
         }
       }
-      if (opcode == 0x5 || opcode == 0x6 || opcode == 0xA || opcode == 0xB || opcode == 0xC || opcode == 0xD || opcode == 0xE || opcode == 0xF) {
+      if (opcode == 0xC || opcode == 0xD || opcode == 0xE || opcode == 0xF) {
         // translate 3D
-        uint scale = getRandomValue(0, 6, localSeed);
+        uint scale = getRandomValue(3, 6, localSeed);
         uint delta = (scale * (sizeX / 2)) / 2; 
         posX = delta;
         posY += getYFromThirtyAngle(delta); 

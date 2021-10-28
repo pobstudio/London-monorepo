@@ -23,7 +23,6 @@ export type { LondonBurnMetadataFactory } from "./LondonBurnMetadataFactory";
 export type { LondonBurnNoble } from "./LondonBurnNoble";
 export type { LondonBurnPristineAndEternal } from "./LondonBurnPristineAndEternal";
 export type { LondonGift } from "./LondonGift";
-export type { LondonLoot } from "./LondonLoot";
 export type { Ownable } from "./Ownable";
 export type { Signature } from "./Signature";
 
@@ -49,6 +48,5 @@ export { LondonBurnMetadataFactory__factory } from "./factories/LondonBurnMetada
 export { LondonBurnNoble__factory } from "./factories/LondonBurnNoble__factory";
 export { LondonBurnPristineAndEternal__factory } from "./factories/LondonBurnPristineAndEternal__factory";
 export { LondonGift__factory } from "./factories/LondonGift__factory";
-export { LondonLoot__factory } from "./factories/LondonLoot__factory";
 export { Ownable__factory } from "./factories/Ownable__factory";
 export { Signature__factory } from "./factories/Signature__factory";
