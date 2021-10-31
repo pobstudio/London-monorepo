@@ -11,8 +11,6 @@ import "./utils/Strings.sol";
 library LondonBurnMetadataFactory {
   uint256 constant DECIMALS_TO_CALCULATE_SVG = 4;
   uint256 constant UNIT_DECIMAL = 10000;
-  uint256 constant SQRT_3 = 17320; // 1.7320
-  uint256 constant CUBE_W_H_RATIO = 11507; // 0.8690
 
   using Strings for uint256;
 
@@ -47,62 +45,19 @@ library LondonBurnMetadataFactory {
     floatStr = string(buffer);
   }
 
-  function getYFromThirtyAngle(uint256 x) public pure returns (uint) {
-    return x * UNIT_DECIMAL / SQRT_3;
-  }
-  
-  function getXFromThirtyAngle(uint256 y) public pure returns (uint) {
-    return y * SQRT_3 / UNIT_DECIMAL;
-  }
-
-  function getSquareRatio(uint256 w) public pure returns (uint) {
-    return w * CUBE_W_H_RATIO / UNIT_DECIMAL;
-  }
-
-  function getPathForDownwardIso(uint256 length) public pure returns (string memory path) {
-    uint256 dx = length / 2;
-    uint256 dy = getYFromThirtyAngle(dx);
-
+  function getLinePath(string memory d, uint color) public pure returns (string memory svg) {
     return string(
       abi.encodePacked(
-        'l -', convertUintToFloatString(dx), ' ', convertUintToFloatString(dy),
-        ' l -', convertUintToFloatString(dx), ' -', convertUintToFloatString(dy)
+        '<path d="', d, '" stroke-width="12" opacity="0.75" stroke="', color.toHexStringWithColorPrefix(3), '" stroke-linecap="round" />'
       )
     );
   }
 
-  function getPathForUpwardIso(uint256 length) public pure returns (string memory path) {
-    uint256 dx = length / 2;
-    uint256 dy = getYFromThirtyAngle(dx);
-
+  function getLineD(uint x1, uint y1, uint dx, uint dy) public pure returns (string memory svg) {
     return string(
       abi.encodePacked(
-        'l ', convertUintToFloatString(dx), ' -', convertUintToFloatString(dy),
-        ' l ', convertUintToFloatString(dx), ' ', convertUintToFloatString(dy) 
-      )
-    );
-  }
-
-  function getPrismD(uint256 x, uint256 y, uint256 w, uint256 h) public pure returns (string memory svg) {
-    uint256 dx = w / 2;
-    uint256 dy = getYFromThirtyAngle(dx);
-
-    string memory path = string(
-      abi.encodePacked(
-        "M ", convertUintToFloatString(x), ' ', convertUintToFloatString(y),
-        " m 0 ", convertUintToFloatString(dy),
-        " ", getPathForUpwardIso(w),
-        ' l 0 ', convertUintToFloatString(h - (dy * 2)),
-        " ", getPathForDownwardIso(w)
-      )
-    );
-    return path; 
-  }
-
-  function getPrismPath(string memory d, string memory fill) public pure returns (string memory svg) {
-    return string(
-      abi.encodePacked(
-        '<path fill="', fill, '" d="', d, '"/>'
+        ' M ', x1.toString(), ' ', y1.toString(),
+        ' l ', dx.toString(), ' ', dy.toString()
       )
     );
   }
@@ -142,101 +97,157 @@ library LondonBurnMetadataFactory {
     return getRandomValue(0, 2, seed) == 0;
   }
 
+  function generateBackground(bytes32 seed, uint gridSize, uint bounds, uint margin, uint backgroundColor) public pure returns (string memory path) {
+    // simple background
+    bool isEnd = false;
+    uint x = margin;
+    uint y = margin;
+    string memory d = "";
+    uint localRandomTape = uint(seed);
+    uint ct = 0;
+    while(!isEnd) {
+      // can optimize to use another random source
+      uint rand = (localRandomTape % 0xF) / 2;
+      localRandomTape >>= 4;
+
+      uint length = (rand * gridSize);
+      if (x + length > bounds + margin) {
+        length = bounds + margin - x; 
+      }
+      d = string(
+        abi.encodePacked(
+          d,
+          getLineD(x, y, length, 0)
+        )
+      );
+      x += (length + gridSize);
+      if (x > margin + bounds) {
+        if (y >= margin + bounds) {
+          isEnd = true;
+        }
+        x = margin;
+        y += gridSize;
+      }
+      ct ++;
+      if (localRandomTape == 0x0) {
+        localRandomTape = uint(keccak256(abi.encodePacked(seed, ct)));
+      }
+    }
+    path = getLinePath(d, backgroundColor);
+  }
+
+  function generateLayer(bytes32 seed, uint gridSize, uint bounds, uint margin, uint chance, uint color) public pure returns (string memory path) {
+    string memory d = "";
+    uint localRandomTape = uint(seed);
+    uint ct = 0;
+    uint bplusM = bounds + margin;
+    for (uint x = margin; x < bplusM; x += gridSize) {
+      for (uint y = margin; y < bplusM; y += gridSize) {
+        uint occur = (localRandomTape % 0xF);
+        localRandomTape >>= 4;
+        if (occur < chance) {
+          uint rand = localRandomTape % 0xF;
+          localRandomTape >>= 4;
+          uint s = (localRandomTape % 0xF) / 2;
+          localRandomTape >>= 4;
+          uint delta = s * gridSize;
+          if (rand >= 0 && rand < 4) {
+             d = string(
+              abi.encodePacked(
+                d,
+                getLineD(x, y, 0, 0) 
+              )
+            ); 
+          }
+          if (rand >= 4 && rand < 8) {
+            uint dx = x + delta > bplusM ? bplusM - x : delta;
+            d = string(
+              abi.encodePacked(
+                d,
+                getLineD(x, y, dx, 0) 
+              )
+            ); 
+          }
+          if (rand >= 8 && rand < 12) {
+            uint dy = y + delta > bplusM ? bplusM - y : delta;
+            d = string(
+              abi.encodePacked(
+                d,
+                getLineD(x, y, 0, dy) 
+              )
+            ); 
+          }
+          if (rand >= 12 && rand < 16) {
+            uint dy = delta;
+            uint dx = delta;
+            if (x + dx > bplusM) {
+              dx = bplusM - x;
+              dy = dx;
+            }
+            if (y + dy > bplusM) {
+              dy = bplusM - y;
+              dx = dy;
+            }
+            d = string(
+              abi.encodePacked(
+                d,
+                getLineD(x, y, dx, dy) 
+              )
+            ); 
+          }
+        }
+      }
+      ct++;
+      if (localRandomTape == 0x0) {
+        localRandomTape = uint(keccak256(abi.encodePacked(seed, ct)));
+      }
+    }
+    path = getLinePath(d, color);
+  }
+
   function generateSVGImage(uint256 tokenId) public pure returns (string memory svg) {
     // init variables
     // TODO should these values be tuned
     bytes32 seed = keccak256(abi.encode(tokenId));
-    uint sizeX = 4790000;
-    uint sizeY = 5500000;
-    uint posX = 600000;
-    uint posY = 250000;
-    uint colorIndex = 0;
+    uint margin = 40;
+    uint bounds = 520;
+    
+    uint gridSize = 40;
     
     uint[] memory pallete = new uint[](4);
     // TODO: COLOR
-    pallete[0] = 0x49FF00;
-    pallete[1] = 0xFBFF00;
-    pallete[2] = 0xFF9300;
+    pallete[0] = 0xCEE5D0;
+    pallete[1] = 0xF3F0D7;
+    pallete[2] = 0xFED2AA;
     pallete[3] = 0xFF0000;
 
-    // go through op codes
-    string memory paths = getPrismPath(getPrismD(posX, posY, sizeX, sizeY), 'white');
-    sizeX /= 4;
-    sizeY /= 4;
-    uint tape = uint(seed);
-    for (uint i = 0; i < 32; ++i) {
-      uint opcode = tape & 0xF;
-      tape >>= 4;
-      bytes memory localSeed = abi.encodePacked(seed, i);
+    string memory paths = "";
 
-      // change color Index    
-      if (opcode != 0xB) {
-        colorIndex = getRandomValue(0, 4, localSeed); 
-      } 
-      // change size TODO
-      // if (opcode == 0x0) {
-      //   sizeX *= 2;
-      //   sizeY *= 2;
-      // }
-      if (opcode == 0xE || opcode == 0xF) {
-        sizeX /= 2;
-        sizeY /= 2;
-        // more gradnularity
-      }
-      // jump
-      if (opcode == 0xE || opcode == 0xF) {
-        posX = getRandomValue(0, 600, localSeed);
-        posY = getRandomValue(0, 600, abi.encodePacked(localSeed, i));
-        // more gradnularity
-      } 
-      // translate 
-      if (opcode == 0x1 || opcode == 0x2 || opcode == 0x4 || opcode == 0x5 || opcode == 0x6) {
-        // translate X
-        uint scale = getRandomValue(1, 4, localSeed);
-        uint delta = (scale * sizeX) / 2;
-        bool isNeg = getCoinFlip(abi.encodePacked(localSeed, i));
-        if (isNeg && delta <= posX) {
-          posX = (posX - delta);
-        } else {
-          posX = (posX + delta);
+    paths = string(
+      abi.encodePacked(
+        paths,
+        generateBackground(seed, gridSize, bounds, margin, pallete[3])
+      )
+    );
 
-        }
-      }
-      if (opcode == 0x7 || opcode == 0x8 || opcode == 0x9 || opcode == 0xA || opcode == 0xB) {
-        // translate Y
-        uint scale = getRandomValue(1, 4, localSeed);
-        uint delta = (scale * sizeY) / 2;
-        bool isNeg = getCoinFlip(abi.encodePacked(localSeed, i));
-        if (isNeg && delta <= posY) {
-          posY = (posY - delta);
-        } else {
-          posY = (posY + delta);
-        }
-      }
-      if (opcode == 0xC || opcode == 0xD || opcode == 0xE || opcode == 0xF) {
-        // translate 3D
-        uint scale = getRandomValue(3, 6, localSeed);
-        uint delta = (scale * (sizeX / 2)) / 2; 
-        posX = delta;
-        posY += getYFromThirtyAngle(delta); 
-                // uint negOrNot = getRandomValue(0, 2, abi.encodePacked(localSeed, i));
-        // TODO clamp
-      }
-      string memory d = getPrismD(posX, posY, sizeX, sizeY);
-      string memory path = getPrismPath(d, pallete[colorIndex].toHexStringWithColorPrefix(3));
+    // layers
+    uint chance = 4;
+    for (uint i = 0; i < pallete.length - 1; ++i) {
       paths = string(
         abi.encodePacked(
           paths,
-          path
+          generateLayer(seed, gridSize, bounds, margin, chance, pallete[i])
         )
       );
+      if (chance > 2) {
+        chance -= 1;
+      }
     }
-
     svg = 
       string(
           abi.encodePacked(
               '<svg width="600" height="600" viewBox="0 0 600 600">',
-              '<rect x="0" y="0" width="100%" height="100%"/>',
+              '<rect opacity="0.5" fill="', pallete[3].toHexStringWithColorPrefix(3) ,'" x="0" y="0" width="100%" height="100%"/>',
               paths,
               '</svg>'
           )

@@ -28,10 +28,51 @@ abstract contract LondonBurnGift is LondonBurnBase {
     return (amount * 2) - 1;
   }
 
-  // TODO: This is computationally heavy, and may result in rounding errors, maybe worth hardcoding these values
+  // NOTE: function replicates the values for ((2n - 1) / n) ^ 3
   function londonNeededFromGiftAmount(uint256 amount) public pure returns (uint256) {
-    // return (((amount * 2) - 1) / amount) ^ 2 - (((amount * 2) - 1) / amount) + (amount - 1) ^ (3/8) - 0.75;
-    return 1559;
+    if (amount == 2) {
+      return 3375 ether;
+    }
+    if (amount == 3) {
+      return 4629 ether;
+    }
+    if (amount == 4) {
+      return 5359 ether;
+    }
+    if (amount == 5) {
+      return 5832 ether;
+    }
+    if (amount == 6) {
+      return 6162 ether;
+    }
+    if (amount == 7) {
+      return 6405 ether;
+    }
+    if (amount == 8) {
+      return 6591 ether;
+    }
+    if (amount == 9) {
+      return 6739 ether;
+    }
+    if (amount == 10) {
+      return 6859 ether;
+    }
+    if (amount == 11) {
+      return 6958 ether;
+    }
+    if (amount == 12) {
+      return 7041 ether;
+    }
+    if (amount == 13) {
+      return 7111 ether;
+    }
+    if (amount == 14) {
+      return 7173 ether;
+    }
+    if (amount == 15) {
+      return 7226 ether;
+    }
+    return 0;
   }
 
   function mintGiftType(

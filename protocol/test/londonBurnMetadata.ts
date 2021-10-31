@@ -53,7 +53,7 @@ describe('LondonBurnMetadata', function () {
 
   describe('generateSVGImage', () => {
     it('test', async function () {
-      console.log(await londonBurnFactory.generateSVGImage(3));
+      console.log(await londonBurnFactory.generateSVGImage(4));
     });
   });
 });

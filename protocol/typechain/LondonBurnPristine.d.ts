@@ -20,20 +20,32 @@ import { BytesLike } from '@ethersproject/bytes';
 import { Listener, Provider } from '@ethersproject/providers';
 import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
-interface ERC721Interface extends ethers.utils.Interface {
+interface LondonBurnPristineInterface extends ethers.utils.Interface {
   functions: {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
+    'contractURI()': FunctionFragment;
+    'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
+    'mintEternalType(address,uint256)': FunctionFragment;
     'name()': FunctionFragment;
+    'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
+    'payableErc20()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setContractURI(string)': FunctionFragment;
+    'setTreasury(address)': FunctionFragment;
+    'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'treasury()': FunctionFragment;
+    'ultraSonicForkBlockNumber()': FunctionFragment;
   };
 
   encodeFunctionData(
@@ -42,6 +54,14 @@ interface ERC721Interface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
+    functionFragment: 'contractURI',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'externalBurnableERC721',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'getApproved',
     values: [BigNumberish],
   ): string;
@@ -49,10 +69,23 @@ interface ERC721Interface extends ethers.utils.Interface {
     functionFragment: 'isApprovedForAll',
     values: [string, string],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'mintEternalType',
+    values: [string, BigNumberish],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'ownerOf',
     values: [BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'payableErc20',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom',
@@ -61,6 +94,15 @@ interface ERC721Interface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: 'setApprovalForAll',
     values: [string, boolean],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setContractURI',
+    values: [string],
+  ): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setUltraSonicForkBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'supportsInterface',
@@ -75,9 +117,26 @@ interface ERC721Interface extends ethers.utils.Interface {
     functionFragment: 'transferFrom',
     values: [string, string, BigNumberish],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [string],
+  ): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'ultraSonicForkBlockNumber',
+    values?: undefined,
+  ): string;
 
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'contractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'externalBurnableERC721',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'getApproved',
     data: BytesLike,
@@ -86,14 +145,39 @@ interface ERC721Interface extends ethers.utils.Interface {
     functionFragment: 'isApprovedForAll',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintEternalType',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'payableErc20',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(
     functionFragment: 'safeTransferFrom',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'setApprovalForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setContractURI',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setTreasury',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setUltraSonicForkBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -106,19 +190,30 @@ interface ERC721Interface extends ethers.utils.Interface {
     functionFragment: 'transferFrom',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'ultraSonicForkBlockNumber',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
-export class ERC721 extends Contract {
+export class LondonBurnPristine extends Contract {
   'connect'(signerOrProvider: Signer | Provider | string): this;
   'attach'(addressOrName: string): this;
   'deployed'(): Promise<this>;
@@ -129,7 +224,7 @@ export class ERC721 extends Contract {
   'removeAllListeners'(eventName: EventFilter | string): this;
   'removeListener'(eventName: any, listener: Listener): this;
 
-  'interface': ERC721Interface;
+  'interface': LondonBurnPristineInterface;
 
   'functions': {
     approve(
@@ -150,6 +245,14 @@ export class ERC721 extends Contract {
       owner: string,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
+
+    contractURI(overrides?: CallOverrides): Promise<[string]>;
+
+    'contractURI()'(overrides?: CallOverrides): Promise<[string]>;
+
+    externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
+
+    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<[string]>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -173,9 +276,25 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
+    mintEternalType(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'mintEternalType(address,uint256)'(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     'name()'(overrides?: CallOverrides): Promise<[string]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    'owner()'(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
       tokenId: BigNumberish,
@@ -186,6 +305,14 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<[string]>;
+
+    payableErc20(overrides?: CallOverrides): Promise<[string]>;
+
+    'payableErc20()'(overrides?: CallOverrides): Promise<[string]>;
+
+    renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
+
+    'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -211,6 +338,36 @@ export class ERC721 extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setContractURI(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setContractURI(string)'(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setTreasury(
+      _treasury: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setTreasury(address)'(
+      _treasury: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setUltraSonicForkBlockNumber(uint256)'(
+      _ultraSonicForkBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -251,6 +408,26 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'transferOwnership(address)'(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    treasury(overrides?: CallOverrides): Promise<[string]>;
+
+    'treasury()'(overrides?: CallOverrides): Promise<[string]>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
   };
 
   'approve'(
@@ -271,6 +448,14 @@ export class ERC721 extends Contract {
     owner: string,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
+
+  'contractURI'(overrides?: CallOverrides): Promise<string>;
+
+  'contractURI()'(overrides?: CallOverrides): Promise<string>;
+
+  'externalBurnableERC721'(overrides?: CallOverrides): Promise<string>;
+
+  'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
 
   'getApproved'(
     tokenId: BigNumberish,
@@ -294,9 +479,25 @@ export class ERC721 extends Contract {
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
+  'mintEternalType'(
+    to: string,
+    numMints: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'mintEternalType(address,uint256)'(
+    to: string,
+    numMints: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
   'name'(overrides?: CallOverrides): Promise<string>;
 
   'name()'(overrides?: CallOverrides): Promise<string>;
+
+  'owner'(overrides?: CallOverrides): Promise<string>;
+
+  'owner()'(overrides?: CallOverrides): Promise<string>;
 
   'ownerOf'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -304,6 +505,14 @@ export class ERC721 extends Contract {
     tokenId: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<string>;
+
+  'payableErc20'(overrides?: CallOverrides): Promise<string>;
+
+  'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+
+  'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
+
+  'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256)'(
     from: string,
@@ -329,6 +538,36 @@ export class ERC721 extends Contract {
   'setApprovalForAll(address,bool)'(
     operator: string,
     approved: boolean,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setContractURI'(
+    newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setContractURI(string)'(
+    newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setTreasury'(
+    _treasury: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setTreasury(address)'(
+    _treasury: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setUltraSonicForkBlockNumber'(
+    _ultraSonicForkBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setUltraSonicForkBlockNumber(uint256)'(
+    _ultraSonicForkBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -367,6 +606,24 @@ export class ERC721 extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'transferOwnership'(
+    newOwner: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'transferOwnership(address)'(
+    newOwner: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'treasury'(overrides?: CallOverrides): Promise<string>;
+
+  'treasury()'(overrides?: CallOverrides): Promise<string>;
+
+  'ultraSonicForkBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'ultraSonicForkBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'callStatic': {
     approve(
       to: string,
@@ -386,6 +643,14 @@ export class ERC721 extends Contract {
       owner: string,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    contractURI(overrides?: CallOverrides): Promise<string>;
+
+    'contractURI()'(overrides?: CallOverrides): Promise<string>;
+
+    externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
+
+    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<string>;
 
     getApproved(
       tokenId: BigNumberish,
@@ -409,9 +674,25 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
+    mintEternalType(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'mintEternalType(address,uint256)'(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     name(overrides?: CallOverrides): Promise<string>;
 
     'name()'(overrides?: CallOverrides): Promise<string>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    'owner()'(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -419,6 +700,14 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<string>;
+
+    payableErc20(overrides?: CallOverrides): Promise<string>;
+
+    'payableErc20()'(overrides?: CallOverrides): Promise<string>;
+
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -444,6 +733,33 @@ export class ERC721 extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setContractURI(
+      newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setContractURI(string)'(
+      newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+
+    'setTreasury(address)'(
+      _treasury: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setUltraSonicForkBlockNumber(uint256)'(
+      _ultraSonicForkBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -481,6 +797,26 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'transferOwnership(address)'(
+      newOwner: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    treasury(overrides?: CallOverrides): Promise<string>;
+
+    'treasury()'(overrides?: CallOverrides): Promise<string>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   'filters': {
@@ -494,6 +830,11 @@ export class ERC721 extends Contract {
       owner: string | null,
       operator: string | null,
       approved: null,
+    ): EventFilter;
+
+    OwnershipTransferred(
+      previousOwner: string | null,
+      newOwner: string | null,
     ): EventFilter;
 
     Transfer(
@@ -523,6 +864,14 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    contractURI(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'contractURI()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'externalBurnableERC721()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
@@ -545,9 +894,25 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    mintEternalType(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'mintEternalType(address,uint256)'(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     'name()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'owner()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
       tokenId: BigNumberish,
@@ -558,6 +923,14 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    payableErc20(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'payableErc20()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
+
+    'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -583,6 +956,33 @@ export class ERC721 extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setContractURI(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setContractURI(string)'(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
+
+    'setTreasury(address)'(
+      _treasury: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setUltraSonicForkBlockNumber(uint256)'(
+      _ultraSonicForkBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -623,6 +1023,26 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'transferOwnership(address)'(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'treasury()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   'populateTransaction': {
@@ -648,6 +1068,18 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'contractURI()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    externalBurnableERC721(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'externalBurnableERC721()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides,
@@ -670,9 +1102,25 @@ export class ERC721 extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    mintEternalType(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'mintEternalType(address,uint256)'(
+      to: string,
+      numMints: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'name()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'owner()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
       tokenId: BigNumberish,
@@ -683,6 +1131,14 @@ export class ERC721 extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
+
+    payableErc20(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'payableErc20()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -708,6 +1164,36 @@ export class ERC721 extends Contract {
     'setApprovalForAll(address,bool)'(
       operator: string,
       approved: boolean,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setContractURI(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setContractURI(string)'(
+      newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setTreasury(
+      _treasury: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setTreasury(address)'(
+      _treasury: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setUltraSonicForkBlockNumber(
+      _ultraSonicForkBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setUltraSonicForkBlockNumber(uint256)'(
+      _ultraSonicForkBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
@@ -747,6 +1233,28 @@ export class ERC721 extends Contract {
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'transferOwnership(address)'(
+      newOwner: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'treasury()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ultraSonicForkBlockNumber(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

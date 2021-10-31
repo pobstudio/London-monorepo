@@ -6,9 +6,9 @@ import "./ERC20Mintable.sol";
 import "./ERC721.sol";
 import "./LondonBurnBase.sol";
 
-abstract contract LondonBurnPristineAndEternal is LondonBurnBase {
+abstract contract LondonBurnPristine is LondonBurnBase {
   uint256 constant MIN_PRISTINE_AMOUNT_PER_MINT =    4;
-  uint256 constant INITIAL_MINTABLE_SUPPLY =    500;
+  uint256 constant PRISTINE_MINTABLE_SUPPLY =    500;
   uint256 constant PRICE_PER_PRISTINE_MINT =    1559 ether; // since $LONDON is 10^18 we can use ether as a unit of accounting
   address lastMinter;
 
@@ -16,26 +16,16 @@ abstract contract LondonBurnPristineAndEternal is LondonBurnBase {
   ) {
   }
  
-  // TODO REVEAL VALUES
-  
-  // TODO
-  function maxMintableSupply() public pure returns (uint256) {
-    return INITIAL_MINTABLE_SUPPLY;
-  }
-
-  function mintPristineType(
+  function mintEternalType(
     address to,
     uint256 numMints
   ) public {
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
     require(numMints <= MIN_PRISTINE_AMOUNT_PER_MINT, "Exceeded per tx mint amount");
-    require(tokenTypeSupply[PRISTINE_TYPE] + numMints <= maxMintableSupply(), "Exceeded per tx mint amount");
+    require(tokenTypeSupply[PRISTINE_TYPE] + numMints <= PRISTINE_MINTABLE_SUPPLY, "Exceeded per tx mint amount");
     require(to != tx.origin, "Can't mint consecutively");
-
     _payLondon(to, numMints * PRICE_PER_PRISTINE_MINT);
     _mintTokenType(to, PRISTINE_TYPE, numMints);
     lastMinter = tx.origin;
   }
-
-  // TODO IMPLEMENT ETERNAL
 }

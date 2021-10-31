@@ -32,3 +32,7 @@ export const MAX_MINT_PER_TX = 10;
 export const MAX_MINT_NOT_UNLOCKED = 1;
 
 export const STARTING_INDEX = 3655;
+
+// burn paramters
+
+export const BURN_AIDROP_FEE = ONE_TOKEN_IN_BASE_UNITS.mul(1559);

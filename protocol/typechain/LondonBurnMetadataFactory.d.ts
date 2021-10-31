@@ -9,739 +9,659 @@ import {
   BigNumber,
   BigNumberish,
   PopulatedTransaction,
-} from "ethers";
+} from 'ethers';
 import {
   Contract,
   ContractTransaction,
   CallOverrides,
-} from "@ethersproject/contracts";
-import { BytesLike } from "@ethersproject/bytes";
-import { Listener, Provider } from "@ethersproject/providers";
-import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
+} from '@ethersproject/contracts';
+import { BytesLike } from '@ethersproject/bytes';
+import { Listener, Provider } from '@ethersproject/providers';
+import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface LondonBurnMetadataFactoryInterface extends ethers.utils.Interface {
   functions: {
-    "convertUintToFloatString(uint256)": FunctionFragment;
-    "generateSVGImage(uint256)": FunctionFragment;
-    "getCoinFlip(bytes)": FunctionFragment;
-    "getPathForDownwardIso(uint256)": FunctionFragment;
-    "getPathForUpwardIso(uint256)": FunctionFragment;
-    "getPrismD(uint256,uint256,uint256,uint256)": FunctionFragment;
-    "getPrismPath(string,string)": FunctionFragment;
-    "getRandomValue(uint256,uint256,bytes)": FunctionFragment;
-    "getSquareRatio(uint256)": FunctionFragment;
-    "getXFromThirtyAngle(uint256)": FunctionFragment;
-    "getYFromThirtyAngle(uint256)": FunctionFragment;
+    'convertUintToFloatString(uint256)': FunctionFragment;
+    'generateBackground(bytes32,uint256,uint256,uint256,uint256)': FunctionFragment;
+    'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)': FunctionFragment;
+    'generateSVGImage(uint256)': FunctionFragment;
+    'getCoinFlip(bytes)': FunctionFragment;
+    'getLineD(uint256,uint256,uint256,uint256)': FunctionFragment;
+    'getLinePath(string,uint256)': FunctionFragment;
+    'getRandomValue(uint256,uint256,bytes)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "convertUintToFloatString",
-    values: [BigNumberish]
+    functionFragment: 'convertUintToFloatString',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "generateSVGImage",
-    values: [BigNumberish]
+    functionFragment: 'generateBackground',
+    values: [BytesLike, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getCoinFlip",
-    values: [BytesLike]
+    functionFragment: 'generateLayer',
+    values: [
+      BytesLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "getPathForDownwardIso",
-    values: [BigNumberish]
+    functionFragment: 'generateSVGImage',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getPathForUpwardIso",
-    values: [BigNumberish]
+    functionFragment: 'getCoinFlip',
+    values: [BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "getPrismD",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'getLineD',
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getPrismPath",
-    values: [string, string]
+    functionFragment: 'getLinePath',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "getRandomValue",
-    values: [BigNumberish, BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getSquareRatio",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getXFromThirtyAngle",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getYFromThirtyAngle",
-    values: [BigNumberish]
+    functionFragment: 'getRandomValue',
+    values: [BigNumberish, BigNumberish, BytesLike],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "convertUintToFloatString",
-    data: BytesLike
+    functionFragment: 'convertUintToFloatString',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "generateSVGImage",
-    data: BytesLike
+    functionFragment: 'generateBackground',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getCoinFlip",
-    data: BytesLike
+    functionFragment: 'generateLayer',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getPathForDownwardIso",
-    data: BytesLike
+    functionFragment: 'generateSVGImage',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getPathForUpwardIso",
-    data: BytesLike
+    functionFragment: 'getCoinFlip',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "getPrismD", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLineD', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getPrismPath",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRandomValue",
-    data: BytesLike
+    functionFragment: 'getLinePath',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getSquareRatio",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getXFromThirtyAngle",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getYFromThirtyAngle",
-    data: BytesLike
+    functionFragment: 'getRandomValue',
+    data: BytesLike,
   ): Result;
 
   events: {};
 }
 
 export class LondonBurnMetadataFactory extends Contract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  'connect'(signerOrProvider: Signer | Provider | string): this;
+  'attach'(addressOrName: string): this;
+  'deployed'(): Promise<this>;
 
-  on(event: EventFilter | string, listener: Listener): this;
-  once(event: EventFilter | string, listener: Listener): this;
-  addListener(eventName: EventFilter | string, listener: Listener): this;
-  removeAllListeners(eventName: EventFilter | string): this;
-  removeListener(eventName: any, listener: Listener): this;
+  'on'(event: EventFilter | string, listener: Listener): this;
+  'once'(event: EventFilter | string, listener: Listener): this;
+  'addListener'(eventName: EventFilter | string, listener: Listener): this;
+  'removeAllListeners'(eventName: EventFilter | string): this;
+  'removeListener'(eventName: any, listener: Listener): this;
 
-  interface: LondonBurnMetadataFactoryInterface;
+  'interface': LondonBurnMetadataFactoryInterface;
 
-  functions: {
+  'functions': {
     convertUintToFloatString(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string] & { floatStr: string }>;
 
-    "convertUintToFloatString(uint256)"(
+    'convertUintToFloatString(uint256)'(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string] & { floatStr: string }>;
+
+    generateBackground(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { path: string }>;
+
+    'generateBackground(bytes32,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { path: string }>;
+
+    generateLayer(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { path: string }>;
+
+    'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { path: string }>;
 
     generateSVGImage(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
-    "generateSVGImage(uint256)"(
+    'generateSVGImage(uint256)'(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
     getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
 
-    "getCoinFlip(bytes)"(
+    'getCoinFlip(bytes)'(
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    getPathForDownwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string] & { path: string }>;
-
-    "getPathForDownwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string] & { path: string }>;
-
-    getPathForUpwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string] & { path: string }>;
-
-    "getPathForUpwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string] & { path: string }>;
-
-    getPrismD(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
+    getLineD(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
-    "getPrismD(uint256,uint256,uint256,uint256)"(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
+    'getLineD(uint256,uint256,uint256,uint256)'(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
-    getPrismPath(
+    getLinePath(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
-    "getPrismPath(string,string)"(
+    'getLinePath(string,uint256)'(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<[string] & { svg: string }>;
 
     getRandomValue(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    "getRandomValue(uint256,uint256,bytes)"(
+    'getRandomValue(uint256,uint256,bytes)'(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    getSquareRatio(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "getSquareRatio(uint256)"(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    getXFromThirtyAngle(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "getXFromThirtyAngle(uint256)"(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    getYFromThirtyAngle(
-      x: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    "getYFromThirtyAngle(uint256)"(
-      x: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
   };
 
-  convertUintToFloatString(
+  'convertUintToFloatString'(
     value: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  "convertUintToFloatString(uint256)"(
+  'convertUintToFloatString(uint256)'(
     value: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  generateSVGImage(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "generateSVGImage(uint256)"(
-    tokenId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<boolean>;
-
-  "getCoinFlip(bytes)"(
+  'generateBackground'(
     seed: BytesLike,
-    overrides?: CallOverrides
+    gridSize: BigNumberish,
+    bounds: BigNumberish,
+    margin: BigNumberish,
+    backgroundColor: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateBackground(bytes32,uint256,uint256,uint256,uint256)'(
+    seed: BytesLike,
+    gridSize: BigNumberish,
+    bounds: BigNumberish,
+    margin: BigNumberish,
+    backgroundColor: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateLayer'(
+    seed: BytesLike,
+    gridSize: BigNumberish,
+    bounds: BigNumberish,
+    margin: BigNumberish,
+    chance: BigNumberish,
+    color: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)'(
+    seed: BytesLike,
+    gridSize: BigNumberish,
+    bounds: BigNumberish,
+    margin: BigNumberish,
+    chance: BigNumberish,
+    color: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateSVGImage'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'generateSVGImage(uint256)'(
+    tokenId: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'getCoinFlip'(seed: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+  'getCoinFlip(bytes)'(
+    seed: BytesLike,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  getPathForDownwardIso(
-    length: BigNumberish,
-    overrides?: CallOverrides
+  'getLineD'(
+    x1: BigNumberish,
+    y1: BigNumberish,
+    dx: BigNumberish,
+    dy: BigNumberish,
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  "getPathForDownwardIso(uint256)"(
-    length: BigNumberish,
-    overrides?: CallOverrides
+  'getLineD(uint256,uint256,uint256,uint256)'(
+    x1: BigNumberish,
+    y1: BigNumberish,
+    dx: BigNumberish,
+    dy: BigNumberish,
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  getPathForUpwardIso(
-    length: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "getPathForUpwardIso(uint256)"(
-    length: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getPrismD(
-    x: BigNumberish,
-    y: BigNumberish,
-    w: BigNumberish,
-    h: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  "getPrismD(uint256,uint256,uint256,uint256)"(
-    x: BigNumberish,
-    y: BigNumberish,
-    w: BigNumberish,
-    h: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<string>;
-
-  getPrismPath(
+  'getLinePath'(
     d: string,
-    fill: string,
-    overrides?: CallOverrides
+    color: BigNumberish,
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  "getPrismPath(string,string)"(
+  'getLinePath(string,uint256)'(
     d: string,
-    fill: string,
-    overrides?: CallOverrides
+    color: BigNumberish,
+    overrides?: CallOverrides,
   ): Promise<string>;
 
-  getRandomValue(
+  'getRandomValue'(
     min: BigNumberish,
     max: BigNumberish,
     seed: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  "getRandomValue(uint256,uint256,bytes)"(
+  'getRandomValue(uint256,uint256,bytes)'(
     min: BigNumberish,
     max: BigNumberish,
     seed: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getSquareRatio(
-    w: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "getSquareRatio(uint256)"(
-    w: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  getXFromThirtyAngle(
-    y: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "getXFromThirtyAngle(uint256)"(
-    y: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  getYFromThirtyAngle(
-    x: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  "getYFromThirtyAngle(uint256)"(
-    x: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  callStatic: {
+  'callStatic': {
     convertUintToFloatString(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "convertUintToFloatString(uint256)"(
+    'convertUintToFloatString(uint256)'(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    generateBackground(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'generateBackground(bytes32,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    generateLayer(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     generateSVGImage(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "generateSVGImage(uint256)"(
+    'generateSVGImage(uint256)'(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<boolean>;
 
-    "getCoinFlip(bytes)"(
+    'getCoinFlip(bytes)'(
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    getPathForDownwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    getLineD(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "getPathForDownwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    'getLineD(uint256,uint256,uint256,uint256)'(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    getPathForUpwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "getPathForUpwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getPrismD(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    "getPrismD(uint256,uint256,uint256,uint256)"(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<string>;
-
-    getPrismPath(
+    getLinePath(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    "getPrismPath(string,string)"(
+    'getLinePath(string,uint256)'(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     getRandomValue(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getRandomValue(uint256,uint256,bytes)"(
+    'getRandomValue(uint256,uint256,bytes)'(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getSquareRatio(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getSquareRatio(uint256)"(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getXFromThirtyAngle(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getXFromThirtyAngle(uint256)"(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getYFromThirtyAngle(
-      x: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getYFromThirtyAngle(uint256)"(
-      x: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  filters: {};
+  'filters': {};
 
-  estimateGas: {
+  'estimateGas': {
     convertUintToFloatString(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "convertUintToFloatString(uint256)"(
+    'convertUintToFloatString(uint256)'(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    generateBackground(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'generateBackground(bytes32,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    generateLayer(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     generateSVGImage(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "generateSVGImage(uint256)"(
+    'generateSVGImage(uint256)'(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getCoinFlip(seed: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
 
-    "getCoinFlip(bytes)"(
+    'getCoinFlip(bytes)'(
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getPathForDownwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    getLineD(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getPathForDownwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    'getLineD(uint256,uint256,uint256,uint256)'(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getPathForUpwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getPathForUpwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getPrismD(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getPrismD(uint256,uint256,uint256,uint256)"(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getPrismPath(
+    getLinePath(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getPrismPath(string,string)"(
+    'getLinePath(string,uint256)'(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getRandomValue(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    "getRandomValue(uint256,uint256,bytes)"(
+    'getRandomValue(uint256,uint256,bytes)'(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getSquareRatio(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getSquareRatio(uint256)"(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getXFromThirtyAngle(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getXFromThirtyAngle(uint256)"(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    getYFromThirtyAngle(
-      x: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    "getYFromThirtyAngle(uint256)"(
-      x: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
-  populateTransaction: {
+  'populateTransaction': {
     convertUintToFloatString(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "convertUintToFloatString(uint256)"(
+    'convertUintToFloatString(uint256)'(
       value: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    generateBackground(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'generateBackground(bytes32,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      backgroundColor: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    generateLayer(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'generateLayer(bytes32,uint256,uint256,uint256,uint256,uint256)'(
+      seed: BytesLike,
+      gridSize: BigNumberish,
+      bounds: BigNumberish,
+      margin: BigNumberish,
+      chance: BigNumberish,
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     generateSVGImage(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "generateSVGImage(uint256)"(
+    'generateSVGImage(uint256)'(
       tokenId: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getCoinFlip(
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getCoinFlip(bytes)"(
+    'getCoinFlip(bytes)'(
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getPathForDownwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    getLineD(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getPathForDownwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
+    'getLineD(uint256,uint256,uint256,uint256)'(
+      x1: BigNumberish,
+      y1: BigNumberish,
+      dx: BigNumberish,
+      dy: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getPathForUpwardIso(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getPathForUpwardIso(uint256)"(
-      length: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getPrismD(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getPrismD(uint256,uint256,uint256,uint256)"(
-      x: BigNumberish,
-      y: BigNumberish,
-      w: BigNumberish,
-      h: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getPrismPath(
+    getLinePath(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getPrismPath(string,string)"(
+    'getLinePath(string,uint256)'(
       d: string,
-      fill: string,
-      overrides?: CallOverrides
+      color: BigNumberish,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getRandomValue(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    "getRandomValue(uint256,uint256,bytes)"(
+    'getRandomValue(uint256,uint256,bytes)'(
       min: BigNumberish,
       max: BigNumberish,
       seed: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getSquareRatio(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getSquareRatio(uint256)"(
-      w: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getXFromThirtyAngle(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getXFromThirtyAngle(uint256)"(
-      y: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getYFromThirtyAngle(
-      x: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "getYFromThirtyAngle(uint256)"(
-      x: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }
