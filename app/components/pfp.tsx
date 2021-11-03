@@ -31,6 +31,7 @@ export const SELECTABLE_BACKGROUND: [string, string][] = [
 export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0x4c4808459452c137fb9bf3e824d4d7ac73655f54', 'Quilts'],
   ['0x8a90cab2b38dba80c64b7734e58ee1db38b8992e', 'Doodles'],
+  ['0x31d4da52c12542ac3d6aadba5ed26a3a563a86dc', 'Fly Frogs'],
   ['0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', 'BAYC'],
   ['0x60e4d786628fea6478f785a6d7e704777c86a7c6', 'MAYC'],
   ['0xbd3531da5cf5857e7cfaa92426877b022e612cf8', 'Pudgy Penguins'],

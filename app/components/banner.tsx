@@ -243,10 +243,6 @@ const UserAssets: FC<{
   setBackgroundImageSrc: (src: string) => void;
   account: string;
 }> = ({ account, setBackgroundImageSrc, backgroundImageSrc }) => {
-  // const otherAssets = useOtherAssets(
-  //   account,
-  //   SELECTABLE_FOREGROUND.map((s) => s[0]),
-  // );
   const pobAssets = usePobAssets(account);
   return (
     <>
@@ -260,17 +256,6 @@ const UserAssets: FC<{
           isVerticalScroll={true}
         />
       </ForegroundUserSectionWrapper>
-      {/* <div style={{ flexGrow: 1 }}>
-        <UserSection
-          selectableAssetAndNames={SELECTABLE_FOREGROUND}
-          setSelectedProject={setSelectedForegroundProject}
-          setImageSrc={setForegroundImageSrc}
-          selectedImageSrc={foregroundImageSrc}
-          isVerticalScroll={true}
-          label={'Select Foreground'}
-          items={otherAssets}
-        />
-      </div> */}
     </>
   );
 };
