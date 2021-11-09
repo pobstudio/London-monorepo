@@ -7,15 +7,13 @@ import {
   CHAIN_ID,
   DISCORD_LINK,
   BLOG_LINK,
-  LONDON_EMOJI,
-  SNAPSHOT_LINK,
   TWITTER_LINK,
   UNISWAP_TRADE_LINK,
   OPENSEA_LINK,
-  TOKEN_SYMBOL,
   GITHUB_LINK,
   NOTION_WIKI_LINK,
   ADD_LIQUIDITY_LINK,
+  TOKEN_SYMBOL,
 } from '../constants';
 import { deployments } from '@pob/protocol';
 import { BREAKPTS } from '../styles';
@@ -99,7 +97,9 @@ export const Header: FC = () => {
           <Link href={ROUTES.INDEX} passHref>
             <A style={{ fontWeight: 'bold' }}>LONDON</A>
           </Link>
-            <A href={NOTION_WIKI_LINK} target={'_blank'}>DAO</A>
+          <A href={NOTION_WIKI_LINK} target={'_blank'}>
+            DAO
+          </A>
           {/* <Link href={ROUTES.PROVENANCE} passHref>
             <A>Provenance</A>
           </Link> */}
@@ -112,10 +112,17 @@ export const Header: FC = () => {
           {/* <Link href={ROUTES.RUG} passHref>
             <A style={{ color: 'blue' }}>Banner</A>
           </Link> */}
+          <Link href={ROUTES.BURN} passHref>
+            <A>Burn</A>
+          </Link>
           <Link href={ROUTES.TOKEN} passHref>
             <A>Token-nomics</A>
           </Link>
-          <A style={{ color: 'blue' }} href={UNISWAP_TRADE_LINK} target={'_blank'}>
+          <A
+            style={{ color: 'blue' }}
+            href={UNISWAP_TRADE_LINK}
+            target={'_blank'}
+          >
             Buy {TOKEN_SYMBOL}
           </A>
           {/* <DropdownContainer>

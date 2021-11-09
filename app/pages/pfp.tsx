@@ -35,7 +35,6 @@ export const PER_PROJECT_SETTINGS: { [key: string]: any } = {
 };
 
 const IndexPage: NextPage = () => {
-
   return (
     <>
       <Header />
@@ -46,7 +45,7 @@ const IndexPage: NextPage = () => {
         <Caption>
           <Italic>Complementary service for all avatars + LONDON gifts!</Italic>
         </Caption>
-        <PFP/> 
+        <PFP />
       </PageWrapper>
     </>
   );

@@ -1,10 +1,15 @@
-import { FC } from "react"
-import { FlexEnds, Flex } from "./flex"
-import { POBIcon } from "./icons/pob"
-import { Bold, MiniText, Text } from "./text"
+import { FC } from 'react';
+import { FlexEnds, Flex } from './flex';
+import { POBIcon } from './icons/pob';
+import { Bold, MiniText, Text } from './text';
 import styled from 'styled-components';
-import { DISCORD_LINK, GITHUB_LINK, OPENSEA_LINK, TWITTER_LINK } from "../constants";
-import { A } from "./anchor";
+import {
+  DISCORD_LINK,
+  GITHUB_LINK,
+  OPENSEA_LINK,
+  TWITTER_LINK,
+} from '../constants';
+import { A } from './anchor';
 
 const FooterRow = styled(FlexEnds)`
   width: 800px;
@@ -22,21 +27,23 @@ const AnchorColumn = styled(Flex)`
 `;
 
 export const Footer: FC = () => {
-  return <FooterRow>
+  return (
+    <FooterRow>
       <POBIcon />
       <AnchorColumn>
         <A href={DISCORD_LINK} target={'_blank'}>
           Discord
         </A>
         <A href={OPENSEA_LINK} target={'_blank'}>
-                    OpenSea
-                  </A>
-                  <A href={GITHUB_LINK} target={'_blank'}>
-                    Github
-                  </A>
-                  <A href={TWITTER_LINK} target={'_blank'}>
-                    Twitter
-                  </A>
+          OpenSea
+        </A>
+        <A href={GITHUB_LINK} target={'_blank'}>
+          Github
+        </A>
+        <A href={TWITTER_LINK} target={'_blank'}>
+          Twitter
+        </A>
       </AnchorColumn>
-  </FooterRow>
-}
+    </FooterRow>
+  );
+};
