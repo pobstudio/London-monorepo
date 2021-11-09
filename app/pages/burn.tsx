@@ -159,7 +159,7 @@ const Airdrop: FC = () => {
           <TableRow>
             <LabelTableColumn>Duke/Duchess</LabelTableColumn>
             <ValueTableColumn>300,000</ValueTableColumn>
-            <ValueTableColumn>10</ValueTableColumn>
+            <ValueTableColumn>16</ValueTableColumn>
           </TableRow>
         </TableBody>
       </TableContainer>
