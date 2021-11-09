@@ -29,7 +29,10 @@ abstract contract LondonBurnGift is LondonBurnBase {
   }
 
   // NOTE: function replicates the values for ((2n - 1) / n) ^ 3
-  function londonNeededFromGiftAmount(uint256 amount) public pure returns (uint256) {
+  function londonNeededFromGiftAmount(uint256 amount) public view returns (uint256) {
+    if (block.number < ultraSonicForkBlockNumber) {
+      return 1559 ether;
+    }
     if (amount == 2) {
       return 3375 ether;
     }

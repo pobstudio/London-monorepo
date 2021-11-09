@@ -405,13 +405,13 @@ const GiftShopPage: NextPage = () => {
             {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
           </Italic>
         </Caption> */}
-        {/* <Text style={{ marginBottom: 8 }}>
+        <Text style={{ marginBottom: 8 }}>
           <Link passHref href={ROUTES.DAO}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
-              Learn more about the {LONDON_DAO_TITLE}
+              [COMING SOON] <Bold>London</Bold> Embers: BURN GIFTS!
             </A>
           </Link>
-        </Text> */}
+        </Text>
         <Caption style={{ marginBottom: 4 }}>
           [SOLD OUT] {MAX_SUPPLY}{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>

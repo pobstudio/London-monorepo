@@ -6,4 +6,5 @@ export const ROUTES = {
   PROVENANCE: '/provenance',
   TOKEN: '/token',
   DAO: '/dao',
+  BURN: '/burn',
 };

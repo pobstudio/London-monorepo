@@ -325,11 +325,9 @@ const RugConsoleWrapper = styled(FlexCenter)`
 `;
 
 const RugConsole = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
   border: 1px solid black;
   width: 800px;
-  min-height: 450px;
+  min-height: 400px;
   @media (max-width: ${BREAKPTS.MD}px) {
     width: 100%;
   }
@@ -346,12 +344,6 @@ const BottomBox = styled.div`
 `;
 
 const Web3Cover = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;

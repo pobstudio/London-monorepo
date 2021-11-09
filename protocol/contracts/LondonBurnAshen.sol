@@ -9,7 +9,6 @@ import "./LondonBurnBase.sol";
 abstract contract LondonBurnAshen is LondonBurnBase {
   uint256 constant MIN_SELF_AMOUNT_PER_BURN =    3;
   uint256 constant MAX_SELF_AMOUNT_PER_BURN =    7;
-  uint256 constant PRICE_PER_BURN_MINT =    1559 ether; // since $LONDON is 10^18 we can use ether as a unit of accounting
 
   uint256 totalSelfBurnAmount;
   uint256 numSelfBurns;
@@ -30,9 +29,9 @@ abstract contract LondonBurnAshen is LondonBurnBase {
 
   function londonNeededFromSelfAmount(uint256 amount) public view returns (uint256) {
     if (block.number < ultraSonicForkBlockNumber) {
-      return PRICE_PER_BURN_MINT;
+      return 1559 ether;
     } else {
-      return PRICE_PER_BURN_MINT * amount;
+      return 1559 ether * amount;
     }
   }
 

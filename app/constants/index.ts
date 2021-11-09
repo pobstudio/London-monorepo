@@ -49,6 +49,11 @@ export const STUDIO_PROD_LINK = 'https://pob.studio';
 
 export const LONDON_PROD_LINK = 'https://london.pob.studio';
 
+export const MERGE_LINK =
+  'https://github.com/ethereum/pm/blob/master/Merge/mainnet-readiness.md';
+
+export const ULTRASOUND_LINK = `https://ultrasound.money/`;
+
 export const BLOG_LINK = `https://pob.mirror.xyz`;
 
 export const GITHUB_LINK = `https://github.com/proofofbeauty/LONDON-monorepo`;
