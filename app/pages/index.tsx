@@ -406,7 +406,7 @@ const GiftShopPage: NextPage = () => {
           </Italic>
         </Caption> */}
         <Text style={{ marginBottom: 8 }}>
-          <Link passHref href={ROUTES.DAO}>
+          <Link passHref href={ROUTES.BURN}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
               [COMING SOON] <Bold>London</Bold> Embers: BURN GIFTS!
             </A>
