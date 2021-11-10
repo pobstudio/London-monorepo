@@ -316,7 +316,7 @@ const BurnPage: NextPage = () => {
           celebration of the transition of ETH towards ETH 2.0. Inspired by{' '}
           <A href={ULTRASOUND_LINK}>EIP-1559</A>, LONDON EMBERs are minted via
           the burning of{' '}
-          <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>Gifts</A> and
+          <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>Gifts</A> or 
           Embers.
         </RightAlignedText>
         <RightAlignedText>
