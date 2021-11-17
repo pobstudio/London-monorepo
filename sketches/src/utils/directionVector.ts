@@ -1,4 +1,4 @@
-import { Cord, Vec2 } from "..";
+import { Cord, Vec2 } from '..';
 
 export const getDirectionVector = (directionIndex: number): Cord => {
   if (directionIndex == 0) {

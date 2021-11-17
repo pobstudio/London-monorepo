@@ -7,19 +7,19 @@ import "./ERC721.sol";
 import "./LondonBurnBase.sol";
 
 abstract contract LondonBurnEternal is LondonBurnBase {
-  uint256 constant ETERNAL_MINTABLE_SUPPLY =    100;
+  uint256 constant ETERNAL_MINTABLE_SUPPLY = 100;
 
   constructor(
   ) {
   }
  
-  function mintPristineType(
-    address to,
-    uint256 numMints
+  function mintEternalType(
+    MintCheck[] calldata mintChecks 
   ) public {
     require(msg.sender == treasury, "Only treasury can mint");
+    require(block.number > revealBlockNumber, 'ETERNAL has not been revealed yet');
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
-    require(tokenTypeSupply[PRISTINE_TYPE] + numMints <= ETERNAL_MINTABLE_SUPPLY, "Exceeded per tx mint amount");
-    _mintTokenType(to, ETERNAL_TYPE, numMints);
+    require(tokenTypeSupply[ETERNAL_TYPE] + mintChecks.length <= ETERNAL_MINTABLE_SUPPLY, "Exceeded ETERNAL mint amount");
+    _mintTokenType(ETERNAL_TYPE, mintChecks);
   }
 }

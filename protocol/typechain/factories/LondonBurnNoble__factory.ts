@@ -72,6 +72,25 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'mintCheck',
+        type: 'bytes32',
+      },
+    ],
+    name: 'MintCheckUsed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'address',
         name: 'previousOwner',
         type: 'address',
@@ -112,16 +131,38 @@ const _abi = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'airdropSigner',
-    outputs: [
+    inputs: [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'tokenType',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck[]',
+        name: '_mintChecks',
+        type: 'tuple[]',
       },
     ],
-    stateMutability: 'view',
+    name: '_mintTokenType',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -233,6 +274,42 @@ const _abi = [
   {
     inputs: [
       {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck',
+        name: '_mintCheck',
+        type: 'tuple',
+      },
+    ],
+    name: 'getMintCheckHash',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'owner',
         type: 'address',
@@ -296,11 +373,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
         internalType: 'enum LondonBurnNoble.Nobility',
         name: 'nobility',
         type: 'uint8',
@@ -310,10 +382,45 @@ const _abi = [
         name: 'signature',
         type: 'bytes',
       },
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck[]',
+        name: 'mintChecks',
+        type: 'tuple[]',
+      },
     ],
     name: 'mintNobleType',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'mintingAuthority',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -324,19 +431,6 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'nobleRevealBlockNumber',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -395,6 +489,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'revealBlockNumber',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -449,19 +556,6 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_airdropSigner',
-        type: 'address',
-      },
-    ],
-    name: 'setAirdropSigner',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'operator',
         type: 'address',
       },
@@ -492,12 +586,25 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_mintingAuthority',
+        type: 'address',
+      },
+    ],
+    name: 'setMintingAuthority',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
-        name: '_nobleRevealBlockNumber',
+        name: '_revealBlockNumber',
         type: 'uint256',
       },
     ],
-    name: 'setNobleRevealBlockNumber',
+    name: 'setRevealBlockNumber',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -584,6 +691,25 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenTypeSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -689,6 +815,42 @@ const _abi = [
       },
     ],
     name: 'verifyAirdrop',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck',
+        name: '_mintCheck',
+        type: 'tuple',
+      },
+    ],
+    name: 'verifyMintCheck',
     outputs: [
       {
         internalType: 'bool',

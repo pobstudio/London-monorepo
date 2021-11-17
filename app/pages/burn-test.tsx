@@ -59,17 +59,15 @@ const PageWrapper = styled.div`
 `;
 
 const TestPage: NextPage = () => {
-
   const isMounted = useIsMounted();
 
   const svgBuffer = useMemo(() => {
     if (!isMounted) {
-      return "";
+      return '';
     }
     const svg = renderEmbers();
     return decodeValue(svg);
   }, [isMounted]);
-
 
   return (
     <>

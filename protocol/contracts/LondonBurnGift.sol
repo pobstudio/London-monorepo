@@ -18,19 +18,16 @@ abstract contract LondonBurnGift is LondonBurnBase {
   ) {
   }
 
-  uint256 public giftRevealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-
-  function setGiftRevealBlockNumber(uint256 _giftRevealBlockNumber) external onlyOwner {
-      giftRevealBlockNumber = _giftRevealBlockNumber;
-  }
-
-  function numBurnFromGiftAmount(uint256 amount) public pure returns (uint256) {
+  function numBurnFromGiftAmount(uint256 amount) public view returns (uint256) {
+    if (block.number >= ultraSonicForkBlockNumber) {
+      return 1;
+    }
     return (amount * 2) - 1;
   }
 
   // NOTE: function replicates the values for ((2n - 1) / n) ^ 3
   function londonNeededFromGiftAmount(uint256 amount) public view returns (uint256) {
-    if (block.number < ultraSonicForkBlockNumber) {
+    if (block.number >= ultraSonicForkBlockNumber) {
       return 1559 ether;
     }
     if (amount == 2) {
@@ -79,26 +76,24 @@ abstract contract LondonBurnGift is LondonBurnBase {
   }
 
   function mintGiftType(
-    address to,
-    uint256[] calldata giftTokenIds
+    uint256[] calldata giftTokenIds,
+    MintCheck[] calldata mintChecks
   ) public {
-    require(block.number > giftRevealBlockNumber, 'GIFT has not been revealed yet');
+    require(block.number > revealBlockNumber, 'GIFT has not been revealed yet');
     require(totalGiftBurnAmount + giftTokenIds.length <= MAX_TOTAL_GIFT_BURN_AMOUNT, "Max GIFT burnt");
     require(giftTokenIds.length >= MIN_GIFT_AMOUNT_PER_BURN && giftTokenIds.length <= MAX_GIFT_AMOUNT_PER_BURN , "Exceeded gift burn range");
 
-    _payLondon(to, londonNeededFromGiftAmount(giftTokenIds.length));
+    payableErc20.transferFrom(_msgSender(), treasury, londonNeededFromGiftAmount(giftTokenIds.length));
     
     // burn gifts
     for (uint i = 0; i < giftTokenIds.length; ++i) {
-      externalBurnableERC721.safeTransferFrom(to, address(0), giftTokenIds[i]);
+      externalBurnableERC721.safeTransferFrom(_msgSender(), address(0xdead), giftTokenIds[i]);
     }
-    if (block.number < ultraSonicForkBlockNumber) {
-      _mintTokenType(to, GIFT_TYPE, numBurnFromGiftAmount(giftTokenIds.length));
-      totalGiftBurnAmount += giftTokenIds.length;
-    } else {
-      _mintTokenType(to, ULTRA_SONIC_TYPE, 1);
-      totalGiftBurnAmount += 1;
-    }
+    
+    require(mintChecks.length == numBurnFromGiftAmount(giftTokenIds.length), "MintChecks required mismatch");
+    
+    _mintTokenType(block.number < ultraSonicForkBlockNumber ? GIFT_TYPE : ULTRA_SONIC_TYPE, mintChecks);
+    totalGiftBurnAmount += giftTokenIds.length;
     numGiftBurns++;
   }
 }

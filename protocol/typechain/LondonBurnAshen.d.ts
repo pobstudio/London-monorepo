@@ -22,43 +22,51 @@ import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface LondonBurnAshenInterface extends ethers.utils.Interface {
   functions: {
+    '_mintTokenType(uint256,tuple[])': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
-    'ashenRevealBlockNumber()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'getMintCheckHash(tuple)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
     'londonNeededFromSelfAmount(uint256)': FunctionFragment;
-    'mintAshenType(address,uint256[])': FunctionFragment;
+    'mintAshenType(uint256[],tuple[])': FunctionFragment;
+    'mintingAuthority()': FunctionFragment;
     'name()': FunctionFragment;
     'numBurnFromSelfAmount(uint256)': FunctionFragment;
     'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
     'payableErc20()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
+    'revealBlockNumber()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
-    'setAshenRevealBlockNumber(uint256)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
+    'setMintingAuthority(address)': FunctionFragment;
+    'setRevealBlockNumber(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
+    'splitSignature(bytes)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
+    'tokenTypeSupply(uint256)': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'treasury()': FunctionFragment;
     'ultraSonicForkBlockNumber()': FunctionFragment;
+    'verifyMintCheck(tuple)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'approve',
-    values: [string, BigNumberish],
+    functionFragment: '_mintTokenType',
+    values: [BigNumberish, { to: string; URI: string; signature: BytesLike }[]],
   ): string;
   encodeFunctionData(
-    functionFragment: 'ashenRevealBlockNumber',
-    values?: undefined,
+    functionFragment: 'approve',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(
@@ -74,8 +82,16 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: 'getMintCheckHash',
+    values: [{ to: string; URI: string; signature: BytesLike }],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'isApprovedForAll',
     values: [string, string],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isSigned',
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
   ): string;
   encodeFunctionData(
     functionFragment: 'londonNeededFromSelfAmount',
@@ -83,7 +99,14 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'mintAshenType',
-    values: [string, BigNumberish[]],
+    values: [
+      BigNumberish[],
+      { to: string; URI: string; signature: BytesLike }[],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mintingAuthority',
+    values?: undefined,
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
@@ -104,6 +127,10 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: 'revealBlockNumber',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'safeTransferFrom',
     values: [string, string, BigNumberish],
   ): string;
@@ -112,12 +139,16 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     values: [string, boolean],
   ): string;
   encodeFunctionData(
-    functionFragment: 'setAshenRevealBlockNumber',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(
     functionFragment: 'setContractURI',
     values: [string],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMintingAuthority',
+    values: [string],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
@@ -125,10 +156,18 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: 'splitSignature',
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [BytesLike],
   ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'tokenTypeSupply',
+    values: [BigNumberish],
+  ): string;
   encodeFunctionData(
     functionFragment: 'tokenURI',
     values: [BigNumberish],
@@ -146,12 +185,16 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     functionFragment: 'ultraSonicForkBlockNumber',
     values?: undefined,
   ): string;
+  encodeFunctionData(
+    functionFragment: 'verifyMintCheck',
+    values: [{ to: string; URI: string; signature: BytesLike }],
+  ): string;
 
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'ashenRevealBlockNumber',
+    functionFragment: '_mintTokenType',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'contractURI',
@@ -166,15 +209,24 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'getMintCheckHash',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'isApprovedForAll',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'londonNeededFromSelfAmount',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
     functionFragment: 'mintAshenType',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintingAuthority',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
@@ -193,6 +245,10 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'revealBlockNumber',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'safeTransferFrom',
     data: BytesLike,
   ): Result;
@@ -201,11 +257,15 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setAshenRevealBlockNumber',
+    functionFragment: 'setContractURI',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
+    functionFragment: 'setMintingAuthority',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setRevealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -217,10 +277,18 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'splitSignature',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'supportsInterface',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'tokenTypeSupply',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'transferFrom',
@@ -235,16 +303,22 @@ interface LondonBurnAshenInterface extends ethers.utils.Interface {
     functionFragment: 'ultraSonicForkBlockNumber',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'verifyMintCheck',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'MintCheckUsed(uint256,bytes32)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MintCheckUsed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
@@ -263,6 +337,18 @@ export class LondonBurnAshen extends Contract {
   'interface': LondonBurnAshenInterface;
 
   'functions': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -274,10 +360,6 @@ export class LondonBurnAshen extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
-
-    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -304,6 +386,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -313,6 +405,24 @@ export class LondonBurnAshen extends Contract {
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
@@ -327,16 +437,20 @@ export class LondonBurnAshen extends Contract {
     ): Promise<[BigNumber]>;
 
     mintAshenType(
-      to: string,
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    'mintAshenType(address,uint256[])'(
-      to: string,
+    'mintAshenType(uint256[],tuple[])'(
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<[string]>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<[string]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -374,6 +488,10 @@ export class LondonBurnAshen extends Contract {
 
     'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
+    revealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
@@ -401,16 +519,6 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    setAshenRevealBlockNumber(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
-    'setAshenRevealBlockNumber(uint256)'(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<ContractTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -418,6 +526,26 @@ export class LondonBurnAshen extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
@@ -441,6 +569,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -454,6 +592,16 @@ export class LondonBurnAshen extends Contract {
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     'symbol()'(overrides?: CallOverrides): Promise<[string]>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -498,7 +646,29 @@ export class LondonBurnAshen extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
+
+  '_mintTokenType'(
+    tokenType: BigNumberish,
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  '_mintTokenType(uint256,tuple[])'(
+    tokenType: BigNumberish,
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
 
   'approve'(
     to: string,
@@ -511,10 +681,6 @@ export class LondonBurnAshen extends Contract {
     tokenId: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
-
-  'ashenRevealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
-
-  'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'balanceOf'(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -541,6 +707,16 @@ export class LondonBurnAshen extends Contract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  'getMintCheckHash'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'getMintCheckHash((address,string,bytes))'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   'isApprovedForAll'(
     owner: string,
     operator: string,
@@ -550,6 +726,24 @@ export class LondonBurnAshen extends Contract {
   'isApprovedForAll(address,address)'(
     owner: string,
     operator: string,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'isSigned'(
+    _address: string,
+    messageHash: BytesLike,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    _address: string,
+    messageHash: BytesLike,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
@@ -564,16 +758,20 @@ export class LondonBurnAshen extends Contract {
   ): Promise<BigNumber>;
 
   'mintAshenType'(
-    to: string,
     tokenIds: BigNumberish[],
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'mintAshenType(address,uint256[])'(
-    to: string,
+  'mintAshenType(uint256[],tuple[])'(
     tokenIds: BigNumberish[],
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
+
+  'mintingAuthority'(overrides?: CallOverrides): Promise<string>;
+
+  'mintingAuthority()'(overrides?: CallOverrides): Promise<string>;
 
   'name'(overrides?: CallOverrides): Promise<string>;
 
@@ -608,6 +806,10 @@ export class LondonBurnAshen extends Contract {
 
   'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
 
+  'revealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
   'safeTransferFrom(address,address,uint256)'(
     from: string,
     to: string,
@@ -635,16 +837,6 @@ export class LondonBurnAshen extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'setAshenRevealBlockNumber'(
-    _ashenRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
-  'setAshenRevealBlockNumber(uint256)'(
-    _ashenRevealBlockNumber: BigNumberish,
-    overrides?: Overrides,
-  ): Promise<ContractTransaction>;
-
   'setContractURI'(
     newContractURI: string,
     overrides?: Overrides,
@@ -652,6 +844,26 @@ export class LondonBurnAshen extends Contract {
 
   'setContractURI(string)'(
     newContractURI: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setMintingAuthority'(
+    _mintingAuthority: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setMintingAuthority(address)'(
+    _mintingAuthority: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setRevealBlockNumber'(
+    _revealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setRevealBlockNumber(uint256)'(
+    _revealBlockNumber: BigNumberish,
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
@@ -675,6 +887,16 @@ export class LondonBurnAshen extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'splitSignature'(
+    sig: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+  'splitSignature(bytes)'(
+    sig: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
   'supportsInterface'(
     interfaceId: BytesLike,
     overrides?: CallOverrides,
@@ -688,6 +910,16 @@ export class LondonBurnAshen extends Contract {
   'symbol'(overrides?: CallOverrides): Promise<string>;
 
   'symbol()'(overrides?: CallOverrides): Promise<string>;
+
+  'tokenTypeSupply'(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
+
+  'tokenTypeSupply(uint256)'(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'tokenURI'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -728,7 +960,29 @@ export class LondonBurnAshen extends Contract {
 
   'ultraSonicForkBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
+  'verifyMintCheck'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'verifyMintCheck((address,string,bytes))'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
   'callStatic': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -740,10 +994,6 @@ export class LondonBurnAshen extends Contract {
       tokenId: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
-
-    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -770,6 +1020,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -779,6 +1039,24 @@ export class LondonBurnAshen extends Contract {
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
@@ -793,16 +1071,20 @@ export class LondonBurnAshen extends Contract {
     ): Promise<BigNumber>;
 
     mintAshenType(
-      to: string,
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'mintAshenType(address,uint256[])'(
-      to: string,
+    'mintAshenType(uint256[],tuple[])'(
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<string>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<string>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -837,6 +1119,10 @@ export class LondonBurnAshen extends Contract {
 
     'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
 
+    revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
@@ -864,16 +1150,6 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setAshenRevealBlockNumber(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    'setAshenRevealBlockNumber(uint256)'(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     setContractURI(
       newContractURI: string,
       overrides?: CallOverrides,
@@ -881,6 +1157,26 @@ export class LondonBurnAshen extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -901,6 +1197,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -914,6 +1220,16 @@ export class LondonBurnAshen extends Contract {
     symbol(overrides?: CallOverrides): Promise<string>;
 
     'symbol()'(overrides?: CallOverrides): Promise<string>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -955,6 +1271,16 @@ export class LondonBurnAshen extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   'filters': {
@@ -970,6 +1296,11 @@ export class LondonBurnAshen extends Contract {
       approved: null,
     ): EventFilter;
 
+    MintCheckUsed(
+      tokenId: BigNumberish | null,
+      mintCheck: BytesLike | null,
+    ): EventFilter;
+
     OwnershipTransferred(
       previousOwner: string | null,
       newOwner: string | null,
@@ -983,6 +1314,18 @@ export class LondonBurnAshen extends Contract {
   };
 
   'estimateGas': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -994,10 +1337,6 @@ export class LondonBurnAshen extends Contract {
       tokenId: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
-
-    ashenRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'ashenRevealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1024,6 +1363,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -1033,6 +1382,24 @@ export class LondonBurnAshen extends Contract {
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1047,16 +1414,20 @@ export class LondonBurnAshen extends Contract {
     ): Promise<BigNumber>;
 
     mintAshenType(
-      to: string,
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    'mintAshenType(address,uint256[])'(
-      to: string,
+    'mintAshenType(uint256[],tuple[])'(
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<BigNumber>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1094,6 +1465,10 @@ export class LondonBurnAshen extends Contract {
 
     'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
 
+    revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
@@ -1121,16 +1496,6 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    setAshenRevealBlockNumber(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
-    'setAshenRevealBlockNumber(uint256)'(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<BigNumber>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1138,6 +1503,26 @@ export class LondonBurnAshen extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
@@ -1158,6 +1543,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -1171,6 +1566,16 @@ export class LondonBurnAshen extends Contract {
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     'symbol()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -1215,9 +1620,31 @@ export class LondonBurnAshen extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   'populateTransaction': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1228,14 +1655,6 @@ export class LondonBurnAshen extends Contract {
       to: string,
       tokenId: BigNumberish,
       overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    ashenRevealBlockNumber(
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    'ashenRevealBlockNumber()'(
-      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
@@ -1270,6 +1689,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -1279,6 +1708,24 @@ export class LondonBurnAshen extends Contract {
     'isApprovedForAll(address,address)'(
       owner: string,
       operator: string,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1293,15 +1740,21 @@ export class LondonBurnAshen extends Contract {
     ): Promise<PopulatedTransaction>;
 
     mintAshenType(
-      to: string,
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    'mintAshenType(address,uint256[])'(
-      to: string,
+    'mintAshenType(uint256[],tuple[])'(
       tokenIds: BigNumberish[],
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'mintingAuthority()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1340,6 +1793,12 @@ export class LondonBurnAshen extends Contract {
 
     'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
 
+    revealBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'revealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     'safeTransferFrom(address,address,uint256)'(
       from: string,
       to: string,
@@ -1367,16 +1826,6 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    setAshenRevealBlockNumber(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
-    'setAshenRevealBlockNumber(uint256)'(
-      _ashenRevealBlockNumber: BigNumberish,
-      overrides?: Overrides,
-    ): Promise<PopulatedTransaction>;
-
     setContractURI(
       newContractURI: string,
       overrides?: Overrides,
@@ -1384,6 +1833,26 @@ export class LondonBurnAshen extends Contract {
 
     'setContractURI(string)'(
       newContractURI: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1407,6 +1876,16 @@ export class LondonBurnAshen extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -1420,6 +1899,16 @@ export class LondonBurnAshen extends Contract {
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'symbol()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -1464,6 +1953,16 @@ export class LondonBurnAshen extends Contract {
     ): Promise<PopulatedTransaction>;
 
     'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

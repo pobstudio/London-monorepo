@@ -22,32 +22,46 @@ import { FunctionFragment, EventFragment, Result } from '@ethersproject/abi';
 
 interface LondonBurnEternalInterface extends ethers.utils.Interface {
   functions: {
+    '_mintTokenType(uint256,tuple[])': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'contractURI()': FunctionFragment;
     'externalBurnableERC721()': FunctionFragment;
     'getApproved(uint256)': FunctionFragment;
+    'getMintCheckHash(tuple)': FunctionFragment;
     'isApprovedForAll(address,address)': FunctionFragment;
-    'mintPristineType(address,uint256)': FunctionFragment;
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
+    'mintEternalType(tuple[])': FunctionFragment;
+    'mintingAuthority()': FunctionFragment;
     'name()': FunctionFragment;
     'owner()': FunctionFragment;
     'ownerOf(uint256)': FunctionFragment;
     'payableErc20()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
+    'revealBlockNumber()': FunctionFragment;
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
     'setContractURI(string)': FunctionFragment;
+    'setMintingAuthority(address)': FunctionFragment;
+    'setRevealBlockNumber(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
+    'splitSignature(bytes)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
+    'tokenTypeSupply(uint256)': FunctionFragment;
     'tokenURI(uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'treasury()': FunctionFragment;
     'ultraSonicForkBlockNumber()': FunctionFragment;
+    'verifyMintCheck(tuple)': FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: '_mintTokenType',
+    values: [BigNumberish, { to: string; URI: string; signature: BytesLike }[]],
+  ): string;
   encodeFunctionData(
     functionFragment: 'approve',
     values: [string, BigNumberish],
@@ -66,12 +80,24 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: 'getMintCheckHash',
+    values: [{ to: string; URI: string; signature: BytesLike }],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'isApprovedForAll',
     values: [string, string],
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintPristineType',
-    values: [string, BigNumberish],
+    functionFragment: 'isSigned',
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mintEternalType',
+    values: [{ to: string; URI: string; signature: BytesLike }[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mintingAuthority',
+    values?: undefined,
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
@@ -88,6 +114,10 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     values?: undefined,
   ): string;
   encodeFunctionData(
+    functionFragment: 'revealBlockNumber',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
     functionFragment: 'safeTransferFrom',
     values: [string, string, BigNumberish],
   ): string;
@@ -99,16 +129,32 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     functionFragment: 'setContractURI',
     values: [string],
   ): string;
+  encodeFunctionData(
+    functionFragment: 'setMintingAuthority',
+    values: [string],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setRevealBlockNumber',
+    values: [BigNumberish],
+  ): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
     functionFragment: 'setUltraSonicForkBlockNumber',
     values: [BigNumberish],
   ): string;
   encodeFunctionData(
+    functionFragment: 'splitSignature',
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'supportsInterface',
     values: [BytesLike],
   ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'tokenTypeSupply',
+    values: [BigNumberish],
+  ): string;
   encodeFunctionData(
     functionFragment: 'tokenURI',
     values: [BigNumberish],
@@ -126,7 +172,15 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     functionFragment: 'ultraSonicForkBlockNumber',
     values?: undefined,
   ): string;
+  encodeFunctionData(
+    functionFragment: 'verifyMintCheck',
+    values: [{ to: string; URI: string; signature: BytesLike }],
+  ): string;
 
+  decodeFunctionResult(
+    functionFragment: '_mintTokenType',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(
@@ -142,11 +196,20 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
+    functionFragment: 'getMintCheckHash',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'mintPristineType',
+    functionFragment: 'isApprovedForAll',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintEternalType',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'mintingAuthority',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
@@ -158,6 +221,10 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: 'renounceOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'revealBlockNumber',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
@@ -173,6 +240,14 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'setMintingAuthority',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'setRevealBlockNumber',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'setTreasury',
     data: BytesLike,
   ): Result;
@@ -181,10 +256,18 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     data: BytesLike,
   ): Result;
   decodeFunctionResult(
+    functionFragment: 'splitSignature',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
     functionFragment: 'supportsInterface',
     data: BytesLike,
   ): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'tokenTypeSupply',
+    data: BytesLike,
+  ): Result;
   decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: 'transferFrom',
@@ -199,16 +282,22 @@ interface LondonBurnEternalInterface extends ethers.utils.Interface {
     functionFragment: 'ultraSonicForkBlockNumber',
     data: BytesLike,
   ): Result;
+  decodeFunctionResult(
+    functionFragment: 'verifyMintCheck',
+    data: BytesLike,
+  ): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
+    'MintCheckUsed(uint256,bytes32)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'MintCheckUsed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
@@ -227,6 +316,18 @@ export class LondonBurnEternal extends Contract {
   'interface': LondonBurnEternalInterface;
 
   'functions': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -264,6 +365,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -276,17 +387,37 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
-    mintPristineType(
-      to: string,
-      numMints: BigNumberish,
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    mintEternalType(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
-    'mintPristineType(address,uint256)'(
-      to: string,
-      numMints: BigNumberish,
+    'mintEternalType(tuple[])'(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<[string]>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<[string]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -313,6 +444,10 @@ export class LondonBurnEternal extends Contract {
     renounceOwnership(overrides?: Overrides): Promise<ContractTransaction>;
 
     'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+
+    revealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -351,6 +486,26 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<ContractTransaction>;
+
     setTreasury(
       _treasury: string,
       overrides?: Overrides,
@@ -371,6 +526,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<ContractTransaction>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -384,6 +549,16 @@ export class LondonBurnEternal extends Contract {
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     'symbol()'(overrides?: CallOverrides): Promise<[string]>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -428,7 +603,29 @@ export class LondonBurnEternal extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
+
+  '_mintTokenType'(
+    tokenType: BigNumberish,
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  '_mintTokenType(uint256,tuple[])'(
+    tokenType: BigNumberish,
+    _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
 
   'approve'(
     to: string,
@@ -467,6 +664,16 @@ export class LondonBurnEternal extends Contract {
     overrides?: CallOverrides,
   ): Promise<string>;
 
+  'getMintCheckHash'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  'getMintCheckHash((address,string,bytes))'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
   'isApprovedForAll'(
     owner: string,
     operator: string,
@@ -479,17 +686,37 @@ export class LondonBurnEternal extends Contract {
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  'mintPristineType'(
-    to: string,
-    numMints: BigNumberish,
+  'isSigned'(
+    _address: string,
+    messageHash: BytesLike,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+    _address: string,
+    messageHash: BytesLike,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'mintEternalType'(
+    mintChecks: { to: string; URI: string; signature: BytesLike }[],
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
-  'mintPristineType(address,uint256)'(
-    to: string,
-    numMints: BigNumberish,
+  'mintEternalType(tuple[])'(
+    mintChecks: { to: string; URI: string; signature: BytesLike }[],
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
+
+  'mintingAuthority'(overrides?: CallOverrides): Promise<string>;
+
+  'mintingAuthority()'(overrides?: CallOverrides): Promise<string>;
 
   'name'(overrides?: CallOverrides): Promise<string>;
 
@@ -513,6 +740,10 @@ export class LondonBurnEternal extends Contract {
   'renounceOwnership'(overrides?: Overrides): Promise<ContractTransaction>;
 
   'renounceOwnership()'(overrides?: Overrides): Promise<ContractTransaction>;
+
+  'revealBlockNumber'(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
   'safeTransferFrom(address,address,uint256)'(
     from: string,
@@ -551,6 +782,26 @@ export class LondonBurnEternal extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'setMintingAuthority'(
+    _mintingAuthority: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setMintingAuthority(address)'(
+    _mintingAuthority: string,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setRevealBlockNumber'(
+    _revealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
+  'setRevealBlockNumber(uint256)'(
+    _revealBlockNumber: BigNumberish,
+    overrides?: Overrides,
+  ): Promise<ContractTransaction>;
+
   'setTreasury'(
     _treasury: string,
     overrides?: Overrides,
@@ -571,6 +822,16 @@ export class LondonBurnEternal extends Contract {
     overrides?: Overrides,
   ): Promise<ContractTransaction>;
 
+  'splitSignature'(
+    sig: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+  'splitSignature(bytes)'(
+    sig: BytesLike,
+    overrides?: CallOverrides,
+  ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
   'supportsInterface'(
     interfaceId: BytesLike,
     overrides?: CallOverrides,
@@ -584,6 +845,16 @@ export class LondonBurnEternal extends Contract {
   'symbol'(overrides?: CallOverrides): Promise<string>;
 
   'symbol()'(overrides?: CallOverrides): Promise<string>;
+
+  'tokenTypeSupply'(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
+
+  'tokenTypeSupply(uint256)'(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'tokenURI'(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -624,7 +895,29 @@ export class LondonBurnEternal extends Contract {
 
   'ultraSonicForkBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
+  'verifyMintCheck'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
+  'verifyMintCheck((address,string,bytes))'(
+    _mintCheck: { to: string; URI: string; signature: BytesLike },
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
+
   'callStatic': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -662,6 +955,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<string>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -674,17 +977,37 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    mintPristineType(
-      to: string,
-      numMints: BigNumberish,
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    mintEternalType(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'mintPristineType(address,uint256)'(
-      to: string,
-      numMints: BigNumberish,
+    'mintEternalType(tuple[])'(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<string>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<string>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -708,6 +1031,10 @@ export class LondonBurnEternal extends Contract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     'renounceOwnership()'(overrides?: CallOverrides): Promise<void>;
+
+    revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -746,6 +1073,26 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
     'setTreasury(address)'(
@@ -763,6 +1110,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -776,6 +1133,16 @@ export class LondonBurnEternal extends Contract {
     symbol(overrides?: CallOverrides): Promise<string>;
 
     'symbol()'(overrides?: CallOverrides): Promise<string>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
@@ -817,6 +1184,16 @@ export class LondonBurnEternal extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   'filters': {
@@ -832,6 +1209,11 @@ export class LondonBurnEternal extends Contract {
       approved: null,
     ): EventFilter;
 
+    MintCheckUsed(
+      tokenId: BigNumberish | null,
+      mintCheck: BytesLike | null,
+    ): EventFilter;
+
     OwnershipTransferred(
       previousOwner: string | null,
       newOwner: string | null,
@@ -845,6 +1227,18 @@ export class LondonBurnEternal extends Contract {
   };
 
   'estimateGas': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -882,6 +1276,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -894,17 +1298,37 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mintPristineType(
-      to: string,
-      numMints: BigNumberish,
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    mintEternalType(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
-    'mintPristineType(address,uint256)'(
-      to: string,
-      numMints: BigNumberish,
+    'mintEternalType(tuple[])'(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<BigNumber>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'mintingAuthority()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -931,6 +1355,10 @@ export class LondonBurnEternal extends Contract {
     renounceOwnership(overrides?: Overrides): Promise<BigNumber>;
 
     'renounceOwnership()'(overrides?: Overrides): Promise<BigNumber>;
+
+    revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'revealBlockNumber()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -969,6 +1397,26 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<BigNumber>;
+
     setTreasury(_treasury: string, overrides?: Overrides): Promise<BigNumber>;
 
     'setTreasury(address)'(
@@ -986,6 +1434,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<BigNumber>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -999,6 +1457,16 @@ export class LondonBurnEternal extends Contract {
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     'symbol()'(overrides?: CallOverrides): Promise<BigNumber>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -1043,9 +1511,31 @@ export class LondonBurnEternal extends Contract {
     'ultraSonicForkBlockNumber()'(
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   'populateTransaction': {
+    _mintTokenType(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    '_mintTokenType(uint256,tuple[])'(
+      tokenType: BigNumberish,
+      _mintChecks: { to: string; URI: string; signature: BytesLike }[],
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
     approve(
       to: string,
       tokenId: BigNumberish,
@@ -1090,6 +1580,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    getMintCheckHash(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'getMintCheckHash((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     isApprovedForAll(
       owner: string,
       operator: string,
@@ -1102,16 +1602,38 @@ export class LondonBurnEternal extends Contract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    mintPristineType(
-      to: string,
-      numMints: BigNumberish,
+    isSigned(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)'(
+      _address: string,
+      messageHash: BytesLike,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    mintEternalType(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
-    'mintPristineType(address,uint256)'(
-      to: string,
-      numMints: BigNumberish,
+    'mintEternalType(tuple[])'(
+      mintChecks: { to: string; URI: string; signature: BytesLike }[],
       overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    mintingAuthority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'mintingAuthority()'(
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1139,6 +1661,12 @@ export class LondonBurnEternal extends Contract {
     renounceOwnership(overrides?: Overrides): Promise<PopulatedTransaction>;
 
     'renounceOwnership()'(overrides?: Overrides): Promise<PopulatedTransaction>;
+
+    revealBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'revealBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
       from: string,
@@ -1177,6 +1705,26 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    setMintingAuthority(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setMintingAuthority(address)'(
+      _mintingAuthority: string,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    setRevealBlockNumber(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
+    'setRevealBlockNumber(uint256)'(
+      _revealBlockNumber: BigNumberish,
+      overrides?: Overrides,
+    ): Promise<PopulatedTransaction>;
+
     setTreasury(
       _treasury: string,
       overrides?: Overrides,
@@ -1197,6 +1745,16 @@ export class LondonBurnEternal extends Contract {
       overrides?: Overrides,
     ): Promise<PopulatedTransaction>;
 
+    splitSignature(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'splitSignature(bytes)'(
+      sig: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides,
@@ -1210,6 +1768,16 @@ export class LondonBurnEternal extends Contract {
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'symbol()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tokenTypeSupply(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'tokenTypeSupply(uint256)'(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
@@ -1254,6 +1822,16 @@ export class LondonBurnEternal extends Contract {
     ): Promise<PopulatedTransaction>;
 
     'ultraSonicForkBlockNumber()'(
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    verifyMintCheck(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    'verifyMintCheck((address,string,bytes))'(
+      _mintCheck: { to: string; URI: string; signature: BytesLike },
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

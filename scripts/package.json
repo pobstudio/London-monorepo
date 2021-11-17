@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "rollup:sketches": "rollup --config ./rollup.config.js",
-    "deploy:sketches": "yarn ts-node --project ./tsconfig.json src/deploy-rollup",
-    "refresh-os-metadata": "yarn ts-node --project ./tsconfig.json src/refresh-os-metadata"
+    "snapshot": "yarn ts-node --project ./tsconfig.json src/snapshot"
   },
   "author": "",
   "license": "ISC",

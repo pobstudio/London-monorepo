@@ -64,5 +64,5 @@ export const getPermutations = (inputArr: any[]) => {
 };
 
 export const lerp = (v0: number, v1: number, t: number) => {
-  return v0*(1-t)+v1*t
-}
+  return v0 * (1 - t) + v1 * t;
+};

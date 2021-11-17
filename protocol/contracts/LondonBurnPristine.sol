@@ -16,16 +16,16 @@ abstract contract LondonBurnPristine is LondonBurnBase {
   ) {
   }
  
-  function mintEternalType(
-    address to,
-    uint256 numMints
+  function mintPristineType(
+    MintCheck[] calldata mintChecks 
   ) public {
+    require(block.number > revealBlockNumber, 'PRISTINE has not been revealed yet');
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
-    require(numMints <= MAX_PRISTINE_AMOUNT_PER_MINT, "Exceeded per tx mint amount");
-    require(tokenTypeSupply[PRISTINE_TYPE] + numMints <= PRISTINE_MINTABLE_SUPPLY, "Exceeded per tx mint amount");
+    require(mintChecks.length <= MAX_PRISTINE_AMOUNT_PER_MINT, "Exceeded per tx mint amount");
+    require(tokenTypeSupply[PRISTINE_TYPE] + mintChecks.length <= PRISTINE_MINTABLE_SUPPLY, "Exceeded PRISTINE mint amount");
     require(lastMinter != tx.origin, "Can't mint consecutively");
-    _payLondon(to, numMints * PRICE_PER_PRISTINE_MINT);
-    _mintTokenType(to, PRISTINE_TYPE, numMints);
+    payableErc20.transferFrom(_msgSender(), treasury, mintChecks.length * PRICE_PER_PRISTINE_MINT);
+    _mintTokenType(PRISTINE_TYPE, mintChecks);
     lastMinter = tx.origin;
   }
 }

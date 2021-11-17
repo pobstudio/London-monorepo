@@ -72,6 +72,25 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'mintCheck',
+        type: 'bytes32',
+      },
+    ],
+    name: 'MintCheckUsed',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'address',
         name: 'previousOwner',
         type: 'address',
@@ -110,6 +129,41 @@ const _abi = [
     ],
     name: 'Transfer',
     type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenType',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck[]',
+        name: '_mintChecks',
+        type: 'tuple[]',
+      },
+    ],
+    name: '_mintTokenType',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
@@ -194,16 +248,39 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'giftRevealBlockNumber',
-    outputs: [
+    inputs: [
       {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck',
+        name: '_mintCheck',
+        type: 'tuple',
       },
     ],
-    stateMutability: 'view',
+    name: 'getMintCheckHash',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'pure',
     type: 'function',
   },
   {
@@ -233,6 +310,45 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'messageHash',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
+      },
+    ],
+    name: 'isSigned',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
@@ -246,25 +362,55 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
         internalType: 'uint256[]',
         name: 'giftTokenIds',
         type: 'uint256[]',
+      },
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck[]',
+        name: 'mintChecks',
+        type: 'tuple[]',
       },
     ],
     name: 'mintGiftType',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'mintingAuthority',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -296,7 +442,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'pure',
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -349,6 +495,19 @@ const _abi = [
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'revealBlockNumber',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -436,12 +595,25 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_mintingAuthority',
+        type: 'address',
+      },
+    ],
+    name: 'setMintingAuthority',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'uint256',
-        name: '_giftRevealBlockNumber',
+        name: '_revealBlockNumber',
         type: 'uint256',
       },
     ],
-    name: 'setGiftRevealBlockNumber',
+    name: 'setRevealBlockNumber',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -475,6 +647,35 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'bytes',
+        name: 'sig',
+        type: 'bytes',
+      },
+    ],
+    name: 'splitSignature',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'bytes4',
         name: 'interfaceId',
         type: 'bytes4',
@@ -499,6 +700,25 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenTypeSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -580,6 +800,42 @@ const _abi = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'URI',
+            type: 'string',
+          },
+          {
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct LondonBurnBase.MintCheck',
+        name: '_mintCheck',
+        type: 'tuple',
+      },
+    ],
+    name: 'verifyMintCheck',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',

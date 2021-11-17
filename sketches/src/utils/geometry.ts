@@ -46,3 +46,9 @@ export const getPolygonAsLines = (polygon: Polygon) => {
   lines.push([polygon[0], polygon[polygon.length - 1]]);
   return lines;
 };
+
+export const isCordInRect = (c: Cord, r: Rect) => {
+  return (
+    c[0] >= r[0][0] && c[1] >= r[0][1] && c[0] <= r[1][0] && c[1] <= r[1][1]
+  );
+};
