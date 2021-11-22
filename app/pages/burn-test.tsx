@@ -18,7 +18,12 @@ import {
   MAX_SUPPLY,
 } from '../constants/parameters';
 import { Header } from '../components/header';
-import { NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
+import {
+  getEmberGene,
+  NAMES_RARITY_MAP,
+  RARITY,
+  RARITY_TILE_MAP,
+} from '@pob/sketches';
 import {
   TableBody,
   TableColumn,
@@ -65,7 +70,8 @@ const TestPage: NextPage = () => {
     if (!isMounted) {
       return '';
     }
-    const svg = renderEmbers();
+    const gene = getEmberGene('63');
+    const svg = renderEmbers(gene);
     return decodeValue(svg);
   }, [isMounted]);
 

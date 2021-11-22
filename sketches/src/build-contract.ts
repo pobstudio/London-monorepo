@@ -15,16 +15,16 @@ const ASSETS_DIR = path.resolve(__dirname, '..', 'assets');
 (async () => {
   console.log('Building contract uri');
   console.log();
-  const blob = await readFileAsync(path.resolve(ASSETS_DIR, `icon.png`));
+  const blob = await readFileAsync(path.resolve(ASSETS_DIR, `embers.png`));
   const imageCid = await client.storeBlob(
-    new File([blob], `icon.png`, { type: 'image/png' }),
+    new File([blob], `embers.png`, { type: 'image/png' }),
   );
 
   const contractURI = {
-    name: '$LONDON Gift',
-    description: 'Gifts for the bold miners of 15.59 GWEI.',
+    name: 'LONDON Embers',
+    description: 'The glowing embers of burning NFTs.',
     image: `ipfs://${imageCid}`,
-    external_link: 'https://london.pob.studio',
+    external_link: 'https://london.pob.studio/burn',
     seller_fee_basis_points: 500,
     fee_recipient: '0x5766ab511a204C34661e85af5ba498E2e715A420',
   };

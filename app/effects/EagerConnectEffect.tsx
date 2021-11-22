@@ -24,7 +24,7 @@ export function useEagerConnect() {
       if (isAuthorized) {
         try {
           await activate(injected, undefined, true);
-        } catch (e) {
+        } catch (e: any) {
           // HACK to detect error
           if (e.message.includes('Unsupported')) {
             addStatusToast('chain-unsupported', -1, {

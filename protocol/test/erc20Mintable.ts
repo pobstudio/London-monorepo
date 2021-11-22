@@ -1,7 +1,7 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
+import { ERC20Mintable } from '../typechain-types/ERC20Mintable';
 import { expect } from 'chai';
 
 const TOKEN_SYMBOL = '$MINT';

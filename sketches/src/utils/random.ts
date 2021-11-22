@@ -1,3 +1,5 @@
+import { clone, cloneDeep } from 'lodash';
+
 export type RandomType = 'float' | 'int';
 
 export function randomRangeFactory(randFunc: any) {
@@ -36,6 +38,26 @@ export function randomRangeFactory(randFunc: any) {
     randomInArrayByWeights: (arr: any[], weights: number[]) => {
       const weightedIndex = utils.randomByWeights(weights);
       return arr[weightedIndex];
+    },
+    randomize: (array: any[]) => {
+      const localArray: any[] = clone(array);
+      let currentIndex = localArray.length,
+        randomIndex;
+
+      // While there remain elements to shuffle...
+      while (currentIndex != 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(randFunc() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [localArray[currentIndex], localArray[randomIndex]] = [
+          localArray[randomIndex],
+          localArray[currentIndex],
+        ];
+      }
+
+      return localArray;
     },
   };
   return utils;

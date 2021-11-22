@@ -60,9 +60,8 @@ const londonGift = ERC721__factory.connect(
   for (let i = 0; i < 8888; ++i) {
     const tokenIndex = (i < 3655 ? i + 8888 : i) - 3655;
     try {
-      console.log(i, tokenIndex);
-      const owner = await londonGift.ownerOf(tokenIndex);
-      console.log(owner);
+      const owner = await londonGift.ownerOf(i);
+      console.log(i, owner);
       if (!giftBalance[owner.toLowerCase()]) {
         giftBalance[owner.toLowerCase()] = 1;
       } else {

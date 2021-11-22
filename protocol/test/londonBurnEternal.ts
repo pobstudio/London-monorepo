@@ -1,10 +1,11 @@
-import { ethers } from 'hardhat';
+import { ethers, network } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
-
-import { LondonBurn } from '../typechain/LondonBurn';
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
-import { ERC721Mintable } from '../typechain/ERC721Mintable';
 import { expect } from 'chai';
+import { LondonBurn } from '../typechain-types/LondonBurn';
+import { ERC20Mintable } from '../typechain-types/ERC20Mintable';
+import { ERC721Mintable } from '../typechain-types/ERC721Mintable';
+import { LondonBurnMinter } from '../typechain-types/LondonBurnMinter';
+import { deployments } from '../deployments';
 import { chunk } from 'lodash';
 
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
@@ -14,8 +15,10 @@ const BAD_SIGNATURE =
   '0x4a18b9a27e75dbb5a7387b52f51f8a674db3f27923fe11ee481b72c630d3fd0d789bd8ba92f7a15138cdd7d174406d2d998dc4e9acd0e82c9b16efbe0324198d1b';
 const ETERNAL_TYPE =
   '0x8000000000000000000000000000000400000000000000000000000000000000';
-
+const MAX_BLOCK_NUM =
+  '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
 const ULTRASONIC_BLOCK = 15_000_000;
+const TEAM_ADDRESS = '0x9428ca8b5fe52C33BD0BD7222d719d788B6467F4';
 
 interface MintCheck {
   URI: string;
@@ -26,6 +29,7 @@ interface MintCheck {
 describe('LondonBurnEternal', function () {
   // constant values used in transfer tests
   let londonBurn: LondonBurn;
+  let londonBurnMinter: LondonBurnMinter;
   let owner: Signer;
   let rando: Signer;
   let treasury: Signer;
@@ -33,6 +37,35 @@ describe('LondonBurnEternal', function () {
   let minter: Signer;
   let erc20Mintable: ERC20Mintable;
   let erc721Mintable: ERC721Mintable;
+  let mintCheckCounter = 0;
+
+  const getMintChecks = async (to: string, num: number) => {
+    const mintChecks: MintCheck[] = [];
+
+    for (let i = 0; i < num; ++i) {
+      const mintCheck: MintCheck = {
+        URI: 'ipfs://mintcheck' + mintCheckCounter + i,
+        to,
+        signature: BAD_SIGNATURE,
+      };
+
+      const mintCheckHash = ethers.utils.solidityKeccak256(
+        ['address', 'string'],
+        [mintCheck.to, mintCheck.URI],
+      );
+
+      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
+
+      const mintCheckHashSig = await mintingAuthority.signMessage(
+        bytesMintCheckHash,
+      );
+
+      mintCheck.signature = mintCheckHashSig;
+      mintChecks.push(mintCheck);
+    }
+    mintCheckCounter += num;
+    return mintChecks;
+  };
 
   before(async function () {
     const accounts = await ethers.getSigners();
@@ -40,7 +73,11 @@ describe('LondonBurnEternal', function () {
     rando = accounts[1];
     treasury = accounts[2];
     mintingAuthority = accounts[3];
-    minter = accounts[4];
+    await network.provider.request({
+      method: 'hardhat_impersonateAccount',
+      params: ['0x364d6D0333432C3Ac016Ca832fb8594A8cE43Ca6'],
+    });
+    minter = await ethers.getSigner(TEAM_ADDRESS);
   });
 
   beforeEach(async function () {
@@ -64,259 +101,111 @@ describe('LondonBurnEternal', function () {
     londonBurn = (await LondonBurn.deploy(
       'London Embers',
       'EMBER',
-      erc20Mintable.address,
-      erc721Mintable.address,
     )) as LondonBurn;
     await londonBurn.deployed();
+
+    const LondonBurnMinter = await ethers.getContractFactory(
+      'LondonBurnMinter',
+    );
+    londonBurnMinter = (await LondonBurnMinter.deploy(
+      londonBurn.address,
+      deployments[1].erc20,
+      deployments[1].gift,
+      deployments[1].sushiswap,
+    )) as LondonBurnMinter;
+    await londonBurnMinter.deployed();
+    await londonBurn.setMinter(londonBurnMinter.address);
   });
 
   describe('mintEternalType', () => {
-    it('should mint correctly', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
+    beforeEach(async () => {
+      await londonBurnMinter.connect(owner).setRevealBlockNumber(0);
+      await londonBurnMinter
+        .connect(owner)
+        .setTreasury(await treasury.getAddress());
       await londonBurn
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
+    });
+    it('should mint correctly', async function () {
+      const mintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        2,
+      );
 
-      const mintChecks: MintCheck[] = [];
-
-      for (let i = 0; i < 2; ++i) {
-        const mintCheck: MintCheck = {
-          URI: 'ipfs://mintcheck' + i,
-          to: await treasury.getAddress(),
-          signature: BAD_SIGNATURE,
-        };
-
-        const mintCheckHash = ethers.utils.solidityKeccak256(
-          ['address', 'string'],
-          [mintCheck.to, mintCheck.URI],
-        );
-
-        const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-        const mintCheckHashSig = await mintingAuthority.signMessage(
-          bytesMintCheckHash,
-        );
-
-        mintCheck.signature = mintCheckHashSig;
-        mintChecks.push(mintCheck);
-      }
-
-      await londonBurn.connect(treasury).mintEternalType(mintChecks);
+      await londonBurnMinter.connect(treasury).mintEternalType(mintChecks);
 
       expect(
         await londonBurn.ownerOf(BigNumber.from(ETERNAL_TYPE).or('1')),
-      ).to.eq(await treasury.getAddress());
+      ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(ETERNAL_TYPE).or('1')),
       ).to.eq(mintChecks[0].URI);
 
       expect(
         await londonBurn.ownerOf(BigNumber.from(ETERNAL_TYPE).or('2')),
-      ).to.eq(await treasury.getAddress());
+      ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(ETERNAL_TYPE).or('2')),
       ).to.eq(mintChecks[1].URI);
     });
-    it('should not mint if not valid mint check', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
-
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck]),
-      ).to.revertedWith('Mint check is not valid');
-    });
-    it('should not mint if already used check', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
-
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
-      );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-      await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck, mintCheck]),
-      ).to.revertedWith('Mint check has already been used');
-      await londonBurn.connect(treasury).mintEternalType([mintCheck]);
-      await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck]),
-      ).to.revertedWith('Mint check has already been used');
-    });
     it('should not mint if not revealed', async function () {
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
+      await londonBurnMinter.connect(owner).setRevealBlockNumber(MAX_BLOCK_NUM);
 
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        2,
       );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
 
       await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck]),
+        londonBurnMinter.connect(treasury).mintEternalType(mintChecks),
       ).to.revertedWith('ETERNAL has not been revealed yet');
     });
     it('should not mint if not treasury', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
-
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        2,
       );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
 
       await expect(
-        londonBurn.connect(rando).mintEternalType([mintCheck]),
+        londonBurnMinter.connect(rando).mintEternalType(mintChecks),
       ).to.revertedWith('Only treasury can mint');
     });
     it('should not mint if ultrasonic mode', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setUltraSonicForkBlockNumber(1);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
+      await londonBurnMinter.connect(owner).setUltraSonicForkBlockNumber(1);
 
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        2,
       );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
 
       await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck]),
+        londonBurnMinter.connect(treasury).mintEternalType(mintChecks),
       ).to.revertedWith('ULTRASONIC MODE ENGAGED');
     });
     it('should not mint if exceeded mintable supply', async function () {
-      await londonBurn.connect(owner).setRevealBlockNumber(0);
-      await londonBurn.connect(owner).setTreasury(await treasury.getAddress());
-      await londonBurn
-        .connect(owner)
-        .setMintingAuthority(await mintingAuthority.getAddress());
+      const mintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        100,
+      );
 
-      const mintChecks: MintCheck[] = [];
-
-      for (let i = 0; i < 100; ++i) {
-        const mintCheck: MintCheck = {
-          URI: 'ipfs://mintcheck' + i,
-          to: await treasury.getAddress(),
-          signature: BAD_SIGNATURE,
-        };
-
-        const mintCheckHash = ethers.utils.solidityKeccak256(
-          ['address', 'string'],
-          [mintCheck.to, mintCheck.URI],
-        );
-
-        const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-        const mintCheckHashSig = await mintingAuthority.signMessage(
-          bytesMintCheckHash,
-        );
-
-        mintCheck.signature = mintCheckHashSig;
-        mintChecks.push(mintCheck);
-      }
       const groupedMintChecks = chunk(mintChecks, 20);
 
       for (const gmc of groupedMintChecks) {
-        await londonBurn.connect(treasury).mintEternalType(gmc);
+        await londonBurnMinter.connect(treasury).mintEternalType(gmc);
       }
 
       await expect(await londonBurn.tokenTypeSupply(ETERNAL_TYPE)).to.eq(
         BigNumber.from(100),
       );
 
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const newMintChecks: MintCheck[] = await getMintChecks(
+        await minter.getAddress(),
+        1,
       );
 
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-      mintCheck.signature = mintCheckHashSig;
       await expect(
-        londonBurn.connect(treasury).mintEternalType([mintCheck]),
+        londonBurnMinter.connect(treasury).mintEternalType(newMintChecks),
       ).to.revertedWith('Exceeded ETERNAL mint amount');
     });
   });

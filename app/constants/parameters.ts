@@ -50,6 +50,20 @@ export const BURN_ETERNAL_MINTABLE_SUPPLY = BigNumber.from(100);
 
 // NOBLE
 export const BURN_AIDROP_FEE = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
+export const BURN_NOBLE_AIRDROP_AMOUNT: { [e: number]: number } = {
+  0: 0,
+  1: 2,
+  2: 5,
+  3: 16,
+};
+export const BURN_NOBLE_AIRDROP_AMOUNT_REVERSE_LOOKUP: {
+  [e: number]: number;
+} = {
+  0: 0,
+  2: 1,
+  5: 2,
+  16: 3,
+};
 
 // GIFTS
 export const BURN_MIN_MAX_AMOUNT_FOR_GIFTS = [2, 15];

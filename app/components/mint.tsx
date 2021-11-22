@@ -85,9 +85,8 @@ export const Mint: FC<{}> = ({}) => {
   );
 
   const [cardState, setCardState] = useState<MintingCardState>('uninitialized');
-  const [chooseOption, setChooseOption] = useState<MintingChooseOption>(
-    '1559-gwei',
-  );
+  const [chooseOption, setChooseOption] =
+    useState<MintingChooseOption>('1559-gwei');
 
   const gasInfo = useGasInfo();
 
@@ -141,13 +140,15 @@ export const Mint: FC<{}> = ({}) => {
               </A>
             </FlexEnds>
             <MintOptionRowContainer>
-              {([
-                '1559-gwei',
-                'current',
-                'current-little-lower',
-                'current-more-lower',
-                'let-wallet-decide',
-              ] as MintingChooseOption[]).map((c) => {
+              {(
+                [
+                  '1559-gwei',
+                  'current',
+                  'current-little-lower',
+                  'current-more-lower',
+                  'let-wallet-decide',
+                ] as MintingChooseOption[]
+              ).map((c) => {
                 return (
                   <MintOption
                     option={c}

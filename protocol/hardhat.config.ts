@@ -1,7 +1,7 @@
 require('dotenv').config();
 import '@nomiclabs/hardhat-waffle';
-import 'hardhat-typechain';
 import '@nomiclabs/hardhat-etherscan';
+import '@typechain/hardhat';
 
 import { HardhatUserConfig } from 'hardhat/config';
 import { NetworksUserConfig } from 'hardhat/types';
@@ -33,6 +33,15 @@ if (RINKEBY_NETWORK_RPC_URL && RINKEBY_MNEMONIC) {
     url: RINKEBY_NETWORK_RPC_URL,
     accounts: {
       mnemonic: RINKEBY_MNEMONIC,
+    },
+  };
+}
+
+if (MAINNET_NETWORK_RPC_URL && RINKEBY_MNEMONIC) {
+  (config.networks as NetworksUserConfig).hardhat = {
+    forking: {
+      url: MAINNET_NETWORK_RPC_URL,
+      blockNumber: 13661250,
     },
   };
 }

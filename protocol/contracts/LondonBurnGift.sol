@@ -4,9 +4,10 @@ pragma solidity ^0.8.0;
 
 import "./ERC20Mintable.sol";
 import "./ERC721.sol";
-import "./LondonBurnBase.sol";
+import "./LondonBurnMinterBase.sol";
+import "./LondonBurn.sol";
 
-abstract contract LondonBurnGift is LondonBurnBase {
+abstract contract LondonBurnGift is LondonBurnMinterBase {
   uint256 constant MIN_GIFT_AMOUNT_PER_BURN =    2;
   uint256 constant MAX_GIFT_AMOUNT_PER_BURN =    15;
   uint256 constant MAX_TOTAL_GIFT_BURN_AMOUNT =    1559;
@@ -77,22 +78,20 @@ abstract contract LondonBurnGift is LondonBurnBase {
 
   function mintGiftType(
     uint256[] calldata giftTokenIds,
-    MintCheck[] calldata mintChecks
-  ) public {
+    LondonBurn.MintCheck[] calldata mintChecks
+  ) payable public {
     require(block.number > revealBlockNumber, 'GIFT has not been revealed yet');
     require(totalGiftBurnAmount + giftTokenIds.length <= MAX_TOTAL_GIFT_BURN_AMOUNT, "Max GIFT burnt");
     require(giftTokenIds.length >= MIN_GIFT_AMOUNT_PER_BURN && giftTokenIds.length <= MAX_GIFT_AMOUNT_PER_BURN , "Exceeded gift burn range");
-
-    payableErc20.transferFrom(_msgSender(), treasury, londonNeededFromGiftAmount(giftTokenIds.length));
-    
+    _payLondon(_msgSender(), londonNeededFromGiftAmount(giftTokenIds.length));
     // burn gifts
     for (uint i = 0; i < giftTokenIds.length; ++i) {
-      externalBurnableERC721.safeTransferFrom(_msgSender(), address(0xdead), giftTokenIds[i]);
+      externalBurnableERC721.transferFrom(_msgSender(), address(0xdead), giftTokenIds[i]);
     }
     
     require(mintChecks.length == numBurnFromGiftAmount(giftTokenIds.length), "MintChecks required mismatch");
     
-    _mintTokenType(block.number < ultraSonicForkBlockNumber ? GIFT_TYPE : ULTRA_SONIC_TYPE, mintChecks);
+    londonBurn.mintTokenType(block.number < ultraSonicForkBlockNumber ? GIFT_TYPE : ULTRA_SONIC_TYPE, mintChecks);
     totalGiftBurnAmount += giftTokenIds.length;
     numGiftBurns++;
   }

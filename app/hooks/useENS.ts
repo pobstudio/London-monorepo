@@ -4,7 +4,7 @@ import { useProvider } from './useProvider';
 
 export const useENSLookup = (address?: string | undefined | null) => {
   const provider = useProvider(true);
-  const [ensName, setEnsName] = useState<string | undefined>(undefined);
+  const [ensName, setEnsName] = useState<string | undefined | null>(undefined);
 
   useEffect(() => {
     if (!address || !provider) {

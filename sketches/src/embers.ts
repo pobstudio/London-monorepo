@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom';
 import { randomRangeFactory } from './utils/random';
 import * as colors from './data/colors.json';
-import { makeNoise2D } from 'fast-simplex-noise';
+import { makeNoise3D } from 'fast-simplex-noise';
 import { Bound, Cord, Line, Range, Rect, Vec2 } from '.';
 import { clamp } from 'lodash';
 import { darken } from 'polished';
@@ -9,6 +9,7 @@ import { isCordInRect, scaleCord } from './utils/geometry';
 import { randomVectorFieldBySeed } from './utils/field';
 import {
   addVec2,
+  applyVec2,
   dotMulVec2,
   lenVec2,
   lerp,
@@ -20,22 +21,18 @@ import {
   getDirectionIndexFromVector,
   getDirectionVectorFromAngle,
 } from './utils/directionVector';
+import { newArray } from './utils/array';
+import { generateName } from './utils/name';
 const DIMENSION = 600;
-
-/**
- * TODO
- * Different line primitives
- * Color effects on overlap
- * complex noise function
- * animation
- * noise over random hit
- */
 
 export interface EmberGene {
   gridSize: Bound;
   seed: string;
+  strokeWidth: number;
   pointilism: number;
   pallete: [string, string, string, string];
+  frameCt: number;
+  framePointilism: number;
 }
 
 interface Layer {
@@ -44,49 +41,184 @@ interface Layer {
 
 interface LayerStyles {
   color: string;
+  strokeWidth: number;
+  animation?: string;
 }
 
 const DEFAULT_GENE: EmberGene = {
-  gridSize: [100, 100],
-  seed: '11',
-  pallete: ['#f4f4f4', '#6decb9', '#11999e', '#3c3c3c'],
-  pointilism: 0.0125,
+  gridSize: [125, 125],
+  seed: '0',
+  pallete: ['#00bdaa', '#400082', '#fe346e', '#f1e7b6'],
+  pointilism: 0.001,
+  strokeWidth: 2,
+  frameCt: 50,
+  framePointilism: 0.01,
+};
+
+const FRAME_DURATION = 0.2;
+const MARGIN = 30;
+const AMPLITUDE_RANGE: Range = [0, 12];
+
+export const GRID_SIZE_AND_WEIGHT: [Bound[], number[]] = [
+  [
+    [15, 15],
+    [25, 25],
+    [50, 50],
+    [75, 75],
+    [100, 100],
+    [125, 125],
+  ],
+  [0.25, 0.25, 0.2, 0.15, 0.1, 0.05],
+];
+
+export const GRID_SIZE_TO_STROKE_WIDTH_RANGE: { [k: number]: Range } = {
+  15: [1, 26],
+  25: [1, 15],
+  50: [1, 8],
+  75: [1, 5],
+  100: [1, 4],
+  125: [1, 3],
+};
+
+export const GRID_SIZE_TO_LABEL: { [k: number]: string } = {
+  15: 'empty',
+  25: 'minimal',
+  50: 'normal',
+  75: 'dense',
+  100: 'complex',
+  125: 'super complex',
+};
+
+export const FRAME_CT_AND_WEIGHT: [number[], number[]] = [
+  [1, 5, 10, 20, 40, 50],
+  [0.3, 0.2, 0.2, 0.2, 0.09, 0.01],
+];
+
+export const FRAME_CT_TO_LABEL: { [k: number]: string } = {
+  1: 'still',
+  5: 'gif',
+  10: 'tik tok',
+  20: 'vlog',
+  40: 'short film',
+  50: 'movie',
+};
+
+export const FRAME_POINTILISM_AND_WEIGHT: [number[], number[]] = [
+  [0.01, 0.001, 0.1],
+  [0.49, 0.49, 0.02],
+];
+
+export const FRAME_POINTILISM_TO_LABEL: { [k: number]: string } = {
+  0.01: 'static',
+  0.001: 'turbulent',
+  0.1: 'light speed',
+};
+
+export const getEmberGene = (seed: string): EmberGene => {
+  const randSrc = seedrandom(seed);
+  const { random, randomInArray, randomInArrayByWeights } =
+    randomRangeFactory(randSrc);
+  const pallete = randomInArray((colors as any).default);
+  const gridSize: Bound = randomInArrayByWeights(
+    GRID_SIZE_AND_WEIGHT[0],
+    GRID_SIZE_AND_WEIGHT[1],
+  );
+  const frameCt = randomInArrayByWeights(
+    FRAME_CT_AND_WEIGHT[0],
+    FRAME_CT_AND_WEIGHT[1],
+  );
+  const framePointilism = randomInArrayByWeights(
+    FRAME_POINTILISM_AND_WEIGHT[0],
+    FRAME_POINTILISM_AND_WEIGHT[1],
+  );
+
+  // calculate strokeWidth
+  const strokeWidthRange = GRID_SIZE_TO_STROKE_WIDTH_RANGE[gridSize[0]];
+  const strokeWidth = random(...strokeWidthRange, 'int');
+
+  const pointilism = random(0.001, 0.1, 'float');
+
+  return {
+    gridSize,
+    seed: `seed-${seed}`,
+    pallete,
+    strokeWidth,
+    frameCt,
+    framePointilism,
+    pointilism,
+  };
+};
+
+export const getEmbersTokenMetadataFromGene = (
+  image: string,
+  gene: EmberGene,
+): any => {
+  return {
+    name: generateName(gene.seed),
+    description: 'The embers from celebrating ETH two point oh.',
+    image,
+    gene,
+    attributes: [
+      { trait_type: 'gridSize', value: GRID_SIZE_TO_LABEL[gene.gridSize[0]] },
+      {
+        trait_type: 'animationDuration',
+        value: FRAME_CT_TO_LABEL[gene.frameCt],
+      },
+      {
+        trait_type: 'animation',
+        value: FRAME_POINTILISM_TO_LABEL[gene.framePointilism],
+      },
+    ],
+  };
 };
 
 export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
   const randSrc = seedrandom(gene.seed);
-  const { randomInArray, randomByWeights, random } = randomRangeFactory(
-    randSrc,
-  );
-  const simplex = makeNoise2D(randSrc);
+  const { randomize } = randomRangeFactory(randSrc);
+  const simplex = makeNoise3D(randSrc);
   const gridBounds: Rect = [[0, 0], gene.gridSize];
-  const margin = 30;
   const bounds: Rect = [
-    [margin, margin],
-    [DIMENSION - margin, DIMENSION - margin],
+    [MARGIN, MARGIN],
+    [DIMENSION - MARGIN, DIMENSION - MARGIN],
   ];
+  const { strokeWidth } = gene;
 
-  const generateWaveLayer = (seed: string, hitChance: number = 1): Layer => {
+  const pallete = randomize(gene.pallete);
+
+  const noiseFunc = (x: number, y: number, t: number) => {
+    return Math.abs(
+      simplex(
+        gene.pointilism * x,
+        gene.pointilism * y,
+        gene.framePointilism * t,
+      ),
+    );
+  };
+
+  const generateWaveLayer = (
+    frame: number,
+    seed: string,
+    hitChance: number = 1,
+  ): Layer => {
+    const randSrc = seedrandom(seed);
     const simplexShift = [lerp(0, 1000, randSrc()), lerp(0, 1000, randSrc())];
-    const vectorField = randomVectorFieldBySeed(seed);
+    const simplexHitChance = [
+      lerp(0, 1000, randSrc()),
+      lerp(0, 1000, randSrc()),
+    ];
+
     const lines: Line[] = [];
     const hitMap: { [key: string]: boolean } = {};
-    const amplitudeRange: Range = [0, 8];
-
     for (let i = gridBounds[0][0]; i <= gridBounds[1][0]; ++i) {
       for (let j = gridBounds[0][1]; j <= gridBounds[1][1]; ++j) {
         const c = clamp(
-          simplex(
-            gene.pointilism * i + simplexShift[0],
-            gene.pointilism * j + simplexShift[1],
-          ) / 0.5,
+          noiseFunc(i + simplexShift[0], j + simplexShift[1], frame) / 0.75,
           0,
           1,
         );
-        const amp = Math.round(lerp(...amplitudeRange, c));
-        // console.log(c, amp)
+        const amp = Math.round(lerp(...AMPLITUDE_RANGE, c));
         const l1: Cord = [i, j];
-        const v = vectorField(mulVec2(l1, [gene.pointilism, gene.pointilism]));
+        const v: Vec2 = [randSrc(), randSrc()];
         const len = lenVec2(v);
         const relativeVector: Vec2 = [0, -1];
         const angle = Math.round(
@@ -95,6 +227,7 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
         );
         const discreteAngle = Math.floor(angle / 45) * 45;
         const directionVector = getDirectionVectorFromAngle(discreteAngle);
+        // get clamped l2 point
         let l2: Cord = [0, 0];
         let isInBounds = false;
         let localAmp = amp;
@@ -109,8 +242,9 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
             localAmp--;
           }
         }
+        // check if line is overlapping
         let isLineOverlapping = false;
-        for (let i = 0; i < localAmp; ++i) {
+        for (let i = 0; i <= localAmp; ++i) {
           if (
             hitMap[
               [
@@ -126,9 +260,19 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
           }
         }
 
-        if (randSrc() < hitChance && !isLineOverlapping) {
+        const h = clamp(
+          noiseFunc(i + simplexHitChance[0], j + simplexHitChance[1], frame) /
+            0.75,
+          0,
+          1,
+        );
+        if (h < hitChance && !isLineOverlapping) {
           lines.push([l1, l2]);
-          for (let i = 0; i < localAmp; ++i) {
+          const range =
+            randSrc() < 0.5 || localAmp == 0
+              ? [0, localAmp]
+              : [1, localAmp - 1];
+          for (let i = range[0]; i <= range[1]; ++i) {
             hitMap[
               [
                 [
@@ -153,39 +297,70 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
         scaleCord(l[0], gridBounds, bounds),
         scaleCord(l[1], gridBounds, bounds),
       ])
-      .map((l) => {
-        const v = subVec2(l[1], l[0]);
-        // console.log(v)
-        if (v[0] !== 0 && Math.abs(v[0]) === Math.abs(v[1])) {
-          const radius = (v[0] !== 0 ? v[0] : v[1]) / 2;
-          const uv1: Vec2 = v[1] > 0 ? [1, 0] : [0, -1];
-          const uv2: Vec2 = v[1] > 0 ? [0, -1] : [-1, 0];
-          const a1 = addVec2(l[0], mulVec2(uv1, [radius, radius]));
-          const a2 = addVec2(l[1], mulVec2(uv2, [radius, radius]));
-          // return `M ${l[0][0]} ${l[0][1]} C ${a1[0]} ${a1[1]} ${a2[0]} ${a2[1]} ${l[1][0]} ${l[1][1]}`
-        }
-        return `M ${l[0][0]} ${l[0][1]} L ${l[1][0]} ${l[1][1]}`;
-      })
+      .map(
+        (l) =>
+          `M${l[0][0].toPrecision(5)} ${l[0][1].toPrecision(
+            5,
+          )}L${l[1][0].toPrecision(5)} ${l[1][1].toPrecision(5)}`,
+      )
       .join(' ');
-    return `<path d="${d}" stroke-width="3" stroke="${styles.color}" stroke-linecap="round" fill="transparent" />`;
+    return `<path d="${d}" opacity="1" stroke-width="${styles.strokeWidth}" stroke="${styles.color}" stroke-linecap="round" fill="transparent">${styles.animation}</path>`;
   };
+
+  const getAnimationForFrame = (frame: number) => {
+    return `<animate 
+    attributeName="visibility"
+    from="hidden"
+    to="hidden"
+    values="hidden; hidden; visible; visible; hidden; hidden; visible; visible; hidden; hidden;"
+    animateMotion="discrete"
+    keyTimes="0; ${(0.5 * frame) / gene.frameCt}; ${
+      (0.5 * frame) / gene.frameCt
+    }; ${(0.5 * (frame + 1)) / gene.frameCt}; ${
+      (0.5 * (frame + 1)) / gene.frameCt
+    }; ${0.5 + 0.5 * (1 - (frame + 1) / gene.frameCt)}; ${
+      0.5 + 0.5 * (1 - (frame + 1) / gene.frameCt)
+    }; ${0.5 + 0.5 * (1 - frame / gene.frameCt)}; ${
+      0.5 + 0.5 * (1 - frame / gene.frameCt)
+    }; 1"
+    dur="${FRAME_DURATION * gene.frameCt}s"
+    repeatCount="indefinite"
+    />
+    `;
+  };
+
+  const getPathFrame = (frame: number) => {
+    return (
+      convertLayerToPath(generateWaveLayer(frame, gene.seed + '0', 1), {
+        color: pallete[1],
+        strokeWidth,
+        animation: getAnimationForFrame(frame),
+      }) +
+      convertLayerToPath(generateWaveLayer(frame, gene.seed + '1', 0.6), {
+        color: pallete[2],
+        strokeWidth,
+        animation: getAnimationForFrame(frame),
+      }) +
+      convertLayerToPath(generateWaveLayer(frame, gene.seed + '2', 0.5), {
+        color: pallete[3],
+        strokeWidth,
+        animation: getAnimationForFrame(frame),
+      })
+    );
+  };
+
+  const paths = newArray(gene.frameCt)
+    .map((_: any, i: number) => getPathFrame(i))
+    .join();
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" width="${DIMENSION}" height="${DIMENSION}" viewBox="0 0 ${DIMENSION} ${DIMENSION}">` +
     `
     <style>
-      path { mix-blend-mode: normal; }
+      path { mix-blend-mode: darken; }
     </style>` +
-    `<rect opacity="0.5" fill="${gene.pallete[2]}" x="0" y="0" width="100%" height="100%"/>` +
-    convertLayerToPath(generateWaveLayer(gene.seed + '0', 0.5), {
-      color: gene.pallete[0],
-    }) +
-    convertLayerToPath(generateWaveLayer(gene.seed + '1', 0.25), {
-      color: gene.pallete[1],
-    }) +
-    convertLayerToPath(generateWaveLayer(gene.seed + '3', 0.15), {
-      color: gene.pallete[2],
-    }) +
+    `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="100%" height="100%"/>` +
+    paths +
     '</svg>'
   );
 };

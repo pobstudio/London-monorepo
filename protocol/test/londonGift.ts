@@ -1,10 +1,9 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
-import { LondonGift } from '../typechain/LondonGift';
+import { ERC20Mintable } from '../typechain-types/ERC20Mintable';
+import { LondonGift } from '../typechain-types/LondonGift';
 import { expect } from 'chai';
-import { getAddress } from '@ethersproject/address';
 
 const TOKEN_SYMBOL = '$LONDON';
 const TOKEN_NAME = '$LONDON';

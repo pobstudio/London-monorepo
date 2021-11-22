@@ -1,8 +1,8 @@
 import { ethers } from 'hardhat';
 import { BigNumber, Signer } from 'ethers';
 
-import { ERC20Mintable } from '../typechain/ERC20Mintable';
-import { GasPriceBasedMinter } from '../typechain/GasPriceBasedMinter';
+import { ERC20Mintable } from '../typechain-types/ERC20Mintable';
+import { GasPriceBasedMinter } from '../typechain-types/GasPriceBasedMinter';
 import { expect } from 'chai';
 
 const TOKEN_SYMBOL = '$LONDON';
