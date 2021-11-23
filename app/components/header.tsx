@@ -113,10 +113,10 @@ export const Header: FC = () => {
             <A style={{ color: 'blue' }}>Banner</A>
           </Link> */}
           <Link href={ROUTES.BURN} passHref>
-            <A>Burn</A>
+            <A>Embers</A>
           </Link>
           <Link href={ROUTES.TOKEN} passHref>
-            <A>Token-nomics</A>
+            <A>Token</A>
           </Link>
           <A
             style={{ color: 'blue' }}

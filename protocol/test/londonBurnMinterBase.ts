@@ -141,7 +141,9 @@ describe('LondonBurnMinterBase', function () {
     });
     it('should not set new revealBlockNumber address by rando', async function () {
       await expect(
-        londonBurnMinter.connect(rando).setBurnRevealBlockNumber(ULTRASONIC_BLOCK),
+        londonBurnMinter
+          .connect(rando)
+          .setBurnRevealBlockNumber(ULTRASONIC_BLOCK),
       ).to.reverted;
     });
   });

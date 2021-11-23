@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const TableContainer = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+  min-width: 300px;
 `;
 
 export const TableRow = styled.div`

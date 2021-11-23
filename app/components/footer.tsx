@@ -10,11 +10,17 @@ import {
   TWITTER_LINK,
 } from '../constants';
 import { A } from './anchor';
+import { BREAKPTS } from '../styles';
 
 const FooterRow = styled(FlexEnds)`
   width: 800px;
   padding: 48px 0;
   align-items: flex-start;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 const AnchorColumn = styled(Flex)`
@@ -23,6 +29,9 @@ const AnchorColumn = styled(Flex)`
   }
   > * + * {
     margin-left: 12px;
+  }
+  @media (max-width: ${BREAKPTS.MD}px) {
+    margin-top: 12px;
   }
 `;
 

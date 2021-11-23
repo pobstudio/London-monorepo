@@ -101,15 +101,10 @@ const PreviewImg = styled.img`
   }
 `;
 
-const LabelTableColumn = styled(TableColumn)`
-  @media (max-width: ${BREAKPTS.MD}px) {
-    width: 220px;
-  }
-`;
+const LabelTableColumn = styled(TableColumn)``;
 
 const ValueTableColumn = styled(TableColumn)`
   text-align: right;
-  width: 280px;
 `;
 
 const PageWrapper = styled.div`
@@ -119,6 +114,8 @@ const PageWrapper = styled.div`
   padding: 14px;
   flex-direction: column;
   padding-top: 240px;
+  width: 100%;
+  margin: auto;
   > p + p {
     margin-top: 20px;
   }

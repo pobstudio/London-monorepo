@@ -253,8 +253,6 @@ const Asset = styled(FlexCenterColumn)<{ isSelected?: boolean }>`
 `;
 
 const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
-  max-width: 100%;
-  width: 100%;
   display: flex;
   flex-grow: 1;
   flex-wrap: ${(p) => (p.isVerticalScroll ? 'wrap' : 'nowrap')};
@@ -363,6 +361,7 @@ const AvatarConsole = styled.div`
   border: 1px solid black;
   width: 800px;
   min-height: 450px;
+  position: relative;
   @media (max-width: ${BREAKPTS.MD}px) {
     width: 100%;
     grid-template-columns: minMax(0, 200px) minMax(0, 1fr);
