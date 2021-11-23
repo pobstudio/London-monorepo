@@ -44,7 +44,7 @@ import {
   BURN_MIN_MAX_AMOUNT_FOR_SELF,
 } from '../constants/parameters';
 import { Header } from '../components/header';
-import { NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
+import { ADVANCED_FRAME_CT_AND_WEIGHT, BASIC_FRAME_CT_AND_WEIGHT, FRAME_CT_TO_LABEL, FRAME_POINTILISM_AND_WEIGHT, FRAME_POINTILISM_TO_LABEL, GRID_SIZE_AND_WEIGHT, GRID_SIZE_TO_LABEL, NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
 import {
   TableBody,
   TableColumn,
@@ -70,6 +70,8 @@ import { PFP } from '../components/pfp';
 import { Banner } from '../components/banner';
 import { ethers, utils } from 'ethers';
 import { Code } from '../components/code';
+import { NobleAirdrop } from '../components/embers/airdrop';
+import { useMemo } from 'react';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -79,6 +81,14 @@ import { Code } from '../components/code';
 // import { HashInfoSection } from '../components/hash-info-section';
 // import { SagaPricingSection } from '../components/saga-pricing-section';
 // import { HeroContent } from '../components/home-hero';
+
+const PreviewImg = styled.img`
+  display: block;
+  width: 450px;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    width: 320px;
+  }
+`;
 
 const LabelTableColumn = styled(TableColumn)`
   @media (max-width: ${BREAKPTS.MD}px) {
@@ -289,6 +299,9 @@ const BurnAshen: FC = () => {
   );
 };
 const BurnPage: NextPage = () => {
+  const randomNum = useMemo(() => {
+    return Math.floor(Math.random() * (10 - 0) + 0)
+  }, []);
   return (
     <>
       <Header />
@@ -296,19 +309,20 @@ const BurnPage: NextPage = () => {
         <Title>
           <Bold>LONDON</Bold> Embers
         </Title>
-        <Caption>
-          <Italic>
-            {true && '[Coming soon] Buying butane at the local shoppe...'}
-          </Italic>
-        </Caption>
         <Caption style={{ marginBottom: 4 }}>
-          <A href="#">Generative art</A> created by burning London Gift +
+          <A href="#">Gen art</A> created by burning London Gift +
           Embers.
         </Caption>
         <Text style={{ marginBottom: 12 }}>
           <Italic>Is it getting hot or is it just me?</Italic>
         </Text>
-        <Text style={{ marginTop: 28 }}>
+        <div style={{ margin: '24px 0' }}>
+          <PreviewImg src={`/embers/${randomNum}.svg`} />
+          <MiniText style={{ paddingTop: 8, textAlign: 'center' }}>
+            Preview of EMBERS.
+          </MiniText>
+        </div>
+        {/* <Text style={{ marginTop: 28 }}>
           <Bold>Abstract</Bold>
         </Text>
         <RightAlignedText>
@@ -318,10 +332,195 @@ const BurnPage: NextPage = () => {
           the burning of{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>Gifts</A> or
           Embers.
+        </RightAlignedText> */}
+        {/* <NobleAirdrop/> */}
+        <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
+        <RightAlignedText>
+          <Bold>LONDON</Bold> Embers rarity design is designed with minimalism in mind; it has a few core attributes, if aligned correctly, can produce widly different and expressive EMBERs. 
+        </RightAlignedText>
+          <RightAlignedText>
+            The attributes are: <Bold>provenance</Bold>, <Bold>gridSize</Bold>, <Bold>animationDuration</Bold>, and <Bold>animationStyle</Bold>.
+          </RightAlignedText>
+          <RightAlignedText>
+            <Bold>provenance</Bold> attribute identifies how the EMBER was minted. <Bold>provenance</Bold> is a key factor to how other attributes are generated.
+          </RightAlignedText>
+          <TableContainer
+          style={{
+            marginTop: 48,
+            marginBottom: 48,
+            border: '1px solid black',
+            background: 'white',
+          }}
+        >
+          <TableHeader>
+            <LabelTableColumn>
+              <Bold>Provenance</Bold>
+            </LabelTableColumn>
+            <ValueTableColumn>
+                from
+              </ValueTableColumn>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <LabelTableColumn>Noble</LabelTableColumn>
+              <ValueTableColumn>
+                airdrop
+              </ValueTableColumn>
+            </TableRow>
+            <TableRow>
+              <LabelTableColumn>Gift</LabelTableColumn>
+              <ValueTableColumn>
+                burning GIFT
+              </ValueTableColumn>
+            </TableRow>
+            <TableRow>
+              <LabelTableColumn>Pristine</LabelTableColumn>
+              <ValueTableColumn>
+                public sale
+              </ValueTableColumn>
+            </TableRow>
+            <TableRow>
+              <LabelTableColumn>Eternal</LabelTableColumn>
+              <ValueTableColumn>
+                DAO minted
+              </ValueTableColumn>
+            </TableRow>
+            <TableRow>
+              <LabelTableColumn>Ashen</LabelTableColumn>
+              <ValueTableColumn>
+                burning EMBER
+              </ValueTableColumn>
+            </TableRow>
+          </TableBody>
+        </TableContainer>
+          <RightAlignedText>
+            <Bold>gridSize</Bold>, as the name suggests, controls the size of the grid, the larger the grid the more 'complex' the art appears.
+          </RightAlignedText>
+          <TableContainer
+          style={{
+            marginTop: 48,
+            marginBottom: 48,
+            border: '1px solid black',
+            background: 'white',
+          }}
+        >
+          <TableHeader>
+            <LabelTableColumn>
+              <Bold>Grid Size</Bold>
+            </LabelTableColumn>
+            <ValueTableColumn>Chance</ValueTableColumn>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(GRID_SIZE_TO_LABEL).map((r, index) => {
+              return (
+                <TableRow key={`table-row-state-${index}`}>
+                  <LabelTableColumn>{`${r[1]} (${r[0]}x${r[0]})`}</LabelTableColumn>
+                  <ValueTableColumn>
+                    {GRID_SIZE_AND_WEIGHT[1][index] * 100}%
+                  </ValueTableColumn>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </TableContainer>
+        <RightAlignedText>
+            <Bold>animationDuration</Bold> controls how long the animation lasts. The weighting of <Bold>animationDuration</Bold> depends on <Bold>provenance</Bold>.
         </RightAlignedText>
         <RightAlignedText>
-          Embers will be airdropped to <Bold>{TOKEN_SYMBOL}</Bold> + Gift
-          holders. A public sale of Embers will also be available at launch.
+            If <Bold>provenance</Bold> is <Italic>Noble</Italic>, <Italic>Pristine</Italic>, or <Italic>Eternal</Italic>, the weights are the following:
+        </RightAlignedText>
+        <TableContainer
+          style={{
+            marginTop: 48,
+            marginBottom: 48,
+            border: '1px solid black',
+            background: 'white',
+          }}
+        >
+          <TableHeader>
+            <LabelTableColumn>
+              <Bold>Duration</Bold>
+            </LabelTableColumn>
+            <ValueTableColumn>Chance</ValueTableColumn>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(FRAME_CT_TO_LABEL).map((r, index) => {
+              return (
+                <TableRow key={`table-row-state-${index}`}>
+                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${index === 0 ? '' : 's'})`}</LabelTableColumn>
+                  <ValueTableColumn>
+                    {BASIC_FRAME_CT_AND_WEIGHT[1][index] * 100}%
+                  </ValueTableColumn>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </TableContainer>
+        <RightAlignedText>
+            If <Bold>provenance</Bold> is <Italic>Ashen</Italic> or <Italic>Gift</Italic>, the weights are the following:
+        </RightAlignedText>
+        <TableContainer
+          style={{
+            marginTop: 48,
+            marginBottom: 48,
+            border: '1px solid black',
+            background: 'white',
+          }}
+        >
+          <TableHeader>
+            <LabelTableColumn>
+              <Bold>Duration</Bold>
+            </LabelTableColumn>
+            <ValueTableColumn>Chance</ValueTableColumn>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(FRAME_CT_TO_LABEL).map((r, index) => {
+              return (
+                <TableRow key={`table-row-state-${index}`}>
+                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${index === 0 ? '' : 's'})`}</LabelTableColumn>
+                  <ValueTableColumn>
+                    {ADVANCED_FRAME_CT_AND_WEIGHT[1][index] * 100}%
+                  </ValueTableColumn>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </TableContainer>
+        <RightAlignedText>
+          These weights are selected to push users to burn EMBERs and GIFTs.
+        </RightAlignedText>
+        <RightAlignedText>
+          Finally, <Bold>animationStyle</Bold> controls how the animation is generated.
+        </RightAlignedText>
+        <TableContainer
+          style={{
+            marginTop: 48,
+            marginBottom: 48,
+            border: '1px solid black',
+            background: 'white',
+          }}
+        >
+          <TableHeader>
+            <LabelTableColumn>
+              <Bold>Duration</Bold>
+            </LabelTableColumn>
+            <ValueTableColumn>Chance</ValueTableColumn>
+          </TableHeader>
+          <TableBody>
+            {Object.entries(FRAME_POINTILISM_TO_LABEL).map((r, index) => {
+              return (
+                <TableRow key={`table-row-state-${index}`}>
+                  <LabelTableColumn>{`${r[1]}`}</LabelTableColumn>
+                  <ValueTableColumn>
+                    {FRAME_POINTILISM_AND_WEIGHT[1][index] * 100}%
+                  </ValueTableColumn>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </TableContainer>
+        <RightAlignedText>
+          There are a few other bells and whistles thrown in the EMBER generation process that will be left to users to figure out, the name of the EMBER NFTs being one of them.
         </RightAlignedText>
         <BurnGift />
         <BurnAshen />

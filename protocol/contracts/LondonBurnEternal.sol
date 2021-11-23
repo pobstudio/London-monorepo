@@ -15,12 +15,13 @@ abstract contract LondonBurnEternal is LondonBurnMinterBase {
   }
  
   function mintEternalType(
-    LondonBurn.MintCheck[] calldata _mintChecks
+    LondonBurn.MintCheck calldata _mintCheck
   ) public {
-    require(msg.sender == treasury, "Only treasury can mint");
     require(block.number > revealBlockNumber, 'ETERNAL has not been revealed yet');
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
-    require(londonBurn.tokenTypeSupply(ETERNAL_TYPE) + _mintChecks.length <= ETERNAL_MINTABLE_SUPPLY, "Exceeded ETERNAL mint amount");
-    londonBurn.mintTokenType(ETERNAL_TYPE, _mintChecks);
+    require(londonBurn.tokenTypeSupply(ETERNAL_TYPE) + _mintCheck.uris.length <= ETERNAL_MINTABLE_SUPPLY, "Exceeded ETERNAL mint amount");
+    require(_mintCheck.to == treasury, 'MintCheck do not mint to treasury');
+    require(_mintCheck.tokenType == ETERNAL_TYPE, "Must be correct tokenType");
+    londonBurn.mintTokenType(_mintCheck);
   }
 }

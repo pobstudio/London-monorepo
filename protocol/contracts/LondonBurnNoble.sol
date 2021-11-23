@@ -27,7 +27,7 @@ abstract contract LondonBurnNoble is LondonBurnMinterBase {
 
   address public airdropAuthority;
 
-  mapping(address => bool) hasReceivedAirdrop; // NOTE: should we change this to use airdrop hash?
+  mapping(address => uint256) public receivedAirdropNum;
 
   function getAirdropHash(address to, Nobility nobility) public pure returns (bytes32) {
     return keccak256(abi.encodePacked(to, nobility));
@@ -46,15 +46,16 @@ abstract contract LondonBurnNoble is LondonBurnMinterBase {
   }
 
   function mintNobleType(
-    Nobility nobility, bytes calldata signature, LondonBurn.MintCheck[] calldata mintChecks
+    Nobility nobility, bytes calldata signature, LondonBurn.MintCheck calldata mintCheck
   ) public {
     require(block.number > revealBlockNumber, 'NOBLE has not been revealed yet');
     require(block.number < ultraSonicForkBlockNumber, "ULTRASONIC MODE ENGAGED");
     require(verifyAirdrop(_msgSender(), nobility, signature), "Noble mint is not valid");
-    require(mintChecks.length == airdropAmount[nobility], "MintChecks length mismatch");
-    require(!hasReceivedAirdrop[_msgSender()], "Already received airdrop");
-    londonBurn.mintTokenType(NOBLE_TYPE, mintChecks);
-    hasReceivedAirdrop[_msgSender()] = true;
+    require(mintCheck.uris.length <= airdropAmount[nobility], "MintChecks length mismatch");
+    require(receivedAirdropNum[_msgSender()] + mintCheck.uris.length <= airdropAmount[nobility], "Already received airdrop");
+    require(mintCheck.tokenType == NOBLE_TYPE, "Must be correct tokenType");
+    londonBurn.mintTokenType(mintCheck);
+    receivedAirdropNum[_msgSender()] += mintCheck.uris.length;
   }
 
 }

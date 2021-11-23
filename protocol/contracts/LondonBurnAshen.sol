@@ -29,7 +29,7 @@ abstract contract LondonBurnAshen is LondonBurnMinterBase {
 
   function mintAshenType(
     uint256[] calldata tokenIds,
-    LondonBurn.MintCheck[] calldata _mintChecks
+    LondonBurn.MintCheck calldata _mintCheck
   ) payable public {
     require(block.number > revealBlockNumber, 'ASHEN has not been revealed yet');
     require(tokenIds.length >= MIN_SELF_AMOUNT_PER_BURN && tokenIds.length <= MAX_SELF_AMOUNT_PER_BURN , "Exceeded self burn range");
@@ -38,7 +38,8 @@ abstract contract LondonBurnAshen is LondonBurnMinterBase {
     for (uint i = 0; i < tokenIds.length; ++i) {
       londonBurn.transferFrom(_msgSender(), address(0xdead), tokenIds[i]);
     }
-    require(_mintChecks.length == numBurnFromSelfAmount(tokenIds.length), "MintChecks required mismatch");
-    londonBurn.mintTokenType(block.number < ultraSonicForkBlockNumber ? ASHEN_TYPE : ULTRA_SONIC_TYPE, _mintChecks);
+    require(_mintCheck.uris.length == numBurnFromSelfAmount(tokenIds.length), "MintCheck required mismatch");
+    require(_mintCheck.tokenType == (block.number < ultraSonicForkBlockNumber ? ASHEN_TYPE : ULTRA_SONIC_TYPE), "Must be correct tokenType");
+    londonBurn.mintTokenType(_mintCheck);
   }
 }

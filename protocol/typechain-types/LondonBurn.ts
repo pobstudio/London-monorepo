@@ -12,274 +12,307 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import { Listener, Provider } from '@ethersproject/providers';
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import { Listener, Provider } from "@ethersproject/providers";
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export type MintCheckStruct = { to: string; URI: string; signature: BytesLike };
-
-export type MintCheckStructOutput = [string, string, string] & {
+export type MintCheckStruct = {
   to: string;
-  URI: string;
+  tokenType: BigNumberish;
+  uris: string[];
+  signature: BytesLike;
+};
+
+export type MintCheckStructOutput = [string, BigNumber, string[], string] & {
+  to: string;
+  tokenType: BigNumber;
+  uris: string[];
   signature: string;
 };
 
 export type ModifyCheckStruct = {
-  tokenId: BigNumberish;
-  URI: string;
+  tokenIds: BigNumberish[];
+  uris: string[];
   signature: BytesLike;
 };
 
-export type ModifyCheckStructOutput = [BigNumber, string, string] & {
-  tokenId: BigNumber;
-  URI: string;
+export type ModifyCheckStructOutput = [BigNumber[], string[], string] & {
+  tokenIds: BigNumber[];
+  uris: string[];
   signature: string;
 };
 
 export interface LondonBurnInterface extends utils.Interface {
   functions: {
-    'approve(address,uint256)': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'contractURI()': FunctionFragment;
-    'getApproved(uint256)': FunctionFragment;
-    'getMintCheckHash((address,string,bytes))': FunctionFragment;
-    'getModifyCheckHash((uint256,string,bytes))': FunctionFragment;
-    'isApprovedForAll(address,address)': FunctionFragment;
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
-    'mintTokenType(uint256,(address,string,bytes)[])': FunctionFragment;
-    'minter()': FunctionFragment;
-    'mintingAuthority()': FunctionFragment;
-    'modifyBaseURIByModifyCheck((uint256,string,bytes)[])': FunctionFragment;
-    'name()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'ownerOf(uint256)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'safeTransferFrom(address,address,uint256)': FunctionFragment;
-    'setApprovalForAll(address,bool)': FunctionFragment;
-    'setContractURI(string)': FunctionFragment;
-    'setMinter(address)': FunctionFragment;
-    'setMintingAuthority(address)': FunctionFragment;
-    'splitSignature(bytes)': FunctionFragment;
-    'supportsInterface(bytes4)': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'tokenTypeSupply(uint256)': FunctionFragment;
-    'tokenURI(uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'verifyMintCheck((address,string,bytes))': FunctionFragment;
-    'verifyModifyCheck((uint256,string,bytes))': FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "baseMetadataURI()": FunctionFragment;
+    "contractURI()": FunctionFragment;
+    "getApproved(uint256)": FunctionFragment;
+    "getMintCheckHash((address,uint256,string[],bytes))": FunctionFragment;
+    "getModifyCheckHash((uint256[],string[],bytes))": FunctionFragment;
+    "isApprovedForAll(address,address)": FunctionFragment;
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
+    "mintTokenType((address,uint256,string[],bytes))": FunctionFragment;
+    "minter()": FunctionFragment;
+    "mintingAuthority()": FunctionFragment;
+    "modifyBaseURIByModifyCheck((uint256[],string[],bytes))": FunctionFragment;
+    "name()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "ownerOf(uint256)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "safeTransferFrom(address,address,uint256)": FunctionFragment;
+    "setApprovalForAll(address,bool)": FunctionFragment;
+    "setBaseMetadataURI(string)": FunctionFragment;
+    "setContractURI(string)": FunctionFragment;
+    "setMinter(address)": FunctionFragment;
+    "setMintingAuthority(address)": FunctionFragment;
+    "splitSignature(bytes)": FunctionFragment;
+    "supportsInterface(bytes4)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "tokenIdToUri(uint256)": FunctionFragment;
+    "tokenTypeSupply(uint256)": FunctionFragment;
+    "tokenURI(uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "verifyMintCheck((address,uint256,string[],bytes))": FunctionFragment;
+    "verifyModifyCheck((uint256[],string[],bytes))": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'approve',
-    values: [string, BigNumberish],
+    functionFragment: "approve",
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'contractURI',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'getApproved',
-    values: [BigNumberish],
+    functionFragment: "baseMetadataURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'getMintCheckHash',
-    values: [MintCheckStruct],
+    functionFragment: "contractURI",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'getModifyCheckHash',
-    values: [ModifyCheckStruct],
+    functionFragment: "getApproved",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'isApprovedForAll',
-    values: [string, string],
+    functionFragment: "getMintCheckHash",
+    values: [MintCheckStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: 'isSigned',
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
+    functionFragment: "getModifyCheckHash",
+    values: [ModifyCheckStruct]
   ): string;
   encodeFunctionData(
-    functionFragment: 'mintTokenType',
-    values: [BigNumberish, MintCheckStruct[]],
-  ): string;
-  encodeFunctionData(functionFragment: 'minter', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'mintingAuthority',
-    values?: undefined,
+    functionFragment: "isApprovedForAll",
+    values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'modifyBaseURIByModifyCheck',
-    values: [ModifyCheckStruct[]],
-  ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'ownerOf',
-    values: [BigNumberish],
+    functionFragment: "isSigned",
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'renounceOwnership',
-    values?: undefined,
+    functionFragment: "mintTokenType",
+    values: [MintCheckStruct]
+  ): string;
+  encodeFunctionData(functionFragment: "minter", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mintingAuthority",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'safeTransferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "modifyBaseURIByModifyCheck",
+    values: [ModifyCheckStruct]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ownerOf",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'setApprovalForAll',
-    values: [string, boolean],
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'setContractURI',
-    values: [string],
-  ): string;
-  encodeFunctionData(functionFragment: 'setMinter', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'setMintingAuthority',
-    values: [string],
+    functionFragment: "safeTransferFrom",
+    values: [string, string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'splitSignature',
-    values: [BytesLike],
+    functionFragment: "setApprovalForAll",
+    values: [string, boolean]
   ): string;
   encodeFunctionData(
-    functionFragment: 'supportsInterface',
-    values: [BytesLike],
-  ): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'tokenTypeSupply',
-    values: [BigNumberish],
+    functionFragment: "setBaseMetadataURI",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'tokenURI',
-    values: [BigNumberish],
+    functionFragment: "setContractURI",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "setMinter", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setMintingAuthority",
+    values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferFrom',
-    values: [string, string, BigNumberish],
+    functionFragment: "splitSignature",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferOwnership',
-    values: [string],
+    functionFragment: "supportsInterface",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "tokenIdToUri",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'verifyMintCheck',
-    values: [MintCheckStruct],
+    functionFragment: "tokenTypeSupply",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: 'verifyModifyCheck',
-    values: [ModifyCheckStruct],
+    functionFragment: "tokenURI",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "verifyMintCheck",
+    values: [MintCheckStruct]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "verifyModifyCheck",
+    values: [ModifyCheckStruct]
   ): string;
 
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'contractURI',
-    data: BytesLike,
+    functionFragment: "baseMetadataURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getApproved',
-    data: BytesLike,
+    functionFragment: "contractURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getMintCheckHash',
-    data: BytesLike,
+    functionFragment: "getApproved",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'getModifyCheckHash',
-    data: BytesLike,
+    functionFragment: "getMintCheckHash",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'isApprovedForAll',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'mintTokenType',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'minter', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'mintingAuthority',
-    data: BytesLike,
+    functionFragment: "getModifyCheckHash",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'modifyBaseURIByModifyCheck',
-    data: BytesLike,
+    functionFragment: "isApprovedForAll",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ownerOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'renounceOwnership',
-    data: BytesLike,
+    functionFragment: "mintTokenType",
+    data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "minter", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'safeTransferFrom',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'setApprovalForAll',
-    data: BytesLike,
+    functionFragment: "mintingAuthority",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setContractURI',
-    data: BytesLike,
+    functionFragment: "modifyBaseURIByModifyCheck",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'setMinter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'setMintingAuthority',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: 'splitSignature',
-    data: BytesLike,
+    functionFragment: "renounceOwnership",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'supportsInterface',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'tokenTypeSupply',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'tokenURI', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'transferFrom',
-    data: BytesLike,
+    functionFragment: "safeTransferFrom",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'transferOwnership',
-    data: BytesLike,
+    functionFragment: "setApprovalForAll",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'verifyMintCheck',
-    data: BytesLike,
+    functionFragment: "setBaseMetadataURI",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'verifyModifyCheck',
-    data: BytesLike,
+    functionFragment: "setContractURI",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setMinter", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setMintingAuthority",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "splitSignature",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenIdToUri",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenTypeSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "verifyMintCheck",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "verifyModifyCheck",
+    data: BytesLike
   ): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'ApprovalForAll(address,address,bool)': EventFragment;
-    'MintCheckUsed(uint256,bytes32)': EventFragment;
-    'ModifyCheckUsed(uint256,bytes32)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "ApprovalForAll(address,address,bool)": EventFragment;
+    "MintCheckUsed(uint256,bytes32)": EventFragment;
+    "ModifyCheckUsed(uint256,bytes32)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'MintCheckUsed'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ModifyCheckUsed'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "MintCheckUsed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ModifyCheckUsed"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
 export type ApprovalEvent = TypedEvent<
@@ -330,57 +363,59 @@ export interface LondonBurn extends BaseContract {
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  'interface': LondonBurnInterface;
+  interface: LondonBurnInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
+    eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
+    eventFilter: TypedEventFilter<TEvent>
   ): this;
   removeAllListeners(eventName?: string): this;
-  'off': OnEvent<this>;
-  'on': OnEvent<this>;
-  'once': OnEvent<this>;
-  'removeListener': OnEvent<this>;
+  off: OnEvent<this>;
+  on: OnEvent<this>;
+  once: OnEvent<this>;
+  removeListener: OnEvent<this>;
 
-  'functions': {
+  functions: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<[string]>;
 
     contractURI(overrides?: CallOverrides): Promise<[string]>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     getMintCheckHash(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     getModifyCheckHash(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     isSigned(
@@ -389,13 +424,12 @@ export interface LondonBurn extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     mintTokenType(
-      tokenType: BigNumberish,
-      _mintChecks: MintCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _mintCheck: MintCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     minter(overrides?: CallOverrides): Promise<[string]>;
@@ -403,8 +437,8 @@ export interface LondonBurn extends BaseContract {
     mintingAuthority(overrides?: CallOverrides): Promise<[string]>;
 
     modifyBaseURIByModifyCheck(
-      _modifyChecks: ModifyCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _modifyCheck: ModifyCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -413,123 +447,135 @@ export interface LondonBurn extends BaseContract {
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setBaseMetadataURI(
+      _baseMetadataURI: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setMinter(
       _minter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setMintingAuthority(
       _mintingAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    tokenIdToUri(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     tokenTypeSupply(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string]>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     verifyMintCheck(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     verifyModifyCheck(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
   approve(
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
   contractURI(overrides?: CallOverrides): Promise<string>;
 
   getApproved(
     tokenId: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   getMintCheckHash(
     _mintCheck: MintCheckStruct,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   getModifyCheckHash(
     _modifyCheck: ModifyCheckStruct,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<string>;
 
   isApprovedForAll(
     owner: string,
     operator: string,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   isSigned(
@@ -538,13 +584,12 @@ export interface LondonBurn extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   mintTokenType(
-    tokenType: BigNumberish,
-    _mintChecks: MintCheckStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _mintCheck: MintCheckStruct,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   minter(overrides?: CallOverrides): Promise<string>;
@@ -552,8 +597,8 @@ export interface LondonBurn extends BaseContract {
   mintingAuthority(overrides?: CallOverrides): Promise<string>;
 
   modifyBaseURIByModifyCheck(
-    _modifyChecks: ModifyCheckStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _modifyCheck: ModifyCheckStruct,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -563,60 +608,67 @@ export interface LondonBurn extends BaseContract {
   ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  'safeTransferFrom(address,address,uint256)'(
+  "safeTransferFrom(address,address,uint256)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  'safeTransferFrom(address,address,uint256,bytes)'(
+  "safeTransferFrom(address,address,uint256,bytes)"(
     from: string,
     to: string,
     tokenId: BigNumberish,
     _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
     operator: string,
     approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setBaseMetadataURI(
+    _baseMetadataURI: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setContractURI(
     newContractURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setMinter(
     _minter: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setMintingAuthority(
     _mintingAuthority: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   splitSignature(
     sig: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
   supportsInterface(
     interfaceId: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  tokenIdToUri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
   tokenTypeSupply(
     arg0: BigNumberish,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
@@ -625,54 +677,56 @@ export interface LondonBurn extends BaseContract {
     from: string,
     to: string,
     tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   verifyMintCheck(
     _mintCheck: MintCheckStruct,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   verifyModifyCheck(
     _modifyCheck: ModifyCheckStruct,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
-  'callStatic': {
+  callStatic: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<string>;
 
     contractURI(overrides?: CallOverrides): Promise<string>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     getMintCheckHash(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     getModifyCheckHash(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<string>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     isSigned(
@@ -681,13 +735,12 @@ export interface LondonBurn extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     mintTokenType(
-      tokenType: BigNumberish,
-      _mintChecks: MintCheckStruct[],
-      overrides?: CallOverrides,
+      _mintCheck: MintCheckStruct,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     minter(overrides?: CallOverrides): Promise<string>;
@@ -695,8 +748,8 @@ export interface LondonBurn extends BaseContract {
     mintingAuthority(overrides?: CallOverrides): Promise<string>;
 
     modifyBaseURIByModifyCheck(
-      _modifyChecks: ModifyCheckStruct[],
-      overrides?: CallOverrides,
+      _modifyCheck: ModifyCheckStruct,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
@@ -707,54 +760,64 @@ export interface LondonBurn extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setBaseMetadataURI(
+      _baseMetadataURI: string,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setMinter(_minter: string, overrides?: CallOverrides): Promise<void>;
 
     setMintingAuthority(
       _mintingAuthority: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    tokenIdToUri(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     tokenTypeSupply(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
@@ -763,117 +826,119 @@ export interface LondonBurn extends BaseContract {
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     verifyMintCheck(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     verifyModifyCheck(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
   };
 
-  'filters': {
-    'Approval(address,address,uint256)'(
+  filters: {
+    "Approval(address,address,uint256)"(
       owner?: string | null,
       approved?: string | null,
-      tokenId?: BigNumberish | null,
+      tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
     Approval(
       owner?: string | null,
       approved?: string | null,
-      tokenId?: BigNumberish | null,
+      tokenId?: BigNumberish | null
     ): ApprovalEventFilter;
 
-    'ApprovalForAll(address,address,bool)'(
+    "ApprovalForAll(address,address,bool)"(
       owner?: string | null,
       operator?: string | null,
-      approved?: null,
+      approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
       owner?: string | null,
       operator?: string | null,
-      approved?: null,
+      approved?: null
     ): ApprovalForAllEventFilter;
 
-    'MintCheckUsed(uint256,bytes32)'(
+    "MintCheckUsed(uint256,bytes32)"(
       tokenId?: BigNumberish | null,
-      mintCheck?: BytesLike | null,
+      mintCheck?: BytesLike | null
     ): MintCheckUsedEventFilter;
     MintCheckUsed(
       tokenId?: BigNumberish | null,
-      mintCheck?: BytesLike | null,
+      mintCheck?: BytesLike | null
     ): MintCheckUsedEventFilter;
 
-    'ModifyCheckUsed(uint256,bytes32)'(
+    "ModifyCheckUsed(uint256,bytes32)"(
       tokenId?: BigNumberish | null,
-      modifyCheck?: BytesLike | null,
+      modifyCheck?: BytesLike | null
     ): ModifyCheckUsedEventFilter;
     ModifyCheckUsed(
       tokenId?: BigNumberish | null,
-      modifyCheck?: BytesLike | null,
+      modifyCheck?: BytesLike | null
     ): ModifyCheckUsedEventFilter;
 
-    'OwnershipTransferred(address,address)'(
+    "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
-      newOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: string | null,
-      newOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(
+    "Transfer(address,address,uint256)"(
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null,
+      tokenId?: BigNumberish | null
     ): TransferEventFilter;
     Transfer(
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null,
+      tokenId?: BigNumberish | null
     ): TransferEventFilter;
   };
 
-  'estimateGas': {
+  estimateGas: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getMintCheckHash(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getModifyCheckHash(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isSigned(
@@ -882,13 +947,12 @@ export interface LondonBurn extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     mintTokenType(
-      tokenType: BigNumberish,
-      _mintChecks: MintCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _mintCheck: MintCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     minter(overrides?: CallOverrides): Promise<BigNumber>;
@@ -896,8 +960,8 @@ export interface LondonBurn extends BaseContract {
     mintingAuthority(overrides?: CallOverrides): Promise<BigNumber>;
 
     modifyBaseURIByModifyCheck(
-      _modifyChecks: ModifyCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _modifyCheck: ModifyCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -906,127 +970,139 @@ export interface LondonBurn extends BaseContract {
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setBaseMetadataURI(
+      _baseMetadataURI: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setMinter(
       _minter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setMintingAuthority(
       _mintingAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    tokenIdToUri(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tokenTypeSupply(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     verifyMintCheck(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     verifyModifyCheck(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
-  'populateTransaction': {
+  populateTransaction: {
     approve(
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
       owner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    baseMetadataURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     contractURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getMintCheckHash(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getModifyCheckHash(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isSigned(
@@ -1035,13 +1111,12 @@ export interface LondonBurn extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     mintTokenType(
-      tokenType: BigNumberish,
-      _mintChecks: MintCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _mintCheck: MintCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     minter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1049,8 +1124,8 @@ export interface LondonBurn extends BaseContract {
     mintingAuthority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     modifyBaseURIByModifyCheck(
-      _modifyChecks: ModifyCheckStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _modifyCheck: ModifyCheckStruct,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1059,91 +1134,101 @@ export interface LondonBurn extends BaseContract {
 
     ownerOf(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256)'(
+    "safeTransferFrom(address,address,uint256)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    'safeTransferFrom(address,address,uint256,bytes)'(
+    "safeTransferFrom(address,address,uint256,bytes)"(
       from: string,
       to: string,
       tokenId: BigNumberish,
       _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
       operator: string,
       approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setBaseMetadataURI(
+      _baseMetadataURI: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setContractURI(
       newContractURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setMinter(
       _minter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setMintingAuthority(
       _mintingAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    tokenIdToUri(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     tokenTypeSupply(
       arg0: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     tokenURI(
       tokenId: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       from: string,
       to: string,
       tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     verifyMintCheck(
       _mintCheck: MintCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     verifyModifyCheck(
       _modifyCheck: ModifyCheckStruct,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

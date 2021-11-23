@@ -9,28 +9,28 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import { FunctionFragment, Result } from '@ethersproject/abi';
-import { Listener, Provider } from '@ethersproject/providers';
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import { FunctionFragment, Result } from "@ethersproject/abi";
+import { Listener, Provider } from "@ethersproject/providers";
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface BellCurveParametersStorageInterface extends utils.Interface {
   functions: {
-    'a()': FunctionFragment;
-    'b()': FunctionFragment;
-    'c()': FunctionFragment;
-    'd()': FunctionFragment;
+    "a()": FunctionFragment;
+    "b()": FunctionFragment;
+    "c()": FunctionFragment;
+    "d()": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: 'a', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'b', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'c', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'd', values?: undefined): string;
+  encodeFunctionData(functionFragment: "a", values?: undefined): string;
+  encodeFunctionData(functionFragment: "b", values?: undefined): string;
+  encodeFunctionData(functionFragment: "c", values?: undefined): string;
+  encodeFunctionData(functionFragment: "d", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: 'a', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'b', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'c', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'd', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "a", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "b", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "c", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "d", data: BytesLike): Result;
 
   events: {};
 }
@@ -45,15 +45,15 @@ export interface BellCurveParametersStorage extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
+    eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
+    eventFilter: TypedEventFilter<TEvent>
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;

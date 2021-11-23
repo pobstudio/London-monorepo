@@ -89,10 +89,16 @@ export const GRID_SIZE_TO_LABEL: { [k: number]: string } = {
   125: 'super complex',
 };
 
-export const FRAME_CT_AND_WEIGHT: [number[], number[]] = [
+export const BASIC_FRAME_CT_AND_WEIGHT: [number[], number[]] = [
   [1, 5, 10, 20, 40, 50],
   [0.3, 0.2, 0.2, 0.2, 0.09, 0.01],
 ];
+
+export const ADVANCED_FRAME_CT_AND_WEIGHT: [number[], number[]] = [
+  [1, 5, 10, 20, 40, 50],
+  [0, 0.2, 0.2, 0.4, 0.15, 0.05],
+];
+
 
 export const FRAME_CT_TO_LABEL: { [k: number]: string } = {
   1: 'still',
@@ -109,12 +115,12 @@ export const FRAME_POINTILISM_AND_WEIGHT: [number[], number[]] = [
 ];
 
 export const FRAME_POINTILISM_TO_LABEL: { [k: number]: string } = {
-  0.01: 'static',
-  0.001: 'turbulent',
-  0.1: 'light speed',
+  0.01: 'noisy',
+  0.001: 'flowy',
+  0.1: 'crazy',
 };
 
-export const getEmberGene = (seed: string): EmberGene => {
+export const getEmberGene = (seed: string, tokenType: string): EmberGene => {
   const randSrc = seedrandom(seed);
   const { random, randomInArray, randomInArrayByWeights } =
     randomRangeFactory(randSrc);
@@ -123,10 +129,15 @@ export const getEmberGene = (seed: string): EmberGene => {
     GRID_SIZE_AND_WEIGHT[0],
     GRID_SIZE_AND_WEIGHT[1],
   );
-  const frameCt = randomInArrayByWeights(
-    FRAME_CT_AND_WEIGHT[0],
-    FRAME_CT_AND_WEIGHT[1],
+  
+  const frameCt = tokenType === 'gift' || tokenType === 'ashen' || tokenType === 'ultrasonic' ? randomInArrayByWeights(
+    ADVANCED_FRAME_CT_AND_WEIGHT[0],
+    ADVANCED_FRAME_CT_AND_WEIGHT[1],
+  ) : randomInArrayByWeights(
+    BASIC_FRAME_CT_AND_WEIGHT[0],
+    BASIC_FRAME_CT_AND_WEIGHT[1],
   );
+
   const framePointilism = randomInArrayByWeights(
     FRAME_POINTILISM_AND_WEIGHT[0],
     FRAME_POINTILISM_AND_WEIGHT[1],
@@ -152,6 +163,7 @@ export const getEmberGene = (seed: string): EmberGene => {
 export const getEmbersTokenMetadataFromGene = (
   image: string,
   gene: EmberGene,
+  tokenTypeLabel: string,
 ): any => {
   return {
     name: generateName(gene.seed),
@@ -165,8 +177,12 @@ export const getEmbersTokenMetadataFromGene = (
         value: FRAME_CT_TO_LABEL[gene.frameCt],
       },
       {
-        trait_type: 'animation',
+        trait_type: 'animationStyle',
         value: FRAME_POINTILISM_TO_LABEL[gene.framePointilism],
+      },
+      {
+        trait_type: 'provenance',
+        value: tokenTypeLabel,
       },
     ],
   };
@@ -359,7 +375,7 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
     <style>
       path { mix-blend-mode: darken; }
     </style>` +
-    `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="100%" height="100%"/>` +
+    `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="${DIMENSION}" height="${DIMENSION}"/>` +
     paths +
     '</svg>'
   );

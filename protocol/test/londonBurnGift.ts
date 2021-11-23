@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import { chunk } from 'lodash';
 import { LondonBurnMinter } from '../typechain-types/LondonBurnMinter';
 import { deployments } from '../deployments';
+import { newArray } from './utils';
 
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const ONE_MWEI = ethers.utils.parseUnits('1', 'mwei');
@@ -44,8 +45,9 @@ const BURN_LONDON_FEE_FOR_GIFTS: { [key: number]: BigNumber } = {
 };
 
 interface MintCheck {
-  URI: string;
+  uris: string[];
   to: string;
+  tokenType: string;
   signature: string;
 }
 
@@ -66,32 +68,37 @@ describe('LondonBurnGift', function () {
   let erc721Mintable: ERC721Mintable;
   let mintCheckCounter = 0;
 
-  const getMintChecks = async (to: string, num: number) => {
-    const mintChecks: MintCheck[] = [];
+  const getMintCheck = async (to: string, num: number, tokenType: string) => {
+    const uris: string[] = [];
 
     for (let i = 0; i < num; ++i) {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck' + mintCheckCounter + i,
-        to,
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
-      );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-      mintChecks.push(mintCheck);
+      const str = 'mintcheck' + (mintCheckCounter + i);
+      uris.push(str);
     }
+
     mintCheckCounter += num;
-    return mintChecks;
+
+    const mintCheck: MintCheck = {
+      tokenType,
+      uris,
+      to,
+      signature: BAD_SIGNATURE,
+    };
+
+    const mintCheckHash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', ...newArray(uris.length).map((_) => 'string')],
+      [mintCheck.to, mintCheck.tokenType, ...mintCheck.uris],
+    );
+
+    const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
+
+    const mintCheckHashSig = await mintingAuthority.signMessage(
+      bytesMintCheckHash,
+    );
+
+    mintCheck.signature = mintCheckHashSig;
+
+    return mintCheck;
   };
 
   before(async function () {
@@ -269,9 +276,10 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -280,7 +288,7 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned],
         );
       // mint gift type
-      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks);
+      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck);
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
@@ -306,14 +314,15 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       // mint gift type
       await londonBurnMinter
         .connect(minter)
-        .mintGiftType(tokenIds, mintChecks, {
+        .mintGiftType(tokenIds, mintCheck, {
           value: ONE_ETH,
         });
       // check treasury get london
@@ -340,9 +349,10 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(rando)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await rando.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(rando)
@@ -351,7 +361,7 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned],
         );
       await expect(
-        londonBurnMinter.connect(rando).mintGiftType(tokenIds, mintChecks),
+        londonBurnMinter.connect(rando).mintGiftType(tokenIds, mintCheck),
       ).to.revertedWith('ERC20: transfer amount exceeds balance');
     });
     it('should not mint if not enough ETH', async function () {
@@ -360,12 +370,13 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(rando)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await rando.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await expect(
-        londonBurnMinter.connect(rando).mintGiftType(tokenIds, mintChecks, {
+        londonBurnMinter.connect(rando).mintGiftType(tokenIds, mintCheck, {
           value: ONE_GWEI,
         }),
       ).to.revertedWith('UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
@@ -379,9 +390,10 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -390,7 +402,7 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned],
         );
       await expect(
-        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks),
+        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck),
       ).to.revertedWith('GIFT has not been revealed yet');
     });
     it('should not mint if max burnt', async function () {
@@ -400,21 +412,21 @@ describe('LondonBurnGift', function () {
       //   const numBurned = 15;
       //   const tokenIds = await mintBurnableNft(minter, numBurned);
       //   await erc721Mintable.connect(minter).setApprovalForAll(londonBurn.address, true);
-      //   const mintChecks = await getMintChecks(await minter.getAddress(), numBurnFromGiftAmount(numBurned));
+      //   const mintCheck = await getMintCheck(await minter.getAddress(), numBurnFromGiftAmount(numBurned));
       //   await erc20Mintable.connect(owner).mint(await minter.getAddress(), BURN_LONDON_FEE_FOR_GIFTS[numBurned]);
       //   await erc20Mintable.connect(minter).approve(londonBurn.address, BURN_LONDON_FEE_FOR_GIFTS[numBurned]);
       //   // mint gift type
-      //   await londonBurn.connect(minter).mintGiftType(tokenIds, mintChecks);
+      //   await londonBurn.connect(minter).mintGiftType(tokenIds, mintCheck);
       //   totalNumBurned += numBurned;
       // }
       // const numBurned = 11;
       // const tokenIds = await mintBurnableNft(minter, numBurned);
       // await erc721Mintable.connect(minter).setApprovalForAll(londonBurn.address, true);
-      // const mintChecks = await getMintChecks(await minter.getAddress(), numBurnFromGiftAmount(numBurned));
+      // const mintCheck = await getMintCheck(await minter.getAddress(), numBurnFromGiftAmount(numBurned));
       // await erc20Mintable.connect(owner).mint(await minter.getAddress(), BURN_LONDON_FEE_FOR_GIFTS[numBurned]);
       // await erc20Mintable.connect(minter).approve(londonBurn.address, BURN_LONDON_FEE_FOR_GIFTS[numBurned]);
       // await expect(
-      //   londonBurn.connect(minter).mintGiftType(tokenIds, mintChecks),
+      //   londonBurn.connect(minter).mintGiftType(tokenIds, mintCheck),
       // ).to.revertedWith('Max GIFT burnt');
     });
     it('should not mint if under 2', async function () {
@@ -423,9 +435,10 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -434,7 +447,7 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned] ?? BigNumber.from(0),
         );
       await expect(
-        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks),
+        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck),
       ).to.revertedWith('Exceeded gift burn range');
     });
     it('should not mint if over 15', async function () {
@@ -443,9 +456,10 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned),
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -454,18 +468,19 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned] ?? BigNumber.from(0),
         );
       await expect(
-        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks),
+        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck),
       ).to.revertedWith('Exceeded gift burn range');
     });
-    it('should not mint if not enough mintChecks', async function () {
+    it('should not mint if not enough mintCheck', async function () {
       const numBurned = 4;
       const tokenIds = await mintBurnableNft(minter, numBurned);
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned) - 1,
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -474,18 +489,19 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned] ?? BigNumber.from(0),
         );
       await expect(
-        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks),
-      ).to.revertedWith('MintChecks required mismatch');
+        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck),
+      ).to.revertedWith('MintCheck required mismatch');
     });
-    it('should not mint if too much mintChecks', async function () {
+    it('should not mint if too much mintCheck', async function () {
       const numBurned = 4;
       const tokenIds = await mintBurnableNft(minter, numBurned);
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         numBurnFromGiftAmount(numBurned) + 1,
+        GIFT_TYPE,
       );
       await erc20Mintable
         .connect(minter)
@@ -494,8 +510,8 @@ describe('LondonBurnGift', function () {
           BURN_LONDON_FEE_FOR_GIFTS[numBurned] ?? BigNumber.from(0),
         );
       await expect(
-        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks),
-      ).to.revertedWith('MintChecks required mismatch');
+        londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck),
+      ).to.revertedWith('MintCheck required mismatch');
     });
     it('should mint ultrasonic conditions', async function () {
       const preBalance = await erc20Mintable.balanceOf(
@@ -507,12 +523,16 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(await minter.getAddress(), 1);
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        1,
+        ULTRASONIC_TYPE,
+      );
       await erc20Mintable
         .connect(minter)
         .approve(londonBurnMinter.address, ONE_TOKEN_IN_BASE_UNITS.mul(1559));
       // mint gift type
-      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintChecks);
+      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck);
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
@@ -536,11 +556,15 @@ describe('LondonBurnGift', function () {
       await erc721Mintable
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
-      const mintChecks = await getMintChecks(await minter.getAddress(), 1);
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        1,
+        ULTRASONIC_TYPE,
+      );
       // mint gift type
       await londonBurnMinter
         .connect(minter)
-        .mintGiftType(tokenIds, mintChecks, {
+        .mintGiftType(tokenIds, mintCheck, {
           value: ONE_ETH,
         });
       // check treasury get london

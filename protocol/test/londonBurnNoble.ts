@@ -8,6 +8,7 @@ import { LondonBurnMinter } from '../typechain-types/LondonBurnMinter';
 import { expect } from 'chai';
 import { chunk } from 'lodash';
 import { deployments } from '../deployments';
+import { newArray } from './utils';
 
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const PRICE_PER_PRISTINE_MINT = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
@@ -26,8 +27,9 @@ const ULTRASONIC_BLOCK = 15_000_000;
 const TEAM_ADDRESS = '0x9428ca8b5fe52C33BD0BD7222d719d788B6467F4';
 
 interface MintCheck {
-  URI: string;
+  uris: string[];
   to: string;
+  tokenType: string;
   signature: string;
 }
 
@@ -45,32 +47,37 @@ describe('LondonBurnNoble', function () {
   let erc721Mintable: ERC721Mintable;
   let mintCheckCounter = 0;
 
-  const getMintChecks = async (to: string, num: number) => {
-    const mintChecks: MintCheck[] = [];
+  const getMintCheck = async (to: string, num: number, tokenType: string) => {
+    const uris: string[] = [];
 
     for (let i = 0; i < num; ++i) {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck' + mintCheckCounter + i,
-        to,
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
-      );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-      mintChecks.push(mintCheck);
+      const str = 'mintcheck' + (mintCheckCounter + i);
+      uris.push(str);
     }
+
     mintCheckCounter += num;
-    return mintChecks;
+
+    const mintCheck: MintCheck = {
+      tokenType,
+      uris,
+      to,
+      signature: BAD_SIGNATURE,
+    };
+
+    const mintCheckHash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', ...newArray(uris.length).map((_) => 'string')],
+      [mintCheck.to, mintCheck.tokenType, ...mintCheck.uris],
+    );
+
+    const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
+
+    const mintCheckHashSig = await mintingAuthority.signMessage(
+      bytesMintCheckHash,
+    );
+
+    mintCheck.signature = mintCheckHashSig;
+
+    return mintCheck;
   };
 
   before(async function () {
@@ -201,7 +208,7 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 2);
+      const mintCheck = await getMintCheck(to, 2, NOBLE_TYPE);
       await londonBurnMinter
         .connect(minter)
         .mintNobleType(nobility, airdropSig, mintCheck);
@@ -217,7 +224,7 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 5);
+      const mintCheck = await getMintCheck(to, 5, NOBLE_TYPE);
       await londonBurnMinter
         .connect(minter)
         .mintNobleType(nobility, airdropSig, mintCheck);
@@ -233,7 +240,7 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 16);
+      const mintCheck = await getMintCheck(to, 16, NOBLE_TYPE);
       await londonBurnMinter
         .connect(minter)
         .mintNobleType(nobility, airdropSig, mintCheck);
@@ -250,7 +257,7 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 5);
+      const mintCheck = await getMintCheck(to, 5, NOBLE_TYPE);
       await expect(
         londonBurnMinter
           .connect(minter)
@@ -268,7 +275,7 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 5);
+      const mintCheck = await getMintCheck(to, 5, NOBLE_TYPE);
       await expect(
         londonBurnMinter
           .connect(minter)
@@ -279,14 +286,14 @@ describe('LondonBurnNoble', function () {
       const to = await minter.getAddress();
       const nobility = 2;
       const airdropSig = BAD_SIGNATURE;
-      const mintCheck = await getMintChecks(to, 5);
+      const mintCheck = await getMintCheck(to, 5, NOBLE_TYPE);
       await expect(
         londonBurnMinter
           .connect(minter)
           .mintNobleType(nobility, airdropSig, mintCheck),
       ).to.revertedWith('Noble mint is not valid');
     });
-    it('should not mint if mintChecks not enough', async function () {
+    it('should mint many times up to airdrop', async function () {
       const to = await minter.getAddress();
       const nobility = 3;
       const airdropHash = ethers.utils.solidityKeccak256(
@@ -296,50 +303,60 @@ describe('LondonBurnNoble', function () {
       const airdropSig = await mintingAuthority.signMessage(
         ethers.utils.arrayify(airdropHash),
       );
-      const mintCheck = await getMintChecks(to, 15);
-      await expect(
-        londonBurnMinter
-          .connect(minter)
-          .mintNobleType(nobility, airdropSig, mintCheck),
-      ).to.revertedWith('MintChecks length mismatch');
-    });
-    it('should not mint if mintChecks too much', async function () {
-      const to = await minter.getAddress();
-      const nobility = 3;
-      const airdropHash = ethers.utils.solidityKeccak256(
-        ['address', 'uint8'],
-        [to, nobility],
-      );
-      const airdropSig = await mintingAuthority.signMessage(
-        ethers.utils.arrayify(airdropHash),
-      );
-      const mintCheck = await getMintChecks(to, 17);
-      await expect(
-        londonBurnMinter
-          .connect(minter)
-          .mintNobleType(nobility, airdropSig, mintCheck),
-      ).to.revertedWith('MintChecks length mismatch');
-    });
-    it('should not mint if already minted', async function () {
-      const to = await minter.getAddress();
-      const nobility = 3;
-      const airdropHash = ethers.utils.solidityKeccak256(
-        ['address', 'uint8'],
-        [to, nobility],
-      );
-      const airdropSig = await mintingAuthority.signMessage(
-        ethers.utils.arrayify(airdropHash),
-      );
-      const mintCheck = await getMintChecks(to, 32);
-      const chunkedMintChecks = chunk(mintCheck, 16);
+      const mintCheck1 = await getMintCheck(to, 4, NOBLE_TYPE);
+      const mintCheck2 = await getMintCheck(to, 4, NOBLE_TYPE);
+      const mintCheck3 = await getMintCheck(to, 4, NOBLE_TYPE);
+      const mintCheck4 = await getMintCheck(to, 4, NOBLE_TYPE);
       await londonBurnMinter
-        .connect(minter)
-        .mintNobleType(nobility, airdropSig, chunkedMintChecks[0]);
+      .connect(minter)
+      .mintNobleType(nobility, airdropSig, mintCheck1)
+      await londonBurnMinter
+      .connect(minter)
+      .mintNobleType(nobility, airdropSig, mintCheck2)
+      await londonBurnMinter
+      .connect(minter)
+      .mintNobleType(nobility, airdropSig, mintCheck3)
+      await londonBurnMinter
+      .connect(minter)
+      .mintNobleType(nobility, airdropSig, mintCheck4)
       expect(await londonBurn.tokenTypeSupply(NOBLE_TYPE)).to.eq(16);
+    });
+    it('should not mint if exceeds alloted amount in one txn', async function () {
+      const to = await minter.getAddress();
+      const nobility = 3;
+      const airdropHash = ethers.utils.solidityKeccak256(
+        ['address', 'uint8'],
+        [to, nobility],
+      );
+      const airdropSig = await mintingAuthority.signMessage(
+        ethers.utils.arrayify(airdropHash),
+      );
+      const mintCheck = await getMintCheck(to, 17, NOBLE_TYPE);
       await expect(
         londonBurnMinter
           .connect(minter)
-          .mintNobleType(nobility, airdropSig, chunkedMintChecks[1]),
+          .mintNobleType(nobility, airdropSig, mintCheck),
+      ).to.revertedWith('MintChecks length mismatch');
+    });
+    it('should not mint if exceeds alloted amount in two txn', async function () {
+      const to = await minter.getAddress();
+      const nobility = 3;
+      const airdropHash = ethers.utils.solidityKeccak256(
+        ['address', 'uint8'],
+        [to, nobility],
+      );
+      const airdropSig = await mintingAuthority.signMessage(
+        ethers.utils.arrayify(airdropHash),
+      );
+      const mintCheck1 = await getMintCheck(to, 10, NOBLE_TYPE);
+      const mintCheck2 = await getMintCheck(to, 7, NOBLE_TYPE);
+      await londonBurnMinter
+      .connect(minter)
+      .mintNobleType(nobility, airdropSig, mintCheck1);
+      await expect(
+        londonBurnMinter
+          .connect(minter)
+          .mintNobleType(nobility, airdropSig, mintCheck2),
       ).to.revertedWith('Already received airdrop');
     });
   });

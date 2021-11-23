@@ -6,6 +6,7 @@ export interface Deployment {
   contractURI: string;
   baseTokenURI: string;
   embers: string;
+  embersMinter: string;
   embersContractURI: string;
   embersMintingAuthority: string;
   sushiswap: string;

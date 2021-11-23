@@ -54,6 +54,20 @@ export const Text = styled.p`
   }
 `;
 
+export const SmallText = styled.p`
+  font-size: 14px;
+  line-height: 16px;
+  color: black;
+  font-weight: 300;
+  max-width: 800px;
+  opacity: 0.8;
+  /* text-transform: uppercase; */
+  margin: 0;
+  @media (max-width: ${BREAKPTS.MD}px) {
+    max-width: 100%;
+  }
+`;
+
 export const RightAlignedText = styled(Text)`
   width: 800px;
   @media (max-width: ${BREAKPTS.MD}px) {

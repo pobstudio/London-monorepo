@@ -5,6 +5,8 @@ import { LondonBurn } from '../typechain-types/LondonBurn';
 import { ERC20Mintable } from '../typechain-types/ERC20Mintable';
 import { ERC721Mintable } from '../typechain-types/ERC721Mintable';
 import { expect } from 'chai';
+import { min } from 'lodash';
+import { newArray } from './utils';
 
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const ONE_MWEI = ethers.utils.parseUnits('1', 'mwei');
@@ -13,20 +15,22 @@ const BAD_SIGNATURE =
   '0x4a18b9a27e75dbb5a7387b52f51f8a674db3f27923fe11ee481b72c630d3fd0d789bd8ba92f7a15138cdd7d174406d2d998dc4e9acd0e82c9b16efbe0324198d1b';
 const ETERNAL_TYPE =
   '0x8000000000000000000000000000000400000000000000000000000000000000';
-
+const INVALID_TYPE =
+  '0x8000000000000000000000000000000100000000000000000000000000000000';
 const ULTRASONIC_BLOCK = 15_000_000;
 
 const CONTRACT_URI = '`ipfs://contracturi';
 
 interface MintCheck {
-  URI: string;
+  uris: string[];
   to: string;
+  tokenType: string;
   signature: string;
 }
 
 interface ModifyCheck {
-  URI: string;
-  tokenId: BigNumber;
+  uris: string[];
+  tokenIds: BigNumber[];
   signature: string;
 }
 
@@ -40,33 +44,38 @@ describe('LondonBurn', function () {
   let minter: Signer;
   let erc20Mintable: ERC20Mintable;
   let erc721Mintable: ERC721Mintable;
-  let mintCheckCounter = 0;
-  const getMintChecks = async (to: string, num: number) => {
-    const mintChecks: MintCheck[] = [];
+  let mintCheckCounter = 12;
+  const getMintCheck = async (to: string, num: number, tokenType: string) => {
+    const uris: string[] = [];
 
     for (let i = 0; i < num; ++i) {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck' + mintCheckCounter + i,
-        to,
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
-      );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-      mintChecks.push(mintCheck);
+      const str = 'mintcheck' + (mintCheckCounter + i);
+      uris.push(str);
     }
+
     mintCheckCounter += num;
-    return mintChecks;
+
+    const mintCheck: MintCheck = {
+      tokenType,
+      uris,
+      to,
+      signature: BAD_SIGNATURE,
+    };
+
+    const mintCheckHash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', ...newArray(uris.length).map((_) => 'string')],
+      [mintCheck.to, mintCheck.tokenType, ...mintCheck.uris],
+    );
+
+    const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
+
+    const mintCheckHashSig = await mintingAuthority.signMessage(
+      bytesMintCheckHash,
+    );
+
+    mintCheck.signature = mintCheckHashSig;
+
+    return mintCheck;
   };
 
   before(async function () {
@@ -145,46 +154,32 @@ describe('LondonBurn', function () {
 
   describe('getMintCheckHash', () => {
     it('should produce correct hash', async function () {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await minter.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        1,
+        ETERNAL_TYPE,
       );
-
+      const mintCheckHash = ethers.utils.solidityKeccak256(
+        [
+          'address',
+          'uint256',
+          ...newArray(mintCheck.uris.length).map((_) => 'string'),
+        ],
+        [mintCheck.to, mintCheck.tokenType, ...mintCheck.uris],
+      );
       expect(await londonBurn.getMintCheckHash(mintCheck)).to.eq(mintCheckHash);
     });
   });
-
   describe('verifyMintCheck', () => {
     it('should produce correct hash', async function () {
       await londonBurn
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
-
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await minter.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        4,
+        ETERNAL_TYPE,
       );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-
       expect(await londonBurn.verifyMintCheck(mintCheck)).to.eq(true);
     });
   });
@@ -195,80 +190,62 @@ describe('LondonBurn', function () {
       await londonBurn
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
+      await londonBurn.connect(owner).setBaseMetadataURI('ipfs://');
     });
 
     it('should mint correctly with valid mintCheck', async function () {
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
-        2,
+        15,
+        ETERNAL_TYPE,
       );
-
-      await londonBurn.connect(minter).mintTokenType(ETERNAL_TYPE, mintChecks);
+      await londonBurn.connect(minter).mintTokenType(mintCheck);
 
       expect(
         await londonBurn.ownerOf(BigNumber.from(ETERNAL_TYPE).or('1')),
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(ETERNAL_TYPE).or('1')),
-      ).to.eq(mintChecks[0].URI);
-
+      ).to.eq(`ipfs://${mintCheck.uris[0]}`);
       expect(
         await londonBurn.ownerOf(BigNumber.from(ETERNAL_TYPE).or('2')),
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(ETERNAL_TYPE).or('2')),
-      ).to.eq(mintChecks[1].URI);
+      ).to.eq(`ipfs://${mintCheck.uris[1]}`);
     });
 
     it('should not mint correctly with invalid mintCheck', async function () {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        15,
+        ETERNAL_TYPE,
+      );
+      mintCheck.signature = BAD_SIGNATURE;
       await expect(
-        londonBurn.connect(minter).mintTokenType(ETERNAL_TYPE, [mintCheck]),
+        londonBurn.connect(minter).mintTokenType(mintCheck),
       ).to.revertedWith('Mint check is not valid');
     });
     it('should not mint correctly with used mintCheck', async function () {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        15,
+        ETERNAL_TYPE,
       );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
+      await londonBurn.connect(minter).mintTokenType(mintCheck);
       await expect(
-        londonBurn
-          .connect(minter)
-          .mintTokenType(ETERNAL_TYPE, [mintCheck, mintCheck]),
-      ).to.revertedWith('Mint check has already been used');
-      await londonBurn.connect(minter).mintTokenType(ETERNAL_TYPE, [mintCheck]);
-      await expect(
-        londonBurn.connect(minter).mintTokenType(ETERNAL_TYPE, [mintCheck]),
+        londonBurn.connect(minter).mintTokenType(mintCheck),
       ).to.revertedWith('Mint check has already been used');
     });
-    it('should not mint correctly with rando', async function () {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck',
-        to: await treasury.getAddress(),
-        signature: BAD_SIGNATURE,
-      };
+    it('should not mint correctly if rando', async function () {
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        15,
+        ETERNAL_TYPE,
+      );
 
       await expect(
-        londonBurn.connect(treasury).mintTokenType(ETERNAL_TYPE, [mintCheck]),
+        londonBurn.connect(rando).mintTokenType(mintCheck),
       ).to.revertedWith('Caller is not the minter');
     });
   });
@@ -276,14 +253,14 @@ describe('LondonBurn', function () {
   describe('getModifyCheckHash', () => {
     it('should produce correct hash', async function () {
       const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://mintcheck',
-        tokenId: BigNumber.from(1),
+        uris: ['ipfs://mintcheck'],
+        tokenIds: [BigNumber.from(1)],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        ['uint256', 'string'],
-        [modifyCheck.tokenId, modifyCheck.URI],
+        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
       expect(await londonBurn.getModifyCheckHash(modifyCheck)).to.eq(
@@ -298,16 +275,16 @@ describe('LondonBurn', function () {
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
 
-      const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://mintcheck',
-        tokenId: BigNumber.from(1),
-        signature: BAD_SIGNATURE,
-      };
-
-      const modifyCheckHash = ethers.utils.solidityKeccak256(
-        ['uint256', 'string'],
-        [modifyCheck.tokenId, modifyCheck.URI],
-      );
+        const modifyCheck: ModifyCheck = {
+          uris: ['ipfs://mintcheck'],
+          tokenIds: [BigNumber.from(1)],
+          signature: BAD_SIGNATURE,
+        };
+  
+        const modifyCheckHash = ethers.utils.solidityKeccak256(
+          [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+          [...modifyCheck.tokenIds, ...modifyCheck.uris],
+        );
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
 
@@ -327,24 +304,26 @@ describe('LondonBurn', function () {
       await londonBurn
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
-        2,
+        4,
+        ETERNAL_TYPE
       );
 
-      await londonBurn.connect(minter).mintTokenType(ETERNAL_TYPE, mintChecks);
+      await londonBurn.connect(minter).mintTokenType(mintCheck);
     });
     it('should correctly modify token id base URI', async function () {
       const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://modified',
-        tokenId: BigNumber.from(ETERNAL_TYPE).or('1'),
+        uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
+        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        ['uint256', 'string'],
-        [modifyCheck.tokenId, modifyCheck.URI],
+        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
+
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
 
@@ -354,32 +333,35 @@ describe('LondonBurn', function () {
 
       modifyCheck.signature = modifyCheckHashSig;
 
-      await londonBurn.modifyBaseURIByModifyCheck([modifyCheck]);
+      await londonBurn.modifyBaseURIByModifyCheck(modifyCheck);
 
-      expect(await londonBurn.tokenURI(modifyCheck.tokenId)).to.eq(
-        modifyCheck.URI,
+      expect(await londonBurn.tokenURI(modifyCheck.tokenIds[0])).to.eq(
+        modifyCheck.uris[0],
+      );
+      expect(await londonBurn.tokenURI(modifyCheck.tokenIds[1])).to.eq(
+        modifyCheck.uris[1],
       );
     });
     it('should not modify token id base URI if not valid check', async function () {
       const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://modified',
-        tokenId: BigNumber.from(ETERNAL_TYPE).or('1'),
+        uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
+        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
         signature: BAD_SIGNATURE,
       };
       await expect(
-        londonBurn.modifyBaseURIByModifyCheck([modifyCheck]),
+        londonBurn.modifyBaseURIByModifyCheck(modifyCheck),
       ).to.revertedWith('Modify check is not valid');
     });
     it('should not modify token id base URI if already used', async function () {
       const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://modified',
-        tokenId: BigNumber.from(ETERNAL_TYPE).or('1'),
+        uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
+        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        ['uint256', 'string'],
-        [modifyCheck.tokenId, modifyCheck.URI],
+        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
@@ -390,24 +372,21 @@ describe('LondonBurn', function () {
 
       modifyCheck.signature = modifyCheckHashSig;
 
+      await londonBurn.modifyBaseURIByModifyCheck(modifyCheck);
       await expect(
-        londonBurn.modifyBaseURIByModifyCheck([modifyCheck, modifyCheck]),
-      ).to.revertedWith('Modify check has already been used');
-      await londonBurn.modifyBaseURIByModifyCheck([modifyCheck]);
-      await expect(
-        londonBurn.connect(minter).modifyBaseURIByModifyCheck([modifyCheck]),
+        londonBurn.connect(minter).modifyBaseURIByModifyCheck(modifyCheck),
       ).to.revertedWith('Modify check has already been used');
     });
     it('should not modify token id does not exist', async function () {
       const modifyCheck: ModifyCheck = {
-        URI: 'ipfs://modified',
-        tokenId: BigNumber.from(ETERNAL_TYPE).or('3'),
+        uris: ['ipfs://modifycheck5'],
+        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('5')],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        ['uint256', 'string'],
-        [modifyCheck.tokenId, modifyCheck.URI],
+        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
@@ -419,8 +398,33 @@ describe('LondonBurn', function () {
       modifyCheck.signature = modifyCheckHashSig;
 
       await expect(
-        londonBurn.modifyBaseURIByModifyCheck([modifyCheck, modifyCheck]),
+        londonBurn.modifyBaseURIByModifyCheck(modifyCheck),
       ).to.revertedWith('Tokenid does not exist');
+    });
+
+    it('should not modify token id if incorrectly shapped modify Check', async function () {
+      const modifyCheck: ModifyCheck = {
+        uris: ['ipfs://modifycheck1'],
+        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
+        signature: BAD_SIGNATURE,
+      };
+
+      const modifyCheckHash = ethers.utils.solidityKeccak256(
+        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
+      );
+
+      const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
+
+      const modifyCheckHashSig = await mintingAuthority.signMessage(
+        bytesModifyCheckHash,
+      );
+
+      modifyCheck.signature = modifyCheckHashSig;
+
+      await expect(
+        londonBurn.modifyBaseURIByModifyCheck(modifyCheck),
+      ).to.revertedWith('tokenIds mismatch with uris');
     });
   });
 });

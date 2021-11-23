@@ -8,6 +8,7 @@ import { LondonBurnMinter } from '../typechain-types/LondonBurnMinter';
 import { expect, util } from 'chai';
 import { chunk } from 'lodash';
 import { deployments } from '../deployments';
+import { newArray } from './utils';
 
 const ONE_TOKEN_IN_BASE_UNITS = ethers.utils.parseEther('1');
 const PRICE_PER_PRISTINE_MINT = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
@@ -25,11 +26,12 @@ const LONDON_WHALE_ADDRESS = '0x7C849375786faE5e4984F50eea47360D75660a31';
 const ULTRASONIC_BLOCK = 15_000_000;
 const MAX_BLOCK_NUM =
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-interface MintCheck {
-  URI: string;
-  to: string;
-  signature: string;
-}
+  interface MintCheck {
+    uris: string[];
+    to: string;
+    tokenType: string;
+    signature: string;
+  }
 
 describe('LondonBurnPristine', function () {
   // constant values used in transfer tests
@@ -46,32 +48,37 @@ describe('LondonBurnPristine', function () {
   let erc721Mintable: ERC721Mintable;
   let mintCheckCounter = 0;
 
-  const getMintChecks = async (to: string, num: number) => {
-    const mintChecks: MintCheck[] = [];
+  const getMintCheck = async (to: string, num: number, tokenType: string) => {
+    const uris: string[] = [];
 
     for (let i = 0; i < num; ++i) {
-      const mintCheck: MintCheck = {
-        URI: 'ipfs://mintcheck' + mintCheckCounter + i,
-        to,
-        signature: BAD_SIGNATURE,
-      };
-
-      const mintCheckHash = ethers.utils.solidityKeccak256(
-        ['address', 'string'],
-        [mintCheck.to, mintCheck.URI],
-      );
-
-      const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
-
-      const mintCheckHashSig = await mintingAuthority.signMessage(
-        bytesMintCheckHash,
-      );
-
-      mintCheck.signature = mintCheckHashSig;
-      mintChecks.push(mintCheck);
+      const str = 'mintcheck' + (mintCheckCounter + i);
+      uris.push(str);
     }
+
     mintCheckCounter += num;
-    return mintChecks;
+
+    const mintCheck: MintCheck = {
+      tokenType,
+      uris,
+      to,
+      signature: BAD_SIGNATURE,
+    };
+
+    const mintCheckHash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', ...newArray(uris.length).map((_) => 'string')],
+      [mintCheck.to, mintCheck.tokenType, ...mintCheck.uris],
+    );
+
+    const bytesMintCheckHash = ethers.utils.arrayify(mintCheckHash);
+
+    const mintCheckHashSig = await mintingAuthority.signMessage(
+      bytesMintCheckHash,
+    );
+
+    mintCheck.signature = mintCheckHashSig;
+
+    return mintCheck;
   };
 
   before(async function () {
@@ -160,15 +167,16 @@ describe('LondonBurnPristine', function () {
           londonBurnMinter.address,
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT),
         );
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
       const preBalance = await erc20Mintable.balanceOf(
         await treasury.getAddress(),
       );
 
-      await londonBurnMinter.connect(minter).mintPristineType(mintChecks);
+      await londonBurnMinter.connect(minter).mintPristineType(mintCheck);
 
       expect(await londonBurn.tokenTypeSupply(PRISTINE_TYPE)).to.eq(
         BigNumber.from(MAX_PRISTINE_AMOUNT_PER_MINT),
@@ -179,14 +187,14 @@ describe('LondonBurnPristine', function () {
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(PRISTINE_TYPE).or('1')),
-      ).to.eq(mintChecks[0].URI);
+      ).to.eq(mintCheck.uris[0]);
 
       expect(
         await londonBurn.ownerOf(BigNumber.from(PRISTINE_TYPE).or('4')),
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(PRISTINE_TYPE).or('4')),
-      ).to.eq(mintChecks[3].URI);
+      ).to.eq(mintCheck.uris[3]);
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
           preBalance,
@@ -195,15 +203,16 @@ describe('LondonBurnPristine', function () {
     });
 
     it('should mint correctly with ETH', async function () {
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
 
       const preBalance = await erc20Mintable.balanceOf(
         await treasury.getAddress(),
       );
-      await londonBurnMinter.connect(minter).mintPristineType(mintChecks, {
+      await londonBurnMinter.connect(minter).mintPristineType(mintCheck, {
         value: ONE_ETH.mul(10),
       });
 
@@ -216,14 +225,14 @@ describe('LondonBurnPristine', function () {
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(PRISTINE_TYPE).or('1')),
-      ).to.eq(mintChecks[0].URI);
+      ).to.eq(mintCheck.uris[0]);
 
       expect(
         await londonBurn.ownerOf(BigNumber.from(PRISTINE_TYPE).or('4')),
       ).to.eq(await minter.getAddress());
       expect(
         await londonBurn.tokenURI(BigNumber.from(PRISTINE_TYPE).or('4')),
-      ).to.eq(mintChecks[3].URI);
+      ).to.eq(mintCheck.uris[3]);
 
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
@@ -242,23 +251,25 @@ describe('LondonBurnPristine', function () {
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT),
         );
 
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
 
       await expect(
-        londonBurnMinter.connect(rando).mintPristineType(mintChecks),
+        londonBurnMinter.connect(rando).mintPristineType(mintCheck),
       ).to.revertedWith('ERC20: transfer amount exceeds balance');
     });
     it('should not mint if not enough balance of ETH', async function () {
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         1,
+        PRISTINE_TYPE,
       );
 
       await expect(
-        londonBurnMinter.connect(rando).mintPristineType(mintChecks, {
+        londonBurnMinter.connect(rando).mintPristineType(mintCheck, {
           value: ONE_GWEI,
         }),
       ).to.revertedWith('UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
@@ -272,13 +283,14 @@ describe('LondonBurnPristine', function () {
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT),
         );
 
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
 
       await expect(
-        londonBurnMinter.connect(minter).mintPristineType(mintChecks),
+        londonBurnMinter.connect(minter).mintPristineType(mintCheck),
       ).to.revertedWith('PRISTINE has not been revealed yet');
     });
     it('should not mint after ultraSonicForkBlockNumber', async function () {
@@ -289,12 +301,13 @@ describe('LondonBurnPristine', function () {
           londonBurnMinter.address,
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT),
         );
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
       await expect(
-        londonBurnMinter.connect(minter).mintPristineType(mintChecks),
+        londonBurnMinter.connect(minter).mintPristineType(mintCheck),
       ).to.revertedWith('ULTRASONIC MODE ENGAGED');
     });
     it('should not mint more than MAX_PRISTINE_AMOUNT_PER_MINT per mint', async function () {
@@ -305,13 +318,14 @@ describe('LondonBurnPristine', function () {
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT + 1),
         );
 
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck = await getMintCheck(
         await minter.getAddress(),
         MAX_PRISTINE_AMOUNT_PER_MINT + 1,
+        PRISTINE_TYPE,
       );
 
       await expect(
-        londonBurnMinter.connect(minter).mintPristineType(mintChecks),
+        londonBurnMinter.connect(minter).mintPristineType(mintCheck),
       ).to.revertedWith('Exceeded per tx mint amount');
     });
     it('should not mint more consecutively', async function () {
@@ -322,19 +336,22 @@ describe('LondonBurnPristine', function () {
           PRICE_PER_PRISTINE_MINT.mul(MAX_PRISTINE_AMOUNT_PER_MINT).mul(2),
         );
 
-      const mintChecks: MintCheck[] = await getMintChecks(
+      const mintCheck1 = await getMintCheck(
         await minter.getAddress(),
-        MAX_PRISTINE_AMOUNT_PER_MINT * 2,
-      );
-      const chunkedMintChecks: MintCheck[][] = chunk(
-        mintChecks,
         MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
       );
+      const mintCheck2 = await getMintCheck(
+        await minter.getAddress(),
+        MAX_PRISTINE_AMOUNT_PER_MINT,
+        PRISTINE_TYPE,
+      );
+
       await londonBurnMinter
         .connect(minter)
-        .mintPristineType(chunkedMintChecks[0]);
+        .mintPristineType(mintCheck1);
       await expect(
-        londonBurnMinter.connect(minter).mintPristineType(chunkedMintChecks[1]),
+        londonBurnMinter.connect(minter).mintPristineType(mintCheck2),
       ).to.revertedWith("Can't mint consecutively");
     });
     it('should not mint if exceeded mintable supply', async function () {
@@ -357,15 +374,15 @@ describe('LondonBurnPristine', function () {
       //       PRICE_PER_PRISTINE_MINT.mul(PRISTINE_MINTABLE_SUPPLY + 1),
       //     );
 
-      //   const mintChecks: MintCheck[] = await getMintChecks(
+      //   const mintCheck = await getMintCheck(
       //     await minter.getAddress(),
       //     PRISTINE_MINTABLE_SUPPLY,
       //   );
 
-      //   const groupedMintChecks = chunk(mintChecks, 4);
+      //   const groupedMintCheck = chunk(mintCheck, 4);
 
       //   let i = 0;
-      //   for (const gmc of groupedMintChecks) {
+      //   for (const gmc of groupedMintCheck) {
       //     if (i % 2 == 0) {
       //       await londonBurn.connect(minter).mintPristineType(gmc);
       //     } else {

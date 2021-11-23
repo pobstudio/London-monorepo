@@ -5,31 +5,31 @@ pragma solidity ^0.8.0;
 import "./ERC20.sol";
 import "./ERC721.sol";
 import "./Ownable.sol";
-import "./utils/Strings.sol";
 import "./utils/Signature.sol";
 
 contract LondonBurn is Ownable, ERC721, Signature {
-    using Strings for uint256;
 
     address public mintingAuthority;
     address public minter;
     string public contractURI;
 
-    mapping(uint256 => string)  tokenIdToURI;
+    mapping(uint256 => string) public tokenIdToUri;
     mapping(uint256 => uint256) public tokenTypeSupply;
 
-    mapping(bytes32 => uint256) mintCheckHashToTokenId;
-    mapping(bytes32 => uint256) modifyCheckHashToTokenId;
+    mapping(bytes32 => uint256) contentHashToTokenId;
+
+    string public baseMetadataURI;
 
     struct MintCheck {
       address to;
-      string URI;
+      uint256 tokenType;
+      string[] uris;
       bytes signature;
     }
 
     struct ModifyCheck {
-      uint256 tokenId;
-      string URI;
+      uint256[] tokenIds;
+      string[] uris;
       bytes signature;
     }
 
@@ -60,15 +60,27 @@ contract LondonBurn is Ownable, ERC721, Signature {
         _;
     }
 
+    function setBaseMetadataURI(string memory _baseMetadataURI) public onlyOwner {
+      baseMetadataURI = _baseMetadataURI;
+    }
+
+    function _baseURI() override internal view virtual returns (string memory) {
+      return baseMetadataURI;
+    }
+
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-        require(bytes(tokenIdToURI[tokenId]).length > 0, "ERC721Metadata: URI query for nonexistent token URI");
+        require(abi.encodePacked(tokenIdToUri[tokenId]).length != 0, "ERC721Metadata: URI query for nonexistent token URI");
 
-        return tokenIdToURI[tokenId];
+        return string(abi.encodePacked(_baseURI(), tokenIdToUri[tokenId]));
     }
 
    function getMintCheckHash(MintCheck calldata _mintCheck) public pure returns (bytes32) {
-      return keccak256(abi.encodePacked(_mintCheck.to, _mintCheck.URI));
+      bytes memory input = abi.encodePacked(_mintCheck.to, _mintCheck.tokenType);
+      for (uint i = 0; i < _mintCheck.uris.length; ++i) {
+        input = abi.encodePacked(input, _mintCheck.uris[i]);
+      }
+      return keccak256(input);
     }
 
     function verifyMintCheck(
@@ -79,21 +91,32 @@ contract LondonBurn is Ownable, ERC721, Signature {
       return isSigned(mintingAuthority, signedHash, v, r, s);
     }
 
-    function mintTokenType(uint256 tokenType, MintCheck[] calldata _mintChecks) external onlyMinter {
-      for (uint i = 0; i < _mintChecks.length; ++i) {
-        bytes32 mintCheckHash = getMintCheckHash(_mintChecks[i]);
-        require(mintCheckHashToTokenId[mintCheckHash] == 0, "Mint check has already been used");
-        require(verifyMintCheck(_mintChecks[i]), "Mint check is not valid");
-        uint tokenId = (tokenType | ++tokenTypeSupply[tokenType]);
-        _mint(_mintChecks[i].to, tokenId);
-        tokenIdToURI[tokenId] = _mintChecks[i].URI;
-        mintCheckHashToTokenId[mintCheckHash] = tokenId;
+
+    function mintTokenType(MintCheck calldata _mintCheck) external onlyMinter {
+      bytes32 mintCheckHash = getMintCheckHash(_mintCheck);
+      (bytes32 r, bytes32 s, uint8 v) = splitSignature(_mintCheck.signature);
+      require(isSigned(mintingAuthority, mintCheckHash, v, r, s), "Mint check is not valid");
+
+      for (uint i = 0; i < _mintCheck.uris.length; ++i) {
+        bytes32 contentHash = keccak256(abi.encodePacked(_mintCheck.uris[i]));
+        require(contentHashToTokenId[contentHash] == 0, "Mint check has already been used");
+        uint tokenId = (_mintCheck.tokenType | ++tokenTypeSupply[_mintCheck.tokenType]);
+        _mint(_mintCheck.to, tokenId);
+        tokenIdToUri[tokenId] = _mintCheck.uris[i];
+        contentHashToTokenId[contentHash] = tokenId;
         emit MintCheckUsed(tokenId, mintCheckHash);
       }
     }
 
     function getModifyCheckHash(ModifyCheck calldata _modifyCheck) public pure returns (bytes32) {
-      return keccak256(abi.encodePacked(_modifyCheck.tokenId, _modifyCheck.URI));
+      bytes memory input = abi.encodePacked("");
+      for (uint i = 0; i < _modifyCheck.tokenIds.length; ++i) {
+        input = abi.encodePacked(input, _modifyCheck.tokenIds[i]);
+      }
+      for (uint i = 0; i < _modifyCheck.uris.length; ++i) {
+        input = abi.encodePacked(input, _modifyCheck.uris[i]);
+      }
+      return keccak256(input);
     }
 
     function verifyModifyCheck(
@@ -104,15 +127,19 @@ contract LondonBurn is Ownable, ERC721, Signature {
       return isSigned(mintingAuthority, signedHash, v, r, s);
     }
 
-    function modifyBaseURIByModifyCheck(ModifyCheck[] calldata _modifyChecks) external {
-      for (uint i = 0; i < _modifyChecks.length; ++i) {
-        bytes32 modifyCheckHash = getModifyCheckHash(_modifyChecks[i]);
-        require(modifyCheckHashToTokenId[modifyCheckHash] == 0, "Modify check has already been used");
-        require(verifyModifyCheck(_modifyChecks[i]), "Modify check is not valid");
-        require(_exists(_modifyChecks[i].tokenId), "Tokenid does not exist");
-        tokenIdToURI[_modifyChecks[i].tokenId] = _modifyChecks[i].URI;
-        modifyCheckHashToTokenId[modifyCheckHash] = _modifyChecks[i].tokenId;
-        emit MintCheckUsed(_modifyChecks[i].tokenId, modifyCheckHash);
+    function modifyBaseURIByModifyCheck(ModifyCheck calldata _modifyCheck) external {
+      require(_modifyCheck.tokenIds.length == _modifyCheck.uris.length, "tokenIds mismatch with uris");
+      bytes32 modifyCheckHash = getModifyCheckHash(_modifyCheck);
+      (bytes32 r, bytes32 s, uint8 v) = splitSignature(_modifyCheck.signature);
+      require(isSigned(mintingAuthority, modifyCheckHash, v, r, s), "Modify check is not valid");
+
+      for (uint i = 0; i < _modifyCheck.tokenIds.length; ++i) {
+        bytes32 contentHash = keccak256(abi.encodePacked(_modifyCheck.uris[i]));
+        require(contentHashToTokenId[contentHash] == 0, "Modify check has already been used");
+        require(_exists(_modifyCheck.tokenIds[i]), "Tokenid does not exist");
+        tokenIdToUri[_modifyCheck.tokenIds[i]] = _modifyCheck.uris[i];
+        contentHashToTokenId[contentHash] = _modifyCheck.tokenIds[i];
+        emit MintCheckUsed(_modifyCheck.tokenIds[i], modifyCheckHash);
       }
     }
 }

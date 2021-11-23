@@ -46,12 +46,10 @@ const handleAirdropRequest = async (
   }
   const numAirdropped = parseInt(row[4]);
   const nobility = BURN_NOBLE_AIRDROP_AMOUNT_REVERSE_LOOKUP[numAirdropped];
-  console.log(numAirdropped, nobility);
   const messageHash = utils.solidityKeccak256(
     ['address', 'uint8'],
     [to, nobility],
   );
-  console.log(messageHash);
   const bytesMessageHash = utils.arrayify(messageHash);
   const signature = await mintingSigner.signMessage(bytesMessageHash);
   res.setHeader(

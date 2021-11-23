@@ -78,7 +78,7 @@ abstract contract LondonBurnGift is LondonBurnMinterBase {
 
   function mintGiftType(
     uint256[] calldata giftTokenIds,
-    LondonBurn.MintCheck[] calldata mintChecks
+    LondonBurn.MintCheck calldata mintCheck
   ) payable public {
     require(block.number > revealBlockNumber, 'GIFT has not been revealed yet');
     require(totalGiftBurnAmount + giftTokenIds.length <= MAX_TOTAL_GIFT_BURN_AMOUNT, "Max GIFT burnt");
@@ -89,9 +89,9 @@ abstract contract LondonBurnGift is LondonBurnMinterBase {
       externalBurnableERC721.transferFrom(_msgSender(), address(0xdead), giftTokenIds[i]);
     }
     
-    require(mintChecks.length == numBurnFromGiftAmount(giftTokenIds.length), "MintChecks required mismatch");
-    
-    londonBurn.mintTokenType(block.number < ultraSonicForkBlockNumber ? GIFT_TYPE : ULTRA_SONIC_TYPE, mintChecks);
+    require(mintCheck.uris.length == numBurnFromGiftAmount(giftTokenIds.length), "MintCheck required mismatch");
+    require(mintCheck.tokenType == (block.number < ultraSonicForkBlockNumber ? GIFT_TYPE : ULTRA_SONIC_TYPE), "Must be correct tokenType");
+    londonBurn.mintTokenType(mintCheck);
     totalGiftBurnAmount += giftTokenIds.length;
     numGiftBurns++;
   }
