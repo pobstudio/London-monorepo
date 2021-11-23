@@ -99,9 +99,7 @@ const handleMintChecks = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const bytesMintCheckHash = utils.arrayify(mintCheckHash);
 
-  const mintCheckHashSig = await mintingSigner.signMessage(
-    bytesMintCheckHash,
-  );
+  const mintCheckHashSig = await mintingSigner.signMessage(bytesMintCheckHash);
 
   const signature = mintCheckHashSig;
 

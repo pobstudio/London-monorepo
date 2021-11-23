@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import { FlexCenter } from './flex';
 
 export const ModalCover = styled(FlexCenter)`
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 `;
 
 export const ModalContent = styled.div`

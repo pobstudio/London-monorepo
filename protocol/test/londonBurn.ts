@@ -259,7 +259,10 @@ describe('LondonBurn', function () {
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
         [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
@@ -275,16 +278,19 @@ describe('LondonBurn', function () {
         .connect(owner)
         .setMintingAuthority(await mintingAuthority.getAddress());
 
-        const modifyCheck: ModifyCheck = {
-          uris: ['ipfs://mintcheck'],
-          tokenIds: [BigNumber.from(1)],
-          signature: BAD_SIGNATURE,
-        };
-  
-        const modifyCheckHash = ethers.utils.solidityKeccak256(
-          [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
-          [...modifyCheck.tokenIds, ...modifyCheck.uris],
-        );
+      const modifyCheck: ModifyCheck = {
+        uris: ['ipfs://mintcheck'],
+        tokenIds: [BigNumber.from(1)],
+        signature: BAD_SIGNATURE,
+      };
+
+      const modifyCheckHash = ethers.utils.solidityKeccak256(
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
+        [...modifyCheck.tokenIds, ...modifyCheck.uris],
+      );
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
 
@@ -307,7 +313,7 @@ describe('LondonBurn', function () {
       const mintCheck = await getMintCheck(
         await minter.getAddress(),
         4,
-        ETERNAL_TYPE
+        ETERNAL_TYPE,
       );
 
       await londonBurn.connect(minter).mintTokenType(mintCheck);
@@ -315,15 +321,20 @@ describe('LondonBurn', function () {
     it('should correctly modify token id base URI', async function () {
       const modifyCheck: ModifyCheck = {
         uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
-        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
+        tokenIds: [
+          BigNumber.from(ETERNAL_TYPE).or('1'),
+          BigNumber.from(ETERNAL_TYPE).or('2'),
+        ],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
         [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
-
 
       const bytesModifyCheckHash = ethers.utils.arrayify(modifyCheckHash);
 
@@ -345,7 +356,10 @@ describe('LondonBurn', function () {
     it('should not modify token id base URI if not valid check', async function () {
       const modifyCheck: ModifyCheck = {
         uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
-        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
+        tokenIds: [
+          BigNumber.from(ETERNAL_TYPE).or('1'),
+          BigNumber.from(ETERNAL_TYPE).or('2'),
+        ],
         signature: BAD_SIGNATURE,
       };
       await expect(
@@ -355,12 +369,18 @@ describe('LondonBurn', function () {
     it('should not modify token id base URI if already used', async function () {
       const modifyCheck: ModifyCheck = {
         uris: ['ipfs://modifycheck1', 'ipfs://modifycheck2'],
-        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
+        tokenIds: [
+          BigNumber.from(ETERNAL_TYPE).or('1'),
+          BigNumber.from(ETERNAL_TYPE).or('2'),
+        ],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
         [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
@@ -385,7 +405,10 @@ describe('LondonBurn', function () {
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
         [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 
@@ -405,12 +428,18 @@ describe('LondonBurn', function () {
     it('should not modify token id if incorrectly shapped modify Check', async function () {
       const modifyCheck: ModifyCheck = {
         uris: ['ipfs://modifycheck1'],
-        tokenIds: [BigNumber.from(ETERNAL_TYPE).or('1'), BigNumber.from(ETERNAL_TYPE).or('2')],
+        tokenIds: [
+          BigNumber.from(ETERNAL_TYPE).or('1'),
+          BigNumber.from(ETERNAL_TYPE).or('2'),
+        ],
         signature: BAD_SIGNATURE,
       };
 
       const modifyCheckHash = ethers.utils.solidityKeccak256(
-        [...newArray(modifyCheck.uris.length).map((_) => 'uint256'), ...newArray(modifyCheck.tokenIds.length).map((_) => 'string')],
+        [
+          ...newArray(modifyCheck.uris.length).map((_) => 'uint256'),
+          ...newArray(modifyCheck.tokenIds.length).map((_) => 'string'),
+        ],
         [...modifyCheck.tokenIds, ...modifyCheck.uris],
       );
 

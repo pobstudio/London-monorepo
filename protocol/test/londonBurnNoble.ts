@@ -308,17 +308,17 @@ describe('LondonBurnNoble', function () {
       const mintCheck3 = await getMintCheck(to, 4, NOBLE_TYPE);
       const mintCheck4 = await getMintCheck(to, 4, NOBLE_TYPE);
       await londonBurnMinter
-      .connect(minter)
-      .mintNobleType(nobility, airdropSig, mintCheck1)
+        .connect(minter)
+        .mintNobleType(nobility, airdropSig, mintCheck1);
       await londonBurnMinter
-      .connect(minter)
-      .mintNobleType(nobility, airdropSig, mintCheck2)
+        .connect(minter)
+        .mintNobleType(nobility, airdropSig, mintCheck2);
       await londonBurnMinter
-      .connect(minter)
-      .mintNobleType(nobility, airdropSig, mintCheck3)
+        .connect(minter)
+        .mintNobleType(nobility, airdropSig, mintCheck3);
       await londonBurnMinter
-      .connect(minter)
-      .mintNobleType(nobility, airdropSig, mintCheck4)
+        .connect(minter)
+        .mintNobleType(nobility, airdropSig, mintCheck4);
       expect(await londonBurn.tokenTypeSupply(NOBLE_TYPE)).to.eq(16);
     });
     it('should not mint if exceeds alloted amount in one txn', async function () {
@@ -351,8 +351,8 @@ describe('LondonBurnNoble', function () {
       const mintCheck1 = await getMintCheck(to, 10, NOBLE_TYPE);
       const mintCheck2 = await getMintCheck(to, 7, NOBLE_TYPE);
       await londonBurnMinter
-      .connect(minter)
-      .mintNobleType(nobility, airdropSig, mintCheck1);
+        .connect(minter)
+        .mintNobleType(nobility, airdropSig, mintCheck1);
       await expect(
         londonBurnMinter
           .connect(minter)

@@ -82,9 +82,7 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
       deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersContractURI
     }/`,
   );
-  await londonBurn.setBaseMetadataURI(
-    `ipfs://`,
-  );
+  await londonBurn.setBaseMetadataURI(`ipfs://`);
   // set block numbers
   await londonBurnMinter.setRevealBlockNumber(revealBlockNumber);
 

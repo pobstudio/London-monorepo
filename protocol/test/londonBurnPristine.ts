@@ -26,12 +26,12 @@ const LONDON_WHALE_ADDRESS = '0x7C849375786faE5e4984F50eea47360D75660a31';
 const ULTRASONIC_BLOCK = 15_000_000;
 const MAX_BLOCK_NUM =
   '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
-  interface MintCheck {
-    uris: string[];
-    to: string;
-    tokenType: string;
-    signature: string;
-  }
+interface MintCheck {
+  uris: string[];
+  to: string;
+  tokenType: string;
+  signature: string;
+}
 
 describe('LondonBurnPristine', function () {
   // constant values used in transfer tests
@@ -347,9 +347,7 @@ describe('LondonBurnPristine', function () {
         PRISTINE_TYPE,
       );
 
-      await londonBurnMinter
-        .connect(minter)
-        .mintPristineType(mintCheck1);
+      await londonBurnMinter.connect(minter).mintPristineType(mintCheck1);
       await expect(
         londonBurnMinter.connect(minter).mintPristineType(mintCheck2),
       ).to.revertedWith("Can't mint consecutively");

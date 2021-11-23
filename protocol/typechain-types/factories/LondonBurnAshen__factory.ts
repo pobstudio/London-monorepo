@@ -2,12 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from 'ethers';
+import { Provider } from '@ethersproject/providers';
 import type {
   LondonBurnAshen,
   LondonBurnAshenInterface,
-} from "../LondonBurnAshen";
+} from '../LondonBurnAshen';
 
 const _abi = [
   {
@@ -15,332 +15,332 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "OwnershipTransferred",
-    type: "event",
+    name: 'OwnershipTransferred',
+    type: 'event',
   },
   {
-    stateMutability: "payable",
-    type: "fallback",
-  },
-  {
-    inputs: [],
-    name: "externalBurnableERC721",
-    outputs: [
-      {
-        internalType: "contract ERC721",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_address",
-        type: "address",
-      },
-      {
-        internalType: "bytes32",
-        name: "messageHash",
-        type: "bytes32",
-      },
-      {
-        internalType: "uint8",
-        name: "v",
-        type: "uint8",
-      },
-      {
-        internalType: "bytes32",
-        name: "r",
-        type: "bytes32",
-      },
-      {
-        internalType: "bytes32",
-        name: "s",
-        type: "bytes32",
-      },
-    ],
-    name: "isSigned",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'fallback',
   },
   {
     inputs: [],
-    name: "londonBurn",
+    name: 'externalBurnableERC721',
     outputs: [
       {
-        internalType: "contract LondonBurn",
-        name: "",
-        type: "address",
+        internalType: 'contract ERC721',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        internalType: 'address',
+        name: '_address',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'messageHash',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
       },
     ],
-    name: "londonNeededFromSelfAmount",
+    name: 'isSigned',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'londonBurn',
+    outputs: [
+      {
+        internalType: 'contract LondonBurn',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256[]",
-        name: "tokenIds",
-        type: "uint256[]",
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'londonNeededFromSelfAmount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'tokenIds',
+        type: 'uint256[]',
       },
       {
         components: [
           {
-            internalType: "address",
-            name: "to",
-            type: "address",
+            internalType: 'address',
+            name: 'to',
+            type: 'address',
           },
           {
-            internalType: "uint256",
-            name: "tokenType",
-            type: "uint256",
+            internalType: 'uint256',
+            name: 'tokenType',
+            type: 'uint256',
           },
           {
-            internalType: "string[]",
-            name: "uris",
-            type: "string[]",
+            internalType: 'string[]',
+            name: 'uris',
+            type: 'string[]',
           },
           {
-            internalType: "bytes",
-            name: "signature",
-            type: "bytes",
+            internalType: 'bytes',
+            name: 'signature',
+            type: 'bytes',
           },
         ],
-        internalType: "struct LondonBurn.MintCheck",
-        name: "_mintCheck",
-        type: "tuple",
+        internalType: 'struct LondonBurn.MintCheck',
+        name: '_mintCheck',
+        type: 'tuple',
       },
     ],
-    name: "mintAshenType",
+    name: 'mintAshenType',
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
       },
     ],
-    name: "numBurnFromSelfAmount",
+    name: 'numBurnFromSelfAmount',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "owner",
+    name: 'owner',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "payableErc20",
+    name: 'payableErc20',
     outputs: [
       {
-        internalType: "contract ERC20",
-        name: "",
-        type: "address",
+        internalType: 'contract ERC20',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "renounceOwnership",
+    name: 'renounceOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "revealBlockNumber",
+    name: 'revealBlockNumber',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_revealBlockNumber",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '_revealBlockNumber',
+        type: 'uint256',
       },
     ],
-    name: "setRevealBlockNumber",
+    name: 'setRevealBlockNumber',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_treasury",
-        type: "address",
+        internalType: 'address',
+        name: '_treasury',
+        type: 'address',
       },
     ],
-    name: "setTreasury",
+    name: 'setTreasury',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_ultraSonicForkBlockNumber",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '_ultraSonicForkBlockNumber',
+        type: 'uint256',
       },
     ],
-    name: "setUltraSonicForkBlockNumber",
+    name: 'setUltraSonicForkBlockNumber',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "bytes",
-        name: "sig",
-        type: "bytes",
+        internalType: 'bytes',
+        name: 'sig',
+        type: 'bytes',
       },
     ],
-    name: "splitSignature",
+    name: 'splitSignature',
     outputs: [
       {
-        internalType: "bytes32",
-        name: "r",
-        type: "bytes32",
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
       },
       {
-        internalType: "bytes32",
-        name: "s",
-        type: "bytes32",
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
       },
       {
-        internalType: "uint8",
-        name: "v",
-        type: "uint8",
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
       },
     ],
-    stateMutability: "pure",
-    type: "function",
+    stateMutability: 'pure',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "sushiswap",
+    name: 'sushiswap',
     outputs: [
       {
-        internalType: "contract IUniswapV2Router02",
-        name: "",
-        type: "address",
+        internalType: 'contract IUniswapV2Router02',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "transferOwnership",
+    name: 'transferOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "treasury",
+    name: 'treasury',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "ultraSonicForkBlockNumber",
+    name: 'ultraSonicForkBlockNumber',
     outputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ];
 
@@ -351,7 +351,7 @@ export class LondonBurnAshen__factory {
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
+    signerOrProvider: Signer | Provider,
   ): LondonBurnAshen {
     return new Contract(address, _abi, signerOrProvider) as LondonBurnAshen;
   }

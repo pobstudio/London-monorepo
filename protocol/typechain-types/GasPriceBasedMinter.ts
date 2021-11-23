@@ -12,79 +12,79 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+} from 'ethers';
+import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import { Listener, Provider } from '@ethersproject/providers';
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export interface GasPriceBasedMinterInterface extends utils.Interface {
   functions: {
-    "a()": FunctionFragment;
-    "b()": FunctionFragment;
-    "blockNumberUpTo()": FunctionFragment;
-    "c()": FunctionFragment;
-    "d()": FunctionFragment;
-    "erc20()": FunctionFragment;
-    "mintableTokenAtGasPrice(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "setErc20(address)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'a()': FunctionFragment;
+    'b()': FunctionFragment;
+    'blockNumberUpTo()': FunctionFragment;
+    'c()': FunctionFragment;
+    'd()': FunctionFragment;
+    'erc20()': FunctionFragment;
+    'mintableTokenAtGasPrice(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'setErc20(address)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "a", values?: undefined): string;
-  encodeFunctionData(functionFragment: "b", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'a', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'b', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "blockNumberUpTo",
-    values?: undefined
+    functionFragment: 'blockNumberUpTo',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "c", values?: undefined): string;
-  encodeFunctionData(functionFragment: "d", values?: undefined): string;
-  encodeFunctionData(functionFragment: "erc20", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'c', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'd', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'erc20', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "mintableTokenAtGasPrice",
-    values: [BigNumberish]
+    functionFragment: 'mintableTokenAtGasPrice',
+    values: [BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
-  encodeFunctionData(functionFragment: "setErc20", values: [string]): string;
+  encodeFunctionData(functionFragment: 'setErc20', values: [string]): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
+    functionFragment: 'transferOwnership',
+    values: [string],
   ): string;
 
-  decodeFunctionResult(functionFragment: "a", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "b", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'a', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'b', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "blockNumberUpTo",
-    data: BytesLike
+    functionFragment: 'blockNumberUpTo',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "c", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "d", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "erc20", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'c', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'd', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'erc20', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "mintableTokenAtGasPrice",
-    data: BytesLike
+    functionFragment: 'mintableTokenAtGasPrice',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "setErc20", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setErc20', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export type OwnershipTransferredEvent = TypedEvent<
@@ -105,15 +105,15 @@ export interface GasPriceBasedMinter extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -136,23 +136,23 @@ export interface GasPriceBasedMinter extends BaseContract {
 
     mintableTokenAtGasPrice(
       gasPrice: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setErc20(
       _erc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -170,23 +170,23 @@ export interface GasPriceBasedMinter extends BaseContract {
 
   mintableTokenAtGasPrice(
     gasPrice: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setErc20(
     _erc20: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -204,7 +204,7 @@ export interface GasPriceBasedMinter extends BaseContract {
 
     mintableTokenAtGasPrice(
       gasPrice: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -215,18 +215,18 @@ export interface GasPriceBasedMinter extends BaseContract {
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: string | null,
-      newOwner?: string | null
+      newOwner?: string | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: string | null,
-      newOwner?: string | null
+      newOwner?: string | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -245,23 +245,23 @@ export interface GasPriceBasedMinter extends BaseContract {
 
     mintableTokenAtGasPrice(
       gasPrice: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setErc20(
       _erc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
@@ -280,23 +280,23 @@ export interface GasPriceBasedMinter extends BaseContract {
 
     mintableTokenAtGasPrice(
       gasPrice: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setErc20(
       _erc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

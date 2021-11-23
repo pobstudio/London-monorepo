@@ -44,7 +44,18 @@ import {
   BURN_MIN_MAX_AMOUNT_FOR_SELF,
 } from '../constants/parameters';
 import { Header } from '../components/header';
-import { ADVANCED_FRAME_CT_AND_WEIGHT, BASIC_FRAME_CT_AND_WEIGHT, FRAME_CT_TO_LABEL, FRAME_POINTILISM_AND_WEIGHT, FRAME_POINTILISM_TO_LABEL, GRID_SIZE_AND_WEIGHT, GRID_SIZE_TO_LABEL, NAMES_RARITY_MAP, RARITY, RARITY_TILE_MAP } from '@pob/sketches';
+import {
+  ADVANCED_FRAME_CT_AND_WEIGHT,
+  BASIC_FRAME_CT_AND_WEIGHT,
+  FRAME_CT_TO_LABEL,
+  FRAME_POINTILISM_AND_WEIGHT,
+  FRAME_POINTILISM_TO_LABEL,
+  GRID_SIZE_AND_WEIGHT,
+  GRID_SIZE_TO_LABEL,
+  NAMES_RARITY_MAP,
+  RARITY,
+  RARITY_TILE_MAP,
+} from '@pob/sketches';
 import {
   TableBody,
   TableColumn,
@@ -300,7 +311,7 @@ const BurnAshen: FC = () => {
 };
 const BurnPage: NextPage = () => {
   const randomNum = useMemo(() => {
-    return Math.floor(Math.random() * (10 - 0) + 0)
+    return Math.floor(Math.random() * (10 - 0) + 0);
   }, []);
   return (
     <>
@@ -310,8 +321,7 @@ const BurnPage: NextPage = () => {
           <Bold>LONDON</Bold> Embers
         </Title>
         <Caption style={{ marginBottom: 4 }}>
-          <A href="#">Gen art</A> created by burning London Gift +
-          Embers.
+          <A href="#">Gen art</A> created by burning London Gift + Embers.
         </Caption>
         <Text style={{ marginBottom: 12 }}>
           <Italic>Is it getting hot or is it just me?</Italic>
@@ -336,15 +346,20 @@ const BurnPage: NextPage = () => {
         {/* <NobleAirdrop/> */}
         <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
         <RightAlignedText>
-          <Bold>LONDON</Bold> Embers rarity design is designed with minimalism in mind; it has a few core attributes, if aligned correctly, can produce widly different and expressive EMBERs. 
+          <Bold>LONDON</Bold> Embers rarity design is designed with minimalism
+          in mind; it has a few core attributes, if aligned correctly, can
+          produce widly different and expressive EMBERs.
         </RightAlignedText>
-          <RightAlignedText>
-            The attributes are: <Bold>provenance</Bold>, <Bold>gridSize</Bold>, <Bold>animationDuration</Bold>, and <Bold>animationStyle</Bold>.
-          </RightAlignedText>
-          <RightAlignedText>
-            <Bold>provenance</Bold> attribute identifies how the EMBER was minted. <Bold>provenance</Bold> is a key factor to how other attributes are generated.
-          </RightAlignedText>
-          <TableContainer
+        <RightAlignedText>
+          The attributes are: <Bold>provenance</Bold>, <Bold>gridSize</Bold>,{' '}
+          <Bold>animationDuration</Bold>, and <Bold>animationStyle</Bold>.
+        </RightAlignedText>
+        <RightAlignedText>
+          <Bold>provenance</Bold> attribute identifies how the EMBER was minted.{' '}
+          <Bold>provenance</Bold> is a key factor to how other attributes are
+          generated.
+        </RightAlignedText>
+        <TableContainer
           style={{
             marginTop: 48,
             marginBottom: 48,
@@ -356,47 +371,36 @@ const BurnPage: NextPage = () => {
             <LabelTableColumn>
               <Bold>Provenance</Bold>
             </LabelTableColumn>
-            <ValueTableColumn>
-                from
-              </ValueTableColumn>
+            <ValueTableColumn>from</ValueTableColumn>
           </TableHeader>
           <TableBody>
             <TableRow>
               <LabelTableColumn>Noble</LabelTableColumn>
-              <ValueTableColumn>
-                airdrop
-              </ValueTableColumn>
+              <ValueTableColumn>airdrop</ValueTableColumn>
             </TableRow>
             <TableRow>
               <LabelTableColumn>Gift</LabelTableColumn>
-              <ValueTableColumn>
-                burning GIFT
-              </ValueTableColumn>
+              <ValueTableColumn>burning GIFT</ValueTableColumn>
             </TableRow>
             <TableRow>
               <LabelTableColumn>Pristine</LabelTableColumn>
-              <ValueTableColumn>
-                public sale
-              </ValueTableColumn>
+              <ValueTableColumn>public sale</ValueTableColumn>
             </TableRow>
             <TableRow>
               <LabelTableColumn>Eternal</LabelTableColumn>
-              <ValueTableColumn>
-                DAO minted
-              </ValueTableColumn>
+              <ValueTableColumn>DAO minted</ValueTableColumn>
             </TableRow>
             <TableRow>
               <LabelTableColumn>Ashen</LabelTableColumn>
-              <ValueTableColumn>
-                burning EMBER
-              </ValueTableColumn>
+              <ValueTableColumn>burning EMBER</ValueTableColumn>
             </TableRow>
           </TableBody>
         </TableContainer>
-          <RightAlignedText>
-            <Bold>gridSize</Bold>, as the name suggests, controls the size of the grid, the larger the grid the more 'complex' the art appears.
-          </RightAlignedText>
-          <TableContainer
+        <RightAlignedText>
+          <Bold>gridSize</Bold>, as the name suggests, controls the size of the
+          grid, the larger the grid the more 'complex' the art appears.
+        </RightAlignedText>
+        <TableContainer
           style={{
             marginTop: 48,
             marginBottom: 48,
@@ -424,10 +428,14 @@ const BurnPage: NextPage = () => {
           </TableBody>
         </TableContainer>
         <RightAlignedText>
-            <Bold>animationDuration</Bold> controls how long the animation lasts. The weighting of <Bold>animationDuration</Bold> depends on <Bold>provenance</Bold>.
+          <Bold>animationDuration</Bold> controls how long the animation lasts.
+          The weighting of <Bold>animationDuration</Bold> depends on{' '}
+          <Bold>provenance</Bold>.
         </RightAlignedText>
         <RightAlignedText>
-            If <Bold>provenance</Bold> is <Italic>Noble</Italic>, <Italic>Pristine</Italic>, or <Italic>Eternal</Italic>, the weights are the following:
+          If <Bold>provenance</Bold> is <Italic>Noble</Italic>,{' '}
+          <Italic>Pristine</Italic>, or <Italic>Eternal</Italic>, the weights
+          are the following:
         </RightAlignedText>
         <TableContainer
           style={{
@@ -447,7 +455,9 @@ const BurnPage: NextPage = () => {
             {Object.entries(FRAME_CT_TO_LABEL).map((r, index) => {
               return (
                 <TableRow key={`table-row-state-${index}`}>
-                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${index === 0 ? '' : 's'})`}</LabelTableColumn>
+                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${
+                    index === 0 ? '' : 's'
+                  })`}</LabelTableColumn>
                   <ValueTableColumn>
                     {BASIC_FRAME_CT_AND_WEIGHT[1][index] * 100}%
                   </ValueTableColumn>
@@ -457,7 +467,8 @@ const BurnPage: NextPage = () => {
           </TableBody>
         </TableContainer>
         <RightAlignedText>
-            If <Bold>provenance</Bold> is <Italic>Ashen</Italic> or <Italic>Gift</Italic>, the weights are the following:
+          If <Bold>provenance</Bold> is <Italic>Ashen</Italic> or{' '}
+          <Italic>Gift</Italic>, the weights are the following:
         </RightAlignedText>
         <TableContainer
           style={{
@@ -477,7 +488,9 @@ const BurnPage: NextPage = () => {
             {Object.entries(FRAME_CT_TO_LABEL).map((r, index) => {
               return (
                 <TableRow key={`table-row-state-${index}`}>
-                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${index === 0 ? '' : 's'})`}</LabelTableColumn>
+                  <LabelTableColumn>{`${r[1]} (${r[0]} frame${
+                    index === 0 ? '' : 's'
+                  })`}</LabelTableColumn>
                   <ValueTableColumn>
                     {ADVANCED_FRAME_CT_AND_WEIGHT[1][index] * 100}%
                   </ValueTableColumn>
@@ -490,7 +503,8 @@ const BurnPage: NextPage = () => {
           These weights are selected to push users to burn EMBERs and GIFTs.
         </RightAlignedText>
         <RightAlignedText>
-          Finally, <Bold>animationStyle</Bold> controls how the animation is generated.
+          Finally, <Bold>animationStyle</Bold> controls how the animation is
+          generated.
         </RightAlignedText>
         <TableContainer
           style={{
@@ -520,7 +534,9 @@ const BurnPage: NextPage = () => {
           </TableBody>
         </TableContainer>
         <RightAlignedText>
-          There are a few other bells and whistles thrown in the EMBER generation process that will be left to users to figure out, the name of the EMBER NFTs being one of them.
+          There are a few other bells and whistles thrown in the EMBER
+          generation process that will be left to users to figure out, the name
+          of the EMBER NFTs being one of them.
         </RightAlignedText>
         <BurnGift />
         <BurnAshen />

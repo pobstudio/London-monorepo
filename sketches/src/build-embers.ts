@@ -1,8 +1,8 @@
-import { getEmberGene, renderEmbers, getEmbersTokenMetadataFromGene } from ".";
+import { getEmberGene, renderEmbers, getEmbersTokenMetadataFromGene } from '.';
 import { ensureDir } from 'fs-extra';
 import { writeFile, readFile, createReadStream } from 'fs';
 import { promisify } from 'util';
-import path from "path";
+import path from 'path';
 
 const getTokenMetadataAndImage = async (
   seed: string,
@@ -14,14 +14,20 @@ const getTokenMetadataAndImage = async (
     gene,
     'LOCAL_BUILD',
   );
-  return [tokenMetadata, image] ;
+  return [tokenMetadata, image];
 };
 
 const writeFileAsync = promisify(writeFile);
 const readFileAsync = promisify(readFile);
 
 const SUPPLY = 2000;
-const METADATA_DIR = path.resolve(__dirname, '..', 'out', 'embers', 'token-metadata');
+const METADATA_DIR = path.resolve(
+  __dirname,
+  '..',
+  'out',
+  'embers',
+  'token-metadata',
+);
 const IMAGE_DIR = path.resolve(__dirname, '..', 'out', 'embers', 'image');
 const seedCore = 'local-build-';
 
@@ -35,9 +41,6 @@ const seedCore = 'local-build-';
       path.resolve(METADATA_DIR, `${i}.json`),
       JSON.stringify(tm),
     );
-    await writeFileAsync(
-      path.resolve(IMAGE_DIR, `${i}.svg`),
-      img,
-    );
+    await writeFileAsync(path.resolve(IMAGE_DIR, `${i}.svg`), img);
   }
 })();

@@ -99,7 +99,6 @@ export const ADVANCED_FRAME_CT_AND_WEIGHT: [number[], number[]] = [
   [0, 0.2, 0.2, 0.4, 0.15, 0.05],
 ];
 
-
 export const FRAME_CT_TO_LABEL: { [k: number]: string } = {
   1: 'still',
   5: 'gif',
@@ -129,14 +128,17 @@ export const getEmberGene = (seed: string, tokenType: string): EmberGene => {
     GRID_SIZE_AND_WEIGHT[0],
     GRID_SIZE_AND_WEIGHT[1],
   );
-  
-  const frameCt = tokenType === 'gift' || tokenType === 'ashen' || tokenType === 'ultrasonic' ? randomInArrayByWeights(
-    ADVANCED_FRAME_CT_AND_WEIGHT[0],
-    ADVANCED_FRAME_CT_AND_WEIGHT[1],
-  ) : randomInArrayByWeights(
-    BASIC_FRAME_CT_AND_WEIGHT[0],
-    BASIC_FRAME_CT_AND_WEIGHT[1],
-  );
+
+  const frameCt =
+    tokenType === 'gift' || tokenType === 'ashen' || tokenType === 'ultrasonic'
+      ? randomInArrayByWeights(
+          ADVANCED_FRAME_CT_AND_WEIGHT[0],
+          ADVANCED_FRAME_CT_AND_WEIGHT[1],
+        )
+      : randomInArrayByWeights(
+          BASIC_FRAME_CT_AND_WEIGHT[0],
+          BASIC_FRAME_CT_AND_WEIGHT[1],
+        );
 
   const framePointilism = randomInArrayByWeights(
     FRAME_POINTILISM_AND_WEIGHT[0],

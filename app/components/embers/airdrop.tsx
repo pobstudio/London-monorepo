@@ -10,10 +10,23 @@ import { BREAKPTS } from '../../styles';
 import { AirdropCheck, AirdropCheckWithAirdropState } from '../../types';
 import { fetcher } from '../../utils/fetcher';
 import { FlexCenter, FlexEnds } from '../flex';
-import { Text, Bold, Title, Caption, Italic, MiniText, SmallText } from '../text';
+import {
+  Text,
+  Bold,
+  Title,
+  Caption,
+  Italic,
+  MiniText,
+  SmallText,
+} from '../text';
 import { useWeb3React } from '@web3-react/core';
 import { BURN_NOBLE_AIRDROP_AMOUNT } from '../../constants/parameters';
-import { ModalCover, ModalContent, ModalInnerContent, ModalDismissButton } from '../modal';
+import {
+  ModalCover,
+  ModalContent,
+  ModalInnerContent,
+  ModalDismissButton,
+} from '../modal';
 
 const ConsoleWrapper = styled(FlexCenter)`
   width: 100%;
@@ -55,7 +68,6 @@ const Button = styled.button`
     background: #e5e5e5;
   }
 `;
-
 
 const SubmitButton = styled.button`
   border: none;
@@ -99,13 +111,12 @@ const ClickableWell = styled(Well)`
 const Input = styled.input`
   background: white;
   padding: 14px;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   width: 100%;
   :focus {
     outline: none;
   }
 `;
-
 
 const useAirdropCheck = (address: string | undefined) => {
   const minter = useLondonEmbersMinterContract();
@@ -124,7 +135,7 @@ const useAirdropCheck = (address: string | undefined) => {
     if (!minter) {
       return;
     }
-    minter.receivedAirdropNum(address).then(b => {
+    minter.receivedAirdropNum(address).then((b) => {
       console.log('b', b);
       setNumAirdropReceived(b.toNumber());
     });
@@ -137,7 +148,10 @@ const useAirdropCheck = (address: string | undefined) => {
     if (data.signature === NULL_SIGNATURE) {
       return undefined;
     }
-    if (!!numAirdropReceived && numAirdropReceived >= BURN_NOBLE_AIRDROP_AMOUNT[data.nobility]) {
+    if (
+      !!numAirdropReceived &&
+      numAirdropReceived >= BURN_NOBLE_AIRDROP_AMOUNT[data.nobility]
+    ) {
       return undefined;
     }
     return {
@@ -162,37 +176,54 @@ export const NobleAirdrop: FC = () => {
     return null;
   }
 
-  return (<>
-    {isClaimModalOpen && <ModalCover>
-      <ModalContent>
-        <ModalDismissButton onClick={() => setIsClaimModalOpen(false)}>Dismiss</ModalDismissButton>
-        <ModalInnerContent>
-          <Title style={{padding: '32px 0 24px 0'}}>Claim EMBERS</Title> 
-          <ClickableWell>
-            <Text><Bold>Claim all {BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]} EMBERS</Bold></Text>
-            <SmallText style={{textAlign: 'left'}}>This can be a bit gas intensive.</SmallText>
-          </ClickableWell>
-          <Well style={{borderTop: 'none'}}>
-            <Text><Bold>Claim some of the EMBERS</Bold></Text>
-            <SmallText style={{textAlign: 'left', paddingBottom: 8}}>7 of {BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]} EMBERS already claimed.</SmallText>
-            <Input type="text" placeholder={'4'}/>
-          </Well>
-          <SubmitButton style={{marginTop: 14}}>
-            Claim
-          </SubmitButton>
-        </ModalInnerContent>
-      </ModalContent>
-    </ModalCover>}
-    <ConsoleWrapper>
-      <Console>
-        <Text style={{ paddingLeft: 14 }}>
-          <Italic>
-            Claim your <Bold>{BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]}</Bold> EMBERS!
-          </Italic>
-        </Text>
-        <Button onClick={() => setIsClaimModalOpen(s => !s)} >Claim</Button>
-      </Console>
-    </ConsoleWrapper>
+  return (
+    <>
+      {isClaimModalOpen && (
+        <ModalCover>
+          <ModalContent>
+            <ModalDismissButton onClick={() => setIsClaimModalOpen(false)}>
+              Dismiss
+            </ModalDismissButton>
+            <ModalInnerContent>
+              <Title style={{ padding: '32px 0 24px 0' }}>Claim EMBERS</Title>
+              <ClickableWell>
+                <Text>
+                  <Bold>
+                    Claim all {BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]}{' '}
+                    EMBERS
+                  </Bold>
+                </Text>
+                <SmallText style={{ textAlign: 'left' }}>
+                  This can be a bit gas intensive.
+                </SmallText>
+              </ClickableWell>
+              <Well style={{ borderTop: 'none' }}>
+                <Text>
+                  <Bold>Claim some of the EMBERS</Bold>
+                </Text>
+                <SmallText style={{ textAlign: 'left', paddingBottom: 8 }}>
+                  7 of {BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]} EMBERS
+                  already claimed.
+                </SmallText>
+                <Input type="text" placeholder={'4'} />
+              </Well>
+              <SubmitButton style={{ marginTop: 14 }}>Claim</SubmitButton>
+            </ModalInnerContent>
+          </ModalContent>
+        </ModalCover>
+      )}
+      <ConsoleWrapper>
+        <Console>
+          <Text style={{ paddingLeft: 14 }}>
+            <Italic>
+              Claim your{' '}
+              <Bold>{BURN_NOBLE_AIRDROP_AMOUNT[airdropCheck.nobility]}</Bold>{' '}
+              EMBERS!
+            </Italic>
+          </Text>
+          <Button onClick={() => setIsClaimModalOpen((s) => !s)}>Claim</Button>
+        </Console>
+      </ConsoleWrapper>
     </>
   );
 };

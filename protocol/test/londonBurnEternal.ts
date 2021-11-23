@@ -191,24 +191,12 @@ describe('LondonBurnEternal', function () {
       ).to.revertedWith('ULTRASONIC MODE ENGAGED');
     });
     it('should not mint if exceeded mintable supply', async function () {
-      const mintChecks = [await getMintCheck(
-        await treasury.getAddress(),
-        25,
-        ETERNAL_TYPE,
-      ), await getMintCheck(
-        await treasury.getAddress(),
-        25,
-        ETERNAL_TYPE,
-      ), await getMintCheck(
-        await treasury.getAddress(),
-        25,
-        ETERNAL_TYPE,
-      ), await getMintCheck(
-        await treasury.getAddress(),
-        25,
-        ETERNAL_TYPE,
-      )];
-
+      const mintChecks = [
+        await getMintCheck(await treasury.getAddress(), 25, ETERNAL_TYPE),
+        await getMintCheck(await treasury.getAddress(), 25, ETERNAL_TYPE),
+        await getMintCheck(await treasury.getAddress(), 25, ETERNAL_TYPE),
+        await getMintCheck(await treasury.getAddress(), 25, ETERNAL_TYPE),
+      ];
 
       for (const mc of mintChecks) {
         await londonBurnMinter.connect(treasury).mintEternalType(mc);

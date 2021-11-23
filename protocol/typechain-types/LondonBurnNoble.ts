@@ -12,10 +12,10 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+} from 'ethers';
+import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import { Listener, Provider } from '@ethersproject/providers';
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export type MintCheckStruct = {
   to: string;
@@ -33,177 +33,177 @@ export type MintCheckStructOutput = [string, BigNumber, string[], string] & {
 
 export interface LondonBurnNobleInterface extends utils.Interface {
   functions: {
-    "airdropAuthority()": FunctionFragment;
-    "externalBurnableERC721()": FunctionFragment;
-    "getAirdropHash(address,uint8)": FunctionFragment;
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
-    "londonBurn()": FunctionFragment;
-    "mintNobleType(uint8,bytes,(address,uint256,string[],bytes))": FunctionFragment;
-    "owner()": FunctionFragment;
-    "payableErc20()": FunctionFragment;
-    "receivedAirdropNum(address)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "revealBlockNumber()": FunctionFragment;
-    "setAirdropAuthority(address)": FunctionFragment;
-    "setRevealBlockNumber(uint256)": FunctionFragment;
-    "setTreasury(address)": FunctionFragment;
-    "setUltraSonicForkBlockNumber(uint256)": FunctionFragment;
-    "splitSignature(bytes)": FunctionFragment;
-    "sushiswap()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "treasury()": FunctionFragment;
-    "ultraSonicForkBlockNumber()": FunctionFragment;
-    "verifyAirdrop(address,uint8,bytes)": FunctionFragment;
+    'airdropAuthority()': FunctionFragment;
+    'externalBurnableERC721()': FunctionFragment;
+    'getAirdropHash(address,uint8)': FunctionFragment;
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
+    'londonBurn()': FunctionFragment;
+    'mintNobleType(uint8,bytes,(address,uint256,string[],bytes))': FunctionFragment;
+    'owner()': FunctionFragment;
+    'payableErc20()': FunctionFragment;
+    'receivedAirdropNum(address)': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'revealBlockNumber()': FunctionFragment;
+    'setAirdropAuthority(address)': FunctionFragment;
+    'setRevealBlockNumber(uint256)': FunctionFragment;
+    'setTreasury(address)': FunctionFragment;
+    'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
+    'splitSignature(bytes)': FunctionFragment;
+    'sushiswap()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'treasury()': FunctionFragment;
+    'ultraSonicForkBlockNumber()': FunctionFragment;
+    'verifyAirdrop(address,uint8,bytes)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "airdropAuthority",
-    values?: undefined
+    functionFragment: 'airdropAuthority',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "externalBurnableERC721",
-    values?: undefined
+    functionFragment: 'externalBurnableERC721',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "getAirdropHash",
-    values: [string, BigNumberish]
+    functionFragment: 'getAirdropHash',
+    values: [string, BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "isSigned",
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
+    functionFragment: 'isSigned',
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "londonBurn",
-    values?: undefined
+    functionFragment: 'londonBurn',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "mintNobleType",
-    values: [BigNumberish, BytesLike, MintCheckStruct]
+    functionFragment: 'mintNobleType',
+    values: [BigNumberish, BytesLike, MintCheckStruct],
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "payableErc20",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "receivedAirdropNum",
-    values: [string]
+    functionFragment: 'payableErc20',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
+    functionFragment: 'receivedAirdropNum',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "revealBlockNumber",
-    values?: undefined
+    functionFragment: 'renounceOwnership',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "setAirdropAuthority",
-    values: [string]
+    functionFragment: 'revealBlockNumber',
+    values?: undefined,
   ): string;
   encodeFunctionData(
-    functionFragment: "setRevealBlockNumber",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "setUltraSonicForkBlockNumber",
-    values: [BigNumberish]
+    functionFragment: 'setAirdropAuthority',
+    values: [string],
   ): string;
   encodeFunctionData(
-    functionFragment: "splitSignature",
-    values: [BytesLike]
+    functionFragment: 'setRevealBlockNumber',
+    values: [BigNumberish],
   ): string;
-  encodeFunctionData(functionFragment: "sushiswap", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "ultraSonicForkBlockNumber",
-    values?: undefined
+    functionFragment: 'setUltraSonicForkBlockNumber',
+    values: [BigNumberish],
   ): string;
   encodeFunctionData(
-    functionFragment: "verifyAirdrop",
-    values: [string, BigNumberish, BytesLike]
+    functionFragment: 'splitSignature',
+    values: [BytesLike],
+  ): string;
+  encodeFunctionData(functionFragment: 'sushiswap', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [string],
+  ): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'ultraSonicForkBlockNumber',
+    values?: undefined,
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'verifyAirdrop',
+    values: [string, BigNumberish, BytesLike],
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "airdropAuthority",
-    data: BytesLike
+    functionFragment: 'airdropAuthority',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "externalBurnableERC721",
-    data: BytesLike
+    functionFragment: 'externalBurnableERC721',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getAirdropHash",
-    data: BytesLike
+    functionFragment: 'getAirdropHash',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "londonBurn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'londonBurn', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "mintNobleType",
-    data: BytesLike
+    functionFragment: 'mintNobleType',
+    data: BytesLike,
   ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "payableErc20",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "receivedAirdropNum",
-    data: BytesLike
+    functionFragment: 'payableErc20',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
+    functionFragment: 'receivedAirdropNum',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "revealBlockNumber",
-    data: BytesLike
+    functionFragment: 'renounceOwnership',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setAirdropAuthority",
-    data: BytesLike
+    functionFragment: 'revealBlockNumber',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setRevealBlockNumber",
-    data: BytesLike
+    functionFragment: 'setAirdropAuthority',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setTreasury",
-    data: BytesLike
+    functionFragment: 'setRevealBlockNumber',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "setUltraSonicForkBlockNumber",
-    data: BytesLike
+    functionFragment: 'setTreasury',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "splitSignature",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "sushiswap", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "ultraSonicForkBlockNumber",
-    data: BytesLike
+    functionFragment: 'setUltraSonicForkBlockNumber',
+    data: BytesLike,
   ): Result;
   decodeFunctionResult(
-    functionFragment: "verifyAirdrop",
-    data: BytesLike
+    functionFragment: 'splitSignature',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'sushiswap', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferOwnership',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'ultraSonicForkBlockNumber',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'verifyAirdrop',
+    data: BytesLike,
   ): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export type OwnershipTransferredEvent = TypedEvent<
@@ -224,15 +224,15 @@ export interface LondonBurnNoble extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -248,7 +248,7 @@ export interface LondonBurnNoble extends BaseContract {
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string]>;
 
     isSigned(
@@ -257,7 +257,7 @@ export interface LondonBurnNoble extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     londonBurn(overrides?: CallOverrides): Promise<[string]>;
@@ -266,7 +266,7 @@ export interface LondonBurnNoble extends BaseContract {
       nobility: BigNumberish,
       signature: BytesLike,
       mintCheck: MintCheckStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -275,45 +275,45 @@ export interface LondonBurnNoble extends BaseContract {
 
     receivedAirdropNum(
       arg0: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setAirdropAuthority(
       _airdropAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     sushiswap(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
@@ -324,7 +324,7 @@ export interface LondonBurnNoble extends BaseContract {
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
@@ -335,7 +335,7 @@ export interface LondonBurnNoble extends BaseContract {
   getAirdropHash(
     to: string,
     nobility: BigNumberish,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<string>;
 
   isSigned(
@@ -344,7 +344,7 @@ export interface LondonBurnNoble extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   londonBurn(overrides?: CallOverrides): Promise<string>;
@@ -353,7 +353,7 @@ export interface LondonBurnNoble extends BaseContract {
     nobility: BigNumberish,
     signature: BytesLike,
     mintCheck: MintCheckStruct,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -362,45 +362,45 @@ export interface LondonBurnNoble extends BaseContract {
 
   receivedAirdropNum(
     arg0: string,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
   setAirdropAuthority(
     _airdropAuthority: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setRevealBlockNumber(
     _revealBlockNumber: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
     _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setUltraSonicForkBlockNumber(
     _ultraSonicForkBlockNumber: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   splitSignature(
     sig: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
   sushiswap(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
@@ -411,7 +411,7 @@ export interface LondonBurnNoble extends BaseContract {
     to: string,
     nobility: BigNumberish,
     signature: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
@@ -422,7 +422,7 @@ export interface LondonBurnNoble extends BaseContract {
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<string>;
 
     isSigned(
@@ -431,7 +431,7 @@ export interface LondonBurnNoble extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     londonBurn(overrides?: CallOverrides): Promise<string>;
@@ -440,7 +440,7 @@ export interface LondonBurnNoble extends BaseContract {
       nobility: BigNumberish,
       signature: BytesLike,
       mintCheck: MintCheckStruct,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
@@ -449,7 +449,7 @@ export interface LondonBurnNoble extends BaseContract {
 
     receivedAirdropNum(
       arg0: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
@@ -458,31 +458,31 @@ export interface LondonBurnNoble extends BaseContract {
 
     setAirdropAuthority(
       _airdropAuthority: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     sushiswap(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
@@ -493,18 +493,18 @@ export interface LondonBurnNoble extends BaseContract {
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: string | null,
-      newOwner?: string | null
+      newOwner?: string | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: string | null,
-      newOwner?: string | null
+      newOwner?: string | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -516,7 +516,7 @@ export interface LondonBurnNoble extends BaseContract {
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isSigned(
@@ -525,7 +525,7 @@ export interface LondonBurnNoble extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     londonBurn(overrides?: CallOverrides): Promise<BigNumber>;
@@ -534,7 +534,7 @@ export interface LondonBurnNoble extends BaseContract {
       nobility: BigNumberish,
       signature: BytesLike,
       mintCheck: MintCheckStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -543,45 +543,45 @@ export interface LondonBurnNoble extends BaseContract {
 
     receivedAirdropNum(
       arg0: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
     setAirdropAuthority(
       _airdropAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     sushiswap(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -592,7 +592,7 @@ export interface LondonBurnNoble extends BaseContract {
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -600,13 +600,13 @@ export interface LondonBurnNoble extends BaseContract {
     airdropAuthority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     externalBurnableERC721(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getAirdropHash(
       to: string,
       nobility: BigNumberish,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isSigned(
@@ -615,7 +615,7 @@ export interface LondonBurnNoble extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     londonBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -624,7 +624,7 @@ export interface LondonBurnNoble extends BaseContract {
       nobility: BigNumberish,
       signature: BytesLike,
       mintCheck: MintCheckStruct,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -633,58 +633,58 @@ export interface LondonBurnNoble extends BaseContract {
 
     receivedAirdropNum(
       arg0: string,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAirdropAuthority(
       _airdropAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     sushiswap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ultraSonicForkBlockNumber(
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     verifyAirdrop(
       to: string,
       nobility: BigNumberish,
       signature: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

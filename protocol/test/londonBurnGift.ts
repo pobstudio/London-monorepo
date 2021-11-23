@@ -320,11 +320,9 @@ describe('LondonBurnGift', function () {
         GIFT_TYPE,
       );
       // mint gift type
-      await londonBurnMinter
-        .connect(minter)
-        .mintGiftType(tokenIds, mintCheck, {
-          value: ONE_ETH,
-        });
+      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck, {
+        value: ONE_ETH,
+      });
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
@@ -562,11 +560,9 @@ describe('LondonBurnGift', function () {
         ULTRASONIC_TYPE,
       );
       // mint gift type
-      await londonBurnMinter
-        .connect(minter)
-        .mintGiftType(tokenIds, mintCheck, {
-          value: ONE_ETH,
-        });
+      await londonBurnMinter.connect(minter).mintGiftType(tokenIds, mintCheck, {
+        value: ONE_ETH,
+      });
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(

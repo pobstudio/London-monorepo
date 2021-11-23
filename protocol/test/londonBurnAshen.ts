@@ -213,7 +213,11 @@ describe('LondonBurnAshen', function () {
       for (let i = 0; i < n; ++i) {
         await londonBurn
           .connect(treasury)
-          .transferFrom(await treasury.getAddress(), await signer.getAddress(), tokenIds[i]);
+          .transferFrom(
+            await treasury.getAddress(),
+            await signer.getAddress(),
+            tokenIds[i],
+          );
       }
       return tokenIds;
     };
@@ -239,9 +243,7 @@ describe('LondonBurnAshen', function () {
           ONE_TOKEN_IN_BASE_UNITS.mul(1559).mul(numBurned),
         );
       // mint gift type
-      await londonBurnMinter
-        .connect(minter)
-        .mintAshenType(tokenIds, mintCheck);
+      await londonBurnMinter.connect(minter).mintAshenType(tokenIds, mintCheck);
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
@@ -464,9 +466,7 @@ describe('LondonBurnAshen', function () {
         .connect(minter)
         .approve(londonBurnMinter.address, ONE_TOKEN_IN_BASE_UNITS.mul(1559));
       // mint gift type
-      await londonBurnMinter
-        .connect(minter)
-        .mintAshenType(tokenIds, mintCheck);
+      await londonBurnMinter.connect(minter).mintAshenType(tokenIds, mintCheck);
       // check treasury get london
       expect(
         (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
