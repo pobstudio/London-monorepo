@@ -153,7 +153,8 @@ describe('LondonBurnAshen', function () {
     )) as LondonBurnMinter;
     await londonBurnMinter.deployed();
     await londonBurn.setMinter(londonBurnMinter.address);
-    await londonBurnMinter.connect(owner).setRevealBlockNumber(0);
+    await londonBurnMinter.setRevealBlockNumber(0);
+    await londonBurnMinter.setBurnRevealBlockNumber(0);
     await londonBurnMinter
       .connect(owner)
       .setTreasury(await treasury.getAddress());
@@ -186,7 +187,7 @@ describe('LondonBurnAshen', function () {
       );
     });
     it('should return flat value after ultrasonicfork', async function () {
-      await londonBurnMinter.setUltraSonicForkBlockNumber(1);
+      await londonBurnMinter.setUltraSonicForkBlockNumber(2);
       expect(await londonBurnMinter.londonNeededFromSelfAmount(2)).to.eq(
         ONE_TOKEN_IN_BASE_UNITS.mul(1559),
       );
@@ -221,6 +222,45 @@ describe('LondonBurnAshen', function () {
       }
       return tokenIds;
     };
+
+    it('should correctly mint and burn with ETH', async function () {
+      const preBalance = await erc20Mintable.balanceOf(
+        await treasury.getAddress(),
+      );
+      const numBurned = 4;
+      const tokenIds = await mintEternalNft(minter, numBurned);
+      await londonBurn
+        .connect(minter)
+        .setApprovalForAll(londonBurnMinter.address, true);
+      const mintCheck = await getMintCheck(
+        await minter.getAddress(),
+        numBurnFromSelfAmount(numBurned),
+        ASHEN_TYPE,
+      );
+      // mint gift type
+      await londonBurnMinter
+        .connect(minter)
+        .mintAshenType(tokenIds, mintCheck, {
+          value: ONE_ETH.mul(10),
+        });
+      // check treasury get london
+      expect(
+        (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
+          preBalance,
+        ),
+      ).to.eq(ONE_TOKEN_IN_BASE_UNITS.mul(1559).mul(numBurned));
+      // check tokens are burnt
+      for (const tokenId of tokenIds) {
+        expect(await londonBurn.ownerOf(tokenId)).to.eq(DEAD_ADDRESS);
+      }
+      // check new tokens are minted
+      expect(await londonBurn.tokenTypeSupply(ASHEN_TYPE)).to.eq(
+        numBurnFromSelfAmount(numBurned),
+      );
+      expect(await waffle.provider.getBalance(londonBurnMinter.address)).to.eq(
+        BigNumber.from(0),
+      );
+    });
 
     it('should correctly mint and burn self with $LONDON', async function () {
       const preBalance = await erc20Mintable.balanceOf(
@@ -257,44 +297,6 @@ describe('LondonBurnAshen', function () {
       // check new tokens are minted
       expect(await londonBurn.tokenTypeSupply(ASHEN_TYPE)).to.eq(
         numBurnFromSelfAmount(numBurned),
-      );
-    });
-    it('should correctly mint and burn self with ETH', async function () {
-      const preBalance = await erc20Mintable.balanceOf(
-        await treasury.getAddress(),
-      );
-      const numBurned = 4;
-      const tokenIds = await mintEternalNft(minter, numBurned);
-      await londonBurn
-        .connect(minter)
-        .setApprovalForAll(londonBurnMinter.address, true);
-      const mintCheck = await getMintCheck(
-        await minter.getAddress(),
-        numBurnFromSelfAmount(numBurned),
-        ASHEN_TYPE,
-      );
-      // mint gift type
-      await londonBurnMinter
-        .connect(minter)
-        .mintAshenType(tokenIds, mintCheck, {
-          value: ONE_ETH.mul(10),
-        });
-      // check treasury get london
-      expect(
-        (await erc20Mintable.balanceOf(await treasury.getAddress())).sub(
-          preBalance,
-        ),
-      ).to.eq(ONE_TOKEN_IN_BASE_UNITS.mul(1559).mul(numBurned));
-      // check tokens are burnt
-      for (const tokenId of tokenIds) {
-        expect(await londonBurn.ownerOf(tokenId)).to.eq(DEAD_ADDRESS);
-      }
-      // check new tokens are minted
-      expect(await londonBurn.tokenTypeSupply(ASHEN_TYPE)).to.eq(
-        numBurnFromSelfAmount(numBurned),
-      );
-      expect(await waffle.provider.getBalance(londonBurnMinter.address)).to.eq(
-        BigNumber.from(0),
       );
     });
     it('should not mint if not enough $LONDON', async function () {
@@ -344,7 +346,7 @@ describe('LondonBurnAshen', function () {
     it('should not mint if not revealed', async function () {
       const numBurned = 6;
       const tokenIds = await mintEternalNft(minter, numBurned);
-      await londonBurnMinter.setRevealBlockNumber(MAX_BLOCK_NUM);
+      await londonBurnMinter.setBurnRevealBlockNumber(MAX_BLOCK_NUM);
       await londonBurn
         .connect(minter)
         .setApprovalForAll(londonBurnMinter.address, true);
@@ -501,7 +503,7 @@ describe('LondonBurnAshen', function () {
       await londonBurnMinter
         .connect(minter)
         .mintAshenType(tokenIds, mintCheck, {
-          value: ONE_ETH,
+          value: ONE_ETH.mul(2),
         });
       // check treasury get london
       expect(

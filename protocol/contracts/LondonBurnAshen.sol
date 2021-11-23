@@ -31,7 +31,7 @@ abstract contract LondonBurnAshen is LondonBurnMinterBase {
     uint256[] calldata tokenIds,
     LondonBurn.MintCheck calldata _mintCheck
   ) payable public {
-    require(block.number > revealBlockNumber, 'ASHEN has not been revealed yet');
+    require(block.number > burnRevealBlockNumber, 'ASHEN has not been revealed yet');
     require(tokenIds.length >= MIN_SELF_AMOUNT_PER_BURN && tokenIds.length <= MAX_SELF_AMOUNT_PER_BURN , "Exceeded self burn range");
     _payLondon(_msgSender(), londonNeededFromSelfAmount(tokenIds.length));
     // burn gifts

@@ -12,130 +12,148 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import { Listener, Provider } from '@ethersproject/providers';
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
+import { Listener, Provider } from "@ethersproject/providers";
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface LondonBurnMinterBaseInterface extends utils.Interface {
   functions: {
-    'externalBurnableERC721()': FunctionFragment;
-    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
-    'londonBurn()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'payableErc20()': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'revealBlockNumber()': FunctionFragment;
-    'setRevealBlockNumber(uint256)': FunctionFragment;
-    'setTreasury(address)': FunctionFragment;
-    'setUltraSonicForkBlockNumber(uint256)': FunctionFragment;
-    'splitSignature(bytes)': FunctionFragment;
-    'sushiswap()': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'treasury()': FunctionFragment;
-    'ultraSonicForkBlockNumber()': FunctionFragment;
+    "burnRevealBlockNumber()": FunctionFragment;
+    "externalBurnableERC721()": FunctionFragment;
+    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
+    "londonBurn()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "payableErc20()": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "revealBlockNumber()": FunctionFragment;
+    "setBurnRevealBlockNumber(uint256)": FunctionFragment;
+    "setRevealBlockNumber(uint256)": FunctionFragment;
+    "setTreasury(address)": FunctionFragment;
+    "setUltraSonicForkBlockNumber(uint256)": FunctionFragment;
+    "splitSignature(bytes)": FunctionFragment;
+    "sushiswap()": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "treasury()": FunctionFragment;
+    "ultraSonicForkBlockNumber()": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: 'externalBurnableERC721',
-    values?: undefined,
+    functionFragment: "burnRevealBlockNumber",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'isSigned',
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
+    functionFragment: "externalBurnableERC721",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'londonBurn',
-    values?: undefined,
-  ): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'payableErc20',
-    values?: undefined,
+    functionFragment: "isSigned",
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: 'renounceOwnership',
-    values?: undefined,
+    functionFragment: "londonBurn",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "payableErc20",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'revealBlockNumber',
-    values?: undefined,
+    functionFragment: "renounceOwnership",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'setRevealBlockNumber',
-    values: [BigNumberish],
-  ): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(
-    functionFragment: 'setUltraSonicForkBlockNumber',
-    values: [BigNumberish],
+    functionFragment: "revealBlockNumber",
+    values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: 'splitSignature',
-    values: [BytesLike],
+    functionFragment: "setBurnRevealBlockNumber",
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: 'sushiswap', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'transferOwnership',
-    values: [string],
+    functionFragment: "setRevealBlockNumber",
+    values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(functionFragment: "setTreasury", values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'ultraSonicForkBlockNumber',
-    values?: undefined,
+    functionFragment: "setUltraSonicForkBlockNumber",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "splitSignature",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(functionFragment: "sushiswap", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "ultraSonicForkBlockNumber",
+    values?: undefined
   ): string;
 
   decodeFunctionResult(
-    functionFragment: 'externalBurnableERC721',
-    data: BytesLike,
-  ): Result;
-  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'londonBurn', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: 'payableErc20',
-    data: BytesLike,
+    functionFragment: "burnRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'renounceOwnership',
-    data: BytesLike,
+    functionFragment: "externalBurnableERC721",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "londonBurn", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "payableErc20",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'revealBlockNumber',
-    data: BytesLike,
+    functionFragment: "renounceOwnership",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setRevealBlockNumber',
-    data: BytesLike,
+    functionFragment: "revealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setTreasury',
-    data: BytesLike,
+    functionFragment: "setBurnRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'setUltraSonicForkBlockNumber',
-    data: BytesLike,
+    functionFragment: "setRevealBlockNumber",
+    data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: 'splitSignature',
-    data: BytesLike,
+    functionFragment: "setTreasury",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'sushiswap', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'transferOwnership',
-    data: BytesLike,
+    functionFragment: "setUltraSonicForkBlockNumber",
+    data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: 'ultraSonicForkBlockNumber',
-    data: BytesLike,
+    functionFragment: "splitSignature",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "sushiswap", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ultraSonicForkBlockNumber",
+    data: BytesLike
   ): Result;
 
   events: {
-    'OwnershipTransferred(address,address)': EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
 }
 
 export type OwnershipTransferredEvent = TypedEvent<
@@ -156,15 +174,15 @@ export interface LondonBurnMinterBase extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>,
+    eventFilter?: TypedEventFilter<TEvent>
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>,
+    eventFilter: TypedEventFilter<TEvent>
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -173,6 +191,8 @@ export interface LondonBurnMinterBase extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    burnRevealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     externalBurnableERC721(overrides?: CallOverrides): Promise<[string]>;
 
     isSigned(
@@ -181,7 +201,7 @@ export interface LondonBurnMinterBase extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     londonBurn(overrides?: CallOverrides): Promise<[string]>;
@@ -191,42 +211,49 @@ export interface LondonBurnMinterBase extends BaseContract {
     payableErc20(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    setBurnRevealBlockNumber(
+      _burnRevealBlockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     sushiswap(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
+
+  burnRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
   externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
@@ -236,7 +263,7 @@ export interface LondonBurnMinterBase extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<boolean>;
 
   londonBurn(overrides?: CallOverrides): Promise<string>;
@@ -246,36 +273,41 @@ export interface LondonBurnMinterBase extends BaseContract {
   payableErc20(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
+  setBurnRevealBlockNumber(
+    _burnRevealBlockNumber: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setRevealBlockNumber(
     _revealBlockNumber: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setTreasury(
     _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   setUltraSonicForkBlockNumber(
     _ultraSonicForkBlockNumber: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   splitSignature(
     sig: BytesLike,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
   sushiswap(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
@@ -283,6 +315,8 @@ export interface LondonBurnMinterBase extends BaseContract {
   ultraSonicForkBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
+    burnRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
     externalBurnableERC721(overrides?: CallOverrides): Promise<string>;
 
     isSigned(
@@ -291,7 +325,7 @@ export interface LondonBurnMinterBase extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     londonBurn(overrides?: CallOverrides): Promise<string>;
@@ -304,28 +338,33 @@ export interface LondonBurnMinterBase extends BaseContract {
 
     revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setBurnRevealBlockNumber(
+      _burnRevealBlockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
     sushiswap(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
@@ -334,17 +373,19 @@ export interface LondonBurnMinterBase extends BaseContract {
   };
 
   filters: {
-    'OwnershipTransferred(address,address)'(
+    "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
-      newOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: string | null,
-      newOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
+    burnRevealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
+
     externalBurnableERC721(overrides?: CallOverrides): Promise<BigNumber>;
 
     isSigned(
@@ -353,7 +394,7 @@ export interface LondonBurnMinterBase extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     londonBurn(overrides?: CallOverrides): Promise<BigNumber>;
@@ -363,36 +404,41 @@ export interface LondonBurnMinterBase extends BaseContract {
     payableErc20(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
+    setBurnRevealBlockNumber(
+      _burnRevealBlockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     sushiswap(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -401,8 +447,12 @@ export interface LondonBurnMinterBase extends BaseContract {
   };
 
   populateTransaction: {
+    burnRevealBlockNumber(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     externalBurnableERC721(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isSigned(
@@ -411,7 +461,7 @@ export interface LondonBurnMinterBase extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     londonBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -421,42 +471,47 @@ export interface LondonBurnMinterBase extends BaseContract {
     payableErc20(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     revealBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    setBurnRevealBlockNumber(
+      _burnRevealBlockNumber: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setRevealBlockNumber(
       _revealBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
       _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     setUltraSonicForkBlockNumber(
       _ultraSonicForkBlockNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     sushiswap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ultraSonicForkBlockNumber(
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

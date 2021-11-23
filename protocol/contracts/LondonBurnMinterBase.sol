@@ -31,6 +31,7 @@ contract LondonBurnMinterBase is Ownable, Signature {
     // block numbers
     uint256 public ultraSonicForkBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
     uint256 public revealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
+    uint256 public burnRevealBlockNumber = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
 
     // token types
     uint256 constant NOBLE_TYPE =    0x8000000000000000000000000000000100000000000000000000000000000000;
@@ -75,6 +76,10 @@ contract LondonBurnMinterBase is Ownable, Signature {
 
     function setRevealBlockNumber(uint256 _revealBlockNumber) external onlyOwner {
         revealBlockNumber = _revealBlockNumber;
+    }
+
+    function setBurnRevealBlockNumber(uint256 _burnRevealBlockNumber) external onlyOwner {
+        burnRevealBlockNumber = _burnRevealBlockNumber;
     }
 
     fallback() external payable { 

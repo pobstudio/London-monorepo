@@ -168,7 +168,8 @@ describe('LondonBurnGift', function () {
     )) as LondonBurnMinter;
     await londonBurnMinter.deployed();
     await londonBurn.setMinter(londonBurnMinter.address);
-    await londonBurnMinter.connect(owner).setRevealBlockNumber(0);
+    await londonBurnMinter.setRevealBlockNumber(0);
+    await londonBurnMinter.setBurnRevealBlockNumber(0);
     await londonBurnMinter
       .connect(owner)
       .setTreasury(await treasury.getAddress());
@@ -380,7 +381,7 @@ describe('LondonBurnGift', function () {
       ).to.revertedWith('UniswapV2Router: EXCESSIVE_INPUT_AMOUNT');
     });
     it('should not mint if not revealed', async function () {
-      await londonBurnMinter.setRevealBlockNumber(
+      await londonBurnMinter.setBurnRevealBlockNumber(
         '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       );
       const numBurned = 4;

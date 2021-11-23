@@ -80,7 +80,7 @@ abstract contract LondonBurnGift is LondonBurnMinterBase {
     uint256[] calldata giftTokenIds,
     LondonBurn.MintCheck calldata mintCheck
   ) payable public {
-    require(block.number > revealBlockNumber, 'GIFT has not been revealed yet');
+    require(block.number > burnRevealBlockNumber, 'GIFT has not been revealed yet');
     require(totalGiftBurnAmount + giftTokenIds.length <= MAX_TOTAL_GIFT_BURN_AMOUNT, "Max GIFT burnt");
     require(giftTokenIds.length >= MIN_GIFT_AMOUNT_PER_BURN && giftTokenIds.length <= MAX_GIFT_AMOUNT_PER_BURN , "Exceeded gift burn range");
     _payLondon(_msgSender(), londonNeededFromGiftAmount(giftTokenIds.length));
