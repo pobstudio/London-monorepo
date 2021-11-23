@@ -229,8 +229,7 @@ export type OwnershipTransferredEvent = TypedEvent<
   { previousOwner: string; newOwner: string }
 >;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface LondonBurnNoble extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;

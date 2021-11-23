@@ -348,8 +348,7 @@ export type OwnershipTransferredEvent = TypedEvent<
   { previousOwner: string; newOwner: string }
 >;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export type TransferEvent = TypedEvent<
   [string, string, BigNumber],

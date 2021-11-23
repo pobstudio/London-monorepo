@@ -20,8 +20,10 @@ const initialAppState: AppProviderState = {
 const AppContext = React.createContext<AppProviderState>(initialAppState);
 
 const AppProvider: React.FC = ({ children }) => {
-  const [isAppBannerVisibleLocal, setIsAppBannerVisibleLocal] =
-    useLocalStorage<boolean>(BANNER_KEY, true);
+  const [
+    isAppBannerVisibleLocal,
+    setIsAppBannerVisibleLocal,
+  ] = useLocalStorage<boolean>(BANNER_KEY, true);
 
   const isAppBannerVisible = useMemo(() => {
     return BANNER_ENABLED && (isAppBannerVisibleLocal ?? false);

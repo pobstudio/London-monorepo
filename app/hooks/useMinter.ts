@@ -67,10 +67,9 @@ export const useMinter = () => {
     return possibleTxs[0];
   }, [transactionMap]);
 
-  const txStatus: TransactionStatus | undefined = useMemo(
-    () => tx?.status,
-    [tx],
-  );
+  const txStatus: TransactionStatus | undefined = useMemo(() => tx?.status, [
+    tx,
+  ]);
 
   return useMemo(
     () => ({

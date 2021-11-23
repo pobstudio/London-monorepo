@@ -121,8 +121,9 @@ export const FRAME_POINTILISM_TO_LABEL: { [k: number]: string } = {
 
 export const getEmberGene = (seed: string, tokenType: string): EmberGene => {
   const randSrc = seedrandom(seed);
-  const { random, randomInArray, randomInArrayByWeights } =
-    randomRangeFactory(randSrc);
+  const { random, randomInArray, randomInArrayByWeights } = randomRangeFactory(
+    randSrc,
+  );
   const pallete = randomInArray((colors as any).default);
   const gridSize: Bound = randomInArrayByWeights(
     GRID_SIZE_AND_WEIGHT[0],
