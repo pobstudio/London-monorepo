@@ -367,7 +367,7 @@ const AvatarConsole = styled.div`
     grid-template-columns: minMax(0, 200px) minMax(0, 1fr);
   }
   @media (max-width: ${BREAKPTS.SM}px) {
-    grid-template-columns: 1fr;
+    display: block;
   }
 `;
 

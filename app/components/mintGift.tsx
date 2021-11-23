@@ -70,6 +70,7 @@ const MintWrapper = styled.div`
   width: 450px;
   @media (max-width: ${BREAKPTS.MD}px) {
     max-width: 100%;
+    width: 350px;
   }
 `;
 
