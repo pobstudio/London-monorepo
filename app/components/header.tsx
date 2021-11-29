@@ -20,6 +20,7 @@ import { BREAKPTS } from '../styles';
 import { getEtherscanAddressUrl, getEtherscanTokenUrl } from '../utils/urls';
 import { ROUTES } from '../constants/routes';
 import Link from 'next/link';
+import { useTokensStore } from '../stores/token';
 const HeaderContainer = styled.div`
   /* padding: 0 12px; */
   position: fixed;
@@ -74,7 +75,6 @@ const DropdownContainer = styled.div`
 
 export const Header: FC = () => {
   const [showMore, setShowMore] = useState(false);
-
   return (
     <HeaderContainer>
       <HeaderRow>

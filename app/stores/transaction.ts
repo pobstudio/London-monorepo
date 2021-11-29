@@ -3,12 +3,18 @@ import produce from 'immer';
 import { TransactionReceipt } from '@ethersproject/providers';
 import { useToastsStore } from './toasts';
 import { BigNumber } from '@ethersproject/bignumber';
+import { TokenType } from '../constants/parameters';
 
 export type TransactionStatus = 'in-progress' | 'success' | 'failed';
 
 export interface MintingTransactionMetadata {
   type: 'minting';
   gasPrice?: BigNumber;
+}
+
+export interface EmbersMintingTransactionMetadata {
+  type: 'embers-minting';
+  tokenType: TokenType;
 }
 
 export interface ApprovalTransactionMetadata {
@@ -21,7 +27,8 @@ export interface MintingGiftTransactionMetadata {
 export type TransactionMetadata =
   | MintingGiftTransactionMetadata
   | ApprovalTransactionMetadata
-  | MintingTransactionMetadata;
+  | MintingTransactionMetadata
+  | EmbersMintingTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;

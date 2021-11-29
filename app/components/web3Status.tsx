@@ -14,6 +14,7 @@ import { isMobile } from 'react-device-detect';
 import { useLoadingText } from '../hooks/useLoadingText';
 import { useLondonBalance } from '../hooks/useBalance';
 import { utils } from 'ethers';
+import { useTokensStore } from '../stores/token';
 
 const AStatus = styled(A)`
   cursor: pointer;
@@ -94,6 +95,7 @@ export const Web3Status: FC = () => {
   ]);
 
   const ensOrHex = useENSorHex(account);
+  const tokenBalance = useTokensStore((s) => s.tokenBalance);
 
   const buttonText = useMemo(() => {
     if (walletView === 'connect') {
@@ -234,6 +236,11 @@ export const Web3Status: FC = () => {
 
   return (
     <AnchorRow>
+      {walletView === 'account' && (
+        <AStatus style={{ textDecoration: 'none' }} onClick={disconnect}>
+          {utils.formatEther(tokenBalance)} $LONDON
+        </AStatus>
+      )}
       {walletView === 'options' && <>{getOptions()}</>}
       <AStatus onClick={onClick}>
         <span style={{ textDecoration: 'none' }}>

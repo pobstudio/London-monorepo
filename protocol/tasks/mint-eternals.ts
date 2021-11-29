@@ -15,28 +15,12 @@ const BLOCKS_PER_24_HRS = 6300;
 
 const eternalMintChecks = [
   {
+    uris: ['bafkreie27nxzrwshr3lluqzbvpq2vqyar2oclup4icuhv3m6dmww4mfnse'],
+    signature:
+      '0x5d8e5db1fd53de66654dfc838f7a3ab497fc4c7ed39c927e5f6108c7432bb4ba1e61c9fffd639feb3323be7d9d3dc66c342e68513dd2ed44608df28a53211e4a1b',
     tokenType:
       '0x8000000000000000000000000000000400000000000000000000000000000000',
-    uris: [
-      'mintcheck17',
-      'mintcheck18',
-      'mintcheck19',
-      'mintcheck20',
-      'mintcheck21',
-      'mintcheck22',
-      'mintcheck23',
-      'mintcheck24',
-      'mintcheck25',
-      'mintcheck26',
-      'mintcheck27',
-      'mintcheck28',
-      'mintcheck29',
-      'mintcheck30',
-      'mintcheck31',
-    ],
-    to: '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65',
-    signature:
-      '0xb80e3585a0909568bb7116c5103ff7a6c27ce0d4a17b3630a70a494012f0edb95bd065d116c459d72d8c41d675a6897b5066749f45496825b1bc70b8c08bcbf11b',
+    to: '0x9428ca8b5fe52C33BD0BD7222d719d788B6467F4',
   },
 ];
 
@@ -47,27 +31,19 @@ task('mint-eternals', 'Deploys LONDON EMBERS', async (args, hre) => {
 
   console.log(`deploying with ${await owner.getAddress()}`);
 
-  // const LondonBurnMinter = await hre.ethers.getContractFactory('LondonBurnMinter');
-  // const londonBurnMinter = (await LondonBurnMinter.attach(
-  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMinter,
-  // )) as LondonBurnMinter;
-
   const LondonBurn = await hre.ethers.getContractFactory('LondonBurn');
-  // const londonBurn = (await LondonBurn.deploy(
-  //   'TEST',
-  //   'TEST'
-  // )) as LondonBurn;
   const londonBurn = (await LondonBurn.attach(
-    '0x60B03aB2571e2466eFA43D30801720285fa3765a',
+    '0x971fe57134d1b1B3D8D62cCADFF1D2CF67e2B8CE',
   )) as LondonBurn;
 
   await londonBurn.deployed();
-  console.log(londonBurn.address);
-  // await londonBurn.setMintingAuthority(
-  //   '0x90F79bf6EB2c4f870365E785982E1f101E93b906',
-  // );
-  // await londonBurn.setMinter(await owner.getAddress());
-  await londonBurn.mintTokenType(eternalMintChecks[0]);
-  // await londonBurn.setMinter(londonBurnMinter.address);
-  // await londonBurnMinter.mintEternalType(eternalMintChecks);
+  // await londonBurn.mintTokenType(eternalMintChecks[0]);
+
+  console.log(
+    await londonBurn.tokenURI(
+      BigNumber.from(
+        '57896044618658097711785492504343953927996121800504035873582290433683637665793',
+      ),
+    ),
+  );
 });

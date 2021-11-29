@@ -80,7 +80,7 @@ const handleMintChecks = async (req: NextApiRequest, res: NextApiResponse) => {
   const tokenMetadatasAndIpfsHashes = await Promise.all(
     newArray(numCheck).map((_, i) =>
       getTokenMetadataAndIPFS(
-        `${to}-${nonce + i}-${TOKEN_TYPES[tokenType]}`,
+        `${to}-${nonce}-${i}-${TOKEN_TYPES[tokenType]}`,
         tokenType,
       ),
     ),
@@ -110,10 +110,6 @@ const handleMintChecks = async (req: NextApiRequest, res: NextApiResponse) => {
     to,
   };
 
-  res.setHeader(
-    'Cache-Control',
-    `public, immutable, no-transform, s-maxage=65536, max-age=65536`,
-  );
   res.status(200).json({
     statusCode: 200,
     tokenMetadatas,

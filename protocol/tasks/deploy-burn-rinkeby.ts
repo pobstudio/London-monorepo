@@ -27,8 +27,10 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
 
   // deploy london
   const Erc20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
-  const erc20 = (await Erc20Mintable.attach(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,
+  const erc20 = (await Erc20Mintable.deploy(
+    await owner.getAddress(),
+    'LONDON',
+    'LONDON',
   )) as ERC20Mintable;
 
   await erc20.deployed();
@@ -36,18 +38,17 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
   console.log('London deployed to:', erc20.address);
 
   // deploy LondonGift
-  const LondonGift = await hre.ethers.getContractFactory('LondonGift');
-  const londonGift = (await LondonGift.attach(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].gift,
-  )) as LondonGift;
+  const ERC721Mintable = await hre.ethers.getContractFactory('ERC721Mintable');
+  const londonGift = (await ERC721Mintable.deploy(
+    'LONDON GIFT',
+    'GIFT',
+  )) as ERC721Mintable;
 
   await londonGift.deployed();
   console.log('LondonGift deployed to:', londonGift.address);
 
   const LondonBurn = await hre.ethers.getContractFactory('LondonBurn');
-  const londonBurn = (await LondonBurn.attach(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embers,
-  )) as LondonBurn;
+  const londonBurn = (await LondonBurn.deploy(name, symbol)) as LondonBurn;
 
   await londonBurn.deployed();
   console.log('LondonBurn deployed to:', londonBurn.address);
@@ -70,23 +71,38 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
   await londonBurnMinter.setTreasury(
     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
   );
-  // await londonBurn.setMintingAuthority(
-  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
-  // );
+  await londonBurn.setMintingAuthority(
+    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
+  );
   await londonBurnMinter.setAirdropAuthority(
     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
   );
-  // await londonBurn.setContractURI(
-  //   `ipfs://${
-  //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersContractURI
-  //   }/`,
-  // );
-  // await londonBurn.setBaseMetadataURI(`ipfs://`);
+  await londonBurn.setContractURI(
+    `ipfs://${
+      deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersContractURI
+    }/`,
+  );
+  await londonBurn.setBaseMetadataURI(`ipfs://`);
   // set block numbers
-  // await londonBurnMinter.setRevealBlockNumber(revealBlockNumber);
+  await londonBurnMinter.setRevealBlockNumber(revealBlockNumber);
 
   // transfer ownership
   // await londonBurn.transferOwnership(
   //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
   // );
+
+  console.log('testnet mints');
+
+  await erc20.mint(
+    await owner.getAddress(),
+    ONE_TOKEN_IN_BASE_UNITS.mul(100_000_000),
+  );
+  await erc20.mint(await rando.getAddress(), ONE_TOKEN_IN_BASE_UNITS.mul(2000));
+  console.log('testnet nft mints');
+  for (let i = 0; i < 20; ++i) {
+    await londonGift.connect(owner).mint();
+  }
+  for (let i = 0; i < 20; ++i) {
+    await londonGift.connect(rando).mint();
+  }
 });

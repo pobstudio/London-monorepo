@@ -33,7 +33,7 @@ export const useSetApprove = () => {
       }
       try {
         const res = await london.approve(
-          deployments[CHAIN_ID].gift,
+          deployments[CHAIN_ID].embersMinter,
           MAX_APPROVAL,
         );
 

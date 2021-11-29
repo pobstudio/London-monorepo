@@ -81,8 +81,10 @@ import { PFP } from '../components/pfp';
 import { Banner } from '../components/banner';
 import { ethers, utils } from 'ethers';
 import { Code } from '../components/code';
-import { NobleAirdrop } from '../components/embers/airdrop';
+import { NobleAirdrop } from '../components/embers/mintNoble';
 import { useMemo } from 'react';
+import { PristineMint } from '../components/embers/mintPristine';
+import { AshenAndGiftMint } from '../components/embers/mintAshenAndGift';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -306,6 +308,23 @@ const BurnAshen: FC = () => {
     </>
   );
 };
+
+const CoreMinting = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.01);
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  padding: 16px 16px 32px;
+  margin: 24px 0;
+  width: 800px;
+`;
+const CoreMintingInner = styled.div`
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+`;
+
 const BurnPage: NextPage = () => {
   const randomNum = useMemo(() => {
     return Math.floor(Math.random() * (10 - 0) + 0);
@@ -340,7 +359,24 @@ const BurnPage: NextPage = () => {
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>Gifts</A> or
           Embers.
         </RightAlignedText> */}
-        {/* <NobleAirdrop/> */}
+        <CoreMinting>
+          <CoreMintingInner>
+            <div style={{ marginTop: 20, marginBottom: 20 }}>
+              <Text style={{ marginBottom: 20 }}>
+                <strong>
+                  MINT <Italic>EMBERs</Italic>
+                </strong>
+              </Text>
+              <PristineMint />
+              {/* <div style={{ marginTop: 24 }}>
+                <AshenAndGiftMint/>
+              </div> */}
+              <div style={{ marginTop: 24 }}>
+                <NobleAirdrop />
+              </div>
+            </div>
+          </CoreMintingInner>
+        </CoreMinting>
         <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
         <RightAlignedText>
           <Bold>LONDON</Bold> Embers rarity design is designed with minimalism

@@ -40,22 +40,21 @@ export const TokensEffect: FC = () => {
 
   // const shopState = useShopState();
 
-  // useEffect(() => {
-  //   if (shopState === 'sold-out') {
-  //     return;
-  //   }
-  //   if (!london) {
-  //     return;
-  //   }
-  //   if (!account) {
-  //     return;
-  //   }
-  //   london.allowance(account, deployments[CHAIN_ID].gift).then((v: any) => {
-  //     console.log('v', v.toString());
-  //     setApprovalBalance(v);
-  //   });
-  //   london.balanceOf(account).then(setTokenBalance);
-  // }, [shopState, account, london, blockNumber]);
+  useEffect(() => {
+    if (!london) {
+      return;
+    }
+    if (!account) {
+      return;
+    }
+    london
+      .allowance(account, deployments[CHAIN_ID].embersMinter)
+      .then((v: any) => {
+        console.log('v', v.toString());
+        setApprovalBalance(v);
+      });
+    london.balanceOf(account).then(setTokenBalance);
+  }, [account, london, blockNumber]);
 
   // useEffect(() => {
   //   if (shopState !== 'preview') {

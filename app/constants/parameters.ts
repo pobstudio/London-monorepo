@@ -44,7 +44,7 @@ export const TOKEN_TYPES: { [key: string]: string } = {
     '0x8000000000000000000000000000000600000000000000000000000000000000',
 };
 
-export type TokenTypes = keyof typeof TOKEN_TYPES;
+export type TokenType = keyof typeof TOKEN_TYPES;
 
 // burn paramters
 export const BURN_ULTRASONIC_BLOCK = BigNumber.from(
@@ -56,9 +56,9 @@ export const BURN_REVEAL_BLOCK = BigNumber.from(
 
 // PRISTINE
 
-export const BURN_PRISTINE_MINTABLE_SUPPLY = BigNumber.from(500);
+export const BURN_PRISTINE_MINTABLE_SUPPLY = 500;
 export const BURN_PRICE_PER_PRISTINE_MINT = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
-export const BURN_MAX_PRISTINE_AMOUNT_PER_MINT = BigNumber.from(4);
+export const BURN_MAX_PRISTINE_AMOUNT_PER_MINT = 4;
 export const BURN_ETERNAL_MINTABLE_SUPPLY = BigNumber.from(100);
 
 // NOBLE

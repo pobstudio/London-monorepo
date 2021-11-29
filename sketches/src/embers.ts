@@ -102,7 +102,7 @@ export const ADVANCED_FRAME_CT_AND_WEIGHT: [number[], number[]] = [
 export const FRAME_CT_TO_LABEL: { [k: number]: string } = {
   1: 'still',
   5: 'gif',
-  10: 'tik tok',
+  10: 'vine',
   20: 'vlog',
   40: 'short film',
   50: 'movie',

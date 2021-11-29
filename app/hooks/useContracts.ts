@@ -4,6 +4,7 @@ import {
   GasPriceBasedMinter__factory,
   LondonGift__factory,
   LondonBurnMinter__factory,
+  LondonBurn__factory,
 } from '@pob/protocol';
 import { useMemo } from 'react';
 import { CHAIN_ID } from '../constants';
@@ -55,6 +56,22 @@ export const useMinterContract = (shouldUseFallback: boolean = false) => {
 
     return GasPriceBasedMinter__factory.connect(
       deployments[CHAIN_ID].minter,
+      getProviderOrSigner(provider as JsonRpcProvider, account as string),
+    );
+  }, [account, provider]);
+};
+
+export const useLondonEmbersContract = (shouldUseFallback: boolean = false) => {
+  const { account } = useWeb3React();
+  const provider = useProvider(shouldUseFallback);
+
+  return useMemo(() => {
+    if (!account && !provider) {
+      return;
+    }
+
+    return LondonBurn__factory.connect(
+      deployments[CHAIN_ID].embers,
       getProviderOrSigner(provider as JsonRpcProvider, account as string),
     );
   }, [account, provider]);

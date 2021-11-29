@@ -7,7 +7,7 @@ import path from 'path';
 const getTokenMetadataAndImage = async (
   seed: string,
 ): Promise<[string, string]> => {
-  const gene = getEmberGene(seed);
+  const gene = getEmberGene(seed, 'noble');
   const image = renderEmbers(gene);
   const tokenMetadata = getEmbersTokenMetadataFromGene(
     `LOCAL_BUILD`,

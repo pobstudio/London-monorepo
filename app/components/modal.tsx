@@ -18,7 +18,7 @@ export const ModalContent = styled.div`
 
 export const ModalInnerContent = styled.div`
   padding: 14px;
-  min-width: 360px;
+  min-width: 450px;
 `;
 
 export const ModalDismissButton = styled.button`

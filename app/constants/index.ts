@@ -23,7 +23,7 @@ export const BLOCKS_PER_24_HRS = 6300;
 export const ONE_GWEI = utils.parseUnits('1', 'gwei');
 
 export const OPENSEA_ASSET_NAME = 'london-gift-v2';
-
+export const EMBERS_OPENSEA_ASSET_NAME = 'london-embers';
 export const OPENSEA_ASSET_URL = 'london-gift-v2';
 
 export const OPENSEA_API_KEY = 'fc09ae6245fb40ab8afbcff451553345';
