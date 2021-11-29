@@ -310,8 +310,8 @@ const MintContent: FC = () => {
             type={'number'}
             onChange={(e) =>
               setMintedAmount(
-                parseInt(e.target.value) > MAX_MINT_PER_TX
-                  ? MAX_MINT_PER_TX
+                parseInt(e.target.value) > BURN_MAX_PRISTINE_AMOUNT_PER_MINT
+                  ? BURN_MAX_PRISTINE_AMOUNT_PER_MINT
                   : parseInt(e.target.value),
               )
             }
