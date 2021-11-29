@@ -59,10 +59,9 @@ export const getTiles = (tilePolygons: TilePolygons[], regions: string[]) => {
         for (const side of polygonSides) {
           const tileIndex = getSideIndex(side);
           if (tileIndex !== undefined) {
-            const position: Cord = (
-              tileIndex === 0 || tileIndex === 2
-                ? [side[0][0], side[1][0]]
-                : [side[0][1], side[1][1]]
+            const position: Cord = (tileIndex === 0 || tileIndex === 2
+              ? [side[0][0], side[1][0]]
+              : [side[0][1], side[1][1]]
             ).sort((a, b) => a - b) as Cord;
             tile.sockets[tileIndex].push({
               position,

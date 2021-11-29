@@ -62,8 +62,14 @@ export type WalletState = 'options' | 'connect' | 'account' | 'pending';
 
 export const Web3Status: FC = () => {
   const router = useRouter();
-  const { active, activate, account, connector, error, deactivate } =
-    useWeb3React();
+  const {
+    active,
+    activate,
+    account,
+    connector,
+    error,
+    deactivate,
+  } = useWeb3React();
   const transactionMap = useTransactionsStore((s) => s.transactionMap);
 
   const [walletView, setWalletView] = useState<WalletState>('connect');

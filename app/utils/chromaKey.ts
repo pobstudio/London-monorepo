@@ -58,23 +58,21 @@ function hexToRgb(hex: string): [number, number, number] {
 
 const hexToHsv = (hex: string) => rgbToHsv(...hexToRgb(hex));
 
-const shouldKeyOut =
-  (keyHsv: [number, number, number]) =>
-  (
-    rgb: [number, number, number],
-    hueThreshold: number,
-    valThreshold: number,
-    satThreshold: number,
-  ) => {
-    const [H, S, V] = rgbToHsv(...rgb);
-    // if (!['000', '234217217'].includes(rgb.join(''))) {
-    //   console.log(rgb.join(''), Math.abs(keyHsv[0] - H), Math.abs(keyHsv[1] - S), Math.abs(keyHsv[2] - V), hueThreshold, satThreshold, valThreshold)
-    // }
-    if (Math.abs(keyHsv[0] - H) >= hueThreshold) return false;
-    if (Math.abs(keyHsv[1] - S) >= satThreshold) return false;
-    if (Math.abs(keyHsv[2] - V) >= valThreshold) return false;
-    return true;
-  };
+const shouldKeyOut = (keyHsv: [number, number, number]) => (
+  rgb: [number, number, number],
+  hueThreshold: number,
+  valThreshold: number,
+  satThreshold: number,
+) => {
+  const [H, S, V] = rgbToHsv(...rgb);
+  // if (!['000', '234217217'].includes(rgb.join(''))) {
+  //   console.log(rgb.join(''), Math.abs(keyHsv[0] - H), Math.abs(keyHsv[1] - S), Math.abs(keyHsv[2] - V), hueThreshold, satThreshold, valThreshold)
+  // }
+  if (Math.abs(keyHsv[0] - H) >= hueThreshold) return false;
+  if (Math.abs(keyHsv[1] - S) >= satThreshold) return false;
+  if (Math.abs(keyHsv[2] - V) >= valThreshold) return false;
+  return true;
+};
 
 export const keyOutColorToAlpha = (
   imageData: ImageData,
