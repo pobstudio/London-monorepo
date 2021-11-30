@@ -5,6 +5,7 @@ import {
   EMBERS_OPENSEA_ASSET_NAME,
   LONDON_EMOJI,
   LONDON_PROD_LINK,
+  NULL_ADDRESS,
   ONE_GWEI,
   OPENSEA_ASSET_NAME,
   TOKEN_SYMBOL,
@@ -55,13 +56,14 @@ import {
   TableBody,
   TableRow,
 } from '../table';
-import { useOpenSeaStats } from '../../hooks/useOpenSea';
+import { OPENSEA_ASSET, OPENSEA_COLLECTION, useLondonAssets } from '../../hooks/useOpenSea';
 import { useEmbersTokenSupply } from '../../hooks/useTokenSupply';
 import { useTokensStore } from '../../stores/token';
 import { useMintCheck } from '../../hooks/useMintCheck';
 import { useLondonEmbersMinterContract } from '../../hooks/useContracts';
 import { useTransactionsStore } from '../../stores/transaction';
 import { useEmberTxStatus } from '../../hooks/useEmberTxStatus';
+import { findIndex } from 'lodash';
 
 const MintWrapper = styled.div`
   border: 1px solid black;
@@ -102,14 +104,13 @@ const Button = styled.button`
 
 const TabGroupButton = styled.button<{ isActive?: boolean }>`
   border: none;
-  border-bottom: 1px solid black;
-  background: ${(p) => (p.isActive ? '#e5e5e5' : 'rgba(0,0,0,0)')};
-  color: black;
-  background: #f5f5f5;
+  background: ${(p) => (p.isActive ? 'black' : '#f5f5f5')};
+  color: ${(p) => (p.isActive ? 'white' : 'black')};
   text-align: center;
   font-size: 18px;
   line-height: 18px;
   font-weight: 500;
+  width: 100%;
   cursor: pointer;
   padding: 14px 0;
   width: 340px;
@@ -123,7 +124,7 @@ const TabGroupButton = styled.button<{ isActive?: boolean }>`
     cursor: not-allowed;
   }
   :hover {
-    background: #e5e5e5;
+    background: ${(p) => (p.isActive ? 'black' : '#e5e5e5')};
   }
 `;
 
@@ -160,13 +161,14 @@ const MintInput = styled.input`
   }
 `;
 
-const ButtonFlex = styled(Flex)`
+const ButtonFlex = styled(FlexEnds)`
   border: 1px solid black;
 `;
 
 const MintContent: FC = () => {
   const minter = useLondonEmbersMinterContract();
   const tokenSupply = useEmbersTokenSupply('pristine');
+
   const { account } = useWeb3React();
   const [mintedAmount, setMintedAmount] = useState<number | undefined>(1);
   const tokenBalance = useTokensStore((s) => s.tokenBalance);
@@ -233,8 +235,6 @@ const MintContent: FC = () => {
     }
   }, [mintCheck, minter, account]);
 
-  const loadingText = useLoadingText();
-
   const isButtonDisabled = useMemo(() => {
     return (
       !account ||
@@ -291,7 +291,6 @@ const MintContent: FC = () => {
     isEnoughBalance,
     txStatus,
     isMintCheckReady,
-    loadingText,
     isApproved,
     approvalTxStatus,
   ]);
@@ -304,17 +303,29 @@ const MintContent: FC = () => {
     }
   }, [mint, approve, isApproved]);
 
+  const [burnedAsset, setBurnedAsset] = useState<'ember' | 'gift'>('gift');
+  const selectedCollectionAddress = useMemo(() => {
+    if (burnedAsset === 'ember') {
+      return deployments[CHAIN_ID].embers;
+    } else {
+      return deployments[CHAIN_ID].gift;
+    }
+  }, [burnedAsset]);
+  const [selectedAssets, setSelectedAssets] = useState<OPENSEA_ASSET[]>([]);
+  useEffect(() => {
+    setSelectedAssets([]);
+  }, [burnedAsset]);
+  const addSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
+    setSelectedAssets(a => a.concat([asset]))
+  }, []);
+  const removeSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
+    setSelectedAssets(a => a.filter(a => a.id !== asset.id))
+  }, []);
+  const londonAssets = useLondonAssets(account ?? NULL_ADDRESS);
+  console.log(londonAssets);
+
   return (
     <>
-      <FlexEnds>
-        <TabGroupButton
-          isActive={true}
-          style={{ width: '100%', borderRight: '1px solid black' }}
-        >
-          EMBERs
-        </TabGroupButton>
-        <TabGroupButton style={{ width: '100%' }}>GIFTs</TabGroupButton>
-      </FlexEnds>
       <MintBody>
         <FlexEnds>
           <Text>
@@ -333,8 +344,28 @@ const MintContent: FC = () => {
             View on OpenSea
           </A>
         </FlexEnds>
-
-        <FlexEnds style={{ marginTop: 24 }}>
+        <ButtonFlex style={{margin: '14px 0'}}>
+          <TabGroupButton
+            isActive={burnedAsset === 'gift'}
+            style={{ borderRight: '1px solid black' }}
+            onClick={() => setBurnedAsset('gift')}
+          >
+            GIFTs
+          </TabGroupButton>
+          <TabGroupButton
+            isActive={burnedAsset === 'ember'}
+            onClick={() => setBurnedAsset('ember')}
+          >EMBERs</TabGroupButton>
+        </ButtonFlex>
+            <UserSection
+              label={`Select ${burnedAsset.toUpperCase()}s to burn`}
+              items={londonAssets}
+              selectedCollectionAddress={selectedCollectionAddress}
+              selectedAssets={selectedAssets}
+              removeSelectedAssets={removeSelectedAssets}
+              addSelectedAssets={addSelectedAssets}
+            />
+        {/* <FlexEnds style={{ marginTop: 24 }}>
           <Text>
             {BURN_PRISTINE_MINTABLE_SUPPLY - (tokenSupply ?? 0)} /{' '}
             {BURN_PRISTINE_MINTABLE_SUPPLY} EMBERs left
@@ -357,7 +388,7 @@ const MintContent: FC = () => {
               )
             }
           />
-        </Flex>
+        </Flex> */}
         <Button
           style={{ width: '100%', marginTop: 14 }}
           disabled={isButtonDisabled}
@@ -367,5 +398,125 @@ const MintContent: FC = () => {
         </Button>
       </MintBody>
     </>
+  );
+};
+
+const UserSectionContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 14px;
+  overflow: auto;
+  margin: 0;
+  margin-top: 14px;
+  height: 360px;
+  background: #F6F6F6;
+  // scrollbar-width: none; /* Firefox */
+  // ::-webkit-scrollbar {
+  //   height: 0;
+  //   width: 0; /* Remove scrollbar space */
+  //   background: transparent; /* Optional: just make scrollbar invisible */
+  // }
+`;
+
+const Asset = styled.div<{ isSelected?: boolean }>`
+  opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
+  background: white;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+`;
+
+const UserSection: FC<{
+  label: string;
+  removeSelectedAssets: (asset: OPENSEA_ASSET) => void;
+  addSelectedAssets: (asset: OPENSEA_ASSET) => void;
+  selectedAssets: OPENSEA_ASSET[];
+  items: OPENSEA_COLLECTION[];
+  selectedCollectionAddress: string;
+}> = ({
+  label,
+  selectedAssets,
+  items,
+  selectedCollectionAddress,
+  removeSelectedAssets,
+  addSelectedAssets,
+}) => {
+
+  const selectedCollection = useMemo(() => {
+    return items.find((i) => i.contract === selectedCollectionAddress);
+  }, [items, selectedCollectionAddress]);
+
+  // if (!items || items.length === 0 || !selectedCollection) {
+  //   return (
+  //     <UserSectionContainer>
+  //       <FlexEnds>
+  //         <Text>{label}</Text>
+  //         <Flex>
+  //           <StyledSelect
+  //             onChange={(e) => {
+  //               setSelectedCollectionAddress(e.target.value);
+  //               setSelectedProject?.(e.target.value);
+  //             }}
+  //             value={selectedCollectionAddress}
+  //           >
+  //             {selectableAssetAndNames?.map((i) => {
+  //               return (
+  //                 <option value={i[0]} key={`option-1-${i}`}>
+  //                   {i[1]}
+  //                 </option>
+  //               );
+  //             })}
+  //           </StyledSelect>
+  //         </Flex>
+  //       </FlexEnds>
+  //       <FlexCenter
+  //         style={{ width: '100%', height: isVerticalScroll ? 178 : 81 }}
+  //       >
+  //         <Text style={{ opacity: 0.5 }}>
+  //           Do not own any. Buy{' '}
+  //           <A
+  //             target={'blank'}
+  //             href={getOpenSeaAssetUrl(selectedCollectionAddress ?? '-')}
+  //           >
+  //             here
+  //           </A>
+  //           .
+  //         </Text>
+  //       </FlexCenter>
+  //     </UserSectionContainer>
+  //   );
+  // }
+
+  return (
+    <UserSectionContainer>
+      <FlexEnds>
+        <Text>{label}</Text>
+      </FlexEnds>
+      <CollectionBody>
+        {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
+          <Asset
+            isSelected={findIndex(selectedAssets, a => a.id === asset.id) !== -1}
+            onClick={() => {
+              if (findIndex(selectedAssets, a => a.id === asset.id) !== -1) {
+                removeSelectedAssets(asset);
+              } else {
+                addSelectedAssets(asset);
+              }
+            }}
+            key={`asset-${asset.name}`}
+          >
+            <img src={asset.image} />
+          </Asset>
+        ))}
+      </CollectionBody>
+    </UserSectionContainer>
   );
 };

@@ -10,7 +10,7 @@ export const deployments: Deployments = {
     erc20: '0x491D6b7D6822d5d4BC88a1264E1b47791Fd8E904',
     minter: '0xd48c6a5c3046A29a57dAd9B6453769c674B7d22F',
     multisig: '0x5766ab511a204C34661e85af5ba498E2e715A420',
-    gift: '0x7645eeC8bB51862A5aa855c40971b2877dAe81AF',
+    gift: '0x7645eec8bb51862a5aa855c40971b2877dae81af',
     contractURI: 'bafkreifmkpt535hxe4hd2sllvhdgnp5oubtos2bhqmc4sfgizwqssse45q',
     baseTokenURI: 'bafybeifjgv53l7dj46igfla76rvrvutjupzamdxtj3aeuqqw5fned343ue',
     sushiswap: '0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F',

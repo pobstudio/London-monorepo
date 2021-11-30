@@ -1,6 +1,7 @@
+import { deployments } from '@pob/protocol';
 import { useMemo } from 'react';
 import useSWR from 'swr';
-import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
+import { CHAIN_ID, HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { fetcher } from '../utils/fetcher';
 
 const OS_SINGLE_ASSET = (contract: string, token: string) =>
@@ -50,6 +51,9 @@ const OS_OWNER_FILTER_ASSETS = (owner: string, contracts: string[]) => {
 
 const OS_OWNER_POB_ASSETS = (owner: string) =>
   OS_OWNER_FILTER_ASSETS(owner, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);
+
+const OS_OWNER_LONDON_ASSETS = (owner: string) =>
+  OS_OWNER_FILTER_ASSETS(owner, [deployments[CHAIN_ID].gift, deployments[CHAIN_ID].embers]);
 
 const OS_OWNER_PUNK_ASSETS = (
   owner: string,
@@ -124,6 +128,12 @@ export const usePunkAssets = (owner: string): OPENSEA_COLLECTION[] => {
 
 export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
   const fetchUrl = OS_OWNER_POB_ASSETS(owner);
+  const { data } = useSWR(fetchUrl, fetcher, {});
+  return useOpenSeaAssets(data);
+};
+
+export const useLondonAssets = (owner: string): OPENSEA_COLLECTION[] => {
+  const fetchUrl = OS_OWNER_LONDON_ASSETS(owner);
   const { data } = useSWR(fetchUrl, fetcher, {});
   return useOpenSeaAssets(data);
 };

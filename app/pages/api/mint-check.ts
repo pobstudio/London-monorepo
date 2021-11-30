@@ -114,7 +114,7 @@ const handleMintChecks = async (req: NextApiRequest, res: NextApiResponse) => {
     statusCode: 200,
     tokenMetadatas,
     ipfsHashes,
-    mintCheck,
+    // mintCheck,
   });
 };
 

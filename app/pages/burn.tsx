@@ -359,7 +359,7 @@ const BurnPage: NextPage = () => {
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>Gifts</A> or
           Embers.
         </RightAlignedText> */}
-        {/* <CoreMinting>
+        <CoreMinting>
           <CoreMintingInner>
             <div style={{ marginTop: 20, marginBottom: 20 }}>
               <Text style={{ marginBottom: 20 }}>
@@ -369,14 +369,14 @@ const BurnPage: NextPage = () => {
               </Text>
               <PristineMint />
               <div style={{ marginTop: 24 }}>
-                <AshenAndGiftMint/>
+                <AshenAndGiftMint />
               </div>
               <div style={{ marginTop: 24 }}>
                 <NobleAirdrop />
               </div>
             </div>
           </CoreMintingInner>
-        </CoreMinting> */}
+        </CoreMinting>
         <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
         <RightAlignedText>
           <Bold>LONDON</Bold> Embers rarity design is designed with minimalism

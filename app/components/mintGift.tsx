@@ -194,13 +194,8 @@ const SoldOutMintContent: FC = () => {
 };
 
 export const OpenSeaStats = () => {
-  const {
-    total_volume,
-    floor_price,
-    num_owners,
-    avg_price,
-    market_cap,
-  } = useOpenSeaStats();
+  const { total_volume, floor_price, num_owners, avg_price, market_cap } =
+    useOpenSeaStats();
   return (
     <TableContainer
       style={{
