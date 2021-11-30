@@ -415,7 +415,7 @@ const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
   overflow: auto;
   margin: 0;
   margin-top: 14px;
-  height: 360px;
+  max-height: 360px;
   background: #F6F6F6;
   // scrollbar-width: none; /* Firefox */
   // ::-webkit-scrollbar {
@@ -429,6 +429,7 @@ const Asset = styled.div<{ isSelected?: boolean }>`
   opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
   background: white;
   img {
+    display: block;
     height: 100%;
     width: 100%;
   }
