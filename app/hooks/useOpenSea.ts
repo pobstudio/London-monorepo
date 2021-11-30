@@ -53,7 +53,10 @@ const OS_OWNER_POB_ASSETS = (owner: string) =>
   OS_OWNER_FILTER_ASSETS(owner, [LONDON_GIFT_CONTRACT, HASH_CONTRACT]);
 
 const OS_OWNER_LONDON_ASSETS = (owner: string) =>
-  OS_OWNER_FILTER_ASSETS(owner, [deployments[CHAIN_ID].gift, deployments[CHAIN_ID].embers]);
+  OS_OWNER_FILTER_ASSETS(owner, [
+    deployments[CHAIN_ID].gift,
+    deployments[CHAIN_ID].embers,
+  ]);
 
 const OS_OWNER_PUNK_ASSETS = (
   owner: string,

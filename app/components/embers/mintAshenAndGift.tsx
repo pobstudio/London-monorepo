@@ -56,7 +56,11 @@ import {
   TableBody,
   TableRow,
 } from '../table';
-import { OPENSEA_ASSET, OPENSEA_COLLECTION, useLondonAssets } from '../../hooks/useOpenSea';
+import {
+  OPENSEA_ASSET,
+  OPENSEA_COLLECTION,
+  useLondonAssets,
+} from '../../hooks/useOpenSea';
 import { useEmbersTokenSupply } from '../../hooks/useTokenSupply';
 import { useTokensStore } from '../../stores/token';
 import { useMintCheck } from '../../hooks/useMintCheck';
@@ -316,10 +320,10 @@ const MintContent: FC = () => {
     setSelectedAssets([]);
   }, [burnedAsset]);
   const addSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
-    setSelectedAssets(a => a.concat([asset]))
+    setSelectedAssets((a) => a.concat([asset]));
   }, []);
   const removeSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
-    setSelectedAssets(a => a.filter(a => a.id !== asset.id))
+    setSelectedAssets((a) => a.filter((a) => a.id !== asset.id));
   }, []);
   const londonAssets = useLondonAssets(account ?? NULL_ADDRESS);
   console.log(londonAssets);
@@ -344,7 +348,7 @@ const MintContent: FC = () => {
             View on OpenSea
           </A>
         </FlexEnds>
-        <ButtonFlex style={{margin: '14px 0'}}>
+        <ButtonFlex style={{ margin: '14px 0' }}>
           <TabGroupButton
             isActive={burnedAsset === 'gift'}
             style={{ borderRight: '1px solid black' }}
@@ -355,16 +359,18 @@ const MintContent: FC = () => {
           <TabGroupButton
             isActive={burnedAsset === 'ember'}
             onClick={() => setBurnedAsset('ember')}
-          >EMBERs</TabGroupButton>
+          >
+            EMBERs
+          </TabGroupButton>
         </ButtonFlex>
-            <UserSection
-              label={`Select ${burnedAsset.toUpperCase()}s to burn`}
-              items={londonAssets}
-              selectedCollectionAddress={selectedCollectionAddress}
-              selectedAssets={selectedAssets}
-              removeSelectedAssets={removeSelectedAssets}
-              addSelectedAssets={addSelectedAssets}
-            />
+        <UserSection
+          label={`Select ${burnedAsset.toUpperCase()}s to burn`}
+          items={londonAssets}
+          selectedCollectionAddress={selectedCollectionAddress}
+          selectedAssets={selectedAssets}
+          removeSelectedAssets={removeSelectedAssets}
+          addSelectedAssets={addSelectedAssets}
+        />
         {/* <FlexEnds style={{ marginTop: 24 }}>
           <Text>
             {BURN_PRISTINE_MINTABLE_SUPPLY - (tokenSupply ?? 0)} /{' '}
@@ -416,7 +422,7 @@ const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
   margin: 0;
   margin-top: 14px;
   max-height: 360px;
-  background: #F6F6F6;
+  background: #f6f6f6;
   // scrollbar-width: none; /* Firefox */
   // ::-webkit-scrollbar {
   //   height: 0;
@@ -450,7 +456,6 @@ const UserSection: FC<{
   removeSelectedAssets,
   addSelectedAssets,
 }) => {
-
   const selectedCollection = useMemo(() => {
     return items.find((i) => i.contract === selectedCollectionAddress);
   }, [items, selectedCollectionAddress]);
@@ -504,9 +509,11 @@ const UserSection: FC<{
       <CollectionBody>
         {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
           <Asset
-            isSelected={findIndex(selectedAssets, a => a.id === asset.id) !== -1}
+            isSelected={
+              findIndex(selectedAssets, (a) => a.id === asset.id) !== -1
+            }
             onClick={() => {
-              if (findIndex(selectedAssets, a => a.id === asset.id) !== -1) {
+              if (findIndex(selectedAssets, (a) => a.id === asset.id) !== -1) {
                 removeSelectedAssets(asset);
               } else {
                 addSelectedAssets(asset);

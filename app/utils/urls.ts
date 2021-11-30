@@ -9,6 +9,18 @@ export const getOpenSeaAccountUrl = (address: string) => {
   }opensea.io/accounts/${address}`;
 };
 
+export const getRaribleCollectionUrl = (address: string) => {
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }rarible.com/collection/${address}`;
+};
+
+export const getRaribleUserAssetUrl = (address: string) => {
+  return `https://${
+    CHAIN_ID === 1 ? '' : 'testnets.'
+  }rarible.com/collection/${address}`;
+};
+
 export const getOpenSeaAssetUrl = (address: string, tokenId: string = '0') => {
   return `https://${
     CHAIN_ID === 1 ? '' : 'testnets.'

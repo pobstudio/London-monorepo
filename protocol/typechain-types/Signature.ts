@@ -10,30 +10,30 @@ import {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import { FunctionFragment, Result } from "@ethersproject/abi";
-import { Listener, Provider } from "@ethersproject/providers";
-import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
+} from 'ethers';
+import { FunctionFragment, Result } from '@ethersproject/abi';
+import { Listener, Provider } from '@ethersproject/providers';
+import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export interface SignatureInterface extends utils.Interface {
   functions: {
-    "isSigned(address,bytes32,uint8,bytes32,bytes32)": FunctionFragment;
-    "splitSignature(bytes)": FunctionFragment;
+    'isSigned(address,bytes32,uint8,bytes32,bytes32)': FunctionFragment;
+    'splitSignature(bytes)': FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "isSigned",
-    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike]
+    functionFragment: 'isSigned',
+    values: [string, BytesLike, BigNumberish, BytesLike, BytesLike],
   ): string;
   encodeFunctionData(
-    functionFragment: "splitSignature",
-    values: [BytesLike]
+    functionFragment: 'splitSignature',
+    values: [BytesLike],
   ): string;
 
-  decodeFunctionResult(functionFragment: "isSigned", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSigned', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "splitSignature",
-    data: BytesLike
+    functionFragment: 'splitSignature',
+    data: BytesLike,
   ): Result;
 
   events: {};
@@ -49,15 +49,15 @@ export interface Signature extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
   listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
+    eventFilter?: TypedEventFilter<TEvent>,
   ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
   removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
+    eventFilter: TypedEventFilter<TEvent>,
   ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
@@ -72,12 +72,12 @@ export interface Signature extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
   };
 
@@ -87,12 +87,12 @@ export interface Signature extends BaseContract {
     v: BigNumberish,
     r: BytesLike,
     s: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   splitSignature(
     sig: BytesLike,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
 
   callStatic: {
@@ -102,12 +102,12 @@ export interface Signature extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[string, string, number] & { r: string; s: string; v: number }>;
   };
 
@@ -120,12 +120,12 @@ export interface Signature extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -136,12 +136,12 @@ export interface Signature extends BaseContract {
       v: BigNumberish,
       r: BytesLike,
       s: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     splitSignature(
       sig: BytesLike,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

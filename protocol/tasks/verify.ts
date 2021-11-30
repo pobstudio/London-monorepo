@@ -11,14 +11,12 @@ task(
   async (args, hre) => {
     await hre.run('verify:verify', {
       address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embers,
-      constructorArguments: [
-        'LONDON Embers',
-        'EMBERS'
-      ],
+      constructorArguments: ['LONDON Embers', 'EMBERS'],
     });
 
     await hre.run('verify:verify', {
-      address: deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMinter,
+      address:
+        deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMinter,
       constructorArguments: [
         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embers,
         deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].erc20,

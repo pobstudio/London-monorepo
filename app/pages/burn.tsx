@@ -375,7 +375,9 @@ const BurnPage: NextPage = () => {
                 <NobleAirdrop />
               </div>
               <div style={{ marginTop: 24 }}>
-                <Text><Bold>Burning</Bold> comes Dec 3rd 2021 1pm EST</Text>
+                <Text>
+                  <Bold>Burning</Bold> comes Dec 3rd 2021 1pm EST
+                </Text>
               </div>
             </div>
           </CoreMintingInner>
