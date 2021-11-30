@@ -393,7 +393,7 @@ const GiftShopPage: NextPage = () => {
       <Header />
       <PageWrapper>
         <Title>
-          <Bold>LONDON</Bold> Gift
+          <Bold>LONDON</Bold>
         </Title>
         {/* <Caption>
           <Italic>
@@ -408,12 +408,12 @@ const GiftShopPage: NextPage = () => {
         <Text style={{ marginBottom: 8 }}>
           <Link passHref href={ROUTES.BURN}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
-              [COMING SOON] <Bold>London</Bold> Embers: BURN GIFTS!
+              [MINT NOW] <Bold>London Embers </Bold>
             </A>
           </Link>
         </Text>
         <Caption style={{ marginBottom: 4 }}>
-          [SOLD OUT] {MAX_SUPPLY}{' '}
+          [SOLD OUT] <Bold>London Gift:</Bold> {MAX_SUPPLY}{' '}
           <A href={getOpenSeaCollectionUrl(OPENSEA_ASSET_NAME)}>
             generative art mementos
           </A>{' '}
@@ -438,7 +438,7 @@ const GiftShopPage: NextPage = () => {
             Preview of 10 NFTs.
           </MiniText>
         </div>
-        <CoreMinting>
+        {/* <CoreMinting>
           <CoreMintingInner>
             <div style={{ marginTop: 20, marginBottom: 20 }}>
               <Text style={{ marginBottom: 20 }}>
@@ -449,7 +449,7 @@ const GiftShopPage: NextPage = () => {
               <MintGift />
             </div>
           </CoreMintingInner>
-        </CoreMinting>
+        </CoreMinting> */}
         <Utility />
         <ShouldReads />
         <Rarity />
