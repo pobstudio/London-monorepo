@@ -14,6 +14,7 @@ import {
   Caption,
 } from '../components/text';
 import { A } from '../components/anchor';
+import { useWeb3React } from '@web3-react/core';
 import {
   CHAIN_ID,
   DUNE_DASHBOARD_LINK,
@@ -25,6 +26,7 @@ import {
   TOKEN_SYMBOL,
   DAO_TWITTER_LINK,
   ULTRASOUND_LINK,
+  EMBERS_OPENSEA_ASSET_NAME,
 } from '../constants';
 import {
   BLOCK_NUMBER_UNLOCK_START_AT,
@@ -69,9 +71,10 @@ import {
   getEtherscanAddressUrl,
   getOpenSeaAssetUrl,
   getOpenSeaCollectionUrl,
+  getOpenSeaUserAssetUrl,
 } from '../utils/urls';
 import { deployments } from '@pob/protocol';
-import { FlexCenter } from '../components/flex';
+import { FlexCenter, FlexEnds } from '../components/flex';
 import { POBIcon } from '../components/icons/pob';
 import { MintGift } from '../components/mintGift';
 import { ROUTES } from '../constants/routes';
@@ -329,6 +332,7 @@ const BurnPage: NextPage = () => {
   const randomNum = useMemo(() => {
     return Math.floor(Math.random() * (10 - 0) + 0);
   }, []);
+  const { account } = useWeb3React();
   return (
     <>
       <Header />
@@ -362,21 +366,41 @@ const BurnPage: NextPage = () => {
         <CoreMinting>
           <CoreMintingInner>
             <div style={{ marginTop: 20, marginBottom: 20 }}>
-              <Text style={{ marginBottom: 20 }}>
-                <strong>
-                  MINT <Italic>EMBERs</Italic>
-                </strong>
-              </Text>
-              <PristineMint />
-              {/* <div style={{ marginTop: 24 }}>
+              <FlexEnds style={{ marginBottom: 20 }}>
+                <Text>
+                  <strong>
+                    MINT <Italic>EMBERs</Italic>
+                  </strong>
+                </Text>
+                <A
+                  target={'_blank'}
+                  href={
+                    !!account
+                      ? getOpenSeaUserAssetUrl(
+                          account,
+                          EMBERS_OPENSEA_ASSET_NAME,
+                        )
+                      : getOpenSeaCollectionUrl(EMBERS_OPENSEA_ASSET_NAME)
+                  }
+                  style={{ cursor: 'pointer' }}
+                >
+                  View on OpenSea
+                </A>
+              </FlexEnds>
+              {/* <PristineMint /> */}
+              <div>
                 <AshenAndGiftMint />
-              </div> */}
+              </div>
               <div style={{ marginTop: 24 }}>
                 <NobleAirdrop />
               </div>
               <div style={{ marginTop: 24 }}>
                 <Text>
-                  <Bold>Burning</Bold> comes Dec 3rd 2021 1pm EST
+                  All public sale EMBERs are sold, buy on{' '}
+                  <A href={getOpenSeaCollectionUrl(EMBERS_OPENSEA_ASSET_NAME)}>
+                    OpenSea
+                  </A>
+                  .
                 </Text>
               </div>
             </div>

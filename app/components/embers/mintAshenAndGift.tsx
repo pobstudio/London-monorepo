@@ -20,7 +20,14 @@ import {
   BLOCK_NUMBER_REVEAL_START_AT,
   BLOCK_NUMBER_UNLOCK_START_AT,
   BLOCK_NUMBER_UP_TO,
+  BURN_EMBERS_AMOUNT_TO_EMBERS,
+  BURN_GIFT_AMOUNT_TO_EMBERS,
+  BURN_LONDON_FEE_FOR_GIFTS,
+  BURN_LONDON_FEE_FOR_SELF,
+  BURN_MAX_AMOUNT_GIFTS,
   BURN_MAX_PRISTINE_AMOUNT_PER_MINT,
+  BURN_MIN_MAX_AMOUNT_FOR_GIFTS,
+  BURN_MIN_MAX_AMOUNT_FOR_SELF,
   BURN_PRICE_PER_PRISTINE_MINT,
   BURN_PRISTINE_MINTABLE_SUPPLY,
   MAX_MINT_NOT_UNLOCKED,
@@ -46,8 +53,11 @@ import {
 import { deployments } from '@pob/protocol';
 import { ROUTES } from '../../constants/routes';
 import { useGiftStore } from '../../stores/gift';
-import { useIsApproved } from '../../hooks/useIsApproved';
-import { useSetApprove } from '../../hooks/useSetApproval';
+import {
+  useGiftAndEmbersIsApproved,
+  useIsApproved,
+} from '../../hooks/useIsApproved';
+import { useSetApprove, useSetNFTApprove } from '../../hooks/useSetApproval';
 import { useMintGift } from '../../hooks/useMintGift';
 import {
   TableColumn,
@@ -68,6 +78,8 @@ import { useLondonEmbersMinterContract } from '../../hooks/useContracts';
 import { useTransactionsStore } from '../../stores/transaction';
 import { useEmberTxStatus } from '../../hooks/useEmberTxStatus';
 import { findIndex } from 'lodash';
+import { useEthPriceOfLondon } from '../../hooks/useEthPriceOfLondon';
+import { useGiftBurned } from '../../hooks/useGiftBurned';
 
 const MintWrapper = styled.div`
   border: 1px solid black;
@@ -77,6 +89,7 @@ const MintWrapper = styled.div`
     max-width: 100%;
     width: 350px;
   }
+  position: relative;
 `;
 
 const Button = styled.button`
@@ -169,143 +182,20 @@ const ButtonFlex = styled(FlexEnds)`
   border: 1px solid black;
 `;
 
+const StyledSelect = styled.select`
+  font-weight: bold;
+  border: none;
+  outline: none;
+  padding-right: 5px;
+  text-align-last: right;
+`;
+
 const MintContent: FC = () => {
   const minter = useLondonEmbersMinterContract();
-  const tokenSupply = useEmbersTokenSupply('pristine');
 
   const { account } = useWeb3React();
-  const [mintedAmount, setMintedAmount] = useState<number | undefined>(1);
   const tokenBalance = useTokensStore((s) => s.tokenBalance);
-  const [safeMintedAmount, setSafeMintedAmount] = useState(1);
   const addTransaction = useTransactionsStore((s) => s.addTransaction);
-
-  const londonNeeded = useMemo(() => {
-    return BURN_PRICE_PER_PRISTINE_MINT.mul(safeMintedAmount);
-  }, [safeMintedAmount]);
-
-  const isApproved = useIsApproved(londonNeeded);
-
-  const { txStatus: approvalTxStatus, approve } = useSetApprove();
-
-  useEffect(() => {
-    if (!!mintedAmount) {
-      setSafeMintedAmount(mintedAmount);
-    }
-  }, [mintedAmount]);
-
-  const isEnoughBalance = useMemo(
-    () => tokenBalance.gte(londonNeeded),
-    [tokenBalance, londonNeeded],
-  );
-
-  const isMintable = useMemo(() => {
-    return (
-      tokenSupply !== undefined &&
-      tokenSupply < BURN_PRISTINE_MINTABLE_SUPPLY &&
-      isApproved &&
-      isEnoughBalance
-    );
-  }, [tokenSupply, isApproved, isEnoughBalance]);
-
-  const mintCheck = useMintCheck(
-    account ?? undefined,
-    'pristine',
-    safeMintedAmount,
-  );
-
-  const isMintCheckReady = useMemo(() => {
-    return !!mintCheck && mintCheck.uris.length == safeMintedAmount;
-  }, [mintCheck, safeMintedAmount]);
-
-  const { tx, txStatus } = useEmberTxStatus('pristine');
-
-  const [error, setError] = useState<any | undefined>(undefined);
-
-  const mint = useCallback(async () => {
-    if (!account || !minter || !mintCheck) {
-      return;
-    }
-    try {
-      const res = await minter.mintPristineType(mintCheck);
-
-      addTransaction(res.hash, {
-        tokenType: 'pristine',
-        type: 'embers-minting',
-      });
-      setError(undefined);
-    } catch (e) {
-      console.error(e);
-      setError(e);
-    }
-  }, [mintCheck, minter, account]);
-
-  const isButtonDisabled = useMemo(() => {
-    return (
-      !account ||
-      !isMintCheckReady ||
-      (isApproved && !isMintable) ||
-      txStatus === 'in-progress' ||
-      approvalTxStatus === 'in-progress'
-    );
-  }, [
-    isMintCheckReady,
-    account,
-    isApproved,
-    isMintable,
-    txStatus,
-    approvalTxStatus,
-  ]);
-
-  const buttonText = useMemo(() => {
-    if ((tokenSupply ?? 0) >= BURN_PRISTINE_MINTABLE_SUPPLY) {
-      return 'Sold out';
-    }
-    if (isApproved) {
-      if (!isEnoughBalance) {
-        return `Not enough ${TOKEN_SYMBOL}`;
-      }
-      if (!isMintCheckReady) {
-        return `Generating art...`;
-      }
-      if (error || txStatus === 'failed') {
-        return 'Oop try again?';
-      }
-      if (txStatus === 'in-progress') {
-        return `Minting...`;
-      }
-      if (txStatus === 'success') {
-        return `Minted`;
-      }
-      return `Mint for ${safeMintedAmount * 1559} ${TOKEN_SYMBOL}`;
-    }
-    if (approvalTxStatus === 'failed') {
-      return 'Oop try again?';
-    }
-    if (approvalTxStatus === 'in-progress') {
-      return `Approving...`;
-    }
-    if (approvalTxStatus === 'success') {
-      return `Approved`;
-    }
-    return `Approve ${TOKEN_SYMBOL}`;
-  }, [
-    error,
-    tokenSupply,
-    safeMintedAmount,
-    isEnoughBalance,
-    txStatus,
-    isMintCheckReady,
-    isApproved,
-    approvalTxStatus,
-  ]);
-
-  const onButtonClick = useCallback(() => {
-    if (isApproved) {
-      mint();
-    } else {
-      approve();
-    }
-  }, [mint, approve, isApproved]);
 
   const [burnedAsset, setBurnedAsset] = useState<'ember' | 'gift'>('gift');
   const selectedCollectionAddress = useMemo(() => {
@@ -319,37 +209,304 @@ const MintContent: FC = () => {
   useEffect(() => {
     setSelectedAssets([]);
   }, [burnedAsset]);
-  const addSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
-    setSelectedAssets((a) => a.concat([asset]));
-  }, []);
-  const removeSelectedAssets = useCallback((asset: OPENSEA_ASSET) => {
-    setSelectedAssets((a) => a.filter((a) => a.id !== asset.id));
-  }, []);
+
   const londonAssets = useLondonAssets(account ?? NULL_ADDRESS);
-  console.log(londonAssets);
+
+  const selectableRange = useMemo(() => {
+    return burnedAsset === 'ember'
+      ? BURN_MIN_MAX_AMOUNT_FOR_SELF
+      : BURN_MIN_MAX_AMOUNT_FOR_GIFTS;
+  }, [burnedAsset]);
+
+  const mintableAmount = useMemo(() => {
+    return burnedAsset === 'gift'
+      ? BURN_GIFT_AMOUNT_TO_EMBERS(selectedAssets.length)
+      : BURN_EMBERS_AMOUNT_TO_EMBERS(selectedAssets.length);
+  }, [burnedAsset, selectedAssets]);
+
+  const londonNeeded = useMemo(() => {
+    return burnedAsset === 'gift'
+      ? BURN_LONDON_FEE_FOR_GIFTS[selectedAssets.length]
+      : BURN_LONDON_FEE_FOR_SELF[selectedAssets.length];
+  }, [burnedAsset, selectedAssets]);
+
+  const [feeAsset, setFeeAsset] = useState<'ETH' | 'LONDON'>('ETH');
+
+  const isLondonApproved = useIsApproved(
+    feeAsset === 'ETH' ? undefined : londonNeeded,
+  );
+
+  const ethBalance = useBlockchainStore(
+    useCallback(
+      (s) => (!!account ? s.balanceMap[account] : undefined),
+      [account],
+    ),
+  );
+
+  const ethNeeded = useEthPriceOfLondon(
+    feeAsset === 'ETH' ? londonNeeded : undefined,
+  );
+
+  const isWithinSelectedRange = useMemo(
+    () =>
+      selectedAssets.length >= selectableRange[0] &&
+      selectedAssets.length <= selectableRange[1],
+    [selectedAssets, selectableRange],
+  );
+
+  const isEthBalanceEnough = useMemo(() => {
+    return (
+      !!ethBalance && !!ethNeeded && BigNumber.from(ethBalance).gte(ethNeeded)
+    );
+  }, [ethNeeded, ethBalance]);
+
+  const isLondonBalanceEnough = useMemo(() => {
+    return !!londonNeeded && !!tokenBalance && tokenBalance.gte(londonNeeded);
+  }, [londonNeeded, tokenBalance]);
+
+  const mintCheck = useMintCheck(
+    account ?? undefined,
+    burnedAsset === 'ember' ? 'ashen' : 'gift',
+    mintableAmount ?? 0,
+  );
+
+  const isMintCheckReady = useMemo(() => {
+    return !!mintCheck && mintCheck.uris.length == mintableAmount;
+  }, [mintCheck, mintableAmount]);
+
+  const giftBurned = useGiftBurned();
+  const isGiftBurnable = useMemo(() => {
+    return giftBurned !== undefined && BURN_MAX_AMOUNT_GIFTS > giftBurned;
+  }, [giftBurned]);
+
+  const [isGiftApproved, isEmbersApproved] = useGiftAndEmbersIsApproved(
+    account ?? undefined,
+  );
+
+  const [isApprovalModalOpen, setIsApprovalModal] = useState(false);
+
+  const isApproved = useMemo(
+    () =>
+      ((feeAsset === 'LONDON' && isLondonApproved) || feeAsset === 'ETH') &&
+      ((burnedAsset === 'gift' && isGiftApproved) ||
+        (burnedAsset === 'ember' && isEmbersApproved)),
+    [burnedAsset, feeAsset, isEmbersApproved, isGiftApproved, isLondonApproved],
+  );
+  const isEnoughBalance = useMemo(
+    () =>
+      (feeAsset === 'ETH' && isEthBalanceEnough) ||
+      (feeAsset === 'LONDON' && isLondonBalanceEnough),
+    [isEthBalanceEnough, feeAsset, isLondonBalanceEnough],
+  );
+
+  useEffect(() => {
+    if (isApprovalModalOpen && isApproved) {
+      setIsApprovalModal(false);
+    }
+  }, [isApprovalModalOpen, isApproved]);
+
+  const isMintable = useMemo(() => {
+    return (
+      isWithinSelectedRange &&
+      isMintCheckReady &&
+      isApproved &&
+      isEnoughBalance &&
+      (burnedAsset === 'ember' || isGiftBurnable)
+    );
+  }, [
+    isWithinSelectedRange,
+    isMintCheckReady,
+    feeAsset,
+    isEthBalanceEnough,
+    isApproved,
+    isLondonBalanceEnough,
+    burnedAsset,
+    isGiftBurnable,
+  ]);
+
+  const { txStatus: giftTxStatus } = useEmberTxStatus('gift');
+  const { txStatus: ashenTxStatus } = useEmberTxStatus('ashen');
+
+  const isMinting = useMemo(() => {
+    return giftTxStatus === 'in-progress' || ashenTxStatus === 'in-progress';
+  }, [giftTxStatus, ashenTxStatus]);
+
+  console.log(isMinting, giftTxStatus, ashenTxStatus);
+  const addSelectedAssets = useCallback(
+    (asset: OPENSEA_ASSET) => {
+      if (isMinting) {
+        return;
+      }
+      setSelectedAssets((a) => a.concat([asset]));
+    },
+    [isMinting],
+  );
+  const removeSelectedAssets = useCallback(
+    (asset: OPENSEA_ASSET) => {
+      if (isMinting) {
+        return;
+      }
+      setSelectedAssets((a) => a.filter((a) => a.id !== asset.id));
+    },
+    [isMinting],
+  );
+
+  const [error, setError] = useState<any | undefined>(undefined);
+
+  const mint = useCallback(async () => {
+    if (!account || !minter || !mintCheck) {
+      return;
+    }
+    try {
+      const tokenIds = selectedAssets.map((a) => a.id);
+      console.log(tokenIds);
+      if (burnedAsset === 'ember') {
+        const res = await minter.mintAshenType(tokenIds, mintCheck, {
+          value: feeAsset === 'ETH' ? ethNeeded : undefined,
+        });
+        addTransaction(res.hash, {
+          tokenType: 'ashen',
+          type: 'embers-minting',
+        });
+        setError(undefined);
+      } else if (burnedAsset === 'gift') {
+        const res = await minter.mintGiftType(tokenIds, mintCheck, {
+          value: feeAsset === 'ETH' ? ethNeeded : undefined,
+        });
+        addTransaction(res.hash, {
+          tokenType: 'gift',
+          type: 'embers-minting',
+        });
+        setError(undefined);
+      }
+    } catch (e) {
+      console.error(e);
+      setError(e);
+    }
+  }, [
+    feeAsset,
+    ethNeeded,
+    burnedAsset,
+    selectedAssets,
+    mintCheck,
+    minter,
+    account,
+  ]);
+
+  const onButtonClick = useCallback(() => {
+    if (isMintable) {
+      mint();
+    } else {
+      setIsApprovalModal(true);
+    }
+  }, [mint, isMintable]);
+
+  const isButtonDisabled = useMemo(() => {
+    return (
+      !account ||
+      !(
+        isWithinSelectedRange &&
+        isMintCheckReady &&
+        isEnoughBalance &&
+        (burnedAsset === 'ember' || isGiftBurnable)
+      ) ||
+      isMinting
+    );
+  }, [
+    account,
+    isMintable,
+    isEnoughBalance,
+    burnedAsset,
+    isMinting,
+    isGiftBurnable,
+    isMintCheckReady,
+    isWithinSelectedRange,
+  ]);
+
+  const buttonText = useMemo(() => {
+    if (selectedAssets.length < selectableRange[0]) {
+      return 'Select more to burn';
+    }
+    if (selectedAssets.length > selectableRange[1]) {
+      return 'Selected too much';
+    }
+    if (burnedAsset === 'gift' && !isGiftBurnable) {
+      return 'Sold out';
+    }
+    if (!isEnoughBalance) {
+      if (feeAsset === 'ETH') {
+        return `Need ${
+          !!ethNeeded ? utils.formatEther(ethNeeded).slice(0, 7) : '-'
+        } ${feeAsset} to mint`;
+      }
+      return `Need ${
+        !!londonNeeded ? utils.formatEther(londonNeeded).slice(0, 7) : '-'
+      } ${feeAsset} to mint`;
+    }
+    if (!isMintCheckReady) {
+      return `Generating art...`;
+    }
+    if (!isApproved) {
+      return `Approve to mint`;
+    }
+    if (
+      error ||
+      (burnedAsset === 'gift' && giftTxStatus === 'failed') ||
+      (burnedAsset === 'ember' && ashenTxStatus === 'failed')
+    ) {
+      return 'Oop try again?';
+    }
+    if (
+      (burnedAsset === 'gift' && giftTxStatus === 'in-progress') ||
+      (burnedAsset === 'ember' && ashenTxStatus === 'in-progress')
+    ) {
+      return `Minting...`;
+    }
+    if (
+      (burnedAsset === 'gift' && giftTxStatus === 'success') ||
+      (burnedAsset === 'ember' && ashenTxStatus === 'success')
+    ) {
+      return `Minted`;
+    }
+    if (feeAsset === 'ETH') {
+      return `Mint for ${
+        !!ethNeeded ? utils.formatEther(ethNeeded).slice(0, 7) : '-'
+      } ${feeAsset}`;
+    }
+    return `Mint for ${
+      !!londonNeeded ? utils.formatEther(londonNeeded).slice(0, 7) : '-'
+    } ${feeAsset}`;
+  }, [
+    feeAsset,
+    ethNeeded,
+    londonNeeded,
+    selectedAssets,
+    selectableRange,
+    error,
+    burnedAsset,
+    isMinting,
+    isMintCheckReady,
+    isGiftBurnable,
+    isEnoughBalance,
+    giftTxStatus,
+    ashenTxStatus,
+    isApproved,
+  ]);
 
   return (
     <>
       <MintBody>
         <FlexEnds>
           <Text>
-            <Italic>Burn!!!</Italic>
+            <Italic>Select: </Italic>
           </Text>
-
-          <A
-            target={'_blank'}
-            href={
-              !!account
-                ? getOpenSeaUserAssetUrl(account, EMBERS_OPENSEA_ASSET_NAME)
-                : getOpenSeaCollectionUrl(EMBERS_OPENSEA_ASSET_NAME)
-            }
-            style={{ cursor: 'pointer' }}
-          >
-            View on OpenSea
-          </A>
+          <Text>
+            Burn between {selectableRange[0]}-{selectableRange[1]}
+          </Text>
         </FlexEnds>
-        <ButtonFlex style={{ margin: '14px 0' }}>
+        <ButtonFlex style={{ marginTop: 14 }}>
           <TabGroupButton
+            disabled={isMinting}
             isActive={burnedAsset === 'gift'}
             style={{ borderRight: '1px solid black' }}
             onClick={() => setBurnedAsset('gift')}
@@ -357,6 +514,7 @@ const MintContent: FC = () => {
             GIFTs
           </TabGroupButton>
           <TabGroupButton
+            disabled={isMinting}
             isActive={burnedAsset === 'ember'}
             onClick={() => setBurnedAsset('ember')}
           >
@@ -364,37 +522,39 @@ const MintContent: FC = () => {
           </TabGroupButton>
         </ButtonFlex>
         <UserSection
-          label={`Select ${burnedAsset.toUpperCase()}s to burn`}
+          selectableRange={selectableRange}
+          label={`Select ${burnedAsset.toUpperCase()}s`}
           items={londonAssets}
           selectedCollectionAddress={selectedCollectionAddress}
           selectedAssets={selectedAssets}
           removeSelectedAssets={removeSelectedAssets}
           addSelectedAssets={addSelectedAssets}
         />
-        {/* <FlexEnds style={{ marginTop: 24 }}>
+        <FlexEnds style={{ marginTop: 24 }}>
           <Text>
-            {BURN_PRISTINE_MINTABLE_SUPPLY - (tokenSupply ?? 0)} /{' '}
-            {BURN_PRISTINE_MINTABLE_SUPPLY} EMBERs left
+            Burn {selectedAssets.length === 0 ? '-' : selectedAssets.length}{' '}
+            {burnedAsset.toUpperCase()}
+            {selectedAssets.length === 1 ? '' : 's'}
           </Text>
+          →
           <Text>
-            <Italic>1559 $LONDON each</Italic>
+            Mint {mintableAmount ?? '-'} EMBER{mintableAmount === 1 ? '' : 's'}
           </Text>
         </FlexEnds>
-        <Flex style={{ marginTop: 8 }}>
-          <MintInput
-            max={BURN_MAX_PRISTINE_AMOUNT_PER_MINT.toString()}
-            placeholder={`Choose between 1-${BURN_MAX_PRISTINE_AMOUNT_PER_MINT}`}
-            value={mintedAmount}
-            type={'number'}
-            onChange={(e) =>
-              setMintedAmount(
-                parseInt(e.target.value) > MAX_MINT_PER_TX
-                  ? MAX_MINT_PER_TX
-                  : parseInt(e.target.value),
-              )
-            }
-          />
-        </Flex> */}
+      </MintBody>
+      <MintBody style={{ borderTop: '1px solid black' }}>
+        <FlexEnds>
+          <Text>Pay in: </Text>
+          <StyledSelect
+            onChange={(e) => {
+              setFeeAsset(e.target.value as any);
+            }}
+            value={feeAsset}
+          >
+            <option value={'ETH'}>ETH</option>
+            <option value={'LONDON'}>LONDON</option>
+          </StyledSelect>
+        </FlexEnds>
         <Button
           style={{ width: '100%', marginTop: 14 }}
           disabled={isButtonDisabled}
@@ -403,10 +563,124 @@ const MintContent: FC = () => {
           {buttonText}
         </Button>
       </MintBody>
+      {isApprovalModalOpen && (
+        <ApprovalCard
+          dismiss={() => setIsApprovalModal(false)}
+          burnedAssetAddress={
+            burnedAsset === 'ember'
+              ? deployments[CHAIN_ID].embers
+              : deployments[CHAIN_ID].gift
+          }
+          isLondonApprovalNeeded={feeAsset === 'LONDON'}
+          londonNeeded={londonNeeded}
+        />
+      )}
     </>
   );
 };
 
+const ApprovalBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
+const ApprovalContainer = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid black;
+  background: white;
+`;
+
+const ApprovalBody = styled.div`
+  padding: 14px 14px 4px 14px;
+`;
+const ApprovalCard: FC<{
+  dismiss: () => void;
+  burnedAssetAddress: string;
+  isLondonApprovalNeeded?: boolean;
+  londonNeeded: BigNumber;
+}> = ({
+  dismiss,
+  burnedAssetAddress,
+  isLondonApprovalNeeded,
+  londonNeeded,
+}) => {
+  const { txStatus: approvalTxStatus, approve } = useSetApprove();
+  const { txStatus: approvalNFTTxStatus, approve: approveNFT } =
+    useSetNFTApprove(burnedAssetAddress);
+
+  const isLondonApproved = useIsApproved(londonNeeded);
+  const { account } = useWeb3React();
+  const isLondonApprovalButtonDisabled = useMemo(() => {
+    return !account || isLondonApproved || approvalTxStatus === 'in-progress';
+  }, [account, isLondonApproved, approvalTxStatus]);
+
+  const isNFTApprovalButtonDisabled = useMemo(() => {
+    return !account || approvalNFTTxStatus === 'in-progress';
+  }, [account, approvalNFTTxStatus]);
+
+  const approveLondonButtonText = useMemo(() => {
+    if (approvalTxStatus === 'failed') {
+      return 'Oop try again?';
+    }
+    if (approvalTxStatus === 'in-progress') {
+      return `Approving...`;
+    }
+    if (approvalTxStatus === 'success') {
+      return `Approved`;
+    }
+    return `Approve ${TOKEN_SYMBOL}`;
+  }, [approvalTxStatus]);
+
+  const approveNFTButtonText = useMemo(() => {
+    if (approvalNFTTxStatus === 'failed') {
+      return 'Oop try again?';
+    }
+    if (approvalNFTTxStatus === 'in-progress') {
+      return `Approving...`;
+    }
+    if (approvalNFTTxStatus === 'success') {
+      return `Approved`;
+    }
+    return `Approve NFT to burn`;
+  }, [approvalNFTTxStatus]);
+
+  return (
+    <ApprovalBackground>
+      <ApprovalContainer>
+        <ApprovalBody>
+          {isLondonApprovalNeeded && !isLondonApproved && (
+            <Button
+              style={{ width: '100%', marginBottom: 14 }}
+              disabled={isLondonApprovalButtonDisabled}
+              onClick={() => approve()}
+            >
+              {approveLondonButtonText}
+            </Button>
+          )}
+          <Button
+            style={{ width: '100%' }}
+            disabled={isNFTApprovalButtonDisabled}
+            onClick={() => approveNFT()}
+          >
+            {approveNFTButtonText}
+          </Button>
+          <FlexCenter style={{ marginTop: 4 }}>
+            <A onClick={dismiss} style={{ cursor: 'pointer' }}>
+              Dismiss
+            </A>
+          </FlexCenter>
+        </ApprovalBody>
+      </ApprovalContainer>
+    </ApprovalBackground>
+  );
+};
 const UserSectionContainer = styled.div`
   width: 100%;
   max-width: 100%;
@@ -416,6 +690,7 @@ const UserSectionContainer = styled.div`
 
 const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
   display: grid;
+  padding: 14px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 14px;
   overflow: auto;
@@ -423,16 +698,18 @@ const CollectionBody = styled.div<{ isVerticalScroll?: boolean }>`
   margin-top: 14px;
   max-height: 360px;
   background: #f6f6f6;
-  // scrollbar-width: none; /* Firefox */
-  // ::-webkit-scrollbar {
-  //   height: 0;
-  //   width: 0; /* Remove scrollbar space */
-  //   background: transparent; /* Optional: just make scrollbar invisible */
-  // }
+`;
+
+const EmptyCollectionContainer = styled(FlexCenter)`
+  background: #f6f6f6;
+  height: 360px;
+  width: 100%;
+  margin-top: 14px;
 `;
 
 const Asset = styled.div<{ isSelected?: boolean }>`
-  opacity: ${(p) => (p.isSelected ? 1 : 0.4)};
+  box-sizing: border-box;
+  border: ${(p) => (p.isSelected ? '8px solid black' : 'none')};
   background: white;
   img {
     display: block;
@@ -448,6 +725,7 @@ const UserSection: FC<{
   selectedAssets: OPENSEA_ASSET[];
   items: OPENSEA_COLLECTION[];
   selectedCollectionAddress: string;
+  selectableRange: [number, number];
 }> = ({
   label,
   selectedAssets,
@@ -455,76 +733,48 @@ const UserSection: FC<{
   selectedCollectionAddress,
   removeSelectedAssets,
   addSelectedAssets,
+  selectableRange,
 }) => {
   const selectedCollection = useMemo(() => {
     return items.find((i) => i.contract === selectedCollectionAddress);
   }, [items, selectedCollectionAddress]);
 
-  // if (!items || items.length === 0 || !selectedCollection) {
-  //   return (
-  //     <UserSectionContainer>
-  //       <FlexEnds>
-  //         <Text>{label}</Text>
-  //         <Flex>
-  //           <StyledSelect
-  //             onChange={(e) => {
-  //               setSelectedCollectionAddress(e.target.value);
-  //               setSelectedProject?.(e.target.value);
-  //             }}
-  //             value={selectedCollectionAddress}
-  //           >
-  //             {selectableAssetAndNames?.map((i) => {
-  //               return (
-  //                 <option value={i[0]} key={`option-1-${i}`}>
-  //                   {i[1]}
-  //                 </option>
-  //               );
-  //             })}
-  //           </StyledSelect>
-  //         </Flex>
-  //       </FlexEnds>
-  //       <FlexCenter
-  //         style={{ width: '100%', height: isVerticalScroll ? 178 : 81 }}
-  //       >
-  //         <Text style={{ opacity: 0.5 }}>
-  //           Do not own any. Buy{' '}
-  //           <A
-  //             target={'blank'}
-  //             href={getOpenSeaAssetUrl(selectedCollectionAddress ?? '-')}
-  //           >
-  //             here
-  //           </A>
-  //           .
-  //         </Text>
-  //       </FlexCenter>
-  //     </UserSectionContainer>
-  //   );
-  // }
-
   return (
     <UserSectionContainer>
-      <FlexEnds>
-        <Text>{label}</Text>
-      </FlexEnds>
-      <CollectionBody>
-        {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
-          <Asset
-            isSelected={
-              findIndex(selectedAssets, (a) => a.id === asset.id) !== -1
-            }
-            onClick={() => {
-              if (findIndex(selectedAssets, (a) => a.id === asset.id) !== -1) {
-                removeSelectedAssets(asset);
-              } else {
-                addSelectedAssets(asset);
+      {/* <FlexEnds>
+        <Text><Bold>{label}</Bold></Text>
+        <Text>Burn between {selectableRange[0]}-{selectableRange[1]}</Text>
+      </FlexEnds> */}
+      {!items || items.length === 0 || !selectedCollection ? (
+        <EmptyCollectionContainer>
+          <Text style={{ opacity: 0.5 }}>Do not own any.</Text>
+        </EmptyCollectionContainer>
+      ) : (
+        <CollectionBody>
+          {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
+            <Asset
+              isSelected={
+                findIndex(selectedAssets, (a) => a.id === asset.id) !== -1
               }
-            }}
-            key={`asset-${asset.name}`}
-          >
-            <img src={asset.image} />
-          </Asset>
-        ))}
-      </CollectionBody>
+              onClick={() => {
+                if (
+                  findIndex(selectedAssets, (a) => a.id === asset.id) !== -1
+                ) {
+                  removeSelectedAssets(asset);
+                } else {
+                  if (selectedAssets.length >= selectableRange[1]) {
+                    return;
+                  }
+                  addSelectedAssets(asset);
+                }
+              }}
+              key={`asset-${asset.name}`}
+            >
+              <img src={asset.image} />
+            </Asset>
+          ))}
+        </CollectionBody>
+      )}
     </UserSectionContainer>
   );
 };

@@ -79,7 +79,16 @@ export const BURN_NOBLE_AIRDROP_AMOUNT_REVERSE_LOOKUP: {
 };
 
 // GIFTS
-export const BURN_MIN_MAX_AMOUNT_FOR_GIFTS = [2, 15];
+export const BURN_GIFT_AMOUNT_TO_EMBERS = (n: number) => {
+  if (
+    n < BURN_MIN_MAX_AMOUNT_FOR_GIFTS[0] ||
+    n > BURN_MIN_MAX_AMOUNT_FOR_GIFTS[1]
+  ) {
+    return undefined;
+  }
+  return n * 2 - 1;
+};
+export const BURN_MIN_MAX_AMOUNT_FOR_GIFTS: [number, number] = [2, 15];
 export const BURN_MAX_AMOUNT_GIFTS = 1559;
 export const BURN_LONDON_FEE_FOR_GIFTS: { [key: number]: BigNumber } = {
   2: ONE_TOKEN_IN_BASE_UNITS.mul(3375),
@@ -99,7 +108,16 @@ export const BURN_LONDON_FEE_FOR_GIFTS: { [key: number]: BigNumber } = {
 };
 
 // ASHEN
-export const BURN_MIN_MAX_AMOUNT_FOR_SELF = [3, 7];
+export const BURN_EMBERS_AMOUNT_TO_EMBERS = (n: number) => {
+  if (
+    n < BURN_MIN_MAX_AMOUNT_FOR_SELF[0] ||
+    n > BURN_MIN_MAX_AMOUNT_FOR_SELF[1]
+  ) {
+    return undefined;
+  }
+  return n - 1;
+};
+export const BURN_MIN_MAX_AMOUNT_FOR_SELF: [number, number] = [3, 7];
 export const BURN_BASE_LONDON_FEE_FOR_SELF = ONE_TOKEN_IN_BASE_UNITS.mul(1559);
 export const BURN_LONDON_FEE_FOR_SELF: { [key: number]: BigNumber } = {
   3: BURN_BASE_LONDON_FEE_FOR_SELF.mul(3),

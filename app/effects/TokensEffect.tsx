@@ -50,7 +50,6 @@ export const TokensEffect: FC = () => {
     london
       .allowance(account, deployments[CHAIN_ID].embersMinter)
       .then((v: any) => {
-        console.log('v', v.toString());
         setApprovalBalance(v);
       });
     london.balanceOf(account).then(setTokenBalance);

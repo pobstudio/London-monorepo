@@ -24,11 +24,18 @@ export interface ApprovalTransactionMetadata {
 export interface MintingGiftTransactionMetadata {
   type: 'minting-gift';
 }
+
+export interface NFTApprovalTransactionMetadata {
+  type: 'approval-nft';
+  address: string;
+}
+
 export type TransactionMetadata =
   | MintingGiftTransactionMetadata
   | ApprovalTransactionMetadata
   | MintingTransactionMetadata
-  | EmbersMintingTransactionMetadata;
+  | EmbersMintingTransactionMetadata
+  | NFTApprovalTransactionMetadata;
 
 export interface TransactionObject {
   hash: string;
