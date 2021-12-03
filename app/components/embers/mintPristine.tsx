@@ -210,7 +210,8 @@ const MintContent: FC = () => {
       !isMintCheckReady ||
       (isApproved && !isMintable) ||
       txStatus === 'in-progress' ||
-      approvalTxStatus === 'in-progress'
+      approvalTxStatus === 'in-progress' ||
+      BURN_PRISTINE_MINTABLE_SUPPLY - (tokenSupply ?? 0) === 0
     );
   }, [
     isMintCheckReady,
