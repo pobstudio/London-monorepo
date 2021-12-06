@@ -7,6 +7,10 @@ import { clamp } from 'lodash';
 import { darken } from 'polished';
 import { isCordInRect, scaleCord } from './utils/geometry';
 import { randomVectorFieldBySeed } from './utils/field';
+// import Png from 'png-js';
+// import GifEncoder from 'gif-encoder';
+// import { convert } from 'convert-svg-to-png';
+
 import {
   addVec2,
   applyVec2,
@@ -23,7 +27,8 @@ import {
 } from './utils/directionVector';
 import { newArray } from './utils/array';
 import { generateName } from './utils/name';
-const DIMENSION = 600;
+
+export const DIMENSION = 600;
 
 export interface EmberGene {
   gridSize: Bound;
@@ -45,7 +50,7 @@ interface LayerStyles {
   animation?: string;
 }
 
-const DEFAULT_GENE: EmberGene = {
+export const DEFAULT_GENE: EmberGene = {
   gridSize: [125, 125],
   seed: '0',
   pallete: ['#00bdaa', '#400082', '#fe346e', '#f1e7b6'],
@@ -55,7 +60,7 @@ const DEFAULT_GENE: EmberGene = {
   framePointilism: 0.01,
 };
 
-const FRAME_DURATION = 0.2;
+export const FRAME_DURATION = 0.2;
 const MARGIN = 30;
 const AMPLITUDE_RANGE: Range = [0, 12];
 
@@ -190,7 +195,7 @@ export const getEmbersTokenMetadataFromGene = (
   };
 };
 
-export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
+export const computeEmbers = (gene: EmberGene = DEFAULT_GENE) => {
   const randSrc = seedrandom(gene.seed);
   const { randomize } = randomRangeFactory(randSrc);
   const simplex = makeNoise3D(randSrc);
@@ -347,38 +352,59 @@ export const renderEmbers = (gene: EmberGene = DEFAULT_GENE) => {
     `;
   };
 
-  const getPathFrame = (frame: number) => {
+  const getPathFrame = (frame: number, animation?: string) => {
     return (
       convertLayerToPath(generateWaveLayer(frame, gene.seed + '0', 1), {
         color: pallete[1],
         strokeWidth,
-        animation: getAnimationForFrame(frame),
+        animation,
       }) +
       convertLayerToPath(generateWaveLayer(frame, gene.seed + '1', 0.6), {
         color: pallete[2],
         strokeWidth,
-        animation: getAnimationForFrame(frame),
+        animation,
       }) +
       convertLayerToPath(generateWaveLayer(frame, gene.seed + '2', 0.5), {
         color: pallete[3],
         strokeWidth,
-        animation: getAnimationForFrame(frame),
+        animation,
       })
     );
   };
 
-  const paths = newArray(gene.frameCt)
-    .map((_: any, i: number) => getPathFrame(i))
-    .join();
-
-  return (
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${DIMENSION}" height="${DIMENSION}" viewBox="0 0 ${DIMENSION} ${DIMENSION}">` +
-    `
+  const renderSvg = () => {
+    const paths = newArray(gene.frameCt)
+      .map((_: any, i: number) => getPathFrame(i, getAnimationForFrame(i)))
+      .join();
+    return (
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${DIMENSION}" height="${DIMENSION}" viewBox="0 0 ${DIMENSION} ${DIMENSION}">` +
+      `
     <style>
       path { mix-blend-mode: darken; }
     </style>` +
-    `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="${DIMENSION}" height="${DIMENSION}"/>` +
-    paths +
-    '</svg>'
-  );
+      `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="${DIMENSION}" height="${DIMENSION}"/>` +
+      paths +
+      '</svg>'
+    );
+  };
+
+  const renderSvgAtFrame = (frame: number) => {
+    const path = getPathFrame(frame);
+    return (
+      `<svg xmlns="http://www.w3.org/2000/svg" width="${DIMENSION}" height="${DIMENSION}" viewBox="0 0 ${DIMENSION} ${DIMENSION}">` +
+      `
+    <style>
+      path { mix-blend-mode: darken; }
+    </style>` +
+      `<rect opacity="0.5" fill="#FFFFFF" x="0" y="0" width="${DIMENSION}" height="${DIMENSION}"/>` +
+      `<rect opacity="0.5" fill="${pallete[0]}" x="0" y="0" width="${DIMENSION}" height="${DIMENSION}"/>` +
+      path +
+      '</svg>'
+    );
+  };
+
+  return {
+    renderSvg,
+    renderSvgAtFrame,
+  };
 };

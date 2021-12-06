@@ -331,7 +331,6 @@ const MintContent: FC = () => {
     return giftTxStatus === 'in-progress' || ashenTxStatus === 'in-progress';
   }, [giftTxStatus, ashenTxStatus]);
 
-  console.log(giftBurned);
   const addSelectedAssets = useCallback(
     (asset: OPENSEA_ASSET) => {
       if (isMinting) {

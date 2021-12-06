@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber';
+import { invert } from 'lodash';
 import { BLOCKS_PER_24_HRS, ONE_MWEI, ONE_TOKEN_IN_BASE_UNITS } from '.';
 
 export const BELL_CURVE_A = BigNumber.from(6000).mul(ONE_MWEI);
@@ -43,6 +44,8 @@ export const TOKEN_TYPES: { [key: string]: string } = {
   ultrasonic:
     '0x8000000000000000000000000000000600000000000000000000000000000000',
 };
+
+export const TOKEN_TYPES_TO_LABEL = invert(TOKEN_TYPES);
 
 export type TokenType = keyof typeof TOKEN_TYPES;
 

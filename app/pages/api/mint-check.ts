@@ -8,7 +8,7 @@ import { PROVIDER } from '../../constants/providers';
 import {
   getEmberGene,
   getEmbersTokenMetadataFromGene,
-  renderEmbers,
+  computeEmbers,
 } from '@pob/sketches';
 import { newArray } from '@pob/sketches/src/utils/array';
 import { utils } from 'ethers';
@@ -29,7 +29,7 @@ const getTokenMetadataAndIPFS = async (
   tokenTypeLabel: string,
 ): Promise<[any, string]> => {
   const gene = getEmberGene(seed, tokenTypeLabel);
-  const image = renderEmbers(gene);
+  const image = computeEmbers(gene).renderSvg();
   const imageBlob = new Blob([image]);
   const imageIpfs = await client.storeBlob(imageBlob);
   const tokenMetadata = getEmbersTokenMetadataFromGene(

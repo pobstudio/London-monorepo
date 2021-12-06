@@ -88,6 +88,7 @@ import { NobleAirdrop } from '../components/embers/mintNoble';
 import { useMemo } from 'react';
 import { PristineMint } from '../components/embers/mintPristine';
 import { AshenAndGiftMint } from '../components/embers/mintAshenAndGift';
+import { GifEmbers } from '../components/embers/gifEmbers';
 
 // import { ContentWrapper } from '../components/content';
 // import { Header } from '../components/header';
@@ -406,6 +407,9 @@ const BurnPage: NextPage = () => {
             </div>
           </CoreMintingInner>
         </CoreMinting>
+        <div style={{ marginTop: 48 }}>
+          <GifEmbers />
+        </div>
         <SubTitle style={{ marginTop: 48 }}>Rarity</SubTitle>
         <RightAlignedText>
           <Bold>LONDON</Bold> Embers rarity design is designed with minimalism
