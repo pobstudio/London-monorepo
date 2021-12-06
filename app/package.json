@@ -67,5 +67,11 @@
     "@types/react": "^16.9.56",
     "@types/styled-components": "^5.1.5",
     "@types/three": "^0.126.2"
+  },
+  "convert-svg-to-png": {
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   }
 }
