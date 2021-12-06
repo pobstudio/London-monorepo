@@ -38,5 +38,11 @@
   },
   "browser": {
     "fs": false
+  },
+  "convert-svg-to-png": {
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
   }
 }
