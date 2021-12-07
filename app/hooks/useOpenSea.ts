@@ -35,7 +35,7 @@ export const useOpenSeaStats = () => {
   );
 };
 
-const OS_LIMIT_DEFAULT = 32;
+const OS_LIMIT_DEFAULT = 50;
 
 const OS_OWNER_ASSETS = (owner: string, limit: number = OS_LIMIT_DEFAULT) =>
   `https://api.opensea.io/api/v1/assets?owner=${owner}&limit=${limit}&offset=0`;
