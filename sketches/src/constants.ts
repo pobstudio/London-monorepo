@@ -3,7 +3,7 @@ import { Bound, Cord } from './types';
 export const STARTING_INDEX = 1559;
 export const SUPPLY = 8888;
 export const DEFAULT_DIMENSIONS = [2048, 2048];
-export const PRINT_DIMENSIONS = DEFAULT_DIMENSIONS.map((x) => x * 3);
+export const PRINT_DIMENSIONS = DEFAULT_DIMENSIONS.map((x) => x * 4);
 
 export interface DRAW_SETTINGS_TYPE {
   canvasSketchSettings: {
