@@ -14,30 +14,6 @@ import {
 import { useMinter } from '../../hooks/useMinter';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback } from 'react';
-import { useLoadingText } from '../../hooks/useLoadingText';
-import {
-  BELL_CURVE_C,
-  BLOCK_NUMBER_REVEAL_START_AT,
-  BLOCK_NUMBER_UNLOCK_START_AT,
-  BLOCK_NUMBER_UP_TO,
-  BURN_EMBERS_AMOUNT_TO_EMBERS,
-  BURN_GIFT_AMOUNT_TO_EMBERS,
-  BURN_LONDON_FEE_FOR_GIFTS,
-  BURN_LONDON_FEE_FOR_SELF,
-  BURN_MAX_AMOUNT_GIFTS,
-  BURN_MAX_PRISTINE_AMOUNT_PER_MINT,
-  BURN_MIN_MAX_AMOUNT_FOR_GIFTS,
-  BURN_MIN_MAX_AMOUNT_FOR_SELF,
-  BURN_PRICE_PER_PRISTINE_MINT,
-  BURN_PRISTINE_MINTABLE_SUPPLY,
-  MAX_MINT_NOT_UNLOCKED,
-  MAX_MINT_PER_TX,
-  MAX_SUPPLY,
-  MINT_PRICE,
-} from '../../constants/parameters';
-import { BigNumber } from '@ethersproject/bignumber';
-import { utils } from 'ethers';
-import { A } from '../anchor';
 import { Flex, FlexCenter, FlexCenterColumn, FlexEnds } from '../flex';
 import { ASpan, Bold, Italic, Text, Title } from '../text';
 import { useBlockchainStore } from '../../stores/blockchain';
@@ -46,42 +22,24 @@ import { getTwitterShareLink } from '../../utils/twitter';
 import { BREAKPTS } from '../../styles';
 import { useShopState } from '../../hooks/useShopState';
 import {
+  getIPFSUrl,
   getOpenSeaAssetUrl,
   getOpenSeaCollectionUrl,
   getOpenSeaUserAssetUrl,
 } from '../../utils/urls';
 import { deployments } from '@pob/protocol';
-import { ROUTES } from '../../constants/routes';
-import { useGiftStore } from '../../stores/gift';
-import {
-  useGiftAndEmbersIsApproved,
-  useIsApproved,
-} from '../../hooks/useIsApproved';
-import { useSetApprove, useSetNFTApprove } from '../../hooks/useSetApproval';
-import { useMintGift } from '../../hooks/useMintGift';
-import {
-  TableColumn,
-  TableContainer,
-  TableHeader,
-  TableBody,
-  TableRow,
-} from '../table';
 import {
   OPENSEA_ASSET,
   OPENSEA_COLLECTION,
   useLondonAssets,
 } from '../../hooks/useOpenSea';
-import { useEmbersTokenSupply } from '../../hooks/useTokenSupply';
-import { useTokensStore } from '../../stores/token';
-import { useMintCheck } from '../../hooks/useMintCheck';
-import { useLondonEmbersMinterContract } from '../../hooks/useContracts';
-import { useTransactionsStore } from '../../stores/transaction';
-import { useEmberTxStatus } from '../../hooks/useEmberTxStatus';
-import { findIndex } from 'lodash';
-import { useEthPriceOfLondon } from '../../hooks/useEthPriceOfLondon';
-import { useGiftBurned } from '../../hooks/useGiftBurned';
+import { useRef } from 'react';
+import { useNFTContract } from '../../hooks/useContracts';
+import { computeEmbers, DIMENSION, FRAME_DURATION } from '@pob/sketches';
+import { getImage } from '../../utils/image';
+import GIF from 'gif.js';
 
-const MintWrapper = styled.div`
+const Wrapper = styled.div`
   border: 1px solid black;
   background: white;
   width: 450px;
@@ -92,22 +50,20 @@ const MintWrapper = styled.div`
   position: relative;
 `;
 
-const MintBody = styled.div`
+const HiddenCanvas = styled.canvas`
+  width: 0;
+  height: 0;
+  display: block;
+`;
+
+const Body = styled.div`
   padding: 14px;
 `;
 
-export const GifEmbers: FC<{}> = ({}) => {
-  return (
-    <>
-      <MintWrapper>
-        <GifContent />
-      </MintWrapper>
-    </>
-  );
-};
-
-const GifContent: FC = () => {
+export const GifEmbers: FC = () => {
   const { account } = useWeb3React();
+  const embers = useNFTContract(deployments[CHAIN_ID].embers);
+  const hiddenCanvasRef = useRef<HTMLCanvasElement>(null);
 
   const londonAssets = useLondonAssets(account ?? NULL_ADDRESS);
   const selectedCollection = useMemo(() => {
@@ -121,9 +77,55 @@ const GifContent: FC = () => {
     [selectedCollection],
   );
 
-  return (
-    <>
-      <MintBody>
+  const handleClick = useCallback(async (tokenId: string) => {
+    if (!hiddenCanvasRef.current) {
+      return;
+    }
+    const hiddenCanvas = hiddenCanvasRef.current;
+    const hiddenCtx = hiddenCanvasRef.current.getContext('2d');
+    hiddenCanvas.width = DIMENSION;
+    hiddenCanvas.height = DIMENSION;
+    if (!hiddenCtx) {
+      return;
+    }
+    if (!embers) {
+      return;
+    }
+    const uri = await embers.tokenURI(tokenId);
+    if (!uri.startsWith('ipfs://')) {
+      return;
+    }
+    const url = getIPFSUrl(uri.slice(7));
+    const fetchRes = await fetch(url);
+    const metadata = await fetchRes.json();
+    if (!metadata.gene) {
+      return;
+    }
+    const { renderSvgAtFrame } = computeEmbers(metadata.gene);
+    const gif = new GIF({
+      workers: 2,
+      quality: 10,
+      repeat: 0,
+      width: DIMENSION,
+      height: DIMENSION,
+    });
+    for (let i = 0; i < metadata.gene.frameCt; ++i) {
+      const svg = renderSvgAtFrame(i);
+      const img = await getImage(`data:image/svg+xml;base64,${btoa(svg)}`);
+      // hiddenCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, hiddenCanvas.width, hiddenCanvas.height);
+      gif.addFrame(img, { delay: FRAME_DURATION * 1000 });
+    }
+    gif.on('finished', (blob: any) => {
+      window.open(URL.createObjectURL(blob));
+    });
+    
+    gif.render();
+  }, [embers, hiddenCanvasRef]);
+
+  return (<>
+    <HiddenCanvas ref={hiddenCanvasRef} />
+    <Wrapper>
+      <Body>
         <FlexEnds>
           <Text>
             <Italic>Click to download gif: </Italic>
@@ -138,9 +140,8 @@ const GifContent: FC = () => {
             {assets.map((asset: OPENSEA_ASSET) => (
               <Asset
                 as={'a'}
-                download
-                href={`/api/gif-embers?tokenId=${asset.id}`}
                 key={`asset-${asset.name}`}
+                onClick={() => handleClick(asset.id)}
               >
                 <img src={asset.image} />
               </Asset>
@@ -148,7 +149,8 @@ const GifContent: FC = () => {
           </CollectionBody>
         )}
         <Text style={{ marginTop: 14 }}>Will take a few seconds to load</Text>
-      </MintBody>
+      </Body>
+    </Wrapper>
     </>
   );
 };
