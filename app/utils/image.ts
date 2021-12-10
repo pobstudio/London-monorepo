@@ -4,8 +4,8 @@ export const getImageData = async (canvas: HTMLCanvasElement, src: string) => {
     img.onload = () => {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
-      canvas.width = 400;
-      canvas.height = 400;
+      canvas.width = 600;
+      canvas.height = 600;
       ctx.drawImage(
         img,
         0,

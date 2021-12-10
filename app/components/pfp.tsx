@@ -20,10 +20,13 @@ import {
   FlexCenterColumn,
   FlexEnds,
 } from '../components/flex';
-import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
+import { CHAIN_ID, HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { A, AButton } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
+import { EmbersAvatarCanvas } from './embersAvatar';
+import { deployments } from '@pob/protocol';
 export const SELECTABLE_BACKGROUND: [string, string][] = [
+  [deployments[CHAIN_ID].embers, 'LONDON embers'],
   [LONDON_GIFT_CONTRACT, 'LONDON gift'],
   [HASH_CONTRACT, '$HASH'],
 ];
@@ -37,7 +40,7 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0xbd3531da5cf5857e7cfaa92426877b022e612cf8', 'Pudgy Penguins'],
   ['0x1a92f7381b9f03921564a437210bb9396471050c', 'Cool Cats'],
   ['0x85f740958906b317de6ed79663012859067e745b', 'Wicked Cranium'],
-  ['0xb47e3cd837ddf8e4c57f05d70ab86ga5de6e193bbb', 'CryptoPunks'],
+  // ['0xb47e3cd837ddf8e4c57f05d70ab86ga5de6e193bbb', 'CryptoPunks'],
   ['0x02aa731631c6d7f8241d74f906f5b51724ab98f8', 'BearsOnTheBlock'],
   ['0x031920cc2d9f5c10b444fd44009cd64f829e7be2', 'CryptoZunks'],
   ['0xdb55584e5104505a6b38776ee4dcba7dd6bb25fe', 'Imma Degen'],
@@ -66,16 +69,20 @@ export const PER_PROJECT_SETTINGS: { [key: string]: any } = {
 
 export const PFP: FC = () => {
   const { account } = useWeb3React();
-  const [foregroundImageSrc, setForegroundImageSrc] = useState<
-    string | undefined
+  const [foregroundAsset, setForegroundAsset] = useState<
+    OPENSEA_ASSET | undefined
   >();
-  const [backgroundImageSrc, setBackgroundImageSrc] = useState<
-    string | undefined
+  const [backgroundAsset, setBackgroundAsset] = useState<
+    OPENSEA_ASSET | undefined
   >();
 
   const [selectedForegroundProject, setSelectedForegroundProject] = useState<
     string | undefined
-  >();
+  >(SELECTABLE_FOREGROUND[0][0]);
+
+  const [selectedBackgroundProject, setSelectedBackgroundProject] = useState<
+    string | undefined
+  >(SELECTABLE_BACKGROUND[0][0]);
 
   const canvasSettings = useMemo(
     () =>
@@ -89,19 +96,28 @@ export const PFP: FC = () => {
     <AvatarConsoleWrapper>
       <AvatarConsole>
         <AvatarLeftWell>
-          <AvatarCanvas
-            {...canvasSettings}
-            foregroundImageSrc={foregroundImageSrc}
-            backgroundImageSrc={backgroundImageSrc}
-          />
+          {selectedBackgroundProject === deployments[CHAIN_ID].embers ? (
+            <EmbersAvatarCanvas
+              {...canvasSettings}
+              foregroundImageSrc={foregroundAsset?.image}
+              backgroundEmbersTokenId={backgroundAsset?.id}
+            />
+          ) : (
+            <AvatarCanvas
+              {...canvasSettings}
+              foregroundImageSrc={foregroundAsset?.image}
+              backgroundImageSrc={backgroundAsset?.image}
+            />
+          )}
         </AvatarLeftWell>
         <AvatarRightWell>
           {!!account ? (
             <UserAssets
-              foregroundImageSrc={foregroundImageSrc}
-              backgroundImageSrc={backgroundImageSrc}
-              setForegroundImageSrc={setForegroundImageSrc}
-              setBackgroundImageSrc={setBackgroundImageSrc}
+              foregroundAsset={foregroundAsset}
+              backgroundAsset={backgroundAsset}
+              setForegroundAsset={setForegroundAsset}
+              setBackgroundAsset={setBackgroundAsset}
+              setSelectedBackgroundProject={setSelectedBackgroundProject}
               setSelectedForegroundProject={setSelectedForegroundProject}
               account={account}
             />
@@ -133,15 +149,15 @@ const UserSectionContainer = styled.div`
 const UserSection: FC<{
   isVerticalScroll?: boolean;
   label: string;
-  setImageSrc: (src: string) => void;
-  selectedImageSrc?: string;
+  setAsset: (src: OPENSEA_ASSET) => void;
+  selectedAsset?: OPENSEA_ASSET;
   items: OPENSEA_COLLECTION[];
   setSelectedProject?: (address: string) => void;
   selectableAssetAndNames: [string, string][];
 }> = ({
   selectableAssetAndNames,
-  setImageSrc,
-  selectedImageSrc,
+  setAsset,
+  selectedAsset,
   label,
   items,
   isVerticalScroll,
@@ -209,7 +225,10 @@ const UserSection: FC<{
         <Text>{label}</Text>
         <Flex>
           <StyledSelect
-            onChange={(e) => setSelectedCollectionAddress(e.target.value)}
+            onChange={(e) => {
+              setSelectedCollectionAddress(e.target.value);
+              setSelectedProject?.(e.target.value);
+            }}
             value={selectedCollectionAddress}
           >
             {selectableAssetAndNames?.map((i) => {
@@ -225,9 +244,9 @@ const UserSection: FC<{
       <CollectionBody isVerticalScroll={isVerticalScroll}>
         {selectedCollection?.assets.map((asset: OPENSEA_ASSET) => (
           <Asset
-            isSelected={selectedImageSrc === asset.image}
+            isSelected={selectedAsset?.image === asset.image}
             onClick={() => {
-              setImageSrc(asset.image);
+              setAsset(asset);
             }}
             key={`asset-${asset.name}`}
           >
@@ -275,19 +294,21 @@ const ForegroundUserSectionWrapper = styled.div`
 `;
 
 const UserAssets: FC<{
-  foregroundImageSrc?: string;
-  backgroundImageSrc?: string;
-  setForegroundImageSrc: (src: string) => void;
-  setBackgroundImageSrc: (src: string) => void;
+  foregroundAsset?: OPENSEA_ASSET;
+  backgroundAsset?: OPENSEA_ASSET;
+  setForegroundAsset: (src: OPENSEA_ASSET) => void;
+  setBackgroundAsset: (src: OPENSEA_ASSET) => void;
   setSelectedForegroundProject: (address: string) => void;
+  setSelectedBackgroundProject: (address: string) => void;
   account: string;
 }> = ({
   account,
-  setForegroundImageSrc,
-  setBackgroundImageSrc,
-  foregroundImageSrc,
-  backgroundImageSrc,
+  setForegroundAsset,
+  setBackgroundAsset,
+  foregroundAsset,
+  backgroundAsset,
   setSelectedForegroundProject,
+  setSelectedBackgroundProject,
 }) => {
   const otherAssets = useOtherAssets(
     account,
@@ -299,9 +320,10 @@ const UserAssets: FC<{
       <ForegroundUserSectionWrapper>
         <UserSection
           selectableAssetAndNames={SELECTABLE_BACKGROUND}
-          setImageSrc={setBackgroundImageSrc}
-          selectedImageSrc={backgroundImageSrc}
+          setAsset={setBackgroundAsset}
+          selectedAsset={backgroundAsset}
           label={'Select Background'}
+          setSelectedProject={setSelectedBackgroundProject}
           items={pobAssets}
         />
       </ForegroundUserSectionWrapper>
@@ -309,8 +331,8 @@ const UserAssets: FC<{
         <UserSection
           selectableAssetAndNames={SELECTABLE_FOREGROUND}
           setSelectedProject={setSelectedForegroundProject}
-          setImageSrc={setForegroundImageSrc}
-          selectedImageSrc={foregroundImageSrc}
+          setAsset={setForegroundAsset}
+          selectedAsset={foregroundAsset}
           isVerticalScroll={true}
           label={'Select Foreground'}
           items={otherAssets}

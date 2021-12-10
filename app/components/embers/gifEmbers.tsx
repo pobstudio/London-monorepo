@@ -77,80 +77,94 @@ export const GifEmbers: FC = () => {
     [selectedCollection],
   );
 
-  const handleClick = useCallback(async (tokenId: string) => {
-    if (!hiddenCanvasRef.current) {
-      return;
-    }
-    const hiddenCanvas = hiddenCanvasRef.current;
-    const hiddenCtx = hiddenCanvasRef.current.getContext('2d');
-    hiddenCanvas.width = DIMENSION;
-    hiddenCanvas.height = DIMENSION;
-    if (!hiddenCtx) {
-      return;
-    }
-    if (!embers) {
-      return;
-    }
-    const uri = await embers.tokenURI(tokenId);
-    if (!uri.startsWith('ipfs://')) {
-      return;
-    }
-    const url = getIPFSUrl(uri.slice(7));
-    const fetchRes = await fetch(url);
-    const metadata = await fetchRes.json();
-    if (!metadata.gene) {
-      return;
-    }
-    const { renderSvgAtFrame } = computeEmbers(metadata.gene);
-    const gif = new GIF({
-      workers: 2,
-      quality: 10,
-      repeat: 0,
-      width: DIMENSION,
-      height: DIMENSION,
-    });
-    for (let i = 0; i < metadata.gene.frameCt; ++i) {
-      const svg = renderSvgAtFrame(i);
-      const img = await getImage(`data:image/svg+xml;base64,${btoa(svg)}`);
-      // hiddenCtx.drawImage(img, 0, 0, img.width, img.height, 0, 0, hiddenCanvas.width, hiddenCanvas.height);
-      gif.addFrame(img, { delay: FRAME_DURATION * 1000 });
-    }
-    gif.on('finished', (blob: any) => {
-      window.open(URL.createObjectURL(blob));
-    });
-    
-    gif.render();
-  }, [embers, hiddenCanvasRef]);
+  const handleClick = useCallback(
+    async (tokenId: string) => {
+      if (!hiddenCanvasRef.current) {
+        return;
+      }
+      const hiddenCanvas = hiddenCanvasRef.current;
+      const hiddenCtx = hiddenCanvasRef.current.getContext('2d');
+      hiddenCanvas.width = DIMENSION * 2;
+      hiddenCanvas.height = DIMENSION * 2;
+      if (!hiddenCtx) {
+        return;
+      }
+      if (!embers) {
+        return;
+      }
+      const uri = await embers.tokenURI(tokenId);
+      if (!uri.startsWith('ipfs://')) {
+        return;
+      }
+      const url = getIPFSUrl(uri.slice(7));
+      const fetchRes = await fetch(url);
+      const metadata = await fetchRes.json();
+      if (!metadata.gene) {
+        return;
+      }
+      const { renderSvgAtFrame } = computeEmbers(metadata.gene);
+      const gif = new GIF({
+        workers: 2,
+        quality: 10,
+        repeat: 0,
+        width: DIMENSION * 2,
+        height: DIMENSION * 2,
+      });
+      for (let i = 0; i < metadata.gene.frameCt; ++i) {
+        const svg = renderSvgAtFrame(i);
+        const img = await getImage(`data:image/svg+xml;base64,${btoa(svg)}`);
+        hiddenCtx.drawImage(
+          img,
+          0,
+          0,
+          img.width,
+          img.height,
+          0,
+          0,
+          hiddenCanvasRef.current.width,
+          hiddenCanvasRef.current.height,
+        );
+        gif.addFrame(hiddenCtx, { delay: FRAME_DURATION * 1000 });
+      }
+      gif.on('finished', (blob: any) => {
+        window.open(URL.createObjectURL(blob));
+      });
 
-  return (<>
-    <HiddenCanvas ref={hiddenCanvasRef} />
-    <Wrapper>
-      <Body>
-        <FlexEnds>
-          <Text>
-            <Italic>Click to download gif: </Italic>
-          </Text>
-        </FlexEnds>
-        {!assets || assets.length === 0 || !selectedCollection ? (
-          <EmptyCollectionContainer>
-            <Text style={{ opacity: 0.5 }}>Do not own any.</Text>
-          </EmptyCollectionContainer>
-        ) : (
-          <CollectionBody>
-            {assets.map((asset: OPENSEA_ASSET) => (
-              <Asset
-                as={'a'}
-                key={`asset-${asset.name}`}
-                onClick={() => handleClick(asset.id)}
-              >
-                <img src={asset.image} />
-              </Asset>
-            ))}
-          </CollectionBody>
-        )}
-        <Text style={{ marginTop: 14 }}>Will take a few seconds to load</Text>
-      </Body>
-    </Wrapper>
+      gif.render();
+    },
+    [embers, hiddenCanvasRef],
+  );
+
+  return (
+    <>
+      <HiddenCanvas ref={hiddenCanvasRef} />
+      <Wrapper>
+        <Body>
+          <FlexEnds>
+            <Text>
+              <Italic>Click to download gif: </Italic>
+            </Text>
+          </FlexEnds>
+          {!assets || assets.length === 0 || !selectedCollection ? (
+            <EmptyCollectionContainer>
+              <Text style={{ opacity: 0.5 }}>Do not own any.</Text>
+            </EmptyCollectionContainer>
+          ) : (
+            <CollectionBody>
+              {assets.map((asset: OPENSEA_ASSET) => (
+                <Asset
+                  as={'a'}
+                  key={`asset-${asset.name}`}
+                  onClick={() => handleClick(asset.id)}
+                >
+                  <img src={asset.image} />
+                </Asset>
+              ))}
+            </CollectionBody>
+          )}
+          <Text style={{ marginTop: 14 }}>Will take a few seconds to load</Text>
+        </Body>
+      </Wrapper>
     </>
   );
 };
