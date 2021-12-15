@@ -113,6 +113,12 @@ export const GifEmbers: FC = () => {
       for (let i = 0; i < metadata.gene.frameCt; ++i) {
         const svg = renderSvgAtFrame(i);
         const img = await getImage(`data:image/svg+xml;base64,${btoa(svg)}`);
+        hiddenCtx.clearRect(
+          0,
+          0,
+          hiddenCanvasRef.current.width,
+          hiddenCanvasRef.current.height,
+        );
         hiddenCtx.drawImage(
           img,
           0,
@@ -124,7 +130,7 @@ export const GifEmbers: FC = () => {
           hiddenCanvasRef.current.width,
           hiddenCanvasRef.current.height,
         );
-        gif.addFrame(hiddenCtx, { delay: FRAME_DURATION * 1000 });
+        gif.addFrame(hiddenCtx, { delay: FRAME_DURATION * 1000, copy: true });
       }
       gif.on('finished', (blob: any) => {
         window.open(URL.createObjectURL(blob));

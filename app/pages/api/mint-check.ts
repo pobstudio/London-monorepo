@@ -75,6 +75,8 @@ const handleMintChecks = async (req: NextApiRequest, res: NextApiResponse) => {
   const numCheck = parseInt(numChecksStr);
   const nonce = await PROVIDER.getTransactionCount(to);
 
+  console.log(nonce);
+
   const tokenMetadatas: any[] = [];
   const ipfsHashes: string[] = [];
   const tokenMetadatasAndIpfsHashes = await Promise.all(

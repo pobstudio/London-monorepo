@@ -15,30 +15,28 @@ const BLOCKS_PER_24_HRS = 6300;
 
 const eternalMintChecks = [
   {
-    uris: [
-      'bafkreiat5awgasbr3x6nf4nn5jgrcryzirg4umpakx4wlwzxwgemnucl64',
-      'bafkreiasv4cta6dk6sjjvut3tnpgdpyyugoyfmrxt5ta5ew6ptgfhxu2t4',
-      'bafkreies7wx3dwkprjm2s3febaqx4rvrn7rlay2judxelafajunfmh4lce',
-      'bafkreiaxwpl4h3v6nwfugqwp2eswxa3b32zslfpt2mothvoakuuwc5nu4q',
-      'bafkreihajhhnrqdfl2qphvprtoopoc6h6snqdx5z2vrjdt4j5qbqzyqjn4',
-      'bafkreicvubp4po6giqunn46n6tyt3bervqwgyg3yx4n6z23yqnjujnjdyy',
-      'bafkreifzgahhhzlgcjxkewo2fpegxa6lu62fthatrjizbc5ssuooesf6aa',
-      'bafkreic5krx5rb4wjkvib4mteqeswqncpczpmtqbcicp3xm4irpokngt3y',
-      'bafkreihr7b3q6jam54k3i4ykj4ok3gwosoog5j3ixn6eh45vz3imbqcmb4',
-      'bafkreihklgeis3ywgmw3om65saqcofiyecbwdsefot2knhvpnucz2fpfvu',
-      'bafkreibg2wf2udju2ize3xxst7sgna57qm3mrkuprp7cpxdsjvkcnzgyle',
-      'bafkreid5newx6shi5pxlygyeqrtfendhtplz2rhwwuhhcbm7aqeix635ue',
-      'bafkreiedqvak5glcjvpglnhk6eibjiv4b7qz2326iwjf25h5x5meyyw6fm',
-      'bafkreiggbode6zffwivswuh3u4ciabuvthv4j6w24dfqp2sfwy2af4ejv4',
-      'bafkreib57no7j3fq554xw27fd5t3jmebw32etw7oruhdpplygucr4zerb4',
-      'bafkreia32kx47z6x2lsvh5t2gm4jbga5dqo75hhg32y5a4jhopfjoyptoq',
+    "uris": [
+      "bafkreie7cpeftz36e27rtfcy33bu27kfqlekljxwkbe46dxe55ejvcke6a",
+      "bafkreihc4qgtmrmupljsst44ply3skmkejeadvnuuoirnq4oiykhunkmse",
+      "bafkreigcwupghg4we5ezbdpnwrlq2dbnwnlhu5speuneokd33bizpjywki",
+      "bafkreib3oiamp3hqyiu53tjwyiaels5qwnqgtq4lkgnrxoqmb3g4npce24",
+      "bafkreicvyr26k6j3iy3iqi3jqbuptsc7zlqszrqi5pbwfxxdbnmt5enihe",
+      "bafkreidkwbso7wbxc7xqdlrt7ljgbef6scxtiaa4kxclt3qfa7swicj6ou",
+      "bafkreib5i4eke3itpo2stjxc42e5xj457wf6q442r3efo6e7hgagbazazu",
+      "bafkreiaj5ryjuje2rf6lwqwtfsz2fywwdwjpq2jlzrl4b5qw27jbg7qkya",
+      "bafkreib3kvgitwrxspvhnohezr75jaw73pzqfb6ivayvjrd64qobogpy3y",
+      "bafkreihvzgeax744yqtfmx6f5iz6lfau7orhshcojkw7wlvaluyofvlwle",
+      "bafkreid3itj347puwjbl6fxu5fqe7ld6fskoipmcsw2ieaqlk5nuaab4sa",
+      "bafkreigy6myj2da7lczh64n57wuiv4dkpefvdny572nypd75cj7clvhcfe",
+      "bafkreihgxekppasxwilf6d3kvudv444ca4v2snjq4wkztsrpjmsqeu6rca",
+      "bafkreiaalnsqfd4jfiysotlymwrvhngriqgcipc6cercrvhwxng6owi6ea",
+      "bafkreice2oz7tknbj5dek3vozlkruuu3n2tzrpvl6jxo5o2ldrisflua5y",
+      "bafkreih5k5szztbisnsmwfuzwnuz2fkngzktsjqrkelzalzzvacswmw5oi"
     ],
-    signature:
-      '0xb33bfa16b5d91343dbf3cf6793a65f073ed6c83dfd9a48601e17b110475437a86f78d33da1ff5a746bda430e688b96c6cbe7f64a4e5b563cbe43ce75a95b38b01c',
-    tokenType:
-      '0x8000000000000000000000000000000400000000000000000000000000000000',
-    to: '0x5766ab511a204C34661e85af5ba498E2e715A420',
-  },
+    "signature": "0xc638d2de3f930db05a0acd56c5bae9656aa224fa1d3618a3d6bec1ac146e7eb510613682802a8825963181a3b0523e7f22b9fe9a39d32cfb2331dba80363422d1c",
+    "tokenType": "0x8000000000000000000000000000000400000000000000000000000000000000",
+    "to": "0x5766ab511a204C34661e85af5ba498E2e715A420"
+  }
 ];
 
 task('mint-eternals', 'Deploys LONDON EMBERS', async (args, hre) => {
@@ -47,11 +45,6 @@ task('mint-eternals', 'Deploys LONDON EMBERS', async (args, hre) => {
   await hre.run('compile');
 
   console.log(`deploying with ${await owner.getAddress()}`);
-
-  const LondonBurn = await hre.ethers.getContractFactory('LondonBurn');
-  const londonBurn = (await LondonBurn.attach(
-    '0x971fe57134d1b1B3D8D62cCADFF1D2CF67e2B8CE',
-  )) as LondonBurn;
 
   const LondonBurnMinter = await hre.ethers.getContractFactory(
     'LondonBurnMinter',
