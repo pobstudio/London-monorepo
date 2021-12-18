@@ -59,6 +59,7 @@ export const SELECTABLE_FOREGROUND: [string, string][] = [
   ['0x2acab3dea77832c09420663b0e1cb386031ba17b', 'DeadFellaz'],
   ['0x495f947276749ce646f68ac8c248420045cb7b5e', '24px Cats'],
   ['0x488a85d21ac95c9bb0cdaa0d2bfa427fcea88d1e', 'Bored Punk Yacht Club'],
+  ['0x97597002980134bea46250aa0510c9b90d87a587', 'Chain Runners'],
 ];
 
 export const PER_PROJECT_SETTINGS: { [key: string]: any } = {
