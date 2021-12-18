@@ -7,3 +7,8 @@ export const formatBigNumberSafe = (numberish: BigNumberish) => {
     return undefined;
   }
 };
+
+export const lowerCaseCheck = (
+  a: string | undefined | null,
+  b: string | undefined | null,
+) => a && b && a?.toLowerCase()?.includes(b?.toLowerCase());

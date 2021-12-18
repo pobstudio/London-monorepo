@@ -1,4 +1,7 @@
+import { lowerCaseCheck } from './format';
+
 export const getImageData = async (canvas: HTMLCanvasElement, src: string) => {
+  const isSVG = lowerCaseCheck(src, 'svg');
   const imageData = new Promise<ImageData>((res) => {
     const img = new Image();
     img.onload = () => {
@@ -10,8 +13,8 @@ export const getImageData = async (canvas: HTMLCanvasElement, src: string) => {
         img,
         0,
         0,
-        img.width,
-        img.height,
+        isSVG ? canvas.width : img.width,
+        isSVG ? canvas.height : img.height,
         0,
         0,
         canvas.width,
