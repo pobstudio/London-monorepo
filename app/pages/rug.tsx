@@ -1,9 +1,9 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { NextPage } from 'next';
 import styled from 'styled-components';
 import { Text, Bold, Title, Caption, Italic } from '../components/text';
 import { Header } from '../components/header';
-import { RugCanvas, RugImgRotations, RugImgSrcs } from '../components/rug';
+import { RugImgSrcs } from '../components/rug';
 import { useWeb3React } from '@web3-react/core';
 import { WalletState, Web3Status } from '../components/web3Status';
 import { usePrevious } from 'react-use';
@@ -11,7 +11,6 @@ import { Banner } from '../components/banner';
 import {
   OPENSEA_ASSET,
   OPENSEA_COLLECTION,
-  useOtherAssets,
   usePobAssets,
 } from '../hooks/useOpenSea';
 import { BREAKPTS } from '../styles';
@@ -21,8 +20,8 @@ import {
   FlexCenterColumn,
   FlexEnds,
 } from '../components/flex';
-import { HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
-import { A, AButton } from '../components/anchor';
+import { LONDON_GIFT_CONTRACT } from '../constants';
+import { A } from '../components/anchor';
 import { getOpenSeaAssetUrl } from '../utils/urls';
 
 export const SELECTABLE_BACKGROUND: [string, string][] = [
