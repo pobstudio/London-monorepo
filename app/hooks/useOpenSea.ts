@@ -84,7 +84,7 @@ export interface OPENSEA_COLLECTION {
 }
 
 const useOpenSeaAssets = (data: any) => {
-  const assets = data?.assets;
+  const assets = data?.assets ?? data?.collection;
   let collections: OPENSEA_COLLECTION[] = [];
   assets?.forEach((asset: any) => {
     const contract = asset?.asset_contract?.address;
@@ -135,7 +135,7 @@ export const usePunkAssets = (owner: string): OPENSEA_COLLECTION[] => {
 
 export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
   const fetchUrl = OS_OWNER_POB_ASSETS(owner);
-  const { data } = useSWR(fetchUrl, fetcher, {});
+  const { data } = useSWR(`/api/collections?owner=${owner}`, fetcher, {});
   return useOpenSeaAssets(data);
 };
 
@@ -149,7 +149,11 @@ export const useOtherAssets = (
   owner: string,
   contracts: string[],
 ): OPENSEA_COLLECTION[] => {
-  const fetchUrl = OS_OWNER_FILTER_ASSETS(owner, contracts);
-  const { data } = useSWR(fetchUrl, fetcher, {});
+  const { data } = useSWR(
+    useMemo(() => `/api/other-collections?owner=${owner}`, [owner]),
+    fetcher,
+    {},
+  );
+
   return [...useOpenSeaAssets(data), ...usePunkAssets(owner)];
 };

@@ -10,7 +10,6 @@ import { usePrevious } from 'react-use';
 import {
   OPENSEA_ASSET,
   OPENSEA_COLLECTION,
-  useOtherAssets,
   usePobAssets,
 } from '../hooks/useOpenSea';
 import { BREAKPTS } from '../styles';

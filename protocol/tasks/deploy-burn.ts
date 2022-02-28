@@ -19,11 +19,14 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
 
   await hre.run('compile');
 
+  console.log('helllo');
   console.log(`deploying with ${await owner.getAddress()}`);
 
   const name = 'LONDON Embers';
   const symbol = 'EMBERS';
   const revealBlockNumber = 0;
+
+  console.log('wut');
 
   // deploy london
   const Erc20Mintable = await hre.ethers.getContractFactory('ERC20Mintable');
@@ -33,49 +36,62 @@ task('deploy-burn', 'Deploys LONDON EMBERS', async (args, hre) => {
 
   await erc20.deployed();
 
+  console.log('wut');
+
   console.log('London deployed to:', erc20.address);
 
-  // deploy LondonGift
-  const LondonGift = await hre.ethers.getContractFactory('LondonGift');
-  const londonGift = (await LondonGift.attach(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].gift,
-  )) as LondonGift;
-
-  await londonGift.deployed();
-  console.log('LondonGift deployed to:', londonGift.address);
-
-  const LondonBurn = await hre.ethers.getContractFactory('LondonBurn');
-  const londonBurn = (await LondonBurn.attach(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embers,
-  )) as LondonBurn;
-
-  await londonBurn.deployed();
-  console.log('LondonBurn deployed to:', londonBurn.address);
-
-  const LondonBurnMinter = await hre.ethers.getContractFactory(
-    'LondonBurnMinter',
+  const blockNum = 13533333;
+  const ethBalance = await hre.ethers.provider.getBalance(
+    deployments[1].multisig,
+    blockNum,
   );
-  const londonBurnMinter = (await LondonBurnMinter.deploy(
-    londonBurn.address,
-    erc20.address,
-    londonGift.address,
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].sushiswap,
-  )) as LondonBurnMinter;
+  const londonBalance = await erc20.balanceOf(deployments[1].multisig, {
+    blockTag: blockNum,
+  });
+  console.log('eth balance: ', utils.formatEther(ethBalance));
+  console.log('london balance: ', utils.formatEther(londonBalance));
 
-  await londonBurnMinter.deployed();
-  console.log('LondonBurnMinter deployed to:', londonBurnMinter.address);
+  // // deploy LondonGift
+  // const LondonGift = await hre.ethers.getContractFactory('LondonGift');
+  // const londonGift = (await LondonGift.attach(
+  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].gift,
+  // )) as LondonGift;
 
-  console.log('wiring metadata');
-  await londonBurn.setMinter(londonBurnMinter.address);
-  await londonBurnMinter.setTreasury(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
-  );
-  // await londonBurn.setMintingAuthority(
+  // await londonGift.deployed();
+  // console.log('LondonGift deployed to:', londonGift.address);
+
+  // const LondonBurn = await hre.ethers.getContractFactory('LondonBurn');
+  // const londonBurn = (await LondonBurn.attach(
+  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embers,
+  // )) as LondonBurn;
+
+  // await londonBurn.deployed();
+  // console.log('LondonBurn deployed to:', londonBurn.address);
+
+  // const LondonBurnMinter = await hre.ethers.getContractFactory(
+  //   'LondonBurnMinter',
+  // );
+  // const londonBurnMinter = (await LondonBurnMinter.deploy(
+  //   londonBurn.address,
+  //   erc20.address,
+  //   londonGift.address,
+  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].sushiswap,
+  // )) as LondonBurnMinter;
+
+  // await londonBurnMinter.deployed();
+  // console.log('LondonBurnMinter deployed to:', londonBurnMinter.address);
+
+  // console.log('wiring metadata');
+  // await londonBurn.setMinter(londonBurnMinter.address);
+  // await londonBurnMinter.setTreasury(
+  //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].multisig,
+  // );
+  // // await londonBurn.setMintingAuthority(
+  // //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
+  // // );
+  // await londonBurnMinter.setAirdropAuthority(
   //   deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
   // );
-  await londonBurnMinter.setAirdropAuthority(
-    deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersMintingAuthority,
-  );
   // await londonBurn.setContractURI(
   //   `ipfs://${
   //     deployments[NETWORK_NAME_CHAIN_ID[hre.network.name]].embersContractURI

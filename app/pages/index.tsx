@@ -252,7 +252,9 @@ const Utility = () => {
 
   return (
     <>
-      <SubTitle id="tools" style={{ marginTop: 48 }}>Utility</SubTitle>
+      <SubTitle id="tools" style={{ marginTop: 48 }}>
+        Utility
+      </SubTitle>
       <RightAlignedText>
         Customize your PFP with a new background:
       </RightAlignedText>
