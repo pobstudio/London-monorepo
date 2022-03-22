@@ -55,19 +55,21 @@ export const getTiles = (tilePolygons: TilePolygons[], regions: string[]) => {
         polygonRegions: permutation,
       };
       for (let i = 0; i < tilePolygons.length; ++i) {
-        const polygonSides = getPolygonAsLines(tilePolygons[i]);
-        for (const side of polygonSides) {
-          const tileIndex = getSideIndex(side);
-          if (tileIndex !== undefined) {
-            const position: Cord = (
-              tileIndex === 0 || tileIndex === 2
-                ? [side[0][0], side[1][0]]
-                : [side[0][1], side[1][1]]
-            ).sort((a, b) => a - b) as Cord;
-            tile.sockets[tileIndex].push({
-              position,
-              type: permutation[i],
-            });
+        for (const polygon of tilePolygons[i]) {
+          const polygonSides = getPolygonAsLines(polygon);
+          for (const side of polygonSides) {
+            const tileIndex = getSideIndex(side);
+            if (tileIndex !== undefined) {
+              const position: Cord = (
+                tileIndex === 0 || tileIndex === 2
+                  ? [side[0][0], side[1][0]]
+                  : [side[0][1], side[1][1]]
+              ).sort((a, b) => a - b) as Cord;
+              tile.sockets[tileIndex].push({
+                position,
+                type: permutation[i],
+              });
+            }
           }
         }
       }
@@ -142,30 +144,32 @@ export const getNodes = (tiles: Tile[]): Node[] => {
 
 export const getTileDrawFunc = (tiles: Tile[]) => {
   return tiles.map((t) => (ctx: any, r: Rect) => {
-    t.polygons.forEach((p, i) => {
+    t.polygons.forEach((ps, i) => {
       ctx.fillStyle = t.polygonRegions[i];
       ctx.beginPath();
-      p.forEach((c, i) => {
-        const scaledCord = scaleCord(
-          c,
-          [
-            [0, 0],
-            [1, 1],
-          ],
-          r,
-        );
-        const roundedCord = [
-          Math.round(scaledCord[0]),
-          Math.round(scaledCord[1]),
-        ];
+      ps.forEach((p) => {
+        p.forEach((c, i) => {
+          const scaledCord = scaleCord(
+            c,
+            [
+              [0, 0],
+              [1, 1],
+            ],
+            r,
+          );
+          const roundedCord = [
+            Math.round(scaledCord[0]),
+            Math.round(scaledCord[1]),
+          ];
 
-        if (i === 0) {
-          ctx.moveTo(...roundedCord);
-        } else {
-          ctx.lineTo(...roundedCord);
-        }
+          if (i === 0) {
+            ctx.moveTo(...roundedCord);
+          } else {
+            ctx.lineTo(...roundedCord);
+          }
+        });
+        ctx.fill();
       });
-      ctx.fill();
     });
   });
 };

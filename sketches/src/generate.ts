@@ -30,7 +30,7 @@ export const generateNameFromSeed = (seed: number) => {
   };
 };
 
-export const RARITY_TILE_MAP: { [key: string]: TileSet[] } = {
+export const RARITY_TILE_MAP: { [key: string]: string[] } = {
   common: ['grid', 'quilt', 'frizzle', 'squiggle', 'squiggle_1', 'squiggle_2'],
   rare: ['diagonal', 'ripped', 'shattered', 'stairs'],
   superRare: ['cities', 'squiggle'],

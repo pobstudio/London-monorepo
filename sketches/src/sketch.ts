@@ -295,8 +295,6 @@ export const sketchCanvas = (
         ]),
       ];
 
-      const drawableBounds: Bound = getRectBounds(drawableRect);
-
       ctx.fillStyle = palette[0];
       ctx.fillRect(...[0, 0], ...settings.canvasSketchSettings.dimensions);
 

@@ -24,7 +24,7 @@ export declare type Cord = [number, number];
 export declare type Polygon = Cord[];
 export declare type Color = [number, number, number, number];
 // WFC specific types
-export declare type TilePolygons = Polygon[];
+export declare type TilePolygons = Polygon[][];
 export interface TileSideSocket {
   // min, max
   position: [number, number];
