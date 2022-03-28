@@ -10,13 +10,15 @@ import { sketchFactory } from './sketch-factory';
 const ASSETS_DIR = path.resolve(__dirname, '..', 'out', 'sample');
 
 (async () => {
-  const tokenMetadata: TokenMetadata = {
-    seed: 22,
-    tileSet: 'aftermath',
-    framed: 'nay',
-    composition: 'repeat',
-    rarity: 'common',
-    complexity: 'normal',
-  };
-  sketchFactory(tokenMetadata, path.resolve(ASSETS_DIR, 'test.png'));
+  for (let i = 0; i < 10; ++i) {
+    const tokenMetadata: TokenMetadata = {
+      seed: 20 + i,
+      tileSet: 'peaks',
+      framed: 'nay',
+      composition: 'repeat',
+      rarity: 'common',
+      complexity: 'normal',
+    };
+    sketchFactory(tokenMetadata, path.resolve(ASSETS_DIR, i + '.png'));
+  }
 })();
