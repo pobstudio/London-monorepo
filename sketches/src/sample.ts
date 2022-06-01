@@ -12,8 +12,8 @@ const ASSETS_DIR = path.resolve(__dirname, '..', 'out', 'sample');
 (async () => {
   for (let i = 0; i < 10; ++i) {
     const tokenMetadata: TokenMetadata = {
-      seed: 20 + i,
-      tileSet: 'peaks',
+      seed: 33 + i,
+      tileSet: 'glitches',
       framed: 'nay',
       composition: 'repeat',
       rarity: 'common',
