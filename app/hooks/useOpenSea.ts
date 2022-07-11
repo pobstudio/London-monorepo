@@ -1,6 +1,7 @@
 import { deployments } from '@pob/protocol';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
+import { zdk } from '../clients/zdk';
 import { CHAIN_ID, HASH_CONTRACT, LONDON_GIFT_CONTRACT } from '../constants';
 import { fetcher } from '../utils/fetcher';
 
@@ -134,7 +135,6 @@ export const usePunkAssets = (owner: string): OPENSEA_COLLECTION[] => {
 };
 
 export const usePobAssets = (owner: string): OPENSEA_COLLECTION[] => {
-  const fetchUrl = OS_OWNER_POB_ASSETS(owner);
   const { data } = useSWR(`/api/collections?owner=${owner}`, fetcher, {});
   return useOpenSeaAssets(data);
 };

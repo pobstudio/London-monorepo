@@ -80,6 +80,7 @@ import { useEmberTxStatus } from '../../hooks/useEmberTxStatus';
 import { findIndex } from 'lodash';
 import { useEthPriceOfLondon } from '../../hooks/useEthPriceOfLondon';
 import { useGiftBurned } from '../../hooks/useGiftBurned';
+import { useZoraLondonAssets } from '../../hooks/useZora';
 
 const MintWrapper = styled.div`
   border: 1px solid black;
@@ -210,7 +211,7 @@ const MintContent: FC = () => {
     setSelectedAssets([]);
   }, [burnedAsset]);
 
-  const londonAssets = useLondonAssets(account ?? NULL_ADDRESS);
+  const londonAssets = useZoraLondonAssets(account ?? NULL_ADDRESS);
 
   const selectableRange = useMemo(() => {
     return burnedAsset === 'ember'

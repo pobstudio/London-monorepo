@@ -34,6 +34,8 @@ export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 
 export const NFT_STORAGE_API_KEY = process.env.NFT_STORAGE_API_KEY ?? '';
 
+export const IPFS_LINK = `https://ipfs.io/ipfs`;
+
 export const ALCHEMY_KEY =
   CHAIN_ID === 1
     ? process.env.NEXT_PUBLIC_ALCHEMY_KEY
