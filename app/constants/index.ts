@@ -28,7 +28,7 @@ export const OPENSEA_ASSET_NAME = 'london-gift-v2';
 export const EMBERS_OPENSEA_ASSET_NAME = 'london-embers';
 export const OPENSEA_ASSET_URL = 'london-gift-v2';
 
-export const OPENSEA_API_KEY = 'fc09ae6245fb40ab8afbcff451553345';
+export const OPENSEA_API_KEY = process.env.OPENSEA_API_KEY ?? '';
 
 export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID ?? '1');
 
