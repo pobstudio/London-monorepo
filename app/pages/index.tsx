@@ -399,7 +399,7 @@ const GiftShopPage: NextPage = () => {
         </Title>
         <Caption>
           <Italic>
-            LONDON has moved! Check out the new home <A href={'https://pob.studio/works/london'}>here</A> 
+            LONDON has moved! Check out the new home <A href={'https://pob.studio/work/london'}>here</A> 
           </Italic>
         </Caption>
         <Text style={{ marginBottom: 8 }}>
