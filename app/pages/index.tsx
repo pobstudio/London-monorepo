@@ -397,16 +397,11 @@ const GiftShopPage: NextPage = () => {
         <Title>
           <Bold>LONDON</Bold>
         </Title>
-        {/* <Caption>
+        <Caption>
           <Italic>
-            {shopState === 'not-open' &&
-              'Still setting up the register and shelving...'}
-            {shopState === 'open' && 'Grand opening!'}
-            {shopState === 'preview' && 'We are open! 1 per address for now.'}
-            {shopState === 'revealed' && 'NFTs have been revealed!'}
-            {shopState === 'sold-out' && <A href={'/provenance'}>Provenance</A>}
+            LONDON has moved! Check out the new home <A href={'https://pob.studio/works/london'}>here</A> 
           </Italic>
-        </Caption> */}
+        </Caption>
         <Text style={{ marginBottom: 8 }}>
           <Link passHref href={ROUTES.BURN}>
             <A style={{ color: 'blue', textDecoration: 'underline' }}>
