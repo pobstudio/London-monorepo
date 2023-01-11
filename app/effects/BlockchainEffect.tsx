@@ -10,6 +10,7 @@ import { useToastsStore } from '../stores/toasts';
 import { getMainnetProvider } from '../utils/provider';
 import { useWeb3React } from '@web3-react/core';
 
+const isBlockNumberClockNeeded = false;
 // TODO(dave4506)
 export const BlockchainEffect: FC = () => {
   const setBlockNumber = useBlockchainStore((s) => s.setBlockNumber);
@@ -24,6 +25,9 @@ export const BlockchainEffect: FC = () => {
   const { account } = useWeb3React();
 
   useEffect(() => {
+    if (!isBlockNumberClockNeeded) {
+      return;
+    }
     if (!isMounted() || !provider) {
       return;
     }
