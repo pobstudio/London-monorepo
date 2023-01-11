@@ -56,6 +56,9 @@ export const BlockchainEffect: FC = () => {
   }, [provider, isMounted, setBlockNumber]);
 
   useEffect(() => {
+    if (!isBlockNumberClockNeeded) {
+      return;
+    }
     if (!isMounted() || !provider || !account) {
       return;
     }
